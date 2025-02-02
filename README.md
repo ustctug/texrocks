@@ -65,7 +65,9 @@ texrocks install texdoc
 ```
 
 Note, texdoc need a tlpdb database.
-Download it to `~/.local/share/texmf/texdoc/Data.tlpdb.lua`.
+Download
+[it](https://github.com/Freed-Wu/texrocks/releases/download/0.0.1/Data.tlpdb.lua)
+to `~/.local/share/texmf/texdoc/Data.tlpdb.lua`.
 Then create `~/.local/share/texmf/texdoc/texdoc.cnf`:
 
 ```ini
