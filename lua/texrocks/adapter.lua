@@ -1,14 +1,15 @@
-local M         = {}
-local config    = require "texrocks.config"
-local state     = require "texrocks.state"
-local constants = require "texrocks.constants"
-local cfg = require "luarocks.core.cfg"
-local lfs       = require "lfs"
-local gmatch    = string.gmatch
+local M             = {}
+local config        = require "texrocks.config"
+local state         = require "texrocks.state"
+local constants     = require "texrocks.constants"
+local cfg           = require "luarocks.core.cfg"
+local lfs           = require "lfs"
+local lfsattributes = lfs.attributes
+local gmatch        = string.gmatch
 
 -- FIXME: don't know why luahbtex miss it
 -- copied from luatex/source/texk/web2c/luatexdir/lua/luatex-core.lua
-if lfs.mkdirp == nil then
+if not lfs.mkdirp then
     function lfs.mkdirp(path)
         local full = ""
         local r1, r2, r3
@@ -17,6 +18,20 @@ if lfs.mkdirp == nil then
             r1, r2, r3 = lfs.mkdir(full)
         end
         return r1, r2, r3
+    end
+end
+
+if not lfs.isfile then
+    function lfs.isfile(name)
+        local m = lfsattributes(name, "mode")
+        return m == "file" or m == "link"
+    end
+end
+
+if not lfs.isdir then
+    function lfs.isdir(name)
+        local m = lfsattributes(name, "mode")
+        return m == "directory"
     end
 end
 
@@ -104,7 +119,8 @@ function M.fix()
     for _, path in ipairs(get_rock_paths()) do
         local bin_dir = path .. '/bin'
         for _, bin_name in ipairs { 'l3build', 'texdoc', 'texlua',
-            'luatex', 'luahbtex', 'lualatex', 'texluap', 'hbtexluap' } do
+            'luatex', 'luahbtex', 'lualatex', 'texluap',
+            'hbtexluap', 'texrocks' } do
             local bin = bin_dir .. '/' .. bin_name
             if lfs.isfile(bin) then
                 local target_bin = target_bin_dir .. '/' .. bin_name
