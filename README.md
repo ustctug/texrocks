@@ -45,6 +45,8 @@ pdftocairo -png main.pdf
 magick convert main-1.png -gravity North -crop 100%x20% main.png
 ```
 
+![luatex](https://github.com/user-attachments/assets/18e6d10f-6387-4501-9d97-067a5a1629e7)
+
 ## LuaLaTeX
 
 WIP

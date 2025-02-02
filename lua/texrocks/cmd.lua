@@ -12,6 +12,7 @@ local function get_parser()
         :argument("rock", "rock name", "")
     parser:command("remove", "remove a rock then synchronize")
         :argument("rock", "rock name", "")
+    parser:command("list", "list all installed rocks")
 
     return parser
 end
@@ -23,11 +24,16 @@ function M.main()
         cmd = "install"
     elseif args.remove then
         cmd = "remove"
+    elseif args.list then
+        print(table.concat(luarocks.cli { 'list', args.rock }, "\n"))
+        return
     end
     if args.rock ~= '' then
         luarocks.cli { cmd, args.rock }
     end
-    adapter.sync()
+    if args.install or args.remove then
+        adapter.sync()
+    end
 end
 
 return M
