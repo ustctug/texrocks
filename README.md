@@ -49,13 +49,9 @@ magick convert main-1.png -gravity North -crop 100%x20% main.png
 
 ## LuaLaTeX
 
-WIP
-
 ```sh
 texrocks install lualatex-fmt
-luatex examples/tex/latex/main.tex
-pdftocairo -png main.pdf
-magick convert main-1.png -gravity North -crop 100%x20% main.png
+lualatex examples/tex/latex/main.tex
 ```
 
 ## texdoc
@@ -93,6 +89,15 @@ Would you like to search online? (y/N) y
 
 ```sh
 texrocks install l3build
+```
+
+## texluap
+
+Sometimes you need a REPL to debug luatex. you can refer
+[texluap](https://github.com/wakatime/prompt-style.lua#luatex):
+
+```sh
+texrocks install prompt-style
 ```
 
 ## Credit
