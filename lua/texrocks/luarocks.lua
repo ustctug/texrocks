@@ -1,3 +1,4 @@
+--- https://github.com/luarocks/luarocks/issues/747
 local config = require('texrocks.config')
 local constants = require('texrocks.constants')
 local M = {}

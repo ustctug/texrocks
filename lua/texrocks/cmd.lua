@@ -29,6 +29,10 @@ function M.main()
         return
     end
     if args.rock ~= '' then
+        if args.rock:sub(-4) == '-fmt' and args.install then
+            print(table.concat(luarocks.cli { cmd, '--only-deps', args.rock }))
+            adapter.sync()
+        end
         print(table.concat(luarocks.cli { cmd, args.rock }))
     end
     if args.install or args.remove then
