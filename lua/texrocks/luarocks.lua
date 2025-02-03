@@ -6,9 +6,7 @@ local M = {}
 function M.cli(args)
     -- luacheck: ignore 143
     ---@diagnostic disable: undefined-field
-    if os.setenv then
-        os.setenv('LUAROCKS_CONFIG', config.luarocks_config_path)
-    end
+    os.setenv('LUAROCKS_CONFIG', config.luarocks_config_path)
     local luarocks_cmd = {
         config.luarocks_binary,
         "--force-lock",
@@ -26,9 +24,7 @@ function M.cli(args)
         end
         f:close()
     end
-    if os.setenv then
-        os.setenv('LUAROCKS_CONFIG', nil)
-    end
+    os.setenv('LUAROCKS_CONFIG', nil)
     return lines
 end
 

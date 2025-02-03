@@ -1,5 +1,8 @@
 #!/usr/bin/env -S luahbtex --shell-escape --luaonly
 if kpse then
     kpse.set_program_name(status.list().luatex_engine)
+    require 'texrocks.cmd'.main()
+else
+    require 'texrocks.adapter'.fix()
+    print [[this program should be run on texlua. try again.]]
 end
-require'texrocks.cmd'.main()

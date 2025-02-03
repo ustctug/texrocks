@@ -119,7 +119,8 @@ function M.fix()
     for _, path in ipairs(get_rock_paths()) do
         local bin_dir = path .. '/bin'
         for _, bin_name in ipairs { 'l3build', 'texdoc', 'texlua',
-            'luatex', 'luahbtex', 'lualatex', 'texluap', 'hbtexluap' } do
+            'luatex', 'luahbtex', 'lualatex', 'texluap',
+            'hbtexluap', 'texrocks' } do
             local bin = bin_dir .. '/' .. bin_name
             if lfs.isfile(bin) then
                 local target_bin = target_bin_dir .. '/' .. bin_name

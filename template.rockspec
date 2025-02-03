@@ -16,7 +16,7 @@ description = {
   $license
 }
 
-dependencies = { "argparse", "luarocks", "luafilesystem" }
+dependencies = { "argparse", "luarocks", "luafilesystem", "luatex" }
 
 test_dependencies = $test_dependencies
 

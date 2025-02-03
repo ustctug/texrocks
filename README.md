@@ -34,7 +34,9 @@
 
 A (La)TeX package manager powered by luarocks and luaTeX.
 
-## LuaTeX
+## Usage
+
+### LuaTeX
 
 Take an [example](examples/tex/plain/main.tex):
 
@@ -47,14 +49,14 @@ magick convert main-1.png -gravity North -crop 100%x20% main.png
 
 ![luatex](https://github.com/user-attachments/assets/18e6d10f-6387-4501-9d97-067a5a1629e7)
 
-## LuaLaTeX
+### LuaLaTeX
 
 ```sh
 texrocks install lualatex-fmt
 lualatex examples/tex/latex/main.tex
 ```
 
-## texdoc
+### texdoc
 
 ```sh
 texrocks install texdoc
@@ -85,13 +87,13 @@ Would you like to search online? (y/N) y
 
 <https://texdoc.org/serve/impatient/0> is opened.
 
-## l3build
+### l3build
 
 ```sh
 texrocks install l3build
 ```
 
-## texluap
+### texluap
 
 Sometimes you need a REPL to debug luatex. you can refer
 [texluap](https://github.com/wakatime/prompt-style.lua#luatex):
@@ -99,6 +101,40 @@ Sometimes you need a REPL to debug luatex. you can refer
 ```sh
 texrocks install prompt-style
 ```
+
+## Install
+
+```sh
+luarocks --lua-version=5.3 install texrocks
+```
+
+luarocks version must be `> 3.11.1-1` to support `build_dependencies`.
+The latest is `dev-1`.
+
+## Configure
+
+By default:
+
+`~/.config/texmf/init.lua`:
+
+```lua
+local home = os.getenv('HOME')
+rocks_path = home .. '/.local/share/texmf'
+luarocks_config_path = home .. '/.luarocks/config-5.3.lua'
+luarocks_binary = 'luarocks'
+```
+
+Where:
+
+- all rocks will be installed to `rocks_path`
+- will use `luarocks_config_path` to configure `luarocks_binary`. See
+  [config](https://github.com/luarocks/luarocks/wiki/Config-file-format)
+
+By default, `~/.local/share/texmf/fonts/map/luatex.map` and
+`~/.local/share/texmf/web2c/texmf.cnf` will be generated to configure `luatex`.
+
+You can use `~/.config/texmf/fonts/map/luatex.map` and
+`~/.config/texmf/web2c/texmf.cnf` to override it.
 
 ## Credit
 
