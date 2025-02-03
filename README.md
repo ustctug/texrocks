@@ -38,7 +38,15 @@ A (La)TeX package manager powered by luarocks and luaTeX.
 
 ### LuaTeX
 
-Take an [example](examples/tex/plain/main.tex):
+[example](examples/tex/plain/main.tex):
+
+```tex
+Hello, \TeX!
+
+$$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
+
+\bye
+```
 
 ```sh
 texrocks install luatex-fmt
@@ -51,10 +59,25 @@ magick convert main-1.png -gravity North -crop 100%x20% main.png
 
 ### LuaLaTeX
 
+[example](examples/tex/latex/main.tex):
+
+```tex
+\documentclass{article}
+\title{main}
+\begin{document}
+
+Hello, \LaTeX!
+
+\end{document}
+```
+
 ```sh
 texrocks install lualatex-fmt
 lualatex examples/tex/latex/main.tex
 ```
+
+More [required packages](https://ctan.org/pkg/required) is
+[WIP](https://luarocks.org/m/texmf).
 
 ### texdoc
 
