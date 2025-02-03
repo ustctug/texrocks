@@ -49,7 +49,7 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 ```
 
 ```sh
-texrocks install luatex-fmt
+texrocks install luatex
 luatex examples/tex/plain/main.tex
 pdftocairo -png main.pdf
 magick convert main-1.png -gravity North -crop 100%x20% main.png
@@ -72,7 +72,7 @@ Hello, \LaTeX!
 ```
 
 ```sh
-texrocks install lualatex-fmt
+texrocks install lualatex
 lualatex examples/tex/latex/main.tex
 ```
 

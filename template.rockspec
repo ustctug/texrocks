@@ -16,7 +16,9 @@ description = {
   $license
 }
 
-dependencies = { "argparse", "luarocks", "luafilesystem", "luatex" }
+-- texlua contains a lfs
+-- luafilesystem only for first running, see bin/texrocks
+dependencies = { "argparse", "luarocks", "luafilesystem", "texlua" }
 
 test_dependencies = $test_dependencies
 
