@@ -29,7 +29,7 @@ function M.main()
         return
     end
     if args.rock ~= '' then
-        print(table.concat(luarocks.cli { cmd, args.rock }))
+        print(table.concat(luarocks.cli { cmd, args.rock }, "\n"))
     end
     if args.install or args.remove then
         adapter.sync()
