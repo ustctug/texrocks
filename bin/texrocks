@@ -3,6 +3,6 @@ if kpse then
     kpse.set_program_name(arg[0])
     require 'texrocks.cmd'.main()
 else
-    require 'texrocks.adapter'.fix()
+    require 'texrocks.adapter'.sync()
     print [[this program should be run on texlua. try again.]]
 end
