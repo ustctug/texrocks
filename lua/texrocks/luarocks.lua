@@ -3,6 +3,11 @@ local config = require('texrocks.config')
 local constants = require('texrocks.constants')
 local M = {}
 
+if os.setenv == nil then
+    function os.setenv(_key, _value)
+    end
+end
+
 function M.cli(args)
     -- luacheck: ignore 143
     ---@diagnostic disable: undefined-field
