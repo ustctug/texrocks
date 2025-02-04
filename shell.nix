@@ -16,9 +16,10 @@ mkShell rec {
         ldoc
       ]
     ))
+    (builtins.elemAt texlive.luatex.pkgs 2)
   ];
   shellHook = ''
-    export LUAINPUTS_luahbtex="${./.}/lua;${builtins.elemAt buildInputs 0}/share/lua/5.3"
-    export CLUAINPUTS_luahbtex="${builtins.elemAt buildInputs 0}/lib/lua/5.3"
+    export LUAINPUTS="${./.}/lua;${builtins.elemAt buildInputs 0}/share/lua/5.3"
+    export CLUAINPUTS="${builtins.elemAt buildInputs 0}/lib/lua/5.3"
   '';
 }
