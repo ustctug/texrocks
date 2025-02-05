@@ -66,7 +66,9 @@ magick convert main-1.png -gravity North -crop 100%x20% main.png
 \title{main}
 \begin{document}
 
-Hello, \LaTeX!
+\section{Hello, \LaTeX!}
+
+$$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 
 \end{document}
 ```
@@ -74,10 +76,30 @@ Hello, \LaTeX!
 ```sh
 texrocks install lualatex
 lualatex examples/tex/latex/main.tex
+pdftocairo -png main.pdf
+magick convert main-1.png -gravity North -crop 100%x30% main.png
 ```
 
-More [required packages](https://ctan.org/pkg/required) is
-[WIP](https://luarocks.org/m/texmf).
+![lualatex](https://github.com/user-attachments/assets/6e77a463-9231-4bed-b2c6-84b6eb2f1463)
+
+LaTeX require some [required packages](https://ctan.org/pkg/required).
+You can install them by yourself.
+
+- [amscls](https://luarocks.org/modules/Freed-Wu/amscls):
+  AMSLaTeX contains some documentclasses and packages for mathematics.
+- [babel-base](https://luarocks.org/modules/Freed-Wu/babel-base): multilanguages
+- [latex-cyrillic](https://luarocks.org/modules/Freed-Wu/latex-cyrillic):
+  cyrillic alphabet fonts.
+- [latex-graphics](https://luarocks.org/modules/Freed-Wu/latex-graphics):
+  graphics and colours.
+- psnfss: WIP
+- [latex-tools](https://luarocks.org/modules/Freed-Wu/latex-tools): tables.
+
+Some packages are recommended:
+
+- [hyperref](https://luarocks.org/modules/Freed-Wu/hyperref): hyperlinks.
+
+[More packages](https://luarocks.org/m/texmf).
 
 ### texdoc
 
@@ -158,6 +180,102 @@ By default, `~/.local/share/texmf/fonts/map/luatex.map` and
 
 You can use `~/.config/texmf/fonts/map/luatex.map` and
 `~/.config/texmf/web2c/texmf.cnf` to override it.
+
+## Package
+
+### Version
+
+Github release can tag version while CTAN cannot. Such as:
+
+- <https://github.com/latex3/latex2e/releases/download/release-2024-11-01-PL2/latex-graphics.tds.zip>
+  is for version 2024-11-01, we package it to 2024.11.01-1
+- <http://mirrors.ctan.org/install/macros/latex/contrib/hyperref.tds.zip>
+  is for latest version. we package it to scm-1
+
+### Formats
+
+TeX packages have two formats:
+
+- source package `*.ctan.zip`, like:
+  - lua: `*.src.rock`
+  - python : sdist `*.tar.gz`
+- binary package `*.tds.zip`, like:
+  - lua: `*.any.rock`, `*.wi-x86_64.rock`
+  - python: `*-any.whl`, `*-win_amd64.whl`
+
+Like converting typescript to javascript, we need convert `*.ctan.zip`'s `*.dts`
+and `*.ins` to `*.tds.zip`'s `*.cls` and `*.sty`. We package `*.tds.zip` to skip
+converting, like `npmjs.org` packages only contain `*.js` not `*.ts`.
+
+A lua package looks like:
+
+- `~/.luarocks/share/lua/5.3/foo.lua`: lua module
+- `~/.luarocks/lib/lua/5.3/foo.so`: lua binary module
+- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/bin/foo`: executable program
+- `~/.luarocks/bin/foo`: a lua wrapper for above
+- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/README.md`
+- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/LICENSE`
+- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/foo-1.0.0-1.rockspec`: package
+  build script
+- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/rock_manifest`: package
+  manifest
+
+We repackage `*.tds.zip` to:
+
+- `doc/latex/foo/foo.pdf`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/latex/foo/foo.pdf`
+- `tex/latex/foo/foo.sty`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/latex/foo/foo.sty`
+- `tex/latex/foo/foo.cls`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/latex/foo/foo.cls`
+- `tex/latex/foo/foo.lua`:
+  `~/.luarocks/share/lua/5.3/foo.lua`
+- `source/foo/foo.dts`: skip source code of LaTeX
+- `source/foo/foo.ins`: skip source code of LaTeX
+- `source/foo/foo.teal`: skip source code of lua, see
+  [tl](https://github.com/teal-language/tl)
+- `source/foo/foo.ts`: skip source code of lua, see
+  [TypeScriptToLua](https://github.com/TypeScriptToLua/TypeScriptToLua)
+- `fonts/type1/foo/foo.pfb`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/fonts/type1/foo/foo.pfb`
+- `fonts/source/foo/foo.mf`: skip source code of metafont
+
+### Dependencies
+
+`*.tds.zip` doesn't have meta information about packages. when we create
+`*.rockspec`, we need add it from [CTAN](https://ctan.org/).
+
+CTAN doesn't provide dependence information. You need search it. e.g.,
+
+`tex/latex/base/ltnews.cls`:
+
+```tex
+% ...
+\IfFileExists{hyperref.sty}{%
+  \RequirePackage[hidelinks]{hyperref}}{}
+% ...
+```
+
+`hyperref` is an optional dependency of `latex-base`.
+
+### Build Dependencies
+
+Some TeX packages don't provide `*.tds.zip`. You have to build it from
+`*.ctan.zip`.
+
+```sh
+texrocks install &&
+  luatex --interaction=nonstopmode foo.dtx # or foo.ins, see its README.md
+```
+
+or:
+
+```sh
+l3build ctan
+```
+
+add `{ 'texrocks', 'luatex', 'latex-base' }` or `{ 'l3build', 'latex-base' }` to
+`build_dependencies`.
 
 ## Credit
 
