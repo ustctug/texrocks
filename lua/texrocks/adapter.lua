@@ -118,16 +118,24 @@ function M.fix()
     local target_bin_dir = cfg.root_dir .. '/bin'
     for _, path in ipairs(get_rock_paths()) do
         local bin_dir = path .. '/bin'
-        for _, bin_name in ipairs { 'l3build', 'texdoc', 'texlua',
-            'luatex', 'luahbtex', 'lualatex', 'texluap',
-            'hbtexluap', 'texrocks' } do
-            local bin = bin_dir .. '/' .. bin_name
-            if lfs.isfile(bin) then
-                local target_bin = target_bin_dir .. '/' .. bin_name
-                if lfs.isfile(target_bin) then
-                    os.remove(target_bin)
+        if lfs.isdir(bin_dir) then
+            for bin_name in lfs.dir(bin_dir) do
+                local bin = bin_dir .. '/' .. bin_name
+                if lfs.isfile(bin) then
+                    local f = io.open(bin)
+                    if f then
+                        local shebang = '#!/usr/bin/env texlua'
+                        local first = f:read(#shebang)
+                        f:close()
+                        if first == shebang then
+                            local target_bin = target_bin_dir .. '/' .. bin_name
+                            if lfs.isfile(target_bin) then
+                                os.remove(target_bin)
+                            end
+                            lfs.link(bin, target_bin, true)
+                        end
+                    end
                 end
-                lfs.link(bin, target_bin, true)
             end
         end
     end

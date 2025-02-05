@@ -68,7 +68,7 @@ magick convert main-1.png -gravity North -crop 100%x20% main.png
 
 \section{Hello, \LaTeX!}
 
-$$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
+$$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}6$$
 
 \end{document}
 ```
@@ -98,6 +98,7 @@ You can install them by yourself.
 Some packages are recommended:
 
 - [hyperref](https://luarocks.org/modules/Freed-Wu/hyperref): hyperlinks.
+- [pgf](https://luarocks.org/modules/Freed-Wu/pgf): PGF/Tikz.
 
 [More packages](https://luarocks.org/m/texmf).
 

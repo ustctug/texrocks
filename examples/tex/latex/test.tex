@@ -1,0 +1,17 @@
+% \documentclass[tikz]{standalone}
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, quotes, graphs, graphdrawing, shapes.geometric}
+\usegdlibrary{layered}
+\usepackage{hyperref}
+\usepackage{hologo}
+\title{test}
+\begin{document}
+\tikzset{io/.style={trapezium, trapezium left angle=60, trapezium right angle=120, rounded corners=false}}
+\begin{tikzpicture}[rounded corners, >=Stealth, auto]
+  \graph[layered layout, nodes={draw, align=center}]{%
+    "\TeX" -> "\hologo{pdfTeX}" -> "\hologo{XeTeX}";
+    "\hologo{pdfTeX}" -> "\hologo{LuaTeX}"
+  };
+\end{tikzpicture}
+\end{document}
