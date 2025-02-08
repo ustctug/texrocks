@@ -98,9 +98,31 @@ You can install them by yourself.
 Some packages are recommended:
 
 - [hyperref](https://luarocks.org/modules/Freed-Wu/hyperref): hyperlinks.
-- [pgf](https://luarocks.org/modules/Freed-Wu/pgf): PGF/Tikz.
+- [pgf](https://luarocks.org/modules/Freed-Wu/pgf): PGF/TikZ.
+- [beamer](https://luarocks.org/modules/Freed-Wu/beamer): slides.
 
 [More packages](https://luarocks.org/m/texmf).
+
+[A more complicated example](examples/tex/latex/test.tex):
+
+```tex
+\documentclass[tikz]{standalone}
+\usetikzlibrary{arrows.meta, quotes, graphs, graphdrawing, shapes.geometric}
+\usegdlibrary{layered}
+\usepackage{hyperref}
+\usepackage{hologo}
+\title{test}
+\begin{document}
+\begin{tikzpicture}[rounded corners, >=Stealth, auto]
+  \graph[layered layout, nodes={draw, align=center}]{%
+    "\TeX" -> "\hologo{pdfTeX}" -> "\hologo{XeTeX}";
+    "\hologo{pdfTeX}" -> "\hologo{LuaTeX}"
+  };
+\end{tikzpicture}
+\end{document}
+```
+
+![graph](https://github.com/user-attachments/assets/c66416fb-15be-4a93-8fea-8578767b663a)
 
 ### texdoc
 
@@ -165,7 +187,7 @@ By default:
 
 ```lua
 local home = os.getenv('HOME')
-rocks_path = home .. '/.local/share/texmf'
+rocks_path = home .. '/.luarocks',
 luarocks_config_path = home .. '/.luarocks/config-5.3.lua'
 luarocks_binary = 'luarocks'
 ```
