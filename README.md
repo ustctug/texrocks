@@ -41,8 +41,15 @@ A (La)TeX package manager powered by luarocks and luaTeX.
 [example](examples/tex/plain/main.tex):
 
 ```tex
-Hello, \TeX!
+\hoffset-1in
+\voffset-1in
+\hsize30mm
+\pagewidth\hsize
+\vsize20mm
+\pageheight\vsize
+\parindent0mm
 
+Hello, \TeX!
 $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 
 \bye
@@ -51,11 +58,9 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 ```sh
 texrocks install luatex
 luatex examples/tex/plain/main.tex
-pdftocairo -png main.pdf
-magick convert main-1.png -gravity North -crop 100%x20% main.png
 ```
 
-![luatex](https://github.com/user-attachments/assets/18e6d10f-6387-4501-9d97-067a5a1629e7)
+![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
 
 ### LuaLaTeX
 
@@ -64,11 +69,20 @@ magick convert main-1.png -gravity North -crop 100%x20% main.png
 ```tex
 \documentclass{article}
 \title{main}
+\setlength\hoffset{-1in}
+\setlength\voffset{-1in}
+\setlength\oddsidemargin{0pt}
+\setlength\topmargin{0pt}
+\setlength\headheight{0pt}
+\setlength\headsep{0pt}
+\setlength\textheight{20mm}
+\setlength\pageheight{\textheight}
+\setlength\textwidth{40mm}
+\setlength\pagewidth{\textwidth}
 \begin{document}
 
 \section{Hello, \LaTeX!}
-
-$$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}6$$
+$$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 
 \end{document}
 ```
@@ -76,11 +90,9 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}6$$
 ```sh
 texrocks install lualatex
 lualatex examples/tex/latex/main.tex
-pdftocairo -png main.pdf
-magick convert main-1.png -gravity North -crop 100%x30% main.png
 ```
 
-![lualatex](https://github.com/user-attachments/assets/6e77a463-9231-4bed-b2c6-84b6eb2f1463)
+![lualatex](https://github.com/user-attachments/assets/04037340-55ea-4cb9-98fc-46c8e50fb4dd)
 
 LaTeX require some [required packages](https://ctan.org/pkg/required).
 You can install them by yourself.
@@ -100,6 +112,7 @@ Some packages are recommended:
 - [hyperref](https://luarocks.org/modules/Freed-Wu/hyperref): hyperlinks.
 - [pgf](https://luarocks.org/modules/Freed-Wu/pgf): PGF/TikZ.
 - [beamer](https://luarocks.org/modules/Freed-Wu/beamer): slides.
+- [ctex](https://luarocks.org/modules/Freed-Wu/ctex): Chinese support. **bug**
 
 [More packages](https://luarocks.org/m/texmf).
 
@@ -115,14 +128,14 @@ Some packages are recommended:
 \begin{document}
 \begin{tikzpicture}[rounded corners, >=Stealth, auto]
   \graph[layered layout, nodes={draw, align=center}]{%
-    "\TeX" -> "\hologo{pdfTeX}" -> "\hologo{XeTeX}";
-    "\hologo{pdfTeX}" -> "\hologo{LuaTeX}"
+    "\TeX" -> "\hologo{eTeX}" -> "\hologo{pdfTeX}" -> "\hologo{LuaTeX}";
+    "\hologo{eTeX}" -> "\hologo{XeTeX}"
   };
 \end{tikzpicture}
 \end{document}
 ```
 
-![graph](https://github.com/user-attachments/assets/c66416fb-15be-4a93-8fea-8578767b663a)
+![graph](https://github.com/user-attachments/assets/131a8a31-0dd4-49fa-84dd-1531c89da55c)
 
 ### texdoc
 
@@ -219,54 +232,80 @@ Github release can tag version while CTAN cannot. Such as:
 
 TeX packages have two formats:
 
-- source package `*.ctan.zip`, like:
+- source package `*-ctan.zip`, like:
   - lua: `*.src.rock`
   - python : sdist `*.tar.gz`
 - binary package `*.tds.zip`, like:
-  - lua: `*.any.rock`, `*.wi-x86_64.rock`
+  - lua: `*.any.rock`, `*.win-x86_64.rock`
   - python: `*-any.whl`, `*-win_amd64.whl`
 
-Like converting typescript to javascript, we need convert `*.ctan.zip`'s `*.dts`
+Like converting typescript to javascript, we need convert `*-ctan.zip`'s `*.dts`
 and `*.ins` to `*.tds.zip`'s `*.cls` and `*.sty`. We package `*.tds.zip` to skip
 converting, like `npmjs.org` packages only contain `*.js` not `*.ts`.
 
-A lua package looks like:
+A lua package `*.linux-x86_64.rock` contains some files which will be installed to
+`~/.luarocks`:
 
-- `~/.luarocks/share/lua/5.3/foo.lua`: lua module
-- `~/.luarocks/lib/lua/5.3/foo.so`: lua binary module
-- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/bin/foo`: executable program
-- `~/.luarocks/bin/foo`: a lua wrapper for above
-- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/README.md`
-- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/LICENSE`
-- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/foo-1.0.0-1.rockspec`: package
+- `lua/foo.lua`: `~/.luarocks/share/lua/5.3/foo.lua`, lua module
+- `lib/foo.so`: `~/.luarocks/lib/lua/5.3/foo.so`, lua binary module
+- `bin/foo`: `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/bin/foo`,
+  executable program, and luarocks will generate a shell wrapper
+  `~/.luarocks/bin/foo`. You need to add it to `$PATH`.
+- `doc/README.md`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/README.md`
+- `doc/LICENSE`: `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/LICENSE`
+- `foo-1.0.0-1.rockspec`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/foo-1.0.0-1.rockspec`, package
   build script
-- `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/rock_manifest`: package
+- `rock_manifest`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/rock_manifest`, package
   manifest
 
 We repackage `*.tds.zip` to:
 
-- `doc/latex/foo/foo.pdf`:
-  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/latex/foo/foo.pdf`
-- `tex/latex/foo/foo.sty`:
-  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/latex/foo/foo.sty`
+- `doc/{generic,plain,latex,luatex,lualatex}/foo/foo.pdf`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/doc/{generic,plain,latex,luatex,lualatex}/foo/foo.pdf`,
+  document for `texdoc foo` in shell
+- `tex/{latex,lualatex}/foo/foo.sty`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/{latex,lualatex}/foo/foo.sty`,
+  LaTeX macro package for `\usepackage{foo}` in LaTeX `*.tex`
 - `tex/latex/foo/foo.cls`:
-  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/latex/foo/foo.cls`
-- `tex/latex/foo/foo.lua`:
-  `~/.luarocks/share/lua/5.3/foo.lua`
-- `source/foo/foo.dts`: skip source code of LaTeX
-- `source/foo/foo.ins`: skip source code of LaTeX
-- `source/foo/foo.teal`: skip source code of lua, see
-  [tl](https://github.com/teal-language/tl)
-- `source/foo/foo.ts`: skip source code of lua, see
-  [TypeScriptToLua](https://github.com/TypeScriptToLua/TypeScriptToLua)
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/latex/foo/foo.cls`: LaTeX
+  document class for `\documentclass{foo}` in LaTeX `*.tex`
+- `tex/generic/foo/foo.cfg`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/generic/foo/foo.cfg`,
+  configuration for `\input foo.cfg` in LaTeX `*.cls` and `*.sty`
+- `tex/{generic,plain}/foo/foo.tex`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/tex/{generic,plain}/foo/foo.tex`,
+  TeX source for `\input foo.tex` in LaTeX/plainTeX `*.tex`
+- `tex/luatex/foo/foo.lua`:
+  `~/.luarocks/share/lua/5.3/foo.lua`, lua scripts for
+  `\directlua{require'foo'}` in LuaLaTeX/LuaTeX `*.tex`
+- `tex/scripts/foo/foo.lua`:
+  `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/bin/foo`, lua scripts with
+  `#!/usr/bin/env texlua`
+- `tex/scripts/foo/foo-bar.lua`:
+  `~/.luarocks/share/lua/5.3/foo-bar.lua`, lua scripts for `require'foo-bar'`
+  in `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/bin/foo`
 - `fonts/type1/foo/foo.pfb`:
   `~/.luarocks/lib/luarocks/rocks-5.3/foo/1.0.0-1/fonts/type1/foo/foo.pfb`
 - `fonts/source/foo/foo.mf`: skip source code of metafont
+- `source/foo/foo.dts`: skip source code of LaTeX.
+  [docstrip](https://ctan.org/pkg/docstrip) can convert `*.dtx` to document
+  `*.pdf`
+- `source/foo/foo.ins`: skip source code of LaTeX.
+  [docstrip](https://ctan.org/pkg/docstrip) can convert `*.ins` to `*.sty`,
+  `*.cls`, `*.tex` and `*.cfg`
+- `source/foo/foo.tl`: skip source code of lua,
+  [tl](https://github.com/teal-language/tl) can convert `*.tl` to `*.lua`
+- `source/foo/foo.ts`: skip source code of lua.
+  [TypeScriptToLua](https://github.com/TypeScriptToLua/TypeScriptToLua) can
+  convert `*.ts` to `*.lua`
 
 ### Dependencies
 
 `*.tds.zip` doesn't have meta information about packages. when we create
-`*.rockspec`, we need add it from [CTAN](https://ctan.org/).
+`*.rockspec`, we need to add it from [CTAN](https://ctan.org/).
 
 CTAN doesn't provide dependence information. You need search it. e.g.,
 
@@ -288,7 +327,7 @@ Some TeX packages don't provide `*.tds.zip`. You have to build it from
 
 ```sh
 texrocks install &&
-  luatex --interaction=nonstopmode foo.dtx # or foo.ins, see its README.md
+  lualatex --interaction=nonstopmode foo.ins
 ```
 
 or:
@@ -297,10 +336,11 @@ or:
 l3build ctan
 ```
 
-add `{ 'texrocks', 'luatex', 'latex-base' }` or `{ 'l3build', 'latex-base' }` to
+add `{ 'texrocks', 'lualatex', 'latex-base' }` or `{ 'l3build', 'latex-base' }` to
 `build_dependencies`.
 
 ## Credit
 
-- [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim)
-- [apltex](https://github.com/RadioNoiseE/apltex)
+- [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim): a neovim package
+  manager powered by luarocks
+- [apltex](https://github.com/RadioNoiseE/apltex): inspiration origin
