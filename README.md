@@ -68,7 +68,7 @@ luatex examples/tex/plain/minimal.tex
 
 ```tex
 \renewcommand\normalsize{\fontsize{10pt}{12pt}\selectfont}
-\title{main}
+\title{minimal}
 \setlength\hoffset{-1in}
 \setlength\voffset{-1in}
 \setlength\oddsidemargin{0pt}
@@ -125,7 +125,7 @@ Some packages are recommended:
 \usegdlibrary{layered}
 \usepackage{hyperref}
 \usepackage{hologo}
-\title{test}
+\title{graph}
 \begin{document}
 \begin{tikzpicture}[rounded corners, >=Stealth, auto]
   \graph[layered layout, nodes={draw, align=center}]{%
@@ -137,6 +137,35 @@ Some packages are recommended:
 ```
 
 ![graph](https://github.com/user-attachments/assets/131a8a31-0dd4-49fa-84dd-1531c89da55c)
+
+### TeXinfo
+
+[A minimal example](examples/tex/texinfo/minimal.tex):
+
+```texinfo
+@hoffset-1in
+@voffset-1in
+@node Top
+@top Example
+
+@node First Chapter
+@nodedescription The first chapter is the only chapter in this sample.
+@chapter Hello, @TeX{info}
+
+@cindex chapter, first
+This is the first chapter.
+@bye
+```
+
+```sh
+texrocks install texinfo
+texinfo examples/tex/texinfo/minimal.tex
+dvipdfmx minimal.dvi
+pdftocairo -png minimal.pdf
+magick convert minimal-1.png -crop 50%x10% minimal.png
+```
+
+![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)
 
 ### texdoc
 

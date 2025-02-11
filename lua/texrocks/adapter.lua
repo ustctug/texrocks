@@ -82,8 +82,11 @@ function M.sync_luatex_map()
                 local newpath = path .. '/' .. file
                 if lfs.isdir(newpath) then
                     walk(newpath)
-                elseif lfs.isfile(newpath) and file:gsub(".*%.", "") == "pfb" then
-                    table.insert(fonts, newpath)
+                elseif lfs.isfile(newpath) then
+                    local ext = file:gsub(".*%.", "")
+                    if ext == "pfb" or ext == "t3" then
+                        table.insert(fonts, newpath)
+                    end
                 end
             end
         end

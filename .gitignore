@@ -1,3 +1,5 @@
+*.cp
+
 # create by https://github.com/iamcco/coc-gitignore (Sat Feb 01 2025 14:05:19 GMT+0800 (China Standard Time))
 # TeX.gitignore:
 ## Core latex/pdflatex auxiliary files:
