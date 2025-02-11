@@ -38,7 +38,7 @@ A (La)TeX package manager powered by luarocks and luaTeX.
 
 ### LuaTeX
 
-[example](examples/tex/plain/main.tex):
+[A minimal example](examples/tex/plain/minimal.tex):
 
 ```tex
 \hoffset-1in
@@ -57,17 +57,17 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 
 ```sh
 texrocks install luatex
-luatex examples/tex/plain/main.tex
+luatex examples/tex/plain/minimal.tex
 ```
 
 ![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
 
 ### LuaLaTeX
 
-[example](examples/tex/latex/main.tex):
+[A minimal example](examples/tex/latex/minimal.tex):
 
 ```tex
-\documentclass{article}
+\renewcommand\normalsize{\fontsize{10pt}{12pt}\selectfont}
 \title{main}
 \setlength\hoffset{-1in}
 \setlength\voffset{-1in}
@@ -79,9 +79,10 @@ luatex examples/tex/plain/main.tex
 \setlength\pageheight{\textheight}
 \setlength\textwidth{40mm}
 \setlength\pagewidth{\textwidth}
+\setlength\parindent{0mm}
 \begin{document}
 
-\section{Hello, \LaTeX!}
+Hello, \LaTeX!
 $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 
 \end{document}
@@ -89,10 +90,10 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 
 ```sh
 texrocks install lualatex
-lualatex examples/tex/latex/main.tex
+lualatex examples/tex/latex/minimal.tex
 ```
 
-![lualatex](https://github.com/user-attachments/assets/04037340-55ea-4cb9-98fc-46c8e50fb4dd)
+![lualatex](https://github.com/user-attachments/assets/09dd5ddb-8bac-4207-9cc5-ee61724ef7c0)
 
 LaTeX require some [required packages](https://ctan.org/pkg/required).
 You can install them by yourself.
@@ -116,7 +117,7 @@ Some packages are recommended:
 
 [More packages](https://luarocks.org/m/texmf).
 
-[A more complicated example](examples/tex/latex/test.tex):
+[A more complicated example](examples/tex/latex/graph.tex):
 
 ```tex
 \documentclass[tikz]{standalone}
