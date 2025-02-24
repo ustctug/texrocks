@@ -32,7 +32,8 @@
 
 [![luarocks](https://img.shields.io/luarocks/v/Freed-Wu/texrocks)](https://luarocks.org/modules/Freed-Wu/texrocks)
 
-A (La)TeX package manager powered by luarocks and luaTeX.
+A (La)TeX package manager powered by luarocks and luaTeX, also
+[a minimal (La)TeX distribution](https://freed-wu.github.io/2025/03/01/minimal-latex-distribution.html).
 
 ## Usage
 
@@ -114,6 +115,8 @@ Some packages are recommended:
 - [pgf](https://luarocks.org/modules/Freed-Wu/pgf): PGF/TikZ.
 - [beamer](https://luarocks.org/modules/Freed-Wu/beamer): slides.
 - [ctex](https://luarocks.org/modules/Freed-Wu/ctex): Chinese support. **bug**
+- [citation-style-language](https://luarocks.org/modules/Freed-Wu/citation-style-language):
+  use [csl](https://citationstyles.org/) for bibliography.
 
 [More packages](https://luarocks.org/m/texmf).
 
