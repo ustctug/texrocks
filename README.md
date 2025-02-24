@@ -1,36 +1,36 @@
 # texrocks
 
 [![readthedocs](https://shields.io/readthedocs/texrocks)](https://texrocks.readthedocs.io)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Freed-Wu/texrocks/main.svg)](https://results.pre-commit.ci/latest/github/Freed-Wu/texrocks/main)
-[![github/workflow](https://github.com/Freed-Wu/texrocks/actions/workflows/main.yml/badge.svg)](https://github.com/Freed-Wu/texrocks/actions)
-[![codecov](https://codecov.io/gh/Freed-Wu/texrocks/branch/main/graph/badge.svg)](https://codecov.io/gh/Freed-Wu/texrocks)
-[![DeepSource](https://deepsource.io/gh/Freed-Wu/texrocks.svg/?show_trend=true)](https://deepsource.io/gh/Freed-Wu/texrocks)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ustctug/texrocks/main.svg)](https://results.pre-commit.ci/latest/github/ustctug/texrocks/main)
+[![github/workflow](https://github.com/ustctug/texrocks/actions/workflows/main.yml/badge.svg)](https://github.com/ustctug/texrocks/actions)
+[![codecov](https://codecov.io/gh/ustctug/texrocks/branch/main/graph/badge.svg)](https://codecov.io/gh/ustctug/texrocks)
+[![DeepSource](https://deepsource.io/gh/ustctug/texrocks.svg/?show_trend=true)](https://deepsource.io/gh/ustctug/texrocks)
 
-[![github/downloads](https://shields.io/github/downloads/Freed-Wu/texrocks/total)](https://github.com/Freed-Wu/texrocks/releases)
-[![github/downloads/latest](https://shields.io/github/downloads/Freed-Wu/texrocks/latest/total)](https://github.com/Freed-Wu/texrocks/releases/latest)
-[![github/issues](https://shields.io/github/issues/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/issues)
-[![github/issues-closed](https://shields.io/github/issues-closed/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/issues?q=is%3Aissue+is%3Aclosed)
-[![github/issues-pr](https://shields.io/github/issues-pr/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/pulls)
-[![github/issues-pr-closed](https://shields.io/github/issues-pr-closed/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/pulls?q=is%3Apr+is%3Aclosed)
-[![github/discussions](https://shields.io/github/discussions/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/discussions)
-[![github/milestones](https://shields.io/github/milestones/all/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/milestones)
-[![github/forks](https://shields.io/github/forks/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/network/members)
-[![github/stars](https://shields.io/github/stars/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/stargazers)
-[![github/watchers](https://shields.io/github/watchers/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/watchers)
-[![github/contributors](https://shields.io/github/contributors/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/graphs/contributors)
-[![github/commit-activity](https://shields.io/github/commit-activity/w/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/graphs/commit-activity)
-[![github/last-commit](https://shields.io/github/last-commit/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/commits)
-[![github/release-date](https://shields.io/github/release-date/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/releases/latest)
+[![github/downloads](https://shields.io/github/downloads/ustctug/texrocks/total)](https://github.com/ustctug/texrocks/releases)
+[![github/downloads/latest](https://shields.io/github/downloads/ustctug/texrocks/latest/total)](https://github.com/ustctug/texrocks/releases/latest)
+[![github/issues](https://shields.io/github/issues/ustctug/texrocks)](https://github.com/ustctug/texrocks/issues)
+[![github/issues-closed](https://shields.io/github/issues-closed/ustctug/texrocks)](https://github.com/ustctug/texrocks/issues?q=is%3Aissue+is%3Aclosed)
+[![github/issues-pr](https://shields.io/github/issues-pr/ustctug/texrocks)](https://github.com/ustctug/texrocks/pulls)
+[![github/issues-pr-closed](https://shields.io/github/issues-pr-closed/ustctug/texrocks)](https://github.com/ustctug/texrocks/pulls?q=is%3Apr+is%3Aclosed)
+[![github/discussions](https://shields.io/github/discussions/ustctug/texrocks)](https://github.com/ustctug/texrocks/discussions)
+[![github/milestones](https://shields.io/github/milestones/all/ustctug/texrocks)](https://github.com/ustctug/texrocks/milestones)
+[![github/forks](https://shields.io/github/forks/ustctug/texrocks)](https://github.com/ustctug/texrocks/network/members)
+[![github/stars](https://shields.io/github/stars/ustctug/texrocks)](https://github.com/ustctug/texrocks/stargazers)
+[![github/watchers](https://shields.io/github/watchers/ustctug/texrocks)](https://github.com/ustctug/texrocks/watchers)
+[![github/contributors](https://shields.io/github/contributors/ustctug/texrocks)](https://github.com/ustctug/texrocks/graphs/contributors)
+[![github/commit-activity](https://shields.io/github/commit-activity/w/ustctug/texrocks)](https://github.com/ustctug/texrocks/graphs/commit-activity)
+[![github/last-commit](https://shields.io/github/last-commit/ustctug/texrocks)](https://github.com/ustctug/texrocks/commits)
+[![github/release-date](https://shields.io/github/release-date/ustctug/texrocks)](https://github.com/ustctug/texrocks/releases/latest)
 
-[![github/license](https://shields.io/github/license/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks/blob/main/LICENSE)
-[![github/languages](https://shields.io/github/languages/count/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks)
-[![github/languages/top](https://shields.io/github/languages/top/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks)
-[![github/directory-file-count](https://shields.io/github/directory-file-count/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks)
-[![github/code-size](https://shields.io/github/languages/code-size/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks)
-[![github/repo-size](https://shields.io/github/repo-size/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks)
-[![github/v](https://shields.io/github/v/release/Freed-Wu/texrocks)](https://github.com/Freed-Wu/texrocks)
+[![github/license](https://shields.io/github/license/ustctug/texrocks)](https://github.com/ustctug/texrocks/blob/main/LICENSE)
+[![github/languages](https://shields.io/github/languages/count/ustctug/texrocks)](https://github.com/ustctug/texrocks)
+[![github/languages/top](https://shields.io/github/languages/top/ustctug/texrocks)](https://github.com/ustctug/texrocks)
+[![github/directory-file-count](https://shields.io/github/directory-file-count/ustctug/texrocks)](https://github.com/ustctug/texrocks)
+[![github/code-size](https://shields.io/github/languages/code-size/ustctug/texrocks)](https://github.com/ustctug/texrocks)
+[![github/repo-size](https://shields.io/github/repo-size/ustctug/texrocks)](https://github.com/ustctug/texrocks)
+[![github/v](https://shields.io/github/v/release/ustctug/texrocks)](https://github.com/ustctug/texrocks)
 
-[![luarocks](https://img.shields.io/luarocks/v/Freed-Wu/texrocks)](https://luarocks.org/modules/Freed-Wu/texrocks)
+[![luarocks](https://img.shields.io/luarocks/v/ustctug/texrocks)](https://luarocks.org/modules/ustctug/texrocks)
 
 A (La)TeX package manager powered by luarocks and luaTeX, also
 [a minimal (La)TeX distribution](https://freed-wu.github.io/2025/03/01/minimal-latex-distribution.html).
@@ -99,23 +99,23 @@ lualatex examples/tex/latex/minimal.tex
 LaTeX require some [required packages](https://ctan.org/pkg/required).
 You can install them by yourself.
 
-- [amscls](https://luarocks.org/modules/Freed-Wu/amscls):
+- [amscls](https://luarocks.org/modules/ustctug/amscls):
   AMSLaTeX contains some documentclasses and packages for mathematics.
-- [babel-base](https://luarocks.org/modules/Freed-Wu/babel-base): multilanguages
-- [latex-cyrillic](https://luarocks.org/modules/Freed-Wu/latex-cyrillic):
+- [babel-base](https://luarocks.org/modules/ustctug/babel-base): multilanguages
+- [latex-cyrillic](https://luarocks.org/modules/ustctug/latex-cyrillic):
   cyrillic alphabet fonts.
-- [latex-graphics](https://luarocks.org/modules/Freed-Wu/latex-graphics):
+- [latex-graphics](https://luarocks.org/modules/ustctug/latex-graphics):
   graphics and colours.
 - psnfss: WIP
-- [latex-tools](https://luarocks.org/modules/Freed-Wu/latex-tools): tables.
+- [latex-tools](https://luarocks.org/modules/ustctug/latex-tools): tables.
 
 Some packages are recommended:
 
-- [hyperref](https://luarocks.org/modules/Freed-Wu/hyperref): hyperlinks.
-- [pgf](https://luarocks.org/modules/Freed-Wu/pgf): PGF/TikZ.
-- [beamer](https://luarocks.org/modules/Freed-Wu/beamer): slides.
-- [ctex](https://luarocks.org/modules/Freed-Wu/ctex): Chinese support. **bug**
-- [citation-style-language](https://luarocks.org/modules/Freed-Wu/citation-style-language):
+- [hyperref](https://luarocks.org/modules/ustctug/hyperref): hyperlinks.
+- [pgf](https://luarocks.org/modules/ustctug/pgf): PGF/TikZ.
+- [beamer](https://luarocks.org/modules/ustctug/beamer): slides.
+- [ctex](https://luarocks.org/modules/ustctug/ctex): Chinese support. **bug**
+- [citation-style-language](https://luarocks.org/modules/ustctug/citation-style-language):
   use [csl](https://citationstyles.org/) for bibliography.
 
 [More packages](https://luarocks.org/m/texmf).
@@ -178,7 +178,7 @@ texrocks install texdoc
 
 Note, texdoc need a tlpdb database.
 Download
-[it](https://github.com/Freed-Wu/texrocks/releases/download/0.0.1/Data.tlpdb.lua)
+[it](https://github.com/ustctug/texrocks/releases/download/0.0.1/Data.tlpdb.lua)
 to `~/.local/share/texmf/texdoc/Data.tlpdb.lua`.
 Then create `~/.local/share/texmf/texdoc/texdoc.cnf`:
 
