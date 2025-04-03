@@ -114,40 +114,9 @@ function M.sync_luatex_map()
     f:close()
 end
 
----https://github.com/luarocks/luarocks/discussions/1737
-function M.fix()
-    cfg.init()
-    cfg.root_dir = cfg.root_dir or cfg.rocks_trees[1].root
-    local target_bin_dir = cfg.root_dir .. '/bin'
-    for _, path in ipairs(get_rock_paths()) do
-        local bin_dir = path .. '/bin'
-        if lfs.isdir(bin_dir) then
-            for bin_name in lfs.dir(bin_dir) do
-                local bin = bin_dir .. '/' .. bin_name
-                if lfs.isfile(bin) then
-                    local f = io.open(bin)
-                    if f then
-                        local shebang = '#!/usr/bin/env texlua'
-                        local first = f:read(#shebang)
-                        f:close()
-                        if first == shebang then
-                            local target_bin = target_bin_dir .. '/' .. bin_name
-                            if lfs.isfile(target_bin) then
-                                os.remove(target_bin)
-                            end
-                            lfs.link(bin, target_bin, true)
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
-
 function M.sync()
     M.sync_texmf_cnf()
     M.sync_luatex_map()
-    M.fix()
 end
 
 return M
