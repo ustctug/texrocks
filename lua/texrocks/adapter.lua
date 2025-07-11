@@ -1,6 +1,4 @@
 local M         = {}
-local config    = require "texrocks.config"
-local state     = require "texrocks.state"
 local constants = require "texrocks.constants"
 local lfs       = require "lfs"
 local gmatch    = string.gmatch
@@ -17,44 +15,6 @@ if not lfs.mkdirp then
         end
         return r1, r2, r3
     end
-end
-
-local function get_rock_dir(rock)
-    return table.concat({ config.rocks_path, "lib", "luarocks", "rocks-" .. constants.LUA_VERSION, rock.name }, "/")
-end
-
-local function get_rock_path(rock)
-    local rock_dir = get_rock_dir(rock)
-    for file in lfs.dir(rock_dir) do
-        -- ignore hidden files
-        if file:sub(1, 1) ~= '.' then
-            local path = table.concat({ rock_dir, file }, "/")
-            if lfs.attributes(path).mode == 'directory' then
-                return path
-            end
-        end
-    end
-    return ""
-end
-
-local function get_rock_paths()
-    local paths = {}
-    for _, rock in pairs(state.installed_rocks()) do
-        table.insert(paths, get_rock_path(rock))
-    end
-    return paths
-end
-
-function M.sync_texmf_cnf()
-    local web2c = os.getenv('HOME') .. '/.local/share/texmf/web2c'
-    lfs.mkdirp(web2c)
-    local f = io.open(web2c .. '/texmf.cnf', 'w')
-    if f == nil then
-        return
-    end
-    local str = string.format(constants.texmf_cnf, table.concat(get_rock_paths(), ','))
-    f:write(str)
-    f:close()
 end
 
 function M.sync_luatex_map()

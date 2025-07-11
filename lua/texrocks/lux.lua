@@ -1,22 +1,13 @@
 --- https://github.com/luarocks/luarocks/issues/747
-local config = require('texrocks.config')
 local constants = require('texrocks.constants')
 local M = {}
-
-if os.setenv == nil then
-    function os.setenv(_key, _value)
-    end
-end
 
 function M.cli(args)
     -- luacheck: ignore 143
     ---@diagnostic disable: undefined-field
-    os.setenv('LUAROCKS_CONFIG', config.luarocks_config_path)
     local luarocks_cmd = {
-        config.luarocks_binary,
-        "--force-lock",
+        "lx",
         "--lua-version=" .. constants.LUA_VERSION,
-        "--tree=" .. config.rocks_path,
     }
     for _, arg in ipairs(args) do
         table.insert(luarocks_cmd, arg)
@@ -29,7 +20,6 @@ function M.cli(args)
         end
         f:close()
     end
-    os.setenv('LUAROCKS_CONFIG', nil)
     return lines
 end
 

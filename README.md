@@ -37,18 +37,18 @@ A (La)TeX package manager powered by luarocks and luaTeX, also
 
 ## Install
 
-## Package manager
-
-[lux-cli](https://github.com/nvim-neorocks/lux) is a new lua package manager.
-We recommend to use it to manage all packages related to LuaTeX. Make sure you
-have lux-cli > 0.8.2.
-
-## Lua interpreter
-
-LuaTeX provide a lua 5.3 interpreter.
+texrocks uses texlua as lua interpreter and
+[lux-cli](https://github.com/nvim-neorocks/lux) > 0.8.2 as package manager.
+You can install texlua by:
 
 ```sh
 lx --lua-version=5.3 install texlua
+```
+
+After installing texlua,
+
+```sh
+lx --lua-version=5.3 install texrocks
 ```
 
 ## Usage
