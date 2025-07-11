@@ -1,0 +1,2 @@
+#!/usr/bin/env -S lx --lua-version=5.3 lua --lua=texlua --no-loader --
+require 'texrocks.cmd'.main()

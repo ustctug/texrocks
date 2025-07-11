@@ -1,0 +1,12 @@
+@hoffset-1in
+@voffset-1in
+@node Top
+@top Example
+
+@node First Chapter
+@nodedescription The first chapter is the only chapter in this sample.
+@chapter Hello, @TeX{info}
+
+@cindex chapter, first
+This is the first chapter.
+@bye
