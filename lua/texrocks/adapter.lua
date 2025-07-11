@@ -100,6 +100,11 @@ function M.setenv()
     os.setenv("LUAINPUTS", M.getenv(package.path, ""))
     os.setenv("CLUAINPUTS", M.getenv(package.cpath, ""))
     os.setenv("TEXINPUTS", M.getenv(package.path, "tex"))
+
+    os.setenv("TEXMFCNF", "$TEXMFDOTDIR")
+    os.setenv("TEXFONTMAPS", "$TEXMFDOTDIR")
+    os.setenv("TEXFORMATS", M.getenv(package.path, "web2c"))
+    os.setenv("TFMFONTS", M.getenv(package.path, "fonts/tfm"))
 end
 
 function M.run(args)

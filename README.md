@@ -37,15 +37,28 @@ A (La)TeX package manager powered by luarocks and luaTeX, also
 
 ## Install
 
-texrocks uses texlua as lua interpreter and
-[lux-cli](https://github.com/nvim-neorocks/lux) > 0.8.2 as package manager.
-You can install texlua by:
+texrocks uses
+
+- [lx](https://github.com/nvim-neorocks/lux) >= 0.8.2 as package manager,
+
+```sh
+cargo install lux-cli
+# For ArchLinux
+paru -S lux-cli
+# For NixOS
+nix-env -iA nixos.lux-cli
+```
+
+- texlua as lua interpreter, contained in mostly TeX distribution like TeXLive and MikTeX.
+  However, you can install it standalone by:
 
 ```sh
 lx --lua-version=5.3 install texlua
+# For ArchLinux
+paru -S texlua
 ```
 
-After installing texlua,
+Then you can:
 
 ```sh
 lx --lua-version=5.3 install texrocks

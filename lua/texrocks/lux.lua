@@ -1,18 +1,16 @@
---- https://github.com/luarocks/luarocks/issues/747
 local constants = require('texrocks.constants')
 local M = {}
 
 function M.cli(args)
-    -- luacheck: ignore 143
-    ---@diagnostic disable: undefined-field
-    local luarocks_cmd = {
+    local cmdargs = {
         "lx",
         "--lua-version=" .. constants.LUA_VERSION,
+        "--dev",
     }
     for _, arg in ipairs(args) do
-        table.insert(luarocks_cmd, arg)
+        table.insert(cmdargs, arg)
     end
-    local f = io.popen(table.concat(luarocks_cmd, ' '))
+    local f = io.popen(table.concat(cmdargs, ' '))
     local lines = {}
     if f then
         for line in f:lines() do
