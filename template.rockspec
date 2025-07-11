@@ -16,7 +16,7 @@ description = {
   $license
 }
 
-dependencies = { "argparse", "luarocks" }
+dependencies = { "argparse" }
 
 test_dependencies = $test_dependencies
 

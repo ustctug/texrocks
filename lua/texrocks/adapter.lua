@@ -1,11 +1,9 @@
-local M             = {}
-local config        = require "texrocks.config"
-local state         = require "texrocks.state"
-local constants     = require "texrocks.constants"
-local cfg           = require "luarocks.core.cfg"
-local lfs           = require "lfs"
-local lfsattributes = lfs.attributes
-local gmatch        = string.gmatch
+local M         = {}
+local config    = require "texrocks.config"
+local state     = require "texrocks.state"
+local constants = require "texrocks.constants"
+local lfs       = require "lfs"
+local gmatch    = string.gmatch
 
 -- FIXME: don't know why luahbtex miss it
 -- copied from luatex/source/texk/web2c/luatexdir/lua/luatex-core.lua
@@ -18,20 +16,6 @@ if not lfs.mkdirp then
             r1, r2, r3 = lfs.mkdir(full)
         end
         return r1, r2, r3
-    end
-end
-
-if not lfs.isfile then
-    function lfs.isfile(name)
-        local m = lfsattributes(name, "mode")
-        return m == "file" or m == "link"
-    end
-end
-
-if not lfs.isdir then
-    function lfs.isdir(name)
-        local m = lfsattributes(name, "mode")
-        return m == "directory"
     end
 end
 
@@ -117,6 +101,78 @@ end
 function M.sync()
     M.sync_texmf_cnf()
     M.sync_luatex_map()
+end
+
+function M.getenv(path, suffix)
+    local parts = {}
+    for part in string.gmatch(path, "([^;]+)") do
+        table.insert(parts, part)
+    end
+    local processed = {}
+    local seen = {}
+    for _, part in ipairs(parts) do
+        local cleaned = part:gsub("/%?%.lua$", ""):gsub("/%?/init%.lua$", "")
+        if not seen[cleaned] and cleaned ~= "" then
+            if suffix ~= "" then
+                -- https://nvim-neorocks.github.io/explanations/lux-package-conflicts/#the-problem
+                local root = cleaned:gsub("/src$", "")
+                if root == suffix then
+                    cleand = ""
+                else
+                    cleaned = root .. '/etc/' .. suffix
+                    if lfs.isdir(cleaned) then
+                        cleaned = cleaned .. "//"
+                    else
+                        cleaned = ""
+                    end
+                end
+            end
+            if cleaned ~= "" then
+                table.insert(processed, cleaned)
+                seen[cleaned] = true
+            end
+        end
+    end
+    return table.concat(processed, ";")
+end
+
+function M.setenv()
+    os.setenv("LUAINPUTS", M.getenv(package.path, ""))
+    os.setenv("CLUAINPUTS", M.getenv(package.cpath, ""))
+    os.setenv("TEXINPUTS", M.getenv(package.path, "tex"))
+end
+
+function M.run(args)
+    M.setenv()
+    local p = io.popen(table.concat(args, ' '))
+    if p then
+        print(p:read "*a")
+        p:close()
+    end
+end
+
+function M.dump(fmt)
+    M.setenv()
+    local p = io.popen(table.concat({ "which", arg[ -1] }, ' '))
+    local bin = p:read("*a"):gsub("\n$", "")
+    p:close()
+    local exe = fmt
+    if bin:gsub("%.exe$", '') ~= bin then
+        exe = exe .. ".exe"
+    end
+    p = io.popen(table.concat({ "cp", bin, exe }, ' '))
+    p:close()
+    local cmdargs = {
+        './' .. fmt,
+        '--ini',
+        "--interaction=nonstopmode",
+        fmt .. ".ini"
+    }
+    p = io.popen(table.concat(cmdargs, ' '))
+    if p then
+        print(p:read "*a")
+        p:close()
+    end
 end
 
 return M

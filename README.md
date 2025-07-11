@@ -35,6 +35,22 @@
 A (La)TeX package manager powered by luarocks and luaTeX, also
 [a minimal (La)TeX distribution](https://freed-wu.github.io/2025/03/01/minimal-latex-distribution.html).
 
+## Install
+
+## Package manager
+
+[lux-cli](https://github.com/nvim-neorocks/lux) is a new lua package manager.
+We recommend to use it to manage all packages related to LuaTeX. Make sure you
+have lux-cli > 0.8.2.
+
+## Lua interpreter
+
+LuaTeX provide a lua 5.3 interpreter.
+
+```sh
+lx --lua-version=5.3 install texlua
+```
+
 ## Usage
 
 ### LuaTeX
