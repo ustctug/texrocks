@@ -1,3 +1,2 @@
 #!/usr/bin/env texlua
-kpse.set_program_name(arg[-1])
 require 'texrocks.cmd'.main()
