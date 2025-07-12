@@ -17,7 +17,12 @@ if not lfs.mkdirp then
     end
 end
 
-function M.sync()
+function M.sync(short)
+    local f = io.open(constants.fontmap_name, 'w')
+    if f == nil then
+        print("fail to generate " .. constants.fontmap_name)
+        return
+    end
     local fonts = {}
 
     local function walk(path)
@@ -36,30 +41,25 @@ function M.sync()
         end
     end
 
-    -- TODO: empty function
-    for _, path in ipairs(get_rock_paths()) do
-        local type1_dir = path .. '/fonts/'
-        if lfs.isdir(type1_dir) then
-            walk(type1_dir)
-        end
+    for _, path in ipairs(M.getpaths(package.path, "fonts")) do
+        walk(path:gsub("//$", ""))
     end
     local lines = {}
     for _, font in ipairs(fonts) do
-        local name = font:gsub(".*/", ''):gsub("%..*", '')
-        table.insert(lines, string.format("%s %s <%s", name, name:upper(), font))
+        local basename = font:gsub(".*/", '')
+        local name = basename:gsub("%..*", '')
+        local path = font
+        if short then
+            path = basename
+        end
+        table.insert(lines, string.format("%s %s <%s", name, name:upper(), path))
     end
-    local map_dir = os.getenv('HOME') .. '/.local/share/texmf/fonts/map'
-    lfs.mkdirp(map_dir)
-    local f = io.open(map_dir .. '/luatex.map', 'w')
-    if f == nil then
-        return
-    end
-    local str = string.format(constants.luatex_map, table.concat(lines, "\n"))
+    local str = string.format(constants.fontmap, table.concat(lines, "\n"))
     f:write(str)
     f:close()
 end
 
-function M.getenv(path, suffix)
+function M.getpaths(path, suffix)
     local parts = {}
     for part in string.gmatch(path, "([^;]+)") do
         table.insert(parts, part)
@@ -67,8 +67,9 @@ function M.getenv(path, suffix)
     local processed = {}
     local seen = {}
     for _, part in ipairs(parts) do
-        local cleaned = part:gsub("/%?%.lua$", ""):gsub("/%?/init%.lua$", "")
-        if not seen[cleaned] and cleaned ~= "" then
+        local cleaned = part:gsub("/%?/init%.lua$", ""):gsub("/%?%.lua$", "")
+        if seen[cleaned] == nil then
+            local old = cleaned
             if suffix ~= "" then
                 -- https://nvim-neorocks.github.io/explanations/lux-package-conflicts/#the-problem
                 local root = cleaned:gsub("/src$", "")
@@ -85,34 +86,95 @@ function M.getenv(path, suffix)
             end
             if cleaned ~= "" then
                 table.insert(processed, cleaned)
-                seen[cleaned] = true
+                seen[old] = true
             end
         end
     end
+    return processed
+end
+
+function M.getenv(path, suffix)
+    local processed = M.getpaths(path, suffix)
     return table.concat(processed, ";")
 end
 
-function M.setenv()
-    os.setenv("LUAINPUTS", M.getenv(package.path, ""))
-    os.setenv("CLUAINPUTS", M.getenv(package.cpath, ""))
-    os.setenv("TEXINPUTS", M.getenv(package.path, "tex"))
-
-    -- some tex packages like hyperref support config file such as hyperref.cfg
-    os.setenv("TEXMF", "$TEXMFDOTDIR;~/.config/texmf")
-    -- create ./texmf.cnf to override
-    os.setenv("TEXMFCNF", "$TEXMFDOTDIR")
-    os.setenv("TEXFONTMAPS", "$TEXMFDOTDIR")
-    os.setenv("TEXFORMATS", M.getenv(package.path, "web2c"))
-    os.setenv("TFMFONTS", M.getenv(package.path, "fonts/tfm"))
-    os.setenv("T1FONTS", M.getenv(package.path, "fonts/type1"))
+function M.setenv(key, value)
+    if os.getenv(key) == nil then
+        os.setenv(key, value)
+    end
 end
 
-function M.run(args)
-    M.setenv()
-    local p = io.popen(table.concat(args, ' '))
-    if p then
-        print(p:read "*a")
-        p:close()
+function M.setfontenv(key, value)
+    os.setenv(key,
+        "$TEXMFDOTDIR/fonts/" .. value .. ";" .. M.getenv(package.path, "fonts/" .. value) .. ";" .. M.OSFONTDIR)
+end
+
+if os.type == "windows" then
+    M.OSFONTDIR = "C:/Windows/System32/Fonts"
+elseif os.type == "unix" then
+    if os.getenv "XDG_DATA_DIRS" ~= nil then
+        M.OSFONTDIR = "{" .. os.getenv("XDG_DATA_DIRS"):gsub(":", ",") .. "}/share/fonts//"
+    else
+        local prefixes = { "/usr" }
+        if os.getenv "PREFIX" ~= nil then
+            prefixes = { os.getenv "PREFIX" }
+        elseif os.name ~= "cygwin" then
+            table.insert(prefixes, "/usr/local")
+        elseif os.getenv "MINGW_PREFIX" ~= nil then
+            table.insert(prefixes, os.getenv "MINGW_PREFIX")
+        end
+        M.OSFONTDIR = "{" .. table.concat(prefixes, ",") .. "}/share/fonts//"
+    end
+end
+if os.name == "macosx" then
+    M.OSFONTDIR = M.OSFONTDIR .. ";{/System,}/Library/Fonts//"
+elseif os.name == "cygwin" then
+    M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
+end
+
+function M.setenvs()
+    M.setenv("TEXMFDOTDIR", ".")
+    -- https://wiki.archlinux.org/title/XDG_Base_Directory#Partial
+    M.setenv("XDG_CONFIG_HOME", "~/.config")
+    M.setenv("XDG_DATA_HOME", "~/.local/share")
+    M.setenv("XDG_CACHE_HOME", "~/.cache")
+    -- some tex packages like hyperref support config file such as hyperref.cfg
+    M.setenv("TEXMFCONFIG", "$XDG_CONFIG_HOME/texmf")
+    M.setenv("TEXMFHOME", "$XDG_DATA_HOME/texmf")
+    M.setenv("TEXMFVAR", "$XDG_CACHE_HOME/texmf")
+    -- project setting > config > data > cache
+    -- create ./*.cnf to override
+    os.setenv("TEXMF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
+    -- create ./texmf.cnf to override
+    os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
+
+    os.setenv("LUAINPUTS", "$TEXMFDOTDIR/lua;" .. M.getenv(package.path, ""))
+    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR/lib;" .. M.getenv(package.cpath, ""))
+    os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
+
+    os.setenv("TEXFONTMAPS", "$TEXMFDOTDIR")
+    os.setenv("TEXFORMATS", "$TEXMFDOTDIR/web2c;" .. M.getenv(package.path, "web2c"))
+    -- font metrics
+    M.setfontenv("TFMFONTS", "tfm")
+    M.setfontenv("OFMFONTS", "ofm")
+    -- luatex
+    M.setfontenv("T1FONTS", "type1")
+    M.setfontenv("OVFFONTS", "ovf")
+    M.setfontenv("VFFONTS", "vf")
+    -- luahbtex
+    M.setfontenv("TTFONTS", "truetype")
+    M.setfontenv("OPENTYPEFONTS", "opentype")
+end
+
+function M.run(args, short)
+    M.setenvs()
+    M.sync(short)
+    if #args > 0 then
+        local p = io.popen(table.concat(args, ' '))
+        if p then
+            print(p:read "*a")
+            p:close()
+        end
     end
 end
 
@@ -131,7 +193,7 @@ function M.cp(src, dst)
 end
 
 function M.dump(fmt)
-    M.setenv()
+    M.setenvs()
 
     local p = io.popen(table.concat({ "which", arg[ -1] }, ' '))
     local bin
@@ -156,7 +218,7 @@ function M.dump(fmt)
 
     if not lfs.isfile(fmt .. '.fmt') then
         local cmdargs = {
-            './' .. fmt,
+            './' .. exe,
             '--ini',
             "--interaction=nonstopmode",
             fmt .. ".ini"
@@ -168,6 +230,21 @@ function M.dump(fmt)
         end
     else
         print('skip building ' .. fmt .. '.fmt')
+    end
+
+    local wrapper = exe:gsub("^lua", "")
+    if wrapper == exe then
+        return
+    end
+    if not lfs.isfile(wrapper) then
+        local f = io.open(wrapper, "w")
+        if f then
+            local str = string.format(constants.wrapper, fmt)
+            f:write(str)
+            f:close()
+        end
+    else
+        print('skip building ' .. exe)
     end
 end
 

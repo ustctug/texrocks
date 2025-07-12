@@ -72,7 +72,7 @@ lx --lua-version=5.3 install texrocks
 
 ## TeX Dialects
 
-### LuaTeX
+### PlainTeX
 
 [A minimal example](examples/tex/plain/minimal.tex):
 
@@ -93,12 +93,12 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 
 ```sh
 texrocks install luatex
-luatex examples/tex/plain/minimal.tex
+tex examples/tex/plain/minimal.tex
 ```
 
 ![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
 
-### LuaLaTeX
+### LaTeX
 
 [A minimal example](examples/tex/latex/minimal.tex):
 
@@ -126,7 +126,7 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 
 ```sh
 texrocks install lualatex
-lualatex examples/tex/latex/minimal.tex
+latex examples/tex/latex/minimal.tex
 ```
 
 ![lualatex](https://github.com/user-attachments/assets/09dd5ddb-8bac-4207-9cc5-ee61724ef7c0)

@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "dependencies": {
+    "rocks": {
+      "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
+        "name": "argparse",
+        "version": "0.7.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/luarocks/argparse/archive/0.7.1.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-6EUIYsWhm29xlL8arP/3DQoRj/1CYWxs/J8+gz9T0YQ=",
+          "source": "sha256-AJ8n6HTxqHPeQd0NKHiyQLzZ63+ebDsO1uP+0f0vYUE="
+        }
+      },
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f": {
+        "name": "amsfonts",
+        "version": "scm-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==scm",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/dev/",
+        "source_url": {
+          "type": "url",
+          "url": "https://mirrors.ctan.org/install/fonts/amsfonts.tds.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-gKjKbCHSHVuzgw/CCvG5BA5vnW/5OscMCwvbRZHwn1o=",
+          "source": "sha256-3XY8qJtxLQlulSykPDtgQJv8oXTwTFdD2mhGjQY/57Y="
+        }
+      },
+      "f9b1a1c6b26b108a6b49d0c141f50f6e070b28279826e0376c09d01c083e44a4": {
+        "name": "texrocks",
+        "version": "0.0.13-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.0.13",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.0.13.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-uAj9RZMfPXGwpYotrpuC+pjUm8oIypntM40KcNthu8M=",
+          "source": "sha256-4QrrDoAS3yxEtO5K83ByL92hUPzFHOLgrg7spiUHwh8="
+        }
+      }
+    },
+    "entrypoints": [
+      "f9b1a1c6b26b108a6b49d0c141f50f6e070b28279826e0376c09d01c083e44a4",
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f"
+    ]
+  }
+}
