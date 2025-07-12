@@ -182,8 +182,8 @@ and publish them to luarocks.org.
 ### PlainTeX
 
 PlainTeX is the first and simplest TeX Dialect. Original TeX compiler only
-supports 256 registers which is PlainTeX used. LuaTeX supports 65536 however
-PlainTeX cannot use them.
+supports 256 registers used by PlainTeX. LuaTeX supports 65536 however PlainTeX
+cannot use them.
 
 [A minimal example](examples/tex/plain/minimal.tex):
 

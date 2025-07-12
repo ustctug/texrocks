@@ -9,7 +9,7 @@ labels = ["texmf"]
 license = "GPL-3.0"
 
 [dependencies]
-texrocks = "0.0.13-1"
+texrocks = "==0.1.0"
 texinfo = "7.2-2"
 knuth-lib = "scm-1"
 amsfonts = "scm-1"

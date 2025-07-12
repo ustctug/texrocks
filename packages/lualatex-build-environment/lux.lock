@@ -44,6 +44,28 @@
           "source": "sha256-MJ6S2OqTIRW1d1pBjw70rjc9CI7v1wzyXVh1dkfJkBs="
         }
       },
+      "2d89fb8c51b7d3f12d4c3e644141dab3297fba1e7013101448cdc50e67c185fa": {
+        "name": "texrocks",
+        "version": "0.1.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.1.0",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.1.0.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-HfMwBTd44Rg5ZmJScBCL+BhMDpJB1so522wp1lWCZ7w=",
+          "source": "sha256-HNnTQ4RzCfvY5ZQZZxeSHEHXU9p5WpwglET6udXBJBo="
+        }
+      },
       "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
         "name": "argparse",
         "version": "0.7.1-1",
@@ -55,11 +77,11 @@
         "source": "luarocks_rockspec+https://luarocks.org/",
         "source_url": {
           "type": "url",
-          "url": "https://github.com/luarocks/argparse/archive/0.7.1.zip"
+          "url": "https://luarocks.org/argparse-0.7.1-1.src.rock"
         },
         "hashes": {
           "rockspec": "sha256-6EUIYsWhm29xlL8arP/3DQoRj/1CYWxs/J8+gz9T0YQ=",
-          "source": "sha256-AJ8n6HTxqHPeQd0NKHiyQLzZ63+ebDsO1uP+0f0vYUE="
+          "source": "sha256-6jDQZDWGogrrY0nKjLfbY678IdmqAHx7cWinxWSBeHk="
         }
       },
       "3bcfe10c107187a4d92345afd6c3aa4fc86f7cfbffe53558d557900126c4c0c0": {
@@ -231,28 +253,6 @@
           "source": "sha256-TnMkDEA3ZDp+98NTvt1KEM8OGA2FHFTx5o/aQ5fzOTY="
         }
       },
-      "f9b1a1c6b26b108a6b49d0c141f50f6e070b28279826e0376c09d01c083e44a4": {
-        "name": "texrocks",
-        "version": "0.0.13-1",
-        "pinned": false,
-        "opt": false,
-        "dependencies": [
-          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
-        ],
-        "constraint": "==0.0.13",
-        "binaries": [
-          "texrocks"
-        ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
-        "source_url": {
-          "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.0.13.zip"
-        },
-        "hashes": {
-          "rockspec": "sha256-uAj9RZMfPXGwpYotrpuC+pjUm8oIypntM40KcNthu8M=",
-          "source": "sha256-4QrrDoAS3yxEtO5K83ByL92hUPzFHOLgrg7spiUHwh8="
-        }
-      },
       "fa22baa077dca8c903ec9c141321eb0a5b4dd25034e6b70ca3e67c6930112af4": {
         "name": "unicode-data",
         "version": "1.18-1",
@@ -273,11 +273,11 @@
       }
     },
     "entrypoints": [
-      "f9b1a1c6b26b108a6b49d0c141f50f6e070b28279826e0376c09d01c083e44a4",
       "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f",
       "c71a00bc13f4acf8de9de1b4b2d48c02c93eb7bbc4a40ff481e06d537f83808f",
       "1a043a1a092206fb664a8dd394bdf99e526af762fe7282c6ccf49bc0ec23521e",
-      "896583adf76f60854c81cf6097f46697962dd28b6b3b5312cf25c9bd39baf560"
+      "896583adf76f60854c81cf6097f46697962dd28b6b3b5312cf25c9bd39baf560",
+      "2d89fb8c51b7d3f12d4c3e644141dab3297fba1e7013101448cdc50e67c185fa"
     ]
   }
 }

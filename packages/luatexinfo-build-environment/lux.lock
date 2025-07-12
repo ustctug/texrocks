@@ -41,6 +41,28 @@
           "source": "sha256-tFN0DXJDsWJPsP/i61cfv5lOLegN/io1Bww4CBrGycU="
         }
       },
+      "2d89fb8c51b7d3f12d4c3e644141dab3297fba1e7013101448cdc50e67c185fa": {
+        "name": "texrocks",
+        "version": "0.1.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.1.0",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.1.0.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-HfMwBTd44Rg5ZmJScBCL+BhMDpJB1so522wp1lWCZ7w=",
+          "source": "sha256-HNnTQ4RzCfvY5ZQZZxeSHEHXU9p5WpwglET6udXBJBo="
+        }
+      },
       "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
         "name": "argparse",
         "version": "0.7.1-1",
@@ -95,28 +117,6 @@
           "source": "sha256-nA+Z+jTH2AHED2tf9gvCjyAOjvb/sv515UyoNcZ/wEw="
         }
       },
-      "f9b1a1c6b26b108a6b49d0c141f50f6e070b28279826e0376c09d01c083e44a4": {
-        "name": "texrocks",
-        "version": "0.0.13-1",
-        "pinned": false,
-        "opt": false,
-        "dependencies": [
-          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
-        ],
-        "constraint": "==0.0.13",
-        "binaries": [
-          "texrocks"
-        ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
-        "source_url": {
-          "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.0.13.zip"
-        },
-        "hashes": {
-          "rockspec": "sha256-uAj9RZMfPXGwpYotrpuC+pjUm8oIypntM40KcNthu8M=",
-          "source": "sha256-4QrrDoAS3yxEtO5K83ByL92hUPzFHOLgrg7spiUHwh8="
-        }
-      },
       "fe78afa180595ef4fa6e0e6c3796081897f1dbe3d65f1ace70e32ca5a58d6bd2": {
         "name": "texinfo",
         "version": "7.2-2",
@@ -137,10 +137,10 @@
       }
     },
     "entrypoints": [
-      "f9b1a1c6b26b108a6b49d0c141f50f6e070b28279826e0376c09d01c083e44a4",
       "fe78afa180595ef4fa6e0e6c3796081897f1dbe3d65f1ace70e32ca5a58d6bd2",
       "21ad14b3b7260790a3cea09a009cb28f6b15ba4e30ad6ada4cf47ccda27cdb35",
-      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f"
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f",
+      "2d89fb8c51b7d3f12d4c3e644141dab3297fba1e7013101448cdc50e67c185fa"
     ]
   }
 }
