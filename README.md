@@ -95,6 +95,9 @@ tex main.tex
 texrocks luatex main.tex
 ```
 
+If you don't pass any argument, `texrocks` will start a shell where you can
+call `luatex`/`lualatex`/... directly.
+
 If you don't like virtual environment, just install these packages to system.
 
 ```sh

@@ -185,12 +185,13 @@ end
 function M.run(args, short)
     M.setenvs()
     M.sync(short)
-    if #args > 0 then
-        local p = io.popen(table.concat(args, ' '))
-        if p then
-            print(p:read "*a")
-            p:close()
-        end
+    if #args == 0 then
+        args = { os.getenv "SHELL" or os.getenv "ComSpec" or "sh" }
+    end
+    local p = io.popen(table.concat(args, ' '))
+    if p then
+        print(p:read "*a")
+        p:close()
     end
 end
 
