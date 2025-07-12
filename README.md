@@ -60,7 +60,7 @@ luatex main.tex
 
 It will fail, because luatex doesn't know where is
 `your-needed-luatex-package1.sty` in `\usepackage{your-needed-luatex-package1}`
-and `your-needed-luatex-package1.lua` in `\directlua{your-needed-luatex-package1}`.
+and `your-needed-luatex-package1.lua` in `\directlua{require"your-needed-luatex-package1"}`.
 So you try:
 
 ```sh
