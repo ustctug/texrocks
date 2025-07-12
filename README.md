@@ -53,7 +53,7 @@ luatex main.tex
 ```
 
 It will fail, because luatex doesn't know where is
-`your-needed-luatex-package1.sty` in `usepackage{your-needed-luatex-package1}`
+`your-needed-luatex-package1.sty` in `\usepackage{your-needed-luatex-package1}`
 and `your-needed-luatex-package1.lua` in `\directlua{your-needed-luatex-package1}`.
 So you try:
 
@@ -64,7 +64,8 @@ lx --lua-version 5.3 lua --lua=luatex -- main.tex
 `lx` will add lua paths of `your-needed-luatex-package1` and
 `you-loved-luatex-package2` to `$LUA_PATH` and `$CLUA_PATH`.
 lua recognize these variables to set `package.path` and `package.cpath`.
-Any `require"package_name"` will search `package.path` and `package.cpath`.
+Any `require"package_name"` will search `package_name.lua` in `package.path` and
+`package.cpath`.
 
 However, luatex is not a standard lua. it recognizes `$LUAINPUTS` and
 `$CLUAINPUTS` for lua files. so we must modify `package.path` and
@@ -153,9 +154,18 @@ Then you can:
 lx --lua-version=5.3 install texrocks
 ```
 
+Now you can use `lx` to install TeX dialects written in TeX and TeX tools written
+in lua from [luarocks.org](https://luarocks.org/). See
+[packages](packages/README.md) to know how to package missing LuaTeX packages
+and publish them to luarocks.org.
+
 ## TeX Dialects
 
 ### PlainTeX
+
+PlainTeX is the first and simplest TeX Dialect. Original TeX interpreter only
+supports 256 registers which is PlainTeX used. LuaTeX support 65536 however
+PlainTeX cannot use it.
 
 [A minimal example](examples/tex/plain/minimal.tex):
 
@@ -182,6 +192,9 @@ tex examples/tex/plain/minimal.tex
 ![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
 
 ### LaTeX
+
+LaTeX is the most popular TeX Dialect. It can use all LuaTeX registers, which
+means you can create a bigger document than PlainTeX.
 
 [A minimal example](examples/tex/latex/minimal.tex):
 
@@ -261,6 +274,12 @@ Some packages are recommended:
 
 ### TeXinfo
 
+TeXinfo is a TeX dialect designed by GNU. It uses `@` to start a control sequence,
+which is different from other TeX dialects. GNU also create some perl programs
+to convert texinfo to `info`, `HTML`, ..., while other TeX dialects doesn't have
+good support for outputting HTML like [TeX4ht](https://tug.org/tex4ht/) for
+PlainTeX/LaTex/ConTeXt.
+
 [A minimal example](examples/tex/texinfo/minimal.tex):
 
 ```texinfo
@@ -288,13 +307,16 @@ magick convert minimal-1.png -crop 50%x10% minimal.png
 
 ![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)
 
-### Create your TeX dialect
+### ConTeXt
 
-See [packages](packages/README.md)
+TODO
 
-## Tools Related to TeX
+## TeX Tools
 
 ### texdoc
+
+`texdoc` is a tool to search document of any TeX package developed by TeX Live
+team.
 
 ```sh
 lx --lua-version=5.3 --dev install texdoc
@@ -327,11 +349,15 @@ Would you like to search online? (y/N) y
 
 ### l3build
 
+`l3build` is a tool to build TeX packages developed by LaTeX 3 team.
+
 ```sh
 lx --lua-version=5.3 install l3build
 ```
 
 ### luafindfont
+
+`l3build` is a simple tool to search fonts.
 
 ```sh
 lx --lua-version=5.3 --dev install luafindfont
@@ -339,78 +365,14 @@ lx --lua-version=5.3 --dev install luafindfont
 
 ### texluap
 
-Sometimes you need a REPL to debug luatex. you can refer
-[texluap](https://github.com/wakatime/prompt-style.lua#luatex):
+Sometimes you need a REPL to debug luatex.
+[texluap](https://github.com/wakatime/prompt-style.lua#luatex) do it:
 
 ```sh
 lx --lua-version=5.3 install prompt-style
 # For ArchLinux
 paru -S lua53-prompt-style texlua
 ```
-
-## Package
-
-### Version
-
-Github release can tag version while CTAN cannot. Such as:
-
-- <https://github.com/latex3/latex2e/releases/download/release-2024-11-01-PL2/latex-graphics.tds.zip>
-  is for version 2024-11-01, we package it to 2024.11.01-1
-- <http://mirrors.ctan.org/install/macros/latex/contrib/hyperref.tds.zip>
-  is for latest version. we package it to scm-1
-
-### Formats
-
-TeX packages have two formats:
-
-- source package `*-ctan.zip`, like:
-  - lua: `*.src.rock`
-  - python : sdist `*.tar.gz`
-- binary package `*.tds.zip`, like:
-  - lua: `*.any.rock`, `*.win-x86_64.rock`
-  - python: `*-any.whl`, `*-win_amd64.whl`
-
-Like converting typescript to javascript, we need convert `*-ctan.zip`'s `*.dts`
-and `*.ins` to `*.tds.zip`'s `*.cls` and `*.sty`. We package `*.tds.zip` to skip
-converting, like `npmjs.org` packages only contain `*.js` not `*.ts`.
-
-We repackage `*.tds.zip` to `*.src.rock` in order to upload them to luarocks.org.
-
-### Dependencies
-
-`*.tds.zip` doesn't have meta information about packages. when we create
-`*.rockspec`, we need to add it from [CTAN](https://ctan.org/).
-
-CTAN doesn't provide dependence information. You need search it. e.g.,
-
-`tex/latex/base/ltnews.cls`:
-
-```tex
-% ...
-\IfFileExists{hyperref.sty}{%
-  \RequirePackage[hidelinks]{hyperref}}{}
-% ...
-```
-
-`hyperref` is an optional dependency of `latex-base`.
-
-### Build Dependencies
-
-Some TeX packages don't provide `*.tds.zip`. You have to build it from
-`*.ctan.zip`.
-
-```sh
-latex --interaction=nonstopmode foo.ins
-```
-
-or:
-
-```sh
-texrocks l3build ctan
-```
-
-add `{ 'texrocks', 'lualatex', 'latex-base' }` or `{ 'l3build', 'latex-base' }` to
-`build_dependencies`.
 
 ## Credit
 
