@@ -16,9 +16,7 @@ description = {
   $license
 }
 
--- texlua contains a lfs
--- luafilesystem only for first running, see bin/texrocks
-dependencies = { "argparse", "luarocks", "luafilesystem", "texlua" }
+dependencies = { "argparse" }
 
 test_dependencies = $test_dependencies
 
@@ -38,4 +36,8 @@ build = {
   install = {
     bin = { "bin/texrocks" }
   }
+}
+
+deploy = {
+  wrap_bin_scripts = false
 }

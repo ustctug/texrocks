@@ -1,8 +1,2 @@
-#!/usr/bin/env texlua
-if kpse then
-    kpse.set_program_name(arg[0])
-    require 'texrocks.cmd'.main()
-else
-    require 'texrocks.adapter'.sync()
-    print [[this program should be run on texlua. try again.]]
-end
+#!/usr/bin/env -S lx --lua-version=5.3 lua --lua=texlua --no-loader --
+require 'texrocks.cmd'.main()

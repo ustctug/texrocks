@@ -1,11 +1,7 @@
-local M             = {}
-local config        = require "texrocks.config"
-local state         = require "texrocks.state"
-local constants     = require "texrocks.constants"
-local cfg           = require "luarocks.core.cfg"
-local lfs           = require "lfs"
-local lfsattributes = lfs.attributes
-local gmatch        = string.gmatch
+local M         = {}
+local constants = require "texrocks.constants"
+local lfs       = require "lfs"
+local gmatch    = string.gmatch
 
 -- FIXME: don't know why luahbtex miss it
 -- copied from luatex/source/texk/web2c/luatexdir/lua/luatex-core.lua
@@ -21,59 +17,7 @@ if not lfs.mkdirp then
     end
 end
 
-if not lfs.isfile then
-    function lfs.isfile(name)
-        local m = lfsattributes(name, "mode")
-        return m == "file" or m == "link"
-    end
-end
-
-if not lfs.isdir then
-    function lfs.isdir(name)
-        local m = lfsattributes(name, "mode")
-        return m == "directory"
-    end
-end
-
-local function get_rock_dir(rock)
-    return table.concat({ config.rocks_path, "lib", "luarocks", "rocks-" .. constants.LUA_VERSION, rock.name }, "/")
-end
-
-local function get_rock_path(rock)
-    local rock_dir = get_rock_dir(rock)
-    for file in lfs.dir(rock_dir) do
-        -- ignore hidden files
-        if file:sub(1, 1) ~= '.' then
-            local path = table.concat({ rock_dir, file }, "/")
-            if lfs.attributes(path).mode == 'directory' then
-                return path
-            end
-        end
-    end
-    return ""
-end
-
-local function get_rock_paths()
-    local paths = {}
-    for _, rock in pairs(state.installed_rocks()) do
-        table.insert(paths, get_rock_path(rock))
-    end
-    return paths
-end
-
-function M.sync_texmf_cnf()
-    local web2c = os.getenv('HOME') .. '/.local/share/texmf/web2c'
-    lfs.mkdirp(web2c)
-    local f = io.open(web2c .. '/texmf.cnf', 'w')
-    if f == nil then
-        return
-    end
-    local str = string.format(constants.texmf_cnf, table.concat(get_rock_paths(), ','))
-    f:write(str)
-    f:close()
-end
-
-function M.sync_luatex_map()
+function M.sync()
     local fonts = {}
 
     local function walk(path)
@@ -82,13 +26,17 @@ function M.sync_luatex_map()
                 local newpath = path .. '/' .. file
                 if lfs.isdir(newpath) then
                     walk(newpath)
-                elseif lfs.isfile(newpath) and file:gsub(".*%.", "") == "pfb" then
-                    table.insert(fonts, newpath)
+                elseif lfs.isfile(newpath) then
+                    local ext = file:gsub(".*%.", "")
+                    if ext == "pfb" or ext == "t3" then
+                        table.insert(fonts, newpath)
+                    end
                 end
             end
         end
     end
 
+    -- TODO: empty function
     for _, path in ipairs(get_rock_paths()) do
         local type1_dir = path .. '/fonts/'
         if lfs.isdir(type1_dir) then
@@ -111,40 +59,116 @@ function M.sync_luatex_map()
     f:close()
 end
 
----https://github.com/luarocks/luarocks/discussions/1737
-function M.fix()
-    cfg.init()
-    cfg.root_dir = cfg.root_dir or cfg.rocks_trees[1].root
-    local target_bin_dir = cfg.root_dir .. '/bin'
-    for _, path in ipairs(get_rock_paths()) do
-        local bin_dir = path .. '/bin'
-        if lfs.isdir(bin_dir) then
-            for bin_name in lfs.dir(bin_dir) do
-                local bin = bin_dir .. '/' .. bin_name
-                if lfs.isfile(bin) then
-                    local f = io.open(bin)
-                    if f then
-                        local shebang = '#!/usr/bin/env texlua'
-                        local first = f:read(#shebang)
-                        f:close()
-                        if first == shebang then
-                            local target_bin = target_bin_dir .. '/' .. bin_name
-                            if lfs.isfile(target_bin) then
-                                os.remove(target_bin)
-                            end
-                            lfs.link(bin, target_bin, true)
-                        end
+function M.getenv(path, suffix)
+    local parts = {}
+    for part in string.gmatch(path, "([^;]+)") do
+        table.insert(parts, part)
+    end
+    local processed = {}
+    local seen = {}
+    for _, part in ipairs(parts) do
+        local cleaned = part:gsub("/%?%.lua$", ""):gsub("/%?/init%.lua$", "")
+        if not seen[cleaned] and cleaned ~= "" then
+            if suffix ~= "" then
+                -- https://nvim-neorocks.github.io/explanations/lux-package-conflicts/#the-problem
+                local root = cleaned:gsub("/src$", "")
+                if root == suffix then
+                    cleaned = ""
+                else
+                    cleaned = root .. '/etc/' .. suffix
+                    if lfs.isdir(cleaned) then
+                        cleaned = cleaned .. "//"
+                    else
+                        cleaned = ""
                     end
                 end
             end
+            if cleaned ~= "" then
+                table.insert(processed, cleaned)
+                seen[cleaned] = true
+            end
         end
+    end
+    return table.concat(processed, ";")
+end
+
+function M.setenv()
+    os.setenv("LUAINPUTS", M.getenv(package.path, ""))
+    os.setenv("CLUAINPUTS", M.getenv(package.cpath, ""))
+    os.setenv("TEXINPUTS", M.getenv(package.path, "tex"))
+
+    -- some tex packages like hyperref support config file such as hyperref.cfg
+    os.setenv("TEXMF", "$TEXMFDOTDIR;~/.config/texmf")
+    -- create ./texmf.cnf to override
+    os.setenv("TEXMFCNF", "$TEXMFDOTDIR")
+    os.setenv("TEXFONTMAPS", "$TEXMFDOTDIR")
+    os.setenv("TEXFORMATS", M.getenv(package.path, "web2c"))
+    os.setenv("TFMFONTS", M.getenv(package.path, "fonts/tfm"))
+    os.setenv("T1FONTS", M.getenv(package.path, "fonts/type1"))
+end
+
+function M.run(args)
+    M.setenv()
+    local p = io.popen(table.concat(args, ' '))
+    if p then
+        print(p:read "*a")
+        p:close()
     end
 end
 
-function M.sync()
-    M.sync_texmf_cnf()
-    M.sync_luatex_map()
-    M.fix()
+function M.cp(src, dst)
+    local src_file = io.open(src, "rb")
+    local dst_file = io.open(dst, "wb")
+    if src_file and dst_file then
+        dst_file:write(src_file:read("*a"))
+    end
+    if src_file then
+        src_file:close()
+    end
+    if dst_file then
+        dst_file:close()
+    end
+end
+
+function M.dump(fmt)
+    M.setenv()
+
+    local p = io.popen(table.concat({ "which", arg[ -1] }, ' '))
+    local bin
+    if p then
+        bin = p:read("*a"):gsub("\n$", "")
+        p:close()
+    end
+
+    local exe = fmt
+    if bin:gsub("%.exe$", '') ~= bin then
+        exe = exe .. ".exe"
+    end
+
+    if not lfs.isfile(exe) then
+        M.cp(bin, exe)
+        if exe == fmt then
+            os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+        end
+    else
+        print('skip building ' .. exe)
+    end
+
+    if not lfs.isfile(fmt .. '.fmt') then
+        local cmdargs = {
+            './' .. fmt,
+            '--ini',
+            "--interaction=nonstopmode",
+            fmt .. ".ini"
+        }
+        p = io.popen(table.concat(cmdargs, ' '))
+        if p then
+            print(p:read "*a")
+            p:close()
+        end
+    else
+        print('skip building ' .. fmt .. '.fmt')
+    end
 end
 
 return M

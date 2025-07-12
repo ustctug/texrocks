@@ -1,6 +1,6 @@
 local argparse = require 'argparse'
 local adapter = require "texrocks.adapter"
-local luarocks = require "texrocks.luarocks"
+local luarocks = require "texrocks.lux"
 local M = {}
 
 ---get parser
@@ -8,9 +8,13 @@ local M = {}
 local function get_parser()
     local parser = argparse("texrocks", "a package manager for lua(La)TeX")
 
-    parser:command("install", "install a rock then synchronize")
+    parser:command("run", "run luatex/lualatex/... with correct environment variables")
+        :argument("args", "arguments"):args "*"
+    parser:command("dump", "dump format file")
+        :argument("fmt", "format name", "luatex")
+    parser:command("install", "install a rock")
         :argument("rock", "rock name", "")
-    parser:command("remove", "remove a rock then synchronize")
+    parser:command("uninstall", "uninstall a rock")
         :argument("rock", "rock name", "")
     parser:command("list", "list all installed rocks")
 
@@ -22,17 +26,17 @@ function M.main()
     local cmd = ""
     if args.install then
         cmd = "install"
-    elseif args.remove then
-        cmd = "remove"
+    elseif args.uninstall then
+        cmd = "uninstall"
     elseif args.list then
-        print(table.concat(luarocks.cli { 'list', args.rock }, "\n"))
-        return
+        cmd = "list"
+    elseif args.dump then
+        adapter.dump(args.fmt)
+    elseif args.run then
+        adapter.run(args.args)
     end
-    if args.rock ~= '' then
-        print(table.concat(luarocks.cli { cmd, args.rock }, "\n"))
-    end
-    if args.install or args.remove then
-        adapter.sync()
+    if cmd ~= "" then
+        luarocks.cli { cmd, args.rock }
     end
 end
 
