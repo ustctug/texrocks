@@ -164,7 +164,7 @@ lx --lua-version=5.3 install texrocks
 
 Now you can use `lx` to install TeX dialects written in TeX and TeX tools written
 in lua from [luarocks.org](https://luarocks.org/). See
-[packages](packages/README.md) to know how to package missing LuaTeX packages
+[packages](./packages) to know how to package missing LuaTeX packages
 and publish them to luarocks.org.
 
 ## TeX Dialects
