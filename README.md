@@ -119,6 +119,20 @@ lx --lua-version=5.3 install your-needed-luatex-package1 you-loved-luatex-packag
 according to `lux.toml` created by `lux new` to set correct `$LUA_PATH`
 and `$CLUA_PATH`.
 
+Remember add the program path to `$PATH`. For system:
+
+```sh
+PATH="$HOME/.local/share/lux/tree/5.3/bin${PATH:+:}$PATH"
+```
+
+For virtual environment, you can use `direnv`:
+
+`.envrc`:
+
+```sh
+PATH="$PWD/.lux/5.3/bin${PATH:+:}$PATH"
+```
+
 ## Install
 
 texrocks uses
@@ -131,12 +145,6 @@ cargo install lux-cli
 paru -S lux-cli
 # For Nix
 nix-env -iA nixos.lux-cli
-```
-
-Remember update `$PATH`:
-
-```sh
-PATH="$PATH:$HOME/.local/share/lux/tree/5.3/bin"
 ```
 
 - texlua as lua 5.3 interpreter, contained in mostly TeX distribution like
@@ -164,8 +172,8 @@ and publish them to luarocks.org.
 ### PlainTeX
 
 PlainTeX is the first and simplest TeX Dialect. Original TeX interpreter only
-supports 256 registers which is PlainTeX used. LuaTeX support 65536 however
-PlainTeX cannot use it.
+supports 256 registers which is PlainTeX used. LuaTeX supports 65536 however
+PlainTeX cannot use them.
 
 [A minimal example](examples/tex/plain/minimal.tex):
 
@@ -373,6 +381,16 @@ lx --lua-version=5.3 install prompt-style
 # For ArchLinux
 paru -S lua53-prompt-style texlua
 ```
+
+## TODO
+
+- `texrocks XXX --option` will be recognized as `texrocks --option XXX`.
+  Wait [upstream](https://github.com/luarocks/argparse/issues/30). You have to
+  `texrocks XXX \ --option` or `texrocks 'XXX --option'`
+- `lx` can be configure by `~/.config/lux/config.toml`. `texrocks` should
+  know correct installation positions of TeX files according to it. Currently we
+  use default value without any extra config.
+- more TeX packages
 
 ## Credit
 
