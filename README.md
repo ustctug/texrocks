@@ -37,10 +37,19 @@ A (La)TeX package manager powered by luarocks and luaTeX, also
 For example, you create a virtual environment named `my-thesis`:
 
 ```sh
-lx --lua-version=5.3 new my-thesis
+lx new --lua-versions=5.3 my-thesis
 cd my-thesis
 lx --lua-version=5.3 --dev add your-needed-luatex-package1 you-loved-luatex-package2
-vi main.tex
+"$EDITOR" main.tex
+```
+
+PS: you can `lx config edit` to edit config to avoid input `--lua-version=5.3`
+every time. We assume you did this at the following code.
+
+`~/.config/lux/config.toml`:
+
+```toml
+lua_version = "5.3"
 ```
 
 If you build it directly:
@@ -55,7 +64,7 @@ and `your-needed-luatex-package1.lua` in `\directlua{your-needed-luatex-package1
 So you try:
 
 ```sh
-lx --lua-version=5.3 lua --lua=luatex -- main.tex
+lx lua --lua=luatex -- main.tex
 ```
 
 `lx` will add lua paths of `your-needed-luatex-package1` and
@@ -89,7 +98,7 @@ texrocks luatex main.tex
 If you don't like virtual environment, just install these packages to system.
 
 ```sh
-lx --lua-version=5.3 install your-needed-luatex-package1 you-loved-luatex-package2
+lx install your-needed-luatex-package1 you-loved-luatex-package2
 ```
 
 `lx` will know what you want is a virtual environment or a system environment
@@ -161,7 +170,7 @@ nix-env -iA nixos.lux-cli
   TeXLive and MikTeX. However, you can install it standalone by:
 
 ```sh
-lx --lua-version=5.3 install texlua
+lx install texlua
 # For ArchLinux
 paru -S texlua
 ```
@@ -169,7 +178,7 @@ paru -S texlua
 Then you can:
 
 ```sh
-lx --lua-version=5.3 install texrocks
+lx install texrocks
 ```
 
 Now you can use `lx` to install TeX dialects written in TeX and TeX tools written
@@ -203,7 +212,7 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 ```
 
 ```sh
-lx --lua-version=5.3 --dev install luatex
+lx --dev install luatex
 tex examples/tex/plain/minimal.tex
 ```
 
@@ -239,7 +248,7 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 ```
 
 ```sh
-lx --lua-version=5.3 --dev install lualatex
+lx --dev install lualatex
 latex examples/tex/latex/minimal.tex
 ```
 
@@ -316,7 +325,7 @@ This is the first chapter.
 ```
 
 ```sh
-lx --lua-version=5.3 --dev install luatexinfo
+lx --dev install luatexinfo
 texinfo examples/tex/texinfo/minimal.tex
 dvipdfmx minimal.dvi
 pdftocairo -png minimal.pdf
@@ -337,7 +346,7 @@ TODO
 team.
 
 ```sh
-lx --lua-version=5.3 --dev install texdoc
+lx --dev install texdoc
 ```
 
 Note, texdoc need a tlpdb database.
@@ -370,7 +379,7 @@ Would you like to search online? (y/N) y
 `l3build` is a tool to build TeX packages developed by LaTeX 3 team.
 
 ```sh
-lx --lua-version=5.3 install l3build
+lx install l3build
 ```
 
 ### luafindfont
@@ -378,7 +387,7 @@ lx --lua-version=5.3 install l3build
 `l3build` is a simple tool to search fonts.
 
 ```sh
-lx --lua-version=5.3 --dev install luafindfont
+lx --dev install luafindfont
 ```
 
 ### texluap
@@ -387,7 +396,7 @@ Sometimes you need a REPL to debug luatex.
 [texluap](https://github.com/wakatime/prompt-style.lua#luatex) do it:
 
 ```sh
-lx --lua-version=5.3 install prompt-style
+lx install prompt-style
 # For ArchLinux
 paru -S lua53-prompt-style texlua
 ```
