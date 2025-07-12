@@ -20,7 +20,7 @@ latex-fonts = "scm-1"
 
 [run]
 command = "texrocks"
-args = ["dump", "lualatex"]
+args = ["--dump", "lualatex"]
 
 [build]
 type = "none"
