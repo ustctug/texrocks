@@ -1,10 +1,7 @@
 # texrocks
 
-[![readthedocs](https://shields.io/readthedocs/texrocks)](https://texrocks.readthedocs.io)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ustctug/texrocks/main.svg)](https://results.pre-commit.ci/latest/github/ustctug/texrocks/main)
 [![github/workflow](https://github.com/ustctug/texrocks/actions/workflows/main.yml/badge.svg)](https://github.com/ustctug/texrocks/actions)
-[![codecov](https://codecov.io/gh/ustctug/texrocks/branch/main/graph/badge.svg)](https://codecov.io/gh/ustctug/texrocks)
-[![DeepSource](https://deepsource.io/gh/ustctug/texrocks.svg/?show_trend=true)](https://deepsource.io/gh/ustctug/texrocks)
 
 [![github/downloads](https://shields.io/github/downloads/ustctug/texrocks/total)](https://github.com/ustctug/texrocks/releases)
 [![github/downloads/latest](https://shields.io/github/downloads/ustctug/texrocks/latest/total)](https://github.com/ustctug/texrocks/releases/latest)
@@ -30,7 +27,7 @@
 [![github/repo-size](https://shields.io/github/repo-size/ustctug/texrocks)](https://github.com/ustctug/texrocks)
 [![github/v](https://shields.io/github/v/release/ustctug/texrocks)](https://github.com/ustctug/texrocks)
 
-[![luarocks](https://img.shields.io/luarocks/v/ustctug/texrocks)](https://luarocks.org/modules/ustctug/texrocks)
+[![luarocks](https://img.shields.io/luarocks/v/Freed-Wu/texrocks)](https://luarocks.org/modules/Freed-Wu/texrocks)
 
 A (La)TeX package manager powered by luarocks and luaTeX, also
 [a minimal (La)TeX distribution](https://freed-wu.github.io/2025/03/01/minimal-latex-distribution.html).
@@ -73,41 +70,21 @@ However, luatex is not a standard lua. it recognizes `$LUAINPUTS` and
 Notice we install tex files in the same directory of lua files, so we also can
 get them. Font files are similar.
 
-So we create a wrapper named `texrocks` to do this work.
+So we create a lua wrapper named `texrocks` to do this work. `texrocks` calls
+`os.setenv()` to set correct environment variables to make luatex work in a
+virtual/system environment.
 
 ```sh
 texrocks luatex main.tex
 ```
 
-luatex can be configured by environment variables or a config file `texmf.cnf`.
-
-`texmf.cnf`:
-
-```texmf
-% comment
-VAR = XXX
-```
-
-is equal to:
-
-```sh
-VAR=XXX texlua
-```
-
-in shell.
-
-`texrocks` is a wrapper. It calls `os.setenv()` to set correct environment
-variables to make luatex work in a virtual/system environment.
-
-We create some scripts to use it easily:
+We create some scripts to use it easily. `latex`, `texinfo` is similar.
 
 ```sh
 tex main.tex
 # is equal to
 texrocks luatex main.tex
 ```
-
-`latex`, `texinfo` is similar.
 
 If you don't like virtual environment, just install these packages to system.
 
@@ -125,13 +102,46 @@ Remember add the program path to `$PATH`. For system:
 PATH="$HOME/.local/share/lux/tree/5.3/bin${PATH:+:}$PATH"
 ```
 
-For virtual environment, you can use `direnv`:
+For virtual environment, you can use
+[`direnv`](https://github.com/direnv/direnv/):
 
 `.envrc`:
 
 ```sh
 PATH="$PWD/.lux/5.3/bin${PATH:+:}$PATH"
 ```
+
+## Related Projects
+
+Except environment variables, TeX compilers also read a config file:
+
+`texmf.cnf`:
+
+```texmf
+% comment
+VAR = XXX
+```
+
+is equal to shell's:
+
+```sh
+VAR=XXX texlua
+```
+
+or lua's:
+
+```lua
+os.setenv("VAR", "XXX")
+io.popen("texlua")
+```
+
+Many TeX distributions, like TeX Live, MikTeX, doesn't use environment variables.
+They use `texmf.cnf` to declare a fixed path, like `/usr/share/texmf`. It is
+impossible to support virtual environments.
+
+And these huge TeX distributions usually provide many TeX compilers: pdfTeX,
+XeTeX, LuaTeX, ... and many TeX tools written in lua/perl/python/java/...
+We only provide LuaTeX and those TeX tools written in lua. That's enough, IMO.
 
 ## Install
 
@@ -171,7 +181,7 @@ and publish them to luarocks.org.
 
 ### PlainTeX
 
-PlainTeX is the first and simplest TeX Dialect. Original TeX interpreter only
+PlainTeX is the first and simplest TeX Dialect. Original TeX compiler only
 supports 256 registers which is PlainTeX used. LuaTeX supports 65536 however
 PlainTeX cannot use them.
 
