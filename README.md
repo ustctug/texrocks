@@ -40,9 +40,9 @@ A (La)TeX package manager powered by luarocks and luaTeX, also
 For example, you create a virtual environment named `my-thesis`:
 
 ```sh
-lx --lua-version new my-thesis
+lx --lua-version=5.3 new my-thesis
 cd my-thesis
-lx --lua-version 5.3 --dev add your-needed-luatex-package1 you-loved-luatex-package2
+lx --lua-version=5.3 --dev add your-needed-luatex-package1 you-loved-luatex-package2
 vi main.tex
 ```
 
@@ -58,7 +58,7 @@ and `your-needed-luatex-package1.lua` in `\directlua{your-needed-luatex-package1
 So you try:
 
 ```sh
-lx --lua-version 5.3 lua --lua=luatex -- main.tex
+lx --lua-version=5.3 lua --lua=luatex -- main.tex
 ```
 
 `lx` will add lua paths of `your-needed-luatex-package1` and
