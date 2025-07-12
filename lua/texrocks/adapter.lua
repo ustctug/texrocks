@@ -1,3 +1,5 @@
+-- luacheck: ignore 143
+---@diagnostic disable: undefined-field
 local M         = {}
 local constants = require "texrocks.constants"
 local lfs       = require "lfs"
@@ -18,9 +20,18 @@ if not lfs.mkdirp then
 end
 
 function M.sync(short)
-    local f = io.open(constants.fontmap_name, 'w')
+    local dir = ".lux"
+    if not lfs.isdir(dir) then
+        dir = (os.getenv "XDG_DATA_HOME") .. "/lux/tree"
+    end
+    dir = dir .. "/" .. constants.LUA_VERSION
+    if not lfs.isdir(dir) then
+        lfs.mkdirp(dir)
+    end
+    local fontmap_name = dir .. "/" .. constants.fontmap_name
+    local f = io.open(fontmap_name, 'w')
     if f == nil then
-        print("fail to generate " .. constants.fontmap_name)
+        print("fail to generate " .. fontmap_name)
         return
     end
     local fonts = {}
@@ -134,10 +145,15 @@ end
 
 function M.setenvs()
     M.setenv("TEXMFDOTDIR", ".")
+    if os.getenv "USERPROFILE" == nil then
+        M.setenv("HOME", "~")
+    else
+        M.setenv("HOME", os.getenv "USERPROFILE")
+    end
     -- https://wiki.archlinux.org/title/XDG_Base_Directory#Partial
-    M.setenv("XDG_CONFIG_HOME", "~/.config")
-    M.setenv("XDG_DATA_HOME", "~/.local/share")
-    M.setenv("XDG_CACHE_HOME", "~/.cache")
+    M.setenv("XDG_CONFIG_HOME", (os.getenv "HOME") .. "/.config")
+    M.setenv("XDG_DATA_HOME", (os.getenv "HOME") .. "/.local/share")
+    M.setenv("XDG_CACHE_HOME", (os.getenv "HOME") .. "/.cache")
     -- some tex packages like hyperref support config file such as hyperref.cfg
     M.setenv("TEXMFCONFIG", "$XDG_CONFIG_HOME/texmf")
     M.setenv("TEXMFHOME", "$XDG_DATA_HOME/texmf")
@@ -152,7 +168,7 @@ function M.setenvs()
     os.setenv("CLUAINPUTS", "$TEXMFDOTDIR/lib;" .. M.getenv(package.cpath, ""))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
 
-    os.setenv("TEXFONTMAPS", "$TEXMFDOTDIR")
+    os.setenv("TEXFONTMAPS", "{.lux,$XDG_DATA_HOME/lux/tree}/" .. constants.LUA_VERSION)
     os.setenv("TEXFORMATS", "$TEXMFDOTDIR/web2c;" .. M.getenv(package.path, "web2c"))
     -- font metrics
     M.setfontenv("TFMFONTS", "tfm")
@@ -233,10 +249,7 @@ function M.dump(fmt)
     end
 
     local wrapper = exe:gsub("^lua", "")
-    if wrapper == exe then
-        return
-    end
-    if not lfs.isfile(wrapper) then
+    if wrapper ~= exe and not lfs.isfile(wrapper) then
         local f = io.open(wrapper, "w")
         if f then
             local str = string.format(constants.wrapper, fmt)
@@ -244,7 +257,7 @@ function M.dump(fmt)
             f:close()
         end
     else
-        print('skip building ' .. exe)
+        print('skip building ' .. wrapper)
     end
 end
 

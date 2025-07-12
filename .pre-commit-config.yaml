@@ -78,7 +78,7 @@ repos:
     rev: v1.2.0
     hooks:
       - id: luacheck
-  - repo: https://github.com/NixOS/nixfmt
-    rev: e825e956ae967ee24aa502a90099956d1f8bc1ed
-    hooks:
-      - id: nixfmt
+  # - repo: https://github.com/NixOS/nixfmt
+  #   rev: e825e956ae967ee24aa502a90099956d1f8bc1ed
+  #   hooks:
+  #     - id: nixfmt

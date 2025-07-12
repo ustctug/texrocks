@@ -35,6 +35,89 @@
 A (La)TeX package manager powered by luarocks and luaTeX, also
 [a minimal (La)TeX distribution](https://freed-wu.github.io/2025/03/01/minimal-latex-distribution.html).
 
+## Introduction
+
+For example, you create a virtual environment named `my-thesis`:
+
+```sh
+lx --lua-version new my-thesis
+cd my-thesis
+lx --lua-version 5.3 --dev add your-needed-luatex-package1 you-loved-luatex-package2
+vi main.tex
+```
+
+If you build it directly:
+
+```sh
+luatex main.tex
+```
+
+It will fail, because luatex doesn't know where is
+`your-needed-luatex-package1.sty` in `usepackage{your-needed-luatex-package1}`
+and `your-needed-luatex-package1.lua` in `\directlua{your-needed-luatex-package1}`.
+So you try:
+
+```sh
+lx --lua-version 5.3 lua --lua=luatex -- main.tex
+```
+
+`lx` will add lua paths of `your-needed-luatex-package1` and
+`you-loved-luatex-package2` to `$LUA_PATH` and `$CLUA_PATH`.
+lua recognize these variables to set `package.path` and `package.cpath`.
+Any `require"package_name"` will search `package.path` and `package.cpath`.
+
+However, luatex is not a standard lua. it recognizes `$LUAINPUTS` and
+`$CLUAINPUTS` for lua files. so we must modify `package.path` and
+`package.cpath` to get them. and luatex recognize `$TEXINPUTS` for tex files.
+Notice we install tex files in the same directory of lua files, so we also can
+get them. Font files are similar.
+
+So we create a wrapper named `texrocks` to do this work.
+
+```sh
+texrocks luatex main.tex
+```
+
+luatex can be configured by environment variables or a config file `texmf.cnf`.
+
+`texmf.cnf`:
+
+```texmf
+% comment
+VAR = XXX
+```
+
+is equal to:
+
+```sh
+VAR=XXX texlua
+```
+
+in shell.
+
+`texrocks` is a wrapper. It calls `os.setenv()` to set correct environment
+variables to make luatex work in a virtual/system environment.
+
+We create some scripts to use it easily:
+
+```sh
+tex main.tex
+# is equal to
+texrocks luatex main.tex
+```
+
+`latex`, `texinfo` is similar.
+
+If you don't like virtual environment, just install these packages to system.
+
+```sh
+lx --lua-version=5.3 install your-needed-luatex-package1 you-loved-luatex-package2
+```
+
+`lx` will know what you want is a virtual environment or a system environment
+according to `lux.toml` created by `lux new` to set correct `$LUA_PATH`
+and `$CLUA_PATH`.
+
 ## Install
 
 texrocks uses
@@ -45,7 +128,7 @@ texrocks uses
 cargo install lux-cli
 # For ArchLinux
 paru -S lux-cli
-# For NixOS
+# For Nix
 nix-env -iA nixos.lux-cli
 ```
 
@@ -55,8 +138,8 @@ Remember update `$PATH`:
 PATH="$PATH:$HOME/.local/share/lux/tree/5.3/bin"
 ```
 
-- texlua as lua interpreter, contained in mostly TeX distribution like TeXLive and MikTeX.
-  However, you can install it standalone by:
+- texlua as lua 5.3 interpreter, contained in mostly TeX distribution like
+  TeXLive and MikTeX. However, you can install it standalone by:
 
 ```sh
 lx --lua-version=5.3 install texlua
@@ -92,7 +175,7 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 ```
 
 ```sh
-texrocks install luatex
+lx --lua-version=5.3 --dev install luatex
 tex examples/tex/plain/minimal.tex
 ```
 
@@ -125,7 +208,7 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 ```
 
 ```sh
-texrocks install lualatex
+lx --lua-version=5.3 --dev install lualatex
 latex examples/tex/latex/minimal.tex
 ```
 
@@ -196,7 +279,7 @@ This is the first chapter.
 ```
 
 ```sh
-texrocks install texinfo
+lx --lua-version=5.3 --dev install luatexinfo
 texinfo examples/tex/texinfo/minimal.tex
 dvipdfmx minimal.dvi
 pdftocairo -png minimal.pdf
@@ -214,7 +297,7 @@ See [packages](packages/README.md)
 ### texdoc
 
 ```sh
-texrocks install texdoc
+lx --lua-version=5.3 --dev install texdoc
 ```
 
 Note, texdoc need a tlpdb database.
@@ -230,7 +313,7 @@ texlive_tlpdb = /home/user_name/.local/share/texmf/texdoc/Data.tlpdb.lua
 Now it can work:
 
 ```sh
-$ texdoc impatient
+$ texrocks texdoc impatient
 You don't appear to have any local documentation installed.
 
 There may be online documentation available for "impatient" at
@@ -245,7 +328,13 @@ Would you like to search online? (y/N) y
 ### l3build
 
 ```sh
-texrocks install l3build
+lx --lua-version=5.3 install l3build
+```
+
+### luafindfont
+
+```sh
+lx --lua-version=5.3 --dev install luafindfont
 ```
 
 ### texluap
@@ -254,7 +343,9 @@ Sometimes you need a REPL to debug luatex. you can refer
 [texluap](https://github.com/wakatime/prompt-style.lua#luatex):
 
 ```sh
-texrocks install prompt-style
+lx --lua-version=5.3 install prompt-style
+# For ArchLinux
+paru -S lua53-prompt-style texlua
 ```
 
 ## Package
@@ -309,14 +400,13 @@ Some TeX packages don't provide `*.tds.zip`. You have to build it from
 `*.ctan.zip`.
 
 ```sh
-texrocks install &&
-  lualatex --interaction=nonstopmode foo.ins
+latex --interaction=nonstopmode foo.ins
 ```
 
 or:
 
 ```sh
-l3build ctan
+texrocks l3build ctan
 ```
 
 add `{ 'texrocks', 'lualatex', 'latex-base' }` or `{ 'l3build', 'latex-base' }` to
