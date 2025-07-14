@@ -176,6 +176,8 @@ nix-env -iA nixos.lux-cli
 lx install texlua
 # For ArchLinux
 paru -S texlua
+# For Nix
+nix-env -iA nur.repos.Freed-Wu.texlua
 ```
 
 Then you can:
