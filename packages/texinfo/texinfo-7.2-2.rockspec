@@ -21,7 +21,7 @@ description = {
   license = 'GPL-3.0'
 }
 
-build_dependencies = { 'texrocks', 'knuth-lib' }
+build_dependencies = { }
 
 source = {
   url = repo_url .. '/archive/debian/' .. git_ref .. '-' .. specrev .. '.zip',

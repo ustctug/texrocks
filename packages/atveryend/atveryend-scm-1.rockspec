@@ -17,7 +17,7 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-build_dependencies = { 'luatex', 'texrocks', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 source = {
   url = repo_url .. '/releases/download/release-' .. git_ref .. '-PL' .. specrev .. '/' .. package .. '.tds.zip',

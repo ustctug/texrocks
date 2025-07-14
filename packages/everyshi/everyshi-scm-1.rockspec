@@ -30,7 +30,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'lualatex', 'texrocks', 'latex-base' }
+build_dependencies = { 'lualatex', 'latex-base' }
 
 build = {
   type = 'command',

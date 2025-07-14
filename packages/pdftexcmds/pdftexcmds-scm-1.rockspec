@@ -30,7 +30,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'luatex', 'texrocks' }
+build_dependencies = { 'luatex' }
 
 dependencies = { 'infwarerr', 'iftex', 'ltxcmds' }
 

@@ -21,7 +21,7 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-build_dependencies = { 'lualatex', 'texrocks', 'latex-base' }
+build_dependencies = { 'lualatex', 'latex-base' }
 
 dependencies = { 'latex-graphics', 'iftex', 'atbegshi' }
 

@@ -19,7 +19,7 @@ description = {
   license = 'LPPL-1.0'
 }
 
-build_dependencies = { 'lualatex', 'texrocks', 'latex-base' }
+build_dependencies = { 'lualatex', 'latex-base' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
