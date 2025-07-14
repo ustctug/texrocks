@@ -11,7 +11,9 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: check-merge-conflict
       - id: trailing-whitespace
+        exclude: \.rockspec$
       - id: mixed-line-ending
+        exclude: \.rockspec$
       - id: end-of-file-fixer
       - id: detect-private-key
       - id: check-symlinks
@@ -26,6 +28,7 @@ repos:
     rev: v1.5.5
     hooks:
       - id: remove-crlf
+        exclude: \.rockspec$
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.1
     hooks:

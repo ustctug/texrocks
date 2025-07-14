@@ -1,0 +1,24 @@
+package = "initex-generic"
+version = "0.0.1"
+lua = "==5.3"
+
+[description]
+summary = "Test if initex can work"
+maintainer = "Wu Zhenyu"
+labels = ["texmf"]
+license = "GPL-3.0"
+
+[dependencies]
+texrocks = "==0.1.0"
+
+[run]
+command = "../../scripts/build.lua"
+args = ["luahbtex", "zip"]
+
+[test]
+type = "command"
+command = "sh"
+flags = ["-c", "TEXINPUTS=. TEXFORMATS=. ./luahbtex main.tex"]
+
+[build]
+type = "none"

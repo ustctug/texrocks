@@ -1,0 +1,39 @@
+package = "lualatex"
+version = "0.0.1"
+lua = "==5.3"
+
+[description]
+summary = "lualatex for LaTeX"
+maintainer = "Wu Zhenyu"
+labels = ["texmf"]
+detailed = "See https://github.com/Freed-Wu/texrocks"
+homepage = "https://www.lualatex.org/"
+license = 'GPL-3.0'
+
+[source]
+dev = "https://github.com/Freed-Wu/texrocks/releases/download/0.0.1/lualatex.zip"
+dir = "."
+
+[dependencies]
+lualatex = "scm-1"
+
+[test]
+type = "command"
+command = "latex"
+args = ["main.tex"]
+
+[build]
+type = "command"
+build_command = "texlua ./build.lua lualatex"
+
+# https://github.com/nvim-neorocks/lux/issues/866
+[build.install.bin]
+lualatex = "lualatex"
+tex = "tex"
+
+[build.install.conf]
+'../web2c/luahbtex/lualatex.fmt' = 'lualatex.fmt'
+
+# https://github.com/nvim-neorocks/lux/issues/857
+[deploy]
+wrap_bin_scripts = false

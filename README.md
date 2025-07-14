@@ -199,7 +199,7 @@ PlainTeX is the first and simplest TeX Dialect. Original TeX compiler only
 supports 256 registers used by PlainTeX. LuaTeX supports 65536 however PlainTeX
 cannot use them.
 
-[A minimal example](examples/tex/plain/minimal.tex):
+[A minimal example](packages/luatex):
 
 ```tex
 \hoffset-1in
@@ -217,8 +217,7 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 ```
 
 ```sh
-lx --dev install luatex
-tex examples/tex/plain/minimal.tex
+lx --dev run
 ```
 
 ![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
@@ -228,7 +227,7 @@ tex examples/tex/plain/minimal.tex
 LaTeX is the most popular TeX Dialect. It can use all LuaTeX registers, which
 means you can create a bigger document than PlainTeX.
 
-[A minimal example](examples/tex/latex/minimal.tex):
+[A minimal example](packages/lualatex):
 
 ```tex
 \renewcommand\normalsize{\fontsize{10pt}{12pt}\selectfont}
@@ -253,8 +252,7 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 ```
 
 ```sh
-lx --dev install lualatex
-latex examples/tex/latex/minimal.tex
+lx --dev run
 ```
 
 ![lualatex](https://github.com/user-attachments/assets/09dd5ddb-8bac-4207-9cc5-ee61724ef7c0)
@@ -283,7 +281,7 @@ Some packages are recommended:
 
 [More packages](https://luarocks.org/m/texmf).
 
-[A more complicated example](examples/tex/latex/graph.tex):
+[A more complicated example](packages/demo-graph):
 
 ```tex
 \documentclass[tikz]{standalone}
@@ -312,7 +310,7 @@ to convert texinfo to `info`, `HTML`, ..., while other TeX dialects doesn't have
 good support for outputting HTML like [TeX4ht](https://tug.org/tex4ht/) for
 PlainTeX/LaTex/ConTeXt.
 
-[A minimal example](examples/tex/texinfo/minimal.tex):
+[A minimal example](packages/luatexinfo):
 
 ```texinfo
 @hoffset-1in
@@ -330,11 +328,10 @@ This is the first chapter.
 ```
 
 ```sh
-lx --dev install luatexinfo
-texinfo examples/tex/texinfo/minimal.tex
-dvipdfmx minimal.dvi
-pdftocairo -png minimal.pdf
-magick convert minimal-1.png -crop 50%x10% minimal.png
+lx --dev run
+dvipdfmx main.dvi
+pdftocairo -png main.pdf
+magick convert main-1.png -crop 50%x10% main.png
 ```
 
 ![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)

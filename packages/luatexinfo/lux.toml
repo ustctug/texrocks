@@ -1,0 +1,41 @@
+package = "luatexinfo"
+version = "0.0.1"
+lua = "==5.3"
+
+[description]
+summary = "LuaTeX for TeXinfo"
+maintainer = "Wu Zhenyu"
+labels = ["texmf"]
+detailed = "See https://github.com/Freed-Wu/texrocks"
+homepage = "https://www.luatex.org/"
+license = 'GPL-3.0'
+
+[source]
+dev = "https://github.com/Freed-Wu/texrocks/releases/download/0.0.1/luatexinfo.zip"
+dir = "."
+
+[dependencies]
+luatexinfo = "scm-1"
+
+[test]
+type = "command"
+command = "texinfo"
+# pdf has some bug about fonts' path
+# args = ["main.texi"]
+args = ["--output-format=dvi", "main.texi"]
+
+[build]
+type = "command"
+build_command = "texlua ./build.lua luatexinfo"
+
+# https://github.com/nvim-neorocks/lux/issues/866
+[build.install.bin]
+luatexinfo = "luatexinfo"
+texinfo = "texinfo"
+
+[build.install.conf]
+'../web2c/luahbtex/luatexinfo.fmt' = 'luatexinfo.fmt'
+
+# https://github.com/nvim-neorocks/lux/issues/857
+[deploy]
+wrap_bin_scripts = false

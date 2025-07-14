@@ -1,7 +1,10 @@
-*.zip
+*.rock
+packages/initex-*/*.rockspec
+packages/demo/*.rockspec
+
 *.cp
 
-# create by https://github.com/iamcco/coc-gitignore (Sat Feb 01 2025 14:05:19 GMT+0800 (China Standard Time))
+# create by https://github.com/iamcco/coc-gitignore (Tue Jul 15 2025 05:46:39 GMT+0800 (China Standard Time))
 # TeX.gitignore:
 ## Core latex/pdflatex auxiliary files:
 *.aux

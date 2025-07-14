@@ -1,0 +1,23 @@
+package = "initex-texinfo"
+version = "7.2"
+lua = "==5.3"
+
+[description]
+summary = "LuaTex for TeXinfo"
+maintainer = "Wu Zhenyu"
+labels = ["texmf"]
+license = "GPL-3.0"
+
+[dependencies]
+texrocks = "0.1.0-1"
+texinfo = "7.2-2"
+knuth-lib = "scm-1"
+amsfonts = "scm-1"
+tex-ini-files = "scm-1"
+
+[run]
+command = "../../scripts/build.lua"
+args = ["luatexinfo", "zip"]
+
+[build]
+type = "none"
