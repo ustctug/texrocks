@@ -11,28 +11,28 @@ homepage = "https://www.luatex.org/"
 license = 'GPL-3.0'
 
 [source]
-dev = "https://github.com/Freed-Wu/texrocks/releases/download/0.0.1/luatex.zip"
+url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/luatex.zip"
 dir = "."
 
 [dependencies]
+amsfonts = "scm-1"
+texrocks = "0.1.0-1"
 
 [test]
 type = "command"
 command = "tex"
-args = ["main.tex"]
+flags = ["main.tex"]
+
+[deploy]
+wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texlua ./build.lua luatex"
+build_command = "texlua build.lua luatex"
 
-# https://github.com/nvim-neorocks/lux/issues/866
 [build.install.bin]
 luatex = "luatex"
 tex = "tex"
 
 [build.install.conf]
 '../web2c/luahbtex/luatex.fmt' = 'luatex.fmt'
-
-# https://github.com/nvim-neorocks/lux/issues/857
-[deploy]
-wrap_bin_scripts = false

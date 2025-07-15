@@ -1,6 +1,7 @@
 *.rock
 packages/initex-*/*.rockspec
-packages/demo/*.rockspec
+packages/demo-*/*.rockspec
+packages/luatex/*.rockspec
 
 *.cp
 
@@ -14,7 +15,8 @@ packages/demo/*.rockspec
 *.fls
 *.out
 *.toc
-*.fmt
+packages/initex-*/*.fmt
+# *.fmt
 *.fot
 *.cb
 *.cb2
