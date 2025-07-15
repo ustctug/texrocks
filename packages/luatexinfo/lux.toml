@@ -15,7 +15,7 @@ src = "https://github.com/ustctug/texrocks/releases/download/0.0.1/luatexinfo.zi
 dir = "."
 
 [dependencies]
-texrocks = "0.1.0-1"
+texrocks = "0.1.1-1"
 texinfo = "7.2-2"
 knuth-lib = "scm-1"
 amsfonts = "scm-1"

@@ -15,7 +15,7 @@ src = "https://github.com/ustctug/texrocks/releases/download/0.0.1/lualatex.zip"
 dir = "."
 
 [dependencies]
-texrocks = "0.1.0-1"
+texrocks = "0.1.1-1"
 amsfonts = "scm-1"
 # refer https://ctan.org/pkg/required
 # latex-base depends on l3backend depends on unicode-data

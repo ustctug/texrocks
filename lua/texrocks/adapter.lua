@@ -208,3 +208,67 @@ function M.cp(src, dst)
         dst_file:close()
     end
 end
+
+function M.dump(fmt)
+    local p = io.popen(table.concat({ "which", arg[ -1] }, ' '))
+    local bin
+    if p then
+        bin = p:read("*a"):gsub("\n$", "")
+        p:close()
+    end
+
+    local exe = fmt
+    if bin:gsub("%.exe$", '') ~= bin then
+        exe = exe .. ".exe"
+    end
+    if not lfs.isfile(exe) then
+        M.cp(bin, exe)
+        if os.type == "unix" then
+            os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+        end
+    else
+        print('skip building ' .. exe)
+    end
+
+    local wrapper = exe:gsub("^lua", "")
+    if wrapper ~= exe and not lfs.isfile(wrapper) then
+        local f = io.open(wrapper, "w")
+        if f then
+            local str = string.format(constants.wrapper, fmt)
+            f:write(str)
+            f:close()
+        end
+        if os.type == "unix" then
+            os.execute(table.concat({ "chmod", "+x", wrapper }, ' '))
+        end
+    else
+        print('skip building ' .. wrapper)
+    end
+
+    local f = io.open(".gitignore", "w")
+    if f then
+        f:write(table.concat({ "*.exe", exe, wrapper, "" }, "\n"))
+        f:close()
+    end
+
+    if not lfs.isfile(fmt .. '.fmt') then
+        local cmdargs = {
+            './' .. wrapper,
+            '--ini',
+            "--interaction=nonstopmode",
+            fmt .. ".ini"
+        }
+        if os.type == "unix" then
+            os.setenv("PATH", ".:" .. os.getenv "PATH")
+        end
+        p = io.popen(table.concat(cmdargs, ' '))
+        if p then
+            print(p:read "*a")
+            p:close()
+        end
+    else
+        print('skip building ' .. fmt .. '.fmt')
+    end
+end
+
+return M

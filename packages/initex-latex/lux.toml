@@ -9,7 +9,7 @@ labels = ["texmf"]
 license = "GPL-3.0"
 
 [dependencies]
-texrocks = "0.1.0-1"
+texrocks = "0.1.1-1"
 amsfonts = "scm-1"
 # refer https://ctan.org/pkg/required
 # latex-base depends on l3backend depends on unicode-data

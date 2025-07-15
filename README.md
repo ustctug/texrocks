@@ -65,6 +65,9 @@ So you try:
 
 ```sh
 lx lua --lua=luatex -- main.tex
+# or
+lx shell
+luatex main.tex
 ```
 
 `lx` will add lua paths of `your-needed-luatex-package1` and
@@ -73,9 +76,9 @@ lua recognize these variables to set `package.path` and `package.cpath`.
 Any `require"package_name"` will search `package_name.lua` in `package.path` and
 `package.cpath`.
 
-However, luatex is not a standard lua. it recognizes `$LUAINPUTS` and
-`$CLUAINPUTS` for lua files. so we must modify `package.path` and
-`package.cpath` to get them. and luatex recognize `$TEXINPUTS` for tex files.
+However, luatex is not a standard lua. It recognizes `$LUAINPUTS` and
+`$CLUAINPUTS` for lua files. So we must modify `package.path` and
+`package.cpath` to get them. And luatex recognize `$TEXINPUTS` for tex files.
 Notice we install tex files in the same directory of lua files, so we also can
 get them. Font files are similar.
 
@@ -84,44 +87,33 @@ So we create a lua wrapper named `texrocks` to do this work. `texrocks` calls
 virtual/system environment.
 
 ```sh
+lx lua --lua=texrocks -- luatex main.tex
+# or
+lx shell
 texrocks luatex main.tex
+# If you don't pass any argument, `texrocks` will launch a shell like `lx shell`
+lx shell
+texrocks
+luatex main.tex
 ```
 
-We create some scripts to use it easily. `latex`, `texinfo` is similar.
-
-```sh
-tex main.tex
-# is equal to
-texrocks luatex main.tex
-```
-
-If you don't pass any argument, `texrocks` will start a shell where you can
-call `luatex`/`lualatex`/... directly.
-
-If you don't like virtual environment, just install these packages to system.
+If you don't like virtual environment, just use `lx install` to replace `lx add`.
+These packages will be installed to system globally.
 
 ```sh
 lx install your-needed-luatex-package1 you-loved-luatex-package2
 ```
 
-`lx` will know what you want is a virtual environment or a system environment
-according to `lux.toml` created by `lux new` to set correct `$LUA_PATH`
-and `$CLUA_PATH`.
+It is advised that install TeX tools globally and TeX packages on virtual
+environment, and add `lux.lock` to VCS to keep reproducible of your TeX
+documents.
 
-Remember add the program path to `$PATH`. For system:
+For nodejs or python users, you can simply understand:
 
-```sh
-PATH="$HOME/.local/share/lux/tree/5.3/bin${PATH:+:}$PATH"
-```
-
-For virtual environment, you can use
-[`direnv`](https://github.com/direnv/direnv/):
-
-`.envrc`:
-
-```sh
-PATH="$PWD/.lux/5.3/bin${PATH:+:}$PATH"
-```
+- `lux.toml`: npm's `package.json` or uv's `pyproject.toml` or
+  `requirements.txt`.
+- `lux.lock`: npm's `package-lock.json` or uv's `uv.lock`
+- `.lux`: npm's `node_modules` or uv's `.venv`
 
 ## Related Projects
 
@@ -217,7 +209,7 @@ $$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
 ```
 
 ```sh
-lx --dev run
+lx run
 ```
 
 ![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
@@ -252,7 +244,7 @@ $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 ```
 
 ```sh
-lx --dev run
+lx run
 ```
 
 ![lualatex](https://github.com/user-attachments/assets/09dd5ddb-8bac-4207-9cc5-ee61724ef7c0)
@@ -328,7 +320,7 @@ This is the first chapter.
 ```
 
 ```sh
-lx --dev run
+lx run
 dvipdfmx main.dvi
 pdftocairo -png main.pdf
 magick convert main-1.png -crop 50%x10% main.png
@@ -364,7 +356,7 @@ texlive_tlpdb = /home/user_name/.local/share/texmf/texdoc/Data.tlpdb.lua
 Now it can work:
 
 ```sh
-$ texrocks texdoc impatient
+$ texdoc impatient
 You don't appear to have any local documentation installed.
 
 There may be online documentation available for "impatient" at

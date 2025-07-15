@@ -8,6 +8,7 @@ local M = {}
 local function get_parser()
     local parser = argparse("texrocks", "a package manager for lua(La)TeX")
 
+    parser:option("--dump", "dump format file")
     parser:option("--short", "use short path in " .. constants.fontmap_name):args(0)
     parser:argument("args", "arguments"):args "*"
 
@@ -16,7 +17,11 @@ end
 
 function M.main()
     local args = get_parser():parse()
-    adapter.run(args.args, args.short)
+    if args.dump then
+        adapter.dump(args.dump)
+    else
+        adapter.run(args.args, args.short)
+    end
 end
 
 return M
