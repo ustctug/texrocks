@@ -210,7 +210,7 @@ function M.cp(src, dst)
 end
 
 function M.dump(fmt)
-    local p = io.popen(table.concat({ "which", arg[ -1] }, ' '))
+    local p = io.popen(table.concat({ "which", arg[-1] }, ' '))
     local bin
     if p then
         bin = p:read("*a"):gsub("\n$", "")
@@ -221,17 +221,20 @@ function M.dump(fmt)
     if bin:gsub("%.exe$", '') ~= bin then
         exe = exe .. ".exe"
     end
-    if not lfs.isfile(exe) then
-        M.cp(bin, exe)
-        if os.type == "unix" then
-            os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+
+    M.cp(bin, exe)
+    local wrapper = exe:gsub("^lua", "")
+
+    if os.type == "unix" then
+        os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+        local f = io.open(".gitignore", "w")
+        if f then
+            f:write(table.concat({ ".gitignore", exe, wrapper, "" }, "\n"))
+            f:close()
         end
-    else
-        print('skip building ' .. exe)
     end
 
-    local wrapper = exe:gsub("^lua", "")
-    if wrapper ~= exe and not lfs.isfile(wrapper) then
+    if wrapper ~= exe then
         local f = io.open(wrapper, "w")
         if f then
             local str = string.format(constants.wrapper, fmt)
@@ -245,29 +248,17 @@ function M.dump(fmt)
         print('skip building ' .. wrapper)
     end
 
-    local f = io.open(".gitignore", "w")
-    if f then
-        f:write(table.concat({ "*.exe", exe, wrapper, "" }, "\n"))
-        f:close()
-    end
-
-    if not lfs.isfile(fmt .. '.fmt') then
-        local cmdargs = {
-            './' .. wrapper,
-            '--ini',
-            "--interaction=nonstopmode",
-            fmt .. ".ini"
-        }
-        if os.type == "unix" then
-            os.setenv("PATH", ".:" .. os.getenv "PATH")
-        end
-        p = io.popen(table.concat(cmdargs, ' '))
-        if p then
-            print(p:read "*a")
-            p:close()
-        end
-    else
-        print('skip building ' .. fmt .. '.fmt')
+    M.setenvs()
+    local args = {
+        './' .. exe,
+        '--ini',
+        "--interaction=nonstopmode",
+        fmt .. ".ini"
+    }
+    local p = io.popen(table.concat(args, ' '))
+    if p then
+        print(p:read "*a")
+        p:close()
     end
 end
 

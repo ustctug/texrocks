@@ -1,5 +1,5 @@
 package = "luatex"
-version = "0.0.1"
+version = "scm"
 lua = "==5.3"
 
 [description]

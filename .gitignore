@@ -1,7 +1,9 @@
+*.exe
 *.rock
-packages/initex-*/*.rockspec
 packages/demo-*/*.rockspec
 packages/luatex/*.rockspec
+packages/lualatex/*.rockspec
+packages/luatexinfo/*.rockspec
 
 *.cp
 
@@ -15,8 +17,7 @@ packages/luatex/*.rockspec
 *.fls
 *.out
 *.toc
-packages/initex-*/*.fmt
-# *.fmt
+*.fmt
 *.fot
 *.cb
 *.cb2
