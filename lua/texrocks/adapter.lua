@@ -195,7 +195,16 @@ function M.run(args, short)
     end
 end
 
-function M.cp(src, dst)
+function M.chmod_x(exe)
+    if os.type == "unix" then
+        os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+    end
+end
+
+function M.install(src, dst)
+    if os.type ~= "unix" then
+        dst = dst .. ".exe"
+    end
     local src_file = io.open(src, "rb")
     local dst_file = io.open(dst, "wb")
     if src_file and dst_file then
@@ -207,50 +216,50 @@ function M.cp(src, dst)
     if dst_file then
         dst_file:close()
     end
+    M.chmod_x(dst)
+end
+
+function M.wrap(wrapper, template, fmt)
+    local f = io.open(wrapper, "w")
+    if f then
+        local str = string.format(template, fmt)
+        f:write(str)
+        f:close()
+    end
+    M.chmod_x(wrapper)
 end
 
 function M.dump(fmt)
-    local p = io.popen(table.concat({ "which", arg[-1] }, ' '))
-    local bin
-    if p then
-        bin = p:read("*a"):gsub("\n$", "")
-        p:close()
+    local wrapper = fmt:gsub("^lua", "")
+    local cwd = ""
+
+    if fmt == "initex" then
+        -- install texlua to initex
+        local p = io.popen(table.concat({ "which", arg[-1] }, ' '))
+        if p then
+            local bin = p:read("*a"):gsub("\n$", "")
+            p:close()
+            M.install(bin, fmt)
+        end
+        cwd = "./"
+    else
+        -- wrap initex to luaXXXtex and XXXtex
+        M.wrap(fmt, constants.texlua_wrapper, fmt)
+        if wrapper ~= fmt then
+            M.wrap(wrapper, constants.lx_wrapper, fmt)
+        end
     end
-
-    local exe = fmt
-    if bin:gsub("%.exe$", '') ~= bin then
-        exe = exe .. ".exe"
-    end
-
-    M.cp(bin, exe)
-    local wrapper = exe:gsub("^lua", "")
-
     if os.type == "unix" then
-        os.execute(table.concat({ "chmod", "+x", exe }, ' '))
         local f = io.open(".gitignore", "w")
         if f then
-            f:write(table.concat({ ".gitignore", exe, wrapper, "" }, "\n"))
+            f:write(table.concat({ ".gitignore", "*.fmt", "*.exe", fmt, wrapper, "" }, "\n"))
             f:close()
         end
-    end
-
-    if wrapper ~= exe then
-        local f = io.open(wrapper, "w")
-        if f then
-            local str = string.format(constants.wrapper, fmt)
-            f:write(str)
-            f:close()
-        end
-        if os.type == "unix" then
-            os.execute(table.concat({ "chmod", "+x", wrapper }, ' '))
-        end
-    else
-        print('skip building ' .. wrapper)
     end
 
     M.setenvs()
     local args = {
-        './' .. exe,
+        cwd .. 'initex',
         '--ini',
         "--interaction=nonstopmode",
         fmt .. ".ini"

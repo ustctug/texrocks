@@ -14,22 +14,26 @@ license = 'GPL-3.0'
 url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/empty.zip"
 dir = "."
 
+[dependencies]
+texrocks = "0.1.2-1"
+amsfonts = "scm-1"
+
 [build_dependencies]
-texrocks = "0.1.1-1"
+texrocks = "0.1.2-1"
 amsfonts = "scm-1"
 tex-ini-files = "scm-1"
 unicode-data = "1.18-1"
 # etex depends on knuth-lib
 etex = "2.1-1"
 
-[dependencies]
-texrocks = "0.1.1-1"
-amsfonts = "scm-1"
+[run]
+command = "texrocks"
+args = ["luatex"]
 
 [test]
 type = "command"
-command = "tex"
-flags = ["main.tex"]
+command = "texrocks"
+flags = ["luatex", "test.tex"]
 
 [deploy]
 wrap_bin_scripts = false

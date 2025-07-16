@@ -1,0 +1,39 @@
+package = "initex"
+version = "0.0.1"
+lua = "==5.3"
+
+[description]
+summary = "initex"
+maintainer = "Wu Zhenyu"
+labels = ["texmf"]
+detailed = "An initial TeX without any extra features except generating other TeXs by `initex --ini XXX.ini` and called by other TeXs by `initex --fmt XXX`"
+homepage = "https://www.luatex.org/"
+license = "GPL-3.0"
+
+[dependencies]
+texrocks = "0.1.2-1"
+
+[build_dependencies]
+texrocks = "0.1.2-1"
+
+[run]
+command = "texrocks"
+args = ["initex"]
+
+[test]
+type = "command"
+command = "texrocks"
+flags = ["initex", "test.tex"]
+
+[deploy]
+wrap_bin_scripts = false
+
+[build]
+type = "command"
+build_command = "texrocks --dump initex"
+
+[build.install.bin]
+initex = "initex"
+
+[build.install.conf]
+'../web2c/luahbtex/initex.fmt' = 'initex.fmt'

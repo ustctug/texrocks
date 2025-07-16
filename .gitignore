@@ -1,4 +1,3 @@
-*.exe
 *.rock
 packages/demo-*/*.rockspec
 packages/luatex/*.rockspec

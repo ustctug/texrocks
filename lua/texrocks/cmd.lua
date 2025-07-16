@@ -16,7 +16,22 @@ local function get_parser()
 end
 
 function M.main()
-    local args = get_parser():parse()
+    local args = { args = {}, short = true }
+    local cmd = arg[1]
+    if cmd ~= nil and (cmd:gsub("^-", "") == cmd or cmd == "--short") then
+        local short = arg[1] == "--short"
+        if short then
+            for i, v in ipairs(arg) do
+                if i ~= 1 then
+                    table.insert(args.args, v)
+                end
+            end
+        else
+            args = { args = arg, short = short }
+        end
+    else
+        args = get_parser():parse()
+    end
     if args.dump then
         adapter.dump(args.dump)
     else
