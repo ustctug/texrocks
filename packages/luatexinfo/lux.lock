@@ -2,33 +2,119 @@
   "version": "1.0.0",
   "dependencies": {
     "rocks": {
-      "ae1506d312a2a505b679690306a6c39c3dcc646852c0411c9536f529d2293b6d": {
-        "name": "luatexinfo",
-        "version": "scm-1",
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0": {
+        "name": "initex",
+        "version": "0.0.1-1",
         "pinned": false,
         "opt": false,
         "dependencies": [
-          "dc3090899123a1d84e6424fa461141f0e0709ebc38ce5b59ae5be6e30701b2f8",
-          "bb80cb26c285965777f54c91161a9cb1e9f1ec2a22a4457dbdbc61631506b04b"
+          "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d"
         ],
-        "constraint": "==scm",
+        "constraint": "==0.0.1",
         "binaries": [
-          "texinfo",
-          "luatexinfo"
+          "initex"
         ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/releases/download/0.0.1/initex.ini.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-wlWMzJnZBJwG8UKfRKXB5luiJkR7DcIAKxlHEovXeKs=",
+          "source": "sha256-5FcdXxiCUr/VOwViqVbAJW1qNTUrDG0qt+gfIXcLzjo="
+        }
+      },
+      "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d": {
+        "name": "texrocks",
+        "version": "0.1.3-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.1.3",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.1.3.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-YVIJMsV85e9uhGikqBjMWv1LUQluMDrA8VFjx2zrduo=",
+          "source": "sha256-jHVxNgKdJisCoGI9KOVBKR++Q2MO5Bm/t7BYCXwZBXQ="
+        }
+      },
+      "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
+        "name": "argparse",
+        "version": "0.7.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/luarocks/argparse/archive/0.7.1.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-6EUIYsWhm29xlL8arP/3DQoRj/1CYWxs/J8+gz9T0YQ=",
+          "source": "sha256-AJ8n6HTxqHPeQd0NKHiyQLzZ63+ebDsO1uP+0f0vYUE="
+        }
+      },
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f": {
+        "name": "amsfonts",
+        "version": "scm-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==scm",
+        "binaries": [],
         "source": "luarocks_rockspec+https://luarocks.org/dev/",
         "source_url": {
           "type": "url",
-          "url": "https://github.com/Freed-Wu/texrocks/releases/download/0.0.1/luatexinfo.zip"
+          "url": "https://mirrors.ctan.org/install/fonts/amsfonts.tds.zip"
         },
         "hashes": {
-          "rockspec": "sha256-gD1F/8SPlW/UuzUetPQV9EIHWrVln/NMFLrYgbDqza0=",
-          "source": "sha256-S6tJOpo3Wmf8QPsm59DcvPXZFEbOOxicOCGcprlzGw8="
+          "rockspec": "sha256-gKjKbCHSHVuzgw/CCvG5BA5vnW/5OscMCwvbRZHwn1o=",
+          "source": "sha256-3XY8qJtxLQlulSykPDtgQJv8oXTwTFdD2mhGjQY/57Y="
+        }
+      }
+    },
+    "entrypoints": [
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0",
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f"
+    ]
+  },
+  "build_dependencies": {
+    "rocks": {
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0": {
+        "name": "initex",
+        "version": "0.0.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d"
+        ],
+        "constraint": "==0.0.1",
+        "binaries": [
+          "initex"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/releases/download/0.0.1/initex.ini.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-wlWMzJnZBJwG8UKfRKXB5luiJkR7DcIAKxlHEovXeKs=",
+          "source": "sha256-5FcdXxiCUr/VOwViqVbAJW1qNTUrDG0qt+gfIXcLzjo="
         }
       },
-      "b7af3fd20038496daf1fde0492a61c22ea13f239724d132520cce0c9fc32f267": {
-        "name": "argparse",
-        "version": "scm-2",
+      "1b558650a25ca0dc72920679c0d90e1f60704f6d51a55bbb34105c8cb737a649": {
+        "name": "manual",
+        "version": "scm-1",
         "pinned": false,
         "opt": false,
         "dependencies": [],
@@ -36,22 +122,82 @@
         "binaries": [],
         "source": "luarocks_rockspec+https://luarocks.org/dev/",
         "source_url": {
-          "type": "git",
-          "url": "https://github.com/luarocks/argparse.git",
-          "ref": "27967d7b52295ea7885671af734332038c132837"
+          "type": "url",
+          "url": "https://mirrors.ctan.org/fonts/manual.zip"
         },
         "hashes": {
-          "rockspec": "sha256-xXhZ5xUyBi6wcRZKAk1j5dKnYcX4lvcYYpsQODPz9Vc=",
-          "source": "sha256-YZe3mcL7ynxNDERusWA51x6EW6tUrrkgJjq6Blo6r0U="
+          "rockspec": "sha256-jiQSI2JfEmtb/v4XKm4v4w6cgcC3lb1oVDWYiD4eqbQ=",
+          "source": "sha256-MJ6S2OqTIRW1d1pBjw70rjc9CI7v1wzyXVh1dkfJkBs="
         }
       },
-      "bb80cb26c285965777f54c91161a9cb1e9f1ec2a22a4457dbdbc61631506b04b": {
+      "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d": {
+        "name": "texrocks",
+        "version": "0.1.3-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.1.3",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.1.3.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-YVIJMsV85e9uhGikqBjMWv1LUQluMDrA8VFjx2zrduo=",
+          "source": "sha256-jHVxNgKdJisCoGI9KOVBKR++Q2MO5Bm/t7BYCXwZBXQ="
+        }
+      },
+      "21ad14b3b7260790a3cea09a009cb28f6b15ba4e30ad6ada4cf47ccda27cdb35": {
+        "name": "knuth-lib",
+        "version": "scm-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "9ecd4f8b01fcfe290e77652a403ecf42a9b39b8867a57f9b0812a5722d6c8af2",
+          "1b558650a25ca0dc72920679c0d90e1f60704f6d51a55bbb34105c8cb737a649"
+        ],
+        "constraint": "==scm",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/dev/",
+        "source_url": {
+          "type": "url",
+          "url": "https://mirrors.ctan.org/systems/knuth/dist/lib.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-V1WPA3/tbnEaiDu7UXXIChl/+IbOTZawX29KAjNEIoo=",
+          "source": "sha256-tFN0DXJDsWJPsP/i61cfv5lOLegN/io1Bww4CBrGycU="
+        }
+      },
+      "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
+        "name": "argparse",
+        "version": "0.7.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/luarocks/argparse/archive/0.7.1.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-6EUIYsWhm29xlL8arP/3DQoRj/1CYWxs/J8+gz9T0YQ=",
+          "source": "sha256-AJ8n6HTxqHPeQd0NKHiyQLzZ63+ebDsO1uP+0f0vYUE="
+        }
+      },
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f": {
         "name": "amsfonts",
         "version": "scm-1",
         "pinned": false,
         "opt": false,
         "dependencies": [],
-        "constraint": null,
+        "constraint": "==scm",
         "binaries": [],
         "source": "luarocks_rockspec+https://luarocks.org/dev/",
         "source_url": {
@@ -63,32 +209,67 @@
           "source": "sha256-3XY8qJtxLQlulSykPDtgQJv8oXTwTFdD2mhGjQY/57Y="
         }
       },
-      "dc3090899123a1d84e6424fa461141f0e0709ebc38ce5b59ae5be6e30701b2f8": {
-        "name": "texrocks",
+      "896583adf76f60854c81cf6097f46697962dd28b6b3b5312cf25c9bd39baf560": {
+        "name": "tex-ini-files",
         "version": "scm-1",
         "pinned": false,
         "opt": false,
-        "dependencies": [
-          "b7af3fd20038496daf1fde0492a61c22ea13f239724d132520cce0c9fc32f267"
-        ],
-        "constraint": null,
-        "binaries": [
-          "texrocks"
-        ],
+        "dependencies": [],
+        "constraint": "==scm",
+        "binaries": [],
         "source": "luarocks_rockspec+https://luarocks.org/dev/",
         "source_url": {
-          "type": "git",
-          "url": "https://github.com/ustctug/texrocks",
-          "ref": "131479d5da038cf6dbe415d78825f21aacd9d575"
+          "type": "url",
+          "url": "https://mirrors.ctan.org/install/macros/generic/tex-ini-files.tds.zip"
         },
         "hashes": {
-          "rockspec": "sha256-IhMnnmtXtXP2bQJHOLFo4nErpEv9tXAL2GxmBdIsO7A=",
-          "source": "sha256-+IDhFZWW4FhWPjXXkLNz9VcH632Li8YWDm8F4nhAa4U="
+          "rockspec": "sha256-A+POJHgRgidzWqM+odgKFFdm+3J5EhfJzbO/HA383ZQ=",
+          "source": "sha256-bcUZO6cmvzCnw3EzvPv3M7/BqK5nH6PI5AqjmzfA1sY="
+        }
+      },
+      "9ecd4f8b01fcfe290e77652a403ecf42a9b39b8867a57f9b0812a5722d6c8af2": {
+        "name": "cm-tfm",
+        "version": "scm-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/dev/",
+        "source_url": {
+          "type": "url",
+          "url": "https://mirrors.ctan.org/fonts/cm/tfm.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-lY4f7Y9VulhuUWj7c18rRUsPc1WotZpv12Mb0qogv3Y=",
+          "source": "sha256-nA+Z+jTH2AHED2tf9gvCjyAOjvb/sv515UyoNcZ/wEw="
+        }
+      },
+      "fe78afa180595ef4fa6e0e6c3796081897f1dbe3d65f1ace70e32ca5a58d6bd2": {
+        "name": "texinfo",
+        "version": "7.2-2",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==7.2",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/debian-tex/texinfo/archive/debian/7.2-2.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-45uiIMzGqufGjUGyYCkuQVxzH/9tnX0rAIed6aAZw7M=",
+          "source": "sha256-4K1yp1rs8PiCL32uaX1yQHA25vLvr+iIO0tGdyTXgXE="
         }
       }
     },
     "entrypoints": [
-      "ae1506d312a2a505b679690306a6c39c3dcc646852c0411c9536f529d2293b6d"
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0",
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f",
+      "896583adf76f60854c81cf6097f46697962dd28b6b3b5312cf25c9bd39baf560",
+      "21ad14b3b7260790a3cea09a009cb28f6b15ba4e30ad6ada4cf47ccda27cdb35",
+      "fe78afa180595ef4fa6e0e6c3796081897f1dbe3d65f1ace70e32ca5a58d6bd2"
     ]
   }
 }

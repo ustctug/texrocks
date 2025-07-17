@@ -2,6 +2,50 @@
   "version": "1.0.0",
   "dependencies": {
     "rocks": {
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0": {
+        "name": "initex",
+        "version": "0.0.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d"
+        ],
+        "constraint": "==0.0.1",
+        "binaries": [
+          "initex"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/releases/download/0.0.1/initex.ini.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-wlWMzJnZBJwG8UKfRKXB5luiJkR7DcIAKxlHEovXeKs=",
+          "source": "sha256-5FcdXxiCUr/VOwViqVbAJW1qNTUrDG0qt+gfIXcLzjo="
+        }
+      },
+      "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d": {
+        "name": "texrocks",
+        "version": "0.1.3-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.1.3",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.1.3.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-YVIJMsV85e9uhGikqBjMWv1LUQluMDrA8VFjx2zrduo=",
+          "source": "sha256-jHVxNgKdJisCoGI9KOVBKR++Q2MO5Bm/t7BYCXwZBXQ="
+        }
+      },
       "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
         "name": "argparse",
         "version": "0.7.1-1",
@@ -37,37 +81,37 @@
           "rockspec": "sha256-gKjKbCHSHVuzgw/CCvG5BA5vnW/5OscMCwvbRZHwn1o=",
           "source": "sha256-3XY8qJtxLQlulSykPDtgQJv8oXTwTFdD2mhGjQY/57Y="
         }
-      },
-      "8dc75e30cc8590e65d026bff0fcc339e7af18a21a8fa2ae05380fe00be89dd75": {
-        "name": "texrocks",
-        "version": "0.1.2-1",
-        "pinned": false,
-        "opt": false,
-        "dependencies": [
-          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
-        ],
-        "constraint": "==0.1.2",
-        "binaries": [
-          "texrocks"
-        ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
-        "source_url": {
-          "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.1.2.zip"
-        },
-        "hashes": {
-          "rockspec": "sha256-GXiWz9Nk1Y6YltdiNVAbUP4lJ3YSMywIKYBiT3dFw2o=",
-          "source": "sha256-aoHZb3uMJ2F2Us/NPAHj0nCASc2KGaIiUb5HZ5pcwPI="
-        }
       }
     },
     "entrypoints": [
-      "8dc75e30cc8590e65d026bff0fcc339e7af18a21a8fa2ae05380fe00be89dd75",
-      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f"
+      "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f",
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0"
     ]
   },
   "build_dependencies": {
     "rocks": {
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0": {
+        "name": "initex",
+        "version": "0.0.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d"
+        ],
+        "constraint": "==0.0.1",
+        "binaries": [
+          "initex"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/releases/download/0.0.1/initex.ini.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-wlWMzJnZBJwG8UKfRKXB5luiJkR7DcIAKxlHEovXeKs=",
+          "source": "sha256-5FcdXxiCUr/VOwViqVbAJW1qNTUrDG0qt+gfIXcLzjo="
+        }
+      },
       "1b558650a25ca0dc72920679c0d90e1f60704f6d51a55bbb34105c8cb737a649": {
         "name": "manual",
         "version": "scm-1",
@@ -84,6 +128,28 @@
         "hashes": {
           "rockspec": "sha256-jiQSI2JfEmtb/v4XKm4v4w6cgcC3lb1oVDWYiD4eqbQ=",
           "source": "sha256-MJ6S2OqTIRW1d1pBjw70rjc9CI7v1wzyXVh1dkfJkBs="
+        }
+      },
+      "1c4be17d90e2d7ac14f9ba2d3043ed00a4b73abd892964da849191dd641f693d": {
+        "name": "texrocks",
+        "version": "0.1.3-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
+        ],
+        "constraint": "==0.1.3",
+        "binaries": [
+          "texrocks"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.1.3.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-YVIJMsV85e9uhGikqBjMWv1LUQluMDrA8VFjx2zrduo=",
+          "source": "sha256-jHVxNgKdJisCoGI9KOVBKR++Q2MO5Bm/t7BYCXwZBXQ="
         }
       },
       "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023": {
@@ -199,28 +265,6 @@
           "source": "sha256-bcUZO6cmvzCnw3EzvPv3M7/BqK5nH6PI5AqjmzfA1sY="
         }
       },
-      "8dc75e30cc8590e65d026bff0fcc339e7af18a21a8fa2ae05380fe00be89dd75": {
-        "name": "texrocks",
-        "version": "0.1.2-1",
-        "pinned": false,
-        "opt": false,
-        "dependencies": [
-          "2f728e6c11c4d5d9af8bbc70193dfb5c0002f6bac2c5d83e04ffd6bfdf358023"
-        ],
-        "constraint": "==0.1.2",
-        "binaries": [
-          "texrocks"
-        ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
-        "source_url": {
-          "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.1.2.zip"
-        },
-        "hashes": {
-          "rockspec": "sha256-GXiWz9Nk1Y6YltdiNVAbUP4lJ3YSMywIKYBiT3dFw2o=",
-          "source": "sha256-aoHZb3uMJ2F2Us/NPAHj0nCASc2KGaIiUb5HZ5pcwPI="
-        }
-      },
       "9ecd4f8b01fcfe290e77652a403ecf42a9b39b8867a57f9b0812a5722d6c8af2": {
         "name": "cm-tfm",
         "version": "scm-1",
@@ -241,11 +285,11 @@
       }
     },
     "entrypoints": [
-      "8dc75e30cc8590e65d026bff0fcc339e7af18a21a8fa2ae05380fe00be89dd75",
       "8020c29d243273c6122e850f6034b0dcd4fce627e5c5aec4efa6c308b727081f",
       "896583adf76f60854c81cf6097f46697962dd28b6b3b5312cf25c9bd39baf560",
       "8773a74e01b8f5094af083bc0b9678741186d247a7c72fd73252d7ee59c4da5a",
-      "414cfc33951c981ea45dcfddc370cc7c2adc1f157ca71253144d882eb564be84"
+      "414cfc33951c981ea45dcfddc370cc7c2adc1f157ca71253144d882eb564be84",
+      "136bb1d9c1211ce600d78eb995fb5d75abaa70bdbe9e3fd19d888aca3325fdf0"
     ]
   }
 }

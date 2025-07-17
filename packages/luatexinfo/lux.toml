@@ -1,39 +1,46 @@
 package = "luatexinfo"
 version = "0.0.1"
-lua = "==5.3"
+lua = ">=5.1"
 
 [description]
 summary = "LuaTeX for TeXinfo"
-maintainer = "Wu Zhenyu"
+maintainer = "Wu"
 labels = ["texmf"]
-detailed = "See https://github.com/Freed-Wu/texrocks"
+detailed = "See https://github.com/ustctug/texrocks"
 homepage = "https://www.luatex.org/"
 license = 'GPL-3.0'
 
 [source]
-src = "https://github.com/ustctug/texrocks/releases/download/0.0.1/luatexinfo.zip"
+url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/$(PACKAGE).ini.zip"
 dir = "."
 
-[dependencies]
-texrocks = "0.1.1-1"
-texinfo = "7.2-2"
-knuth-lib = "scm-1"
+[build_dependencies]
+initex = "0.0.1-1"
 amsfonts = "scm-1"
 tex-ini-files = "scm-1"
+knuth-lib = "scm-1"
+texinfo = "7.2-2"
+
+[dependencies]
+initex = "0.0.1-1"
+amsfonts = "scm-1"
+
+[run]
+command = "luatexinfo"
 
 [test]
 type = "command"
-command = "texinfo"
-# pdf has some bug about fonts' path
+command = "luatexinfo"
+# pdf has some bug about fonts' paths
 # args = ["main.texi"]
-flags = ["--output-format=dvi", "main.texi"]
+flags = ["--output-format=dvi", "test.texi"]
 
 [deploy]
 wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texlua build.lua luatexinfo"
+build_command = "texrocks --dump luatexinfo"
 
 [build.install.bin]
 luatexinfo = "luatexinfo"

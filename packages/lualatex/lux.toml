@@ -1,44 +1,53 @@
 package = "lualatex"
-version = "scm-1"
-lua = "==5.3"
+version = "0.0.1"
+lua = ">=5.1"
 
 [description]
 summary = "lualatex for LaTeX"
-maintainer = "Wu Zhenyu"
+maintainer = "Wu"
 labels = ["texmf"]
-detailed = "See https://github.com/Freed-Wu/texrocks"
+detailed = "See https://github.com/ustctug/texrocks"
 homepage = "https://www.lualatex.org/"
 license = 'GPL-3.0'
 
 [source]
-src = "https://github.com/ustctug/texrocks/releases/download/0.0.1/lualatex.zip"
+url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/empty.zip"
 dir = "."
 
-[dependencies]
-texrocks = "0.1.1-1"
-amsfonts = "scm-1"
 # refer https://ctan.org/pkg/required
-# latex-base depends on l3backend depends on unicode-data
-latex-base = "2024.11.01-2"
+[dependencies]
+initex = "0.0.1-1"
+amsfonts = "scm-1"
 # tex-ini-files provide lualatexquotejobname.lua
 tex-ini-files = "scm-1"
+# latex-base depends on l3backend depends on unicode-data
+latex-base = "2024.11.01-2"
+
+[build_dependencies]
+initex = "0.0.1-1"
+amsfonts = "scm-1"
+tex-ini-files = "scm-1"
+latex-base = "2024.11.01-2"
 latex-fonts = "scm-1"
+
+[run]
+command = "lualatex"
 
 [test]
 type = "command"
-command = "latex"
-flags = ["main.tex"]
+command = "lualatex"
+flags = ["test.tex"]
 
 [deploy]
 wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texlua build.lua lualatex"
+build_command = "texrocks --dump lualatex"
 
 [build.install.bin]
 lualatex = "lualatex"
-tex = "tex"
+latex = "latex"
 
 [build.install.conf]
 '../web2c/luahbtex/lualatex.fmt' = 'lualatex.fmt'

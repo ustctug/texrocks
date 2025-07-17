@@ -1,8 +1,6 @@
+*.zip
 *.rock
-packages/demo-*/*.rockspec
-packages/luatex/*.rockspec
-packages/lualatex/*.rockspec
-packages/luatexinfo/*.rockspec
+packages/*/*.rockspec
 
 *.cp
 

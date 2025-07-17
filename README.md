@@ -43,8 +43,10 @@ lx --lua-version=5.3 --dev add your-needed-luatex-package1 you-loved-luatex-pack
 "$EDITOR" main.tex
 ```
 
-PS: you can `lx config edit` to edit config to avoid input `--lua-version=5.3`
-every time. We assume you did this at the following code.
+PS: luatex supports both luajit (another implementation of lua 5.1) and lua 5.3.
+However, lualatex only supports lua 5.3. So we recommend that you use lua 5.3
+syntax. you can `lx config edit` to edit config to avoid input
+`--lua-version=5.3` every time. We assume you did this at the following code.
 
 `~/.config/lux/config.toml`:
 
@@ -273,7 +275,7 @@ Some packages are recommended:
 
 [More packages](https://luarocks.org/m/texmf).
 
-[A more complicated example](packages/demo-graph):
+[A more complicated example](packages/demo):
 
 ```tex
 \documentclass[tikz]{standalone}
