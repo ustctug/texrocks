@@ -34,7 +34,7 @@ wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texrocks --dump initex"
+build_command = "texlua --ini initex.ini"
 
 [build.install.bin]
 initex = "initex"
