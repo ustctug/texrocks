@@ -15,15 +15,15 @@ url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/$(PACKAGE).in
 dir = "."
 
 [build_dependencies]
-initex = "0.0.1-1"
-amsfonts = "scm-1"
-tex-ini-files = "scm-1"
-knuth-lib = "scm-1"
+texrocks = "0.2.1-1"
+amsfonts = "3.04-1"
+tex-ini-files = "2025.02.09-1"
+knuth-lib = "2021.02.05-1"
 texinfo = "7.2-2"
 
 [dependencies]
-initex = "0.0.1-1"
-amsfonts = "scm-1"
+texrocks = "0.2.1-1"
+amsfonts = "3.04-1"
 
 [run]
 command = "luatexinfo"
@@ -40,11 +40,10 @@ wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texrocks --dump luatexinfo"
+build_command = "texlua --ini --interaction=nonstopmode luatexinfo.ini"
 
 [build.install.bin]
 luatexinfo = "luatexinfo"
-texinfo = "texinfo"
 
 [build.install.conf]
 '../web2c/luahbtex/luatexinfo.fmt' = 'luatexinfo.fmt'

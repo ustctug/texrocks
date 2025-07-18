@@ -1,8 +1,6 @@
-local git_ref = 'scm'
+local git_ref = '3.4'
 local modrev = git_ref
 local specrev = '1'
-
-local repo_url = 'https://ctan.org/pkg/latex-url'
 
 rockspec_format = '3.0'
 package = 'latex-url'
@@ -18,8 +16,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/release-' .. git_ref .. '-PL' .. specrev .. '/' .. package .. '.tds.zip',
-  dir = '.'
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/url.zip",
+  dir = 'url'
 }
 
 dependencies = {}

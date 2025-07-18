@@ -19,9 +19,16 @@ if os.getenv "LUA_PATH" then
     end
 
     -- copy self to a new wrapper
-    local exe = arg[2]
-    if (arg[1] == "--ini" or arg[1] == "-ini") and exe ~= nil then
-        exe = exe:gsub("%.ini$", "")
+    local is_ini = false
+    local exe
+    for _, opt in ipairs(arg) do
+        if opt == "--ini" or opt == "-ini" then
+            is_ini = true
+        elseif opt:gsub("%.ini$", "") ~= opt then
+            exe = opt:gsub("%.ini$", "")
+        end
+    end
+    if is_ini and exe ~= nil then
         local f = io.open(exe, "w")
         if f then
             local self = io.open(arg[0])

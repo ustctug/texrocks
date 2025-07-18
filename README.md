@@ -29,122 +29,16 @@
 
 [![luarocks](https://img.shields.io/luarocks/v/Freed-Wu/texrocks)](https://luarocks.org/modules/Freed-Wu/texrocks)
 
-A (La)TeX package manager powered by luarocks and luaTeX, also
-[a minimal (La)TeX distribution](https://freed-wu.github.io/2025/03/01/minimal-latex-distribution.html).
+A minimal (La)TeX distribution powered by lux and luaTeX.
 
-## Introduction
+## Features
 
-For example, you create a virtual environment named `my-thesis`:
-
-```sh
-lx new --lua-versions=5.3 my-thesis
-cd my-thesis
-lx --lua-version=5.3 --dev add your-needed-luatex-package1 you-loved-luatex-package2
-"$EDITOR" main.tex
-```
-
-PS: luatex supports both luajit (another implementation of lua 5.1) and lua 5.3.
-However, lualatex only supports lua 5.3. So we recommend that you use lua 5.3
-syntax. you can `lx config edit` to edit config to avoid input
-`--lua-version=5.3` every time. We assume you did this at the following code.
-
-`~/.config/lux/config.toml`:
-
-```toml
-lua_version = "5.3"
-```
-
-If you build it directly:
-
-```sh
-luatex main.tex
-```
-
-It will fail, because luatex doesn't know where is
-`your-needed-luatex-package1.sty` in `\usepackage{your-needed-luatex-package1}`
-and `your-needed-luatex-package1.lua` in `\directlua{require"your-needed-luatex-package1"}`.
-So you try:
-
-```sh
-lx lua --lua=luatex -- main.tex
-# or
-lx shell
-luatex main.tex
-```
-
-`lx` will add lua paths of `your-needed-luatex-package1` and
-`you-loved-luatex-package2` to `$LUA_PATH` and `$CLUA_PATH`.
-lua recognize these variables to set `package.path` and `package.cpath`.
-Any `require"package_name"` will search `package_name.lua` in `package.path` and
-`package.cpath`.
-
-However, luatex is not a standard lua. It recognizes `$LUAINPUTS` and
-`$CLUAINPUTS` for lua files. So we must modify `package.path` and
-`package.cpath` to get them. And luatex recognize `$TEXINPUTS` for tex files.
-Notice we install tex files in the same directory of lua files, so we also can
-get them. Font files are similar.
-
-So we create a lua wrapper named `texrocks` to do this work. `texrocks` calls
-`os.setenv()` to set correct environment variables to make luatex work in a
-virtual/system environment. We wrap `luatex`:
-
-```sh
-luatex main.tex
-```
-
-If you don't like virtual environment, just use `lx install` to replace `lx add`.
-These packages will be installed to system globally.
-
-```sh
-lx install your-needed-luatex-package1 you-loved-luatex-package2
-```
-
-It is advised that install TeX tools globally and TeX packages on virtual
-environment, and add `lux.lock` to VCS to keep reproducible of your TeX
-documents.
-
-For nodejs or python users, you can simply understand:
-
-- `lux.toml`: npm's `package.json` or uv's `pyproject.toml` or
-  `requirements.txt`.
-- `lux.lock`: npm's `package-lock.json` or uv's `uv.lock`
-- `.lux`: npm's `node_modules` or uv's `.venv`
-
-## Related Projects
-
-Except environment variables, TeX compilers also read a config file:
-
-`texmf.cnf`:
-
-```texmf
-% comment
-VAR = XXX
-```
-
-is equal to shell's:
-
-```sh
-VAR=XXX texlua
-```
-
-or lua's:
-
-```lua
-os.setenv("VAR", "XXX")
-io.popen("texlua")
-```
-
-Many TeX distributions, like TeX Live, MikTeX, doesn't use environment variables.
-They use `texmf.cnf` to declare a fixed path, like `/usr/share/texmf`. It is
-impossible to support virtual environments.
-
-And these huge TeX distributions usually provide many TeX compilers: pdfTeX,
-XeTeX, LuaTeX, ... and many TeX tools written in lua/perl/python/java/...
-We only provide LuaTeX and those TeX tools written in lua. That's enough, IMO.
+- [x] install packages in parallel
+- [x] package version control
+- [x] virtual environment
+- [x] minimal preinstalled packages
 
 ## Install
-
-texrocks uses
 
 - [lx](https://github.com/nvim-neorocks/lux) >= 0.8.2 as package manager,
 
@@ -166,12 +60,6 @@ lx install luahbtex
 paru -S luahbtex
 # For Nix
 nix-env -iA nur.repos.Freed-Wu.luahbtex
-```
-
-Then you can:
-
-```sh
-lx install texrocks
 ```
 
 Now you can use `lx` to install TeX dialects written in TeX and TeX tools written
@@ -336,7 +224,7 @@ TODO
 team.
 
 ```sh
-lx --dev install texdoc
+lx install texdoc
 ```
 
 Note, texdoc need a tlpdb database.
@@ -377,7 +265,7 @@ lx install l3build
 `l3build` is a simple tool to search fonts.
 
 ```sh
-lx --dev install luafindfont
+lx install luafindfont
 ```
 
 ### texluap
@@ -390,6 +278,116 @@ lx install prompt-style
 # For ArchLinux
 paru -S lua53-prompt-style texlua
 ```
+
+## Introduction
+
+For example, you create a virtual environment named `my-thesis`:
+
+```sh
+lx new --lua-versions=5.3 my-thesis
+cd my-thesis
+lx --lua-version=5.3 add your-needed-luatex-package1 you-loved-luatex-package2
+"$EDITOR" main.tex
+```
+
+PS: luatex supports both luajit (another implementation of lua 5.1) and lua 5.3.
+However, lualatex only supports lua 5.3. So we recommend that you use lua 5.3
+syntax. you can `lx config edit` to edit config to avoid input
+`--lua-version=5.3` every time. We assume you did this at the following code.
+
+`~/.config/lux/config.toml`:
+
+```toml
+lua_version = "5.3"
+```
+
+If you build it directly:
+
+```sh
+luatex main.tex
+```
+
+It will fail, because luatex doesn't know where is
+`your-needed-luatex-package1.sty` in `\usepackage{your-needed-luatex-package1}`
+and `your-needed-luatex-package1.lua` in `\directlua{require"your-needed-luatex-package1"}`.
+So you try:
+
+```sh
+lx lua --lua=luatex -- main.tex
+# or
+lx shell
+luatex main.tex
+```
+
+`lx` will add lua paths of `your-needed-luatex-package1` and
+`you-loved-luatex-package2` to `$LUA_PATH` and `$CLUA_PATH`.
+lua recognize these variables to set `package.path` and `package.cpath`.
+Any `require"package_name"` will search `package_name.lua` in `package.path` and
+`package.cpath`.
+
+However, luatex is not a standard lua. It recognizes `$LUAINPUTS` and
+`$CLUAINPUTS` for lua files. So we must modify `package.path` and
+`package.cpath` to get them. And luatex recognize `$TEXINPUTS` for tex files.
+Notice we install tex files in the same directory of lua files, so we also can
+get them. Font files are similar.
+
+So we create a lua wrapper named `texrocks` to do this work. `texrocks` calls
+`os.setenv()` to set correct environment variables to make luatex work in a
+virtual/system environment. We wrap `luatex`:
+
+```sh
+luatex main.tex
+```
+
+If you don't like virtual environment, just use `lx install` to replace `lx add`.
+These packages will be installed to system globally.
+
+```sh
+lx install your-needed-luatex-package1 you-loved-luatex-package2
+```
+
+It is advised that install TeX tools globally and TeX packages on virtual
+environment, and add `lux.lock` to VCS to keep reproducible of your TeX
+documents.
+
+For nodejs or python users, you can simply understand:
+
+- `lux.toml`: npm's `package.json` or uv's `pyproject.toml` or
+  `requirements.txt`.
+- `lux.lock`: npm's `package-lock.json` or uv's `uv.lock`
+- `.lux`: npm's `node_modules` or uv's `.venv`
+
+## Related Projects
+
+Except environment variables, TeX compilers also read a config file:
+
+`texmf.cnf`:
+
+```texmf
+% comment
+VAR = XXX
+```
+
+is equal to shell's:
+
+```sh
+VAR=XXX texlua
+```
+
+or lua's:
+
+```lua
+os.setenv("VAR", "XXX")
+io.popen("texlua")
+```
+
+Many TeX distributions, like TeX Live, MikTeX, doesn't use environment variables.
+They use `texmf.cnf` to declare a fixed path, like `/usr/share/texmf`. It is
+impossible to support virtual environments.
+
+And these huge TeX distributions usually provide many TeX compilers: pdfTeX,
+XeTeX, LuaTeX, ... and many TeX tools written in lua/perl/python/java/...
+We only provide LuaTeX and those TeX tools written in lua. That's enough, IMO.
 
 ## TODO
 

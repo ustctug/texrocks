@@ -15,26 +15,25 @@ url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/$(PACKAGE).in
 dir = "."
 
 [dependencies]
-texrocks = "0.1.3-1"
+texrocks = "0.2.1-1"
 
 [build_dependencies]
-texrocks = "0.1.3-1"
+texrocks = "0.2.1-1"
 
 [run]
-command = "texrocks"
-args = ["initex"]
+command = "initex"
 
 [test]
 type = "command"
-command = "texrocks"
-flags = ["initex", "test.tex"]
+command = "initex"
+flags = ["test.tex"]
 
 [deploy]
 wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texlua --ini initex.ini"
+build_command = "texlua --ini --interaction=nonstopmode initex.ini"
 
 [build.install.bin]
 initex = "initex"
