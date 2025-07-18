@@ -5,7 +5,7 @@ local specrev = '1'
 local repo_url = 'https://gitlab.lisn.upsaclay.fr/texlive/luatex'
 
 rockspec_format = '3.0'
-package = 'texlua'
+package = 'luahbtex'
 version = modrev .. '-' .. specrev
 
 description = {
@@ -76,7 +76,7 @@ build = {
   build_command = [[sh build.sh --nolua53 --luahb --parallel]],
   install = {
     bin = {
-      texlua = 'build/texk/web2c/luahbtex'
+      luahbtex = 'build/texk/web2c/luahbtex'
     },
     conf = {
       ['../web2c/texmf.cnf'] = 'source/texk/kpathsea/texmf.cnf'

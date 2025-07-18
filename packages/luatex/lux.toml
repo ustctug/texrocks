@@ -16,12 +16,12 @@ dir = "."
 
 [dependencies]
 initex = "0.0.1-1"
-amsfonts = "scm-1"
+amsfonts = "3.04-1"
 
 [build_dependencies]
 initex = "0.0.1-1"
-amsfonts = "scm-1"
-tex-ini-files = "scm-1"
+amsfonts = "3.04-1"
+tex-ini-files = "2025.02.09-1"
 unicode-data = "1.18-1"
 # etex depends on knuth-lib
 etex = "2.1-1"

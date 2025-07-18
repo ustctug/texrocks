@@ -1,0 +1,26 @@
+#!/usr/bin/env -S luahbtex --luaonly
+if os.getenv "LUA_PATH" then
+    local arg0 = arg[0]
+    arg0 = arg0:gsub(".*[/\\]", "")
+    local cmd = "--fmt=%s"
+    local args = { arg[ -2] }
+    if arg0 ~= "texlua" then
+        cmd = cmd:format(arg0)
+        table.insert(args, cmd)
+    else
+        cmd = arg[1]
+    end
+    -- --ini/--fmt conflict with --luaonly
+    if cmd:gsub("^-", "") == cmd then
+        table.insert(args, arg[ -1])
+    end
+    for _, v in ipairs(arg) do
+        table.insert(args, v)
+    end
+
+    require 'texrocks.adapter'.run(args, false)
+else
+    local cmd = "lx --lua-version=%s lua --lua=%s --no-loader -- %s"
+    cmd = cmd:format(_VERSION:gsub(".* ", ""), arg[0], table.concat(arg, " "))
+    os.exec(cmd)
+end

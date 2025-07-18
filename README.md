@@ -86,16 +86,9 @@ get them. Font files are similar.
 
 So we create a lua wrapper named `texrocks` to do this work. `texrocks` calls
 `os.setenv()` to set correct environment variables to make luatex work in a
-virtual/system environment.
+virtual/system environment. We wrap `luatex`:
 
 ```sh
-lx lua --lua=texrocks -- luatex main.tex
-# or
-lx shell
-texrocks luatex main.tex
-# If you don't pass any argument, `texrocks` will launch a shell like `lx shell`
-lx shell
-texrocks
 luatex main.tex
 ```
 
@@ -163,15 +156,16 @@ paru -S lux-cli
 nix-env -iA nixos.lux-cli
 ```
 
-- texlua as lua 5.3 interpreter, contained in mostly TeX distribution like
-  TeXLive and MikTeX. However, you can install it standalone by:
+- A LuaTeX compiler named luahbtex. Because LaTeX only support it, not others
+  luatex, luajittex, ... It contained in mostly TeX distribution like TeXLive
+  and MikTeX. However, you can install it standalone by:
 
 ```sh
-lx install texlua
+lx install luahbtex
 # For ArchLinux
-paru -S texlua
+paru -S luahbtex
 # For Nix
-nix-env -iA nur.repos.Freed-Wu.texlua
+nix-env -iA nur.repos.Freed-Wu.luahbtex
 ```
 
 Then you can:
@@ -399,9 +393,6 @@ paru -S lua53-prompt-style texlua
 
 ## TODO
 
-- `texrocks XXX --option` will be recognized as `texrocks --option XXX`.
-  Wait [upstream](https://github.com/luarocks/argparse/issues/30). You have to
-  `texrocks XXX \ --option` or `texrocks 'XXX --option'`
 - `lx` can be configure by `~/.config/lux/config.toml`. `texrocks` should
   know correct installation positions of TeX files according to it. Currently we
   use default value without any extra config.

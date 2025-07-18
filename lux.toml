@@ -1,0 +1,24 @@
+package = "texrocks"
+version = "0.2.0"
+lua = ">=5.1"
+
+[description]
+summary = ""
+maintainer = "Wu"
+labels = ["texmf"]
+detailed = ""
+homepage = "https://www.luatex.org/"
+license = "GPL-3.0"
+
+[source]
+url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/$(PACKAGE).ini.zip"
+dir = "."
+
+[deploy]
+wrap_bin_scripts = false
+
+[build]
+type = "builtin"
+
+[build.install.bin]
+texlua = "bin/texlua"

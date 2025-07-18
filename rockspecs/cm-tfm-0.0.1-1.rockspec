@@ -1,8 +1,6 @@
-local git_ref = 'scm'
+local git_ref = '0.0.1'
 local modrev = git_ref
 local specrev = '1'
-
-local repo_url = 'https://ctan.org/pkg/cm-tfm'
 
 rockspec_format = '3.0'
 package = 'cm-tfm'
@@ -20,8 +18,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/tfm.zip",
+  dir = 'tfm'
 }
 
 if modrev == 'scm' or modrev == 'dev' then

@@ -16,7 +16,7 @@ description = {
   $license
 }
 
-dependencies = { "argparse" }
+dependencies = { }
 
 test_dependencies = $test_dependencies
 
@@ -34,7 +34,7 @@ end
 build = {
   type = 'builtin',
   install = {
-    bin = { "bin/texrocks" }
+    bin = { "bin/texlua" }
   }
 }
 

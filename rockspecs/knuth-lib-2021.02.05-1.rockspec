@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = '2021-02-05'
+local modrev = git_ref:gsub("-", ".")
 local specrev = '1'
 
 local repo_url = 'https://ctan.org/pkg/knuth-lib'
@@ -20,8 +20,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/lib.zip",
+  dir = 'lib'
 }
 
 if modrev == 'scm' or modrev == 'dev' then

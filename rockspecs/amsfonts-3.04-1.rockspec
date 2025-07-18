@@ -1,8 +1,6 @@
 local git_ref = '3.04'
-local modrev = 'scm'
+local modrev = git_ref
 local specrev = '1'
-
-local repo_url = 'https://ctan.org/pkg/amsfonts'
 
 rockspec_format = '3.0'
 package = 'amsfonts'
@@ -22,8 +20,8 @@ Basic LaTeX support for the symbol fonts is provided by amsfonts.sty, with names
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. git_ref,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/amsfonts.tds.zip",
+  dir = '.'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
