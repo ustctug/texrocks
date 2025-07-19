@@ -35,7 +35,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode epstopdf.dtx
+    luatex --interaction=nonstopmode epstopdf.dtx
 ]],
   install = {
     conf = {

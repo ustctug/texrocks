@@ -38,7 +38,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    latex --interaction=nonstopmode ntheorem.ins
+    lualatex --interaction=nonstopmode ntheorem.ins
   ]],
   install = {
     conf = {

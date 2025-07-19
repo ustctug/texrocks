@@ -39,7 +39,7 @@ dependencies = { 'latex-base', 'atveryend', 'latex-tools' }
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode hypdoc.dtx
+    luatex --interaction=nonstopmode hypdoc.dtx
 ]],
   install = {
     conf = {

@@ -61,7 +61,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    latex --interaction=nonstopmode ncctools.ins
+    lualatex --interaction=nonstopmode ncctools.ins
   ]],
   copy_directories = { '../doc' },
   install = {

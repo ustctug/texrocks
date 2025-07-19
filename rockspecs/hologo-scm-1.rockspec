@@ -36,7 +36,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode hologo.dtx
+    luatex --interaction=nonstopmode hologo.dtx
   ]],
   install = {
     conf = {

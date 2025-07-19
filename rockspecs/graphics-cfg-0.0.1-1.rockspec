@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = "19d1238af17df376cd46333b229579b0f7f3a41f"
+local modrev = '0.0.1'
 local specrev = '1'
 
 local repo_url = 'https://github.com/latex3/graphics-cfg'
@@ -22,7 +22,8 @@ description = {
 dependencies = { 'graphics-def' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-ctan.zip',
+  url = "https://github.com/latex3/graphics-cfg/archive/" .. git_ref .. ".zip",
+  dir = package .. '-' .. git_ref
 }
 
 if modrev == 'scm' or modrev == 'dev' then

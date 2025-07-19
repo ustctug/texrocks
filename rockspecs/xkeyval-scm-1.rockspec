@@ -76,7 +76,7 @@ build = {
     ]]
   },
   build_command = [[
-    latex --interaction=nonstopmode README
+    lualatex --interaction=nonstopmode README
   ]],
   install = {
     conf = {

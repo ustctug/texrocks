@@ -33,7 +33,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode atveryend.dtx
+    luatex --interaction=nonstopmode atveryend.dtx
 ]],
   install = {
     conf = {

@@ -1,8 +1,6 @@
-local git_ref = 'scm'
+local git_ref = '0.16'
 local modrev = git_ref
 local specrev = '1'
-
-local repo_url = 'https://github.com/latex3/luafindfont'
 
 rockspec_format = '3.0'
 package = 'luafindfont'
@@ -17,16 +15,17 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-dependencies = { 'lualibs' }
+dependencies = { "texrocks", 'lualibs' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
-  dir = '.'
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/luafindfont.zip",
+  dir = 'luafindfont'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = 'https://mirrors.ctan.org/support/luafindfont.zip',
+    dir = 'luafindfont'
   }
 end
 

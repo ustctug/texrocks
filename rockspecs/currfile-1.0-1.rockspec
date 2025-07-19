@@ -39,7 +39,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-        tex --interaction=nonstopmode currfile.ins
+        luatex --interaction=nonstopmode currfile.ins
   ]],
   install = {
     conf = {

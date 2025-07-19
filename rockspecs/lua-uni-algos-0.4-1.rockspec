@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = 'v0.4'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/latex3/lua-uni-algos'
@@ -24,8 +24,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev
 }
 
 if modrev == 'scm' or modrev == 'dev' then

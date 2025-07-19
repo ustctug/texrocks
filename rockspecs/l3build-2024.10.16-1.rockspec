@@ -34,7 +34,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-dependencies = { }
+dependencies = { "texrocks" }
 
 build = {
   type = 'builtin',

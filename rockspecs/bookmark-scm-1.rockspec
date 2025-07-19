@@ -35,7 +35,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    latex --interaction=nonstopmode bookmark.ins
+    lualatex --interaction=nonstopmode bookmark.ins
   ]],
   install = {
     conf = {

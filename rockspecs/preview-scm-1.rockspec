@@ -34,7 +34,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-        latex --interaction=nonstopmode preview.ins
+        lualatex --interaction=nonstopmode preview.ins
   ]],
   install = {
     conf = {

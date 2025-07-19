@@ -35,7 +35,7 @@ build_dependencies = { 'lualatex', 'latex-base' }
 build = {
   type = 'command',
   build_command = [[
-    latex --interaction=nonstopmode everyshi.ins
+    lualatex --interaction=nonstopmode everyshi.ins
 ]],
   install = {
     conf = {

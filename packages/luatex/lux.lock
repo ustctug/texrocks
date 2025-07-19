@@ -2,26 +2,6 @@
   "version": "1.0.0",
   "dependencies": {
     "rocks": {
-      "517d62e0ff4c89017e6951e4912a51009699ce2e9e798f011454ef50b54ef6ed": {
-        "name": "texrocks",
-        "version": "0.2.1-1",
-        "pinned": false,
-        "opt": false,
-        "dependencies": [],
-        "constraint": "==0.2.1",
-        "binaries": [
-          "texlua"
-        ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
-        "source_url": {
-          "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.2.1.zip"
-        },
-        "hashes": {
-          "rockspec": "sha256-J9DrCgeVm7Q4wqnzchWhMxe84u4mZSaaYIVdPDL4rQg=",
-          "source": "sha256-FEaHfgl0khu0EtRP1dKS/hrWQXaj+q2Nq5eNJsxLsuM="
-        }
-      },
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb": {
         "name": "amsfonts",
         "version": "3.04-1",
@@ -39,11 +19,31 @@
           "rockspec": "sha256-pKsfgzTNMdaEA0ozaqvrKJvMtoKt2P4tQx3z8Xm6Vtg=",
           "source": "sha256-3XY8qJtxLQlulSykPDtgQJv8oXTwTFdD2mhGjQY/57Y="
         }
+      },
+      "7d4d6f536577aa98bfb2dc5b54d17908c6d6b634540c93e02c3a262870fbd96b": {
+        "name": "texrocks",
+        "version": "0.2.2-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==0.2.2",
+        "binaries": [
+          "texlua"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.2.2.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-XQgAukTOqH01Z7rPCFI6xr0YT6GgPW+JThXQ9JhLQVY=",
+          "source": "sha256-bVEcA462XHitl4LoCeFBMM0/MalA4rJUZthDyUkbGgA="
+        }
       }
     },
     "entrypoints": [
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb",
-      "517d62e0ff4c89017e6951e4912a51009699ce2e9e798f011454ef50b54ef6ed"
+      "7d4d6f536577aa98bfb2dc5b54d17908c6d6b634540c93e02c3a262870fbd96b"
     ]
   },
   "build_dependencies": {
@@ -107,26 +107,6 @@
           "source": "sha256-drpCf8RPbVyVr6Z4nG5eoUq3mdzGP/xvsYKOw2y40ks="
         }
       },
-      "517d62e0ff4c89017e6951e4912a51009699ce2e9e798f011454ef50b54ef6ed": {
-        "name": "texrocks",
-        "version": "0.2.1-1",
-        "pinned": false,
-        "opt": false,
-        "dependencies": [],
-        "constraint": "==0.2.1",
-        "binaries": [
-          "texlua"
-        ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
-        "source_url": {
-          "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.2.1.zip"
-        },
-        "hashes": {
-          "rockspec": "sha256-J9DrCgeVm7Q4wqnzchWhMxe84u4mZSaaYIVdPDL4rQg=",
-          "source": "sha256-FEaHfgl0khu0EtRP1dKS/hrWQXaj+q2Nq5eNJsxLsuM="
-        }
-      },
       "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2": {
         "name": "tex-ini-files",
         "version": "2025.02.09-1",
@@ -161,6 +141,26 @@
         "hashes": {
           "rockspec": "sha256-pKsfgzTNMdaEA0ozaqvrKJvMtoKt2P4tQx3z8Xm6Vtg=",
           "source": "sha256-3XY8qJtxLQlulSykPDtgQJv8oXTwTFdD2mhGjQY/57Y="
+        }
+      },
+      "7d4d6f536577aa98bfb2dc5b54d17908c6d6b634540c93e02c3a262870fbd96b": {
+        "name": "texrocks",
+        "version": "0.2.2-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==0.2.2",
+        "binaries": [
+          "texlua"
+        ],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/ustctug/texrocks/archive/0.2.2.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-XQgAukTOqH01Z7rPCFI6xr0YT6GgPW+JThXQ9JhLQVY=",
+          "source": "sha256-bVEcA462XHitl4LoCeFBMM0/MalA4rJUZthDyUkbGgA="
         }
       },
       "8773a74e01b8f5094af083bc0b9678741186d247a7c72fd73252d7ee59c4da5a": {
@@ -205,7 +205,7 @@
       "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2",
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb",
       "414cfc33951c981ea45dcfddc370cc7c2adc1f157ca71253144d882eb564be84",
-      "517d62e0ff4c89017e6951e4912a51009699ce2e9e798f011454ef50b54ef6ed"
+      "7d4d6f536577aa98bfb2dc5b54d17908c6d6b634540c93e02c3a262870fbd96b"
     ]
   }
 }

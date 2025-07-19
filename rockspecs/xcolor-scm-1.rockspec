@@ -35,7 +35,7 @@ dependencies = { 'pdfcolmk', 'colortbl' }
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode xcolor.ins
+    luatex --interaction=nonstopmode xcolor.ins
 ]],
   install = {
     conf = {

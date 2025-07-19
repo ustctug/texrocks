@@ -33,7 +33,7 @@ build_dependencies = { 'luatex', 'latex-base' }
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode kvsetkeys.dtx
+    luatex --interaction=nonstopmode kvsetkeys.dtx
 ]],
   install = {
     conf = {

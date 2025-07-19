@@ -37,7 +37,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    latex --interaction=nonstopmode footmisc.ins
+    lualatex --interaction=nonstopmode footmisc.ins
   ]],
   install = {
     conf = {

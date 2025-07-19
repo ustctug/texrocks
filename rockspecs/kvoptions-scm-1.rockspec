@@ -35,7 +35,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode kvoptions.dtx
+    luatex --interaction=nonstopmode kvoptions.dtx
 ]],
   install = {
     conf = {

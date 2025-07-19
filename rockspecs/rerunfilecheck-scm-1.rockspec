@@ -36,7 +36,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode rerunfilecheck.dtx
+    luatex --interaction=nonstopmode rerunfilecheck.dtx
 ]],
   install = {
     conf = {

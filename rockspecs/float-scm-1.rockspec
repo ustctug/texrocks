@@ -35,7 +35,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    latex --interaction=nonstopmode float.ins
+    lualatex --interaction=nonstopmode float.ins
   ]],
   install = {
     conf = {

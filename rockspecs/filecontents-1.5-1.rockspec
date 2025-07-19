@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '1.5'
 local modrev = git_ref
 local specrev = '1'
 
@@ -24,19 +24,21 @@ description = {
 build_dependencies = { 'lualatex', 'latex-base' }
 
 source = {
-  url = '/releases/download/' .. git_ref .. '/' .. package .. '-ctan.zip',
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/filecontents.zip",
+  dir = "filecontents"
 }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = 'https://mirrors.ctan.org/macros/latex/contrib/filecontents.zip',
+    dir = "filecontents"
   }
 end
 
 build = {
   type = 'command',
   build_command = [[
-        latex --interaction=nonstopmode filecontents.ins
+        lualatex --interaction=nonstopmode filecontents.ins
   ]],
   install = {
     conf = {

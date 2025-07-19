@@ -1,5 +1,5 @@
-local git_ref = 'v4.1'
-local modrev = 'scm'
+local git_ref = 'v4.1.1'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/TeX-Live/texdoc'
@@ -22,7 +22,7 @@ source = {
   dir = package .. '-' .. modrev
 }
 
-dependencies = { }
+dependencies = { "texrocks" }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
@@ -32,7 +32,7 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc' },
+  -- copy_directories = { 'doc' },
   install = {
     bin = {
       texdoc = 'script/texdoc.tlu'

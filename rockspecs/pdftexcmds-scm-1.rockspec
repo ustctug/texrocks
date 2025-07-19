@@ -37,7 +37,7 @@ dependencies = { 'infwarerr', 'iftex', 'ltxcmds' }
 build = {
   type = 'command',
   build_command = [[
-        tex --interaction=nonstopmode pdftexcmds.dtx
+        luatex --interaction=nonstopmode pdftexcmds.dtx
   ]],
   install = {
     lua = {

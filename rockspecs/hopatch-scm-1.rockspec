@@ -35,7 +35,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode hopatch.dtx
+    luatex --interaction=nonstopmode hopatch.dtx
   ]],
   install = {
     conf = {

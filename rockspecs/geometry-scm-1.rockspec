@@ -66,7 +66,7 @@ build = {
     ]]
   },
   build_command = [[
-    latex --interaction=nonstopmode changes.txt
+    lualatex --interaction=nonstopmode changes.txt
   ]],
   install = {
     conf = {

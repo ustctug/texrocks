@@ -35,7 +35,7 @@ end
 build = {
   type = 'command',
   build_command = [[
-    tex --interaction=nonstopmode hycolor.dtx
+    luatex --interaction=nonstopmode hycolor.dtx
   ]],
   install = {
     conf = {

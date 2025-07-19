@@ -15,11 +15,11 @@ url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/empty.zip"
 dir = "."
 
 [dependencies]
-texrocks = "0.2.1-1"
+texrocks = "0.2.2-1"
 amsfonts = "3.04-1"
 
 [build_dependencies]
-texrocks = "0.2.1-1"
+texrocks = "0.2.2-1"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
 unicode-data = "1.18-1"

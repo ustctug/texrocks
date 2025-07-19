@@ -36,7 +36,7 @@ dependencies = { 'latex-tools' }
 build = {
   type = 'command',
   build_command = [[
-  latex --interaction=nonstopmode colortbl.ins
+  lualatex --interaction=nonstopmode colortbl.ins
 ]],
   install = {
     conf = {
