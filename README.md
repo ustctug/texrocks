@@ -132,6 +132,7 @@ $ tree -a
 │               │       └──  ltluatex.lua
 │               ├──  6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb-amsfonts@3.04-1
 │               │   ├──  etc
+│               │   │   ├──  conf
 │               │   │   ├──  doc
 │               │   │   │   └──  fonts
 │               │   │   │       └──  amsfonts

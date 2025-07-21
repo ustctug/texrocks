@@ -16,7 +16,7 @@ dir = "."
 
 # refer https://ctan.org/pkg/required
 [dependencies]
-texrocks = "0.2.2-1"
+texrocks = "0.2.3-1"
 amsfonts = "3.04-1"
 # tex-ini-files provide lualatexquotejobname.lua
 tex-ini-files = "2025.02.09-1"
@@ -24,7 +24,7 @@ tex-ini-files = "2025.02.09-1"
 latex-base = "2024.11.01-2"
 
 [build_dependencies]
-texrocks = "0.2.2-1"
+texrocks = "0.2.3-1"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
 latex-base = "2024.11.01-2"

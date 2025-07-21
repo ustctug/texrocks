@@ -151,9 +151,21 @@ function M.setenvs()
         M.setenv("HOME", os.getenv "USERPROFILE")
     end
     -- https://wiki.archlinux.org/title/XDG_Base_Directory#Partial
-    M.setenv("XDG_CONFIG_HOME", (os.getenv "HOME") .. "/.config")
-    M.setenv("XDG_DATA_HOME", (os.getenv "HOME") .. "/.local/share")
-    M.setenv("XDG_CACHE_HOME", (os.getenv "HOME") .. "/.cache")
+    if os.getenv "LOCALAPPDATA" == nil then
+        M.setenv("XDG_CONFIG_HOME", (os.getenv "HOME") .. "/.config")
+    else
+        M.setenv("XDG_CONFIG_HOME", os.getenv "LOCALAPPDATA")
+    end
+    if os.getenv "APPDATA" == nil then
+        M.setenv("XDG_DATA_HOME", (os.getenv "HOME") .. "/.local/share")
+    else
+        M.setenv("XDG_CONFIG_HOME", os.getenv "APPDATA")
+    end
+    if os.getenv "TEMP" == nil then
+        M.setenv("XDG_CACHE_HOME", (os.getenv "HOME") .. "/.cache")
+    else
+        M.setenv("XDG_CACHE_HOME", os.getenv "TEMP")
+    end
     -- some tex packages like hyperref support config file such as hyperref.cfg
     M.setenv("TEXMFCONFIG", "$XDG_CONFIG_HOME/texmf")
     M.setenv("TEXMFHOME", "$XDG_DATA_HOME/texmf")

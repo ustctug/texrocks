@@ -31,7 +31,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install rename
+          sudo apt-get -y install rename parallel
       - name: Pack
         env:
           LUA_PATH: /home/runner/.luarocks/share/lua/5.3/?.lua
@@ -39,18 +39,12 @@ jobs:
         run: |
           luarocks install --local luahbtex
           luarocks install --local luatex
-          luarocks pack luatex
-          luarocks pack amsfonts
-          luarocks pack texrocks
-          rename -f s/linux-x86_64/all/ ./*.linux-x86_64.rock
-          rm -f luahbtex-*.all.rock
-          luarocks pack luahbtex
+          luarocks install --local luatexinfo
+          luarocks install --local lualatex
+          luarocks list --porcelain | cut -f1 | parallel luarocks pack || true
+          rename -f s/linux-x86_64/all/ {texrocks,luatex{,info},lualatex}-*.rock
           luarocks-admin make-manifest .
-          # https://github.com/nvim-neorocks/lux/issues/884
-          zip manifest-5.1.zip manifest-5.1
-          zip manifest-5.2.zip manifest-5.2
-          zip manifest-5.3.zip manifest-5.3
-          zip manifest-5.4.zip manifest-5.4
+          parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: gh-pages
