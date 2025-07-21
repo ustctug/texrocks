@@ -3,19 +3,22 @@
 }:
 
 with pkgs;
-mkShell rec {
+mkShell {
   name = "texrocks";
   buildInputs = [
-    lux-cli
+    # https://github.com/nvim-neorocks/lux/issues/789
+    pkg-config
+
+    # too old
+    # lux-cli
 
     (lua5_3.withPackages (
       p: with p; [
-        argparse
-
-        busted
-        ldoc
+        # busted
+        # ldoc
       ]
     ))
-    (builtins.elemAt texlive.luatex.pkgs 2)
+    # too large
+    # (builtins.elemAt texlive.luatex.pkgs 2)
   ];
 }

@@ -1,0 +1,60 @@
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - doc/*
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - doc/*
+  workflow_dispatch:
+
+# Prevent concurrent auto-commits
+concurrency:
+  group: auto-commit-linux-x86_64
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GH_TOKEN}}
+          ref: gh-pages
+      - name: Install Lua
+        uses: leso-kn/gh-actions-lua@master
+        with:
+          luaVersion: "5.3"
+      - name: Install Luarocks
+        uses: hishamhm/gh-actions-luarocks@master
+      - name: Install Dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install rename
+      - name: Pack
+        env:
+          LUA_PATH: /home/runner/.luarocks/share/lua/5.3/?.lua
+          TEXMFDOTDIR: .;/home/runner/.luarocks//
+        run: |
+          luarocks install --local luahbtex
+          luarocks install --local luatex
+          luarocks pack luatex
+          luarocks pack amsfonts
+          luarocks pack texrocks
+          rename -f s/linux-x86_64/all/ ./*.linux-x86_64.rock
+          rm -f luahbtex-*.all.rock
+          luarocks pack luahbtex
+          luarocks-admin make-manifest .
+          # https://github.com/nvim-neorocks/lux/issues/884
+          zip manifest-5.1.zip manifest-5.1
+          zip manifest-5.2.zip manifest-5.2
+          zip manifest-5.3.zip manifest-5.3
+          zip manifest-5.4.zip manifest-5.4
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: gh-pages
+          commit_message: 'chore: update build artifacts'
+          file_pattern: index.html manifest* *.rock
+          commit_options: --amend --no-edit
+          push_options: --force

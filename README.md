@@ -29,369 +29,148 @@
 
 [![luarocks](https://img.shields.io/luarocks/v/Freed-Wu/texrocks)](https://luarocks.org/modules/Freed-Wu/texrocks)
 
-A minimal (La)TeX distribution powered by lux and luaTeX.
+A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 
 ## Features
 
-- [x] install packages in parallel
-- [x] package version control
-- [x] virtual environment
+- [x] install packages in parallel, thanks to lx
+- [x] package version control, thanks to rockspec
+- [x] virtual environment, thanks to lx
 - [x] minimal preinstalled packages
-- [x] no extra dependencies except a package manager and a TeX compiler while
-  TeXLive needs perl, tcl/tk, ...
+- [x] no extra dependencies while TeXLive needs perl, tcl/tk, ...
 - [x] support Unix
-- [ ] support Win32
+- [ ] support Win32. We use shebang so a cmd wrapper is needed
+- [x] a server to host packages: <https://ustctug.github.io/texrocks/>
 
-## Install
+## Tutor
 
-- [lx](https://github.com/nvim-neorocks/lux) >= 0.8.2 as package manager,
+<!-- markdownlint-disable MD029 -->
 
-```sh
-cargo install lux-cli
-# For ArchLinux
-paru -S lux-cli
-# For Nix
-nix-env -iA nixos.lux-cli
-```
-
-- A LuaTeX compiler named luahbtex. Because LaTeX only support it, not others
-  luatex, luajittex, ... It contained in mostly TeX distribution like TeXLive
-  and MikTeX. However, you can install it standalone by:
+1. Create a project
 
 ```sh
-lx install luahbtex
-# For ArchLinux
-paru -S luahbtex
-# For Nix
-nix-env -iA nur.repos.Freed-Wu.luahbtex
-```
-
-Now you can use `lx` to install TeX dialects written in TeX and TeX tools written
-in lua from [luarocks.org](https://luarocks.org/). See
-[packages](./packages) to know how to package missing LuaTeX packages
-and publish them to luarocks.org.
-
-## TeX Dialects
-
-### PlainTeX
-
-PlainTeX is the first and simplest TeX Dialect. Original TeX compiler only
-supports 256 registers used by PlainTeX. LuaTeX supports 65536 however PlainTeX
-cannot use them.
-
-[A minimal example](packages/luatex):
-
-```tex
-\hoffset-1in
-\voffset-1in
-\hsize30mm
-\pagewidth\hsize
-\vsize20mm
-\pageheight\vsize
-\parindent0mm
-
-Hello, \TeX!
-$$\sum_{n = 1}^\infty{1\over{n^2}} = {\pi^2\over6}$$
-
-\bye
-```
-
-```sh
-lx run
-```
-
-![luatex](https://github.com/user-attachments/assets/47ab4ca2-1fd1-48b1-8016-7a322bbbdb32)
-
-### LaTeX
-
-LaTeX is the most popular TeX Dialect. It can use all LuaTeX registers, which
-means you can create a bigger document than PlainTeX.
-
-[A minimal example](packages/lualatex):
-
-```tex
-\renewcommand\normalsize{\fontsize{10pt}{12pt}\selectfont}
-\title{minimal}
-\setlength\hoffset{-1in}
-\setlength\voffset{-1in}
-\setlength\oddsidemargin{0pt}
-\setlength\topmargin{0pt}
-\setlength\headheight{0pt}
-\setlength\headsep{0pt}
-\setlength\textheight{20mm}
-\setlength\pageheight{\textheight}
-\setlength\textwidth{40mm}
-\setlength\pagewidth{\textwidth}
-\setlength\parindent{0mm}
-\begin{document}
-
-Hello, \LaTeX!
-$$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
-
-\end{document}
-```
-
-```sh
-lx run
-```
-
-![lualatex](https://github.com/user-attachments/assets/09dd5ddb-8bac-4207-9cc5-ee61724ef7c0)
-
-LaTeX require some [required packages](https://ctan.org/pkg/required).
-You can install them by yourself.
-
-- [amscls](https://luarocks.org/modules/ustctug/amscls):
-  AMSLaTeX contains some documentclasses and packages for mathematics.
-- [babel-base](https://luarocks.org/modules/ustctug/babel-base): multilanguages
-- [latex-cyrillic](https://luarocks.org/modules/ustctug/latex-cyrillic):
-  cyrillic alphabet fonts.
-- [latex-graphics](https://luarocks.org/modules/ustctug/latex-graphics):
-  graphics and colours.
-- psnfss: WIP
-- [latex-tools](https://luarocks.org/modules/ustctug/latex-tools): tables.
-
-Some packages are recommended:
-
-- [hyperref](https://luarocks.org/modules/ustctug/hyperref): hyperlinks.
-- [pgf](https://luarocks.org/modules/ustctug/pgf): PGF/TikZ.
-- [beamer](https://luarocks.org/modules/ustctug/beamer): slides.
-- [ctex](https://luarocks.org/modules/ustctug/ctex): Chinese support. **bug**
-- [citation-style-language](https://luarocks.org/modules/ustctug/citation-style-language):
-  use [csl](https://citationstyles.org/) for bibliography.
-
-[More packages](https://luarocks.org/m/texmf).
-
-[A more complicated example](packages/demo):
-
-```tex
-\documentclass[tikz]{standalone}
-\usetikzlibrary{arrows.meta, quotes, graphs, graphdrawing, shapes.geometric}
-\usegdlibrary{layered}
-\usepackage{hyperref}
-\usepackage{hologo}
-\title{graph}
-\begin{document}
-\begin{tikzpicture}[rounded corners, >=Stealth, auto]
-  \graph[layered layout, nodes={draw, align=center}]{%
-    "\TeX" -> "\hologo{eTeX}" -> "\hologo{pdfTeX}" -> "\hologo{LuaTeX}";
-    "\hologo{eTeX}" -> "\hologo{XeTeX}"
-  };
-\end{tikzpicture}
-\end{document}
-```
-
-![graph](https://github.com/user-attachments/assets/131a8a31-0dd4-49fa-84dd-1531c89da55c)
-
-### TeXinfo
-
-TeXinfo is a TeX dialect designed by GNU. It uses `@` to start a control sequence,
-which is different from other TeX dialects. GNU also create some perl programs
-to convert texinfo to `info`, `HTML`, ..., while other TeX dialects doesn't have
-good support for outputting HTML like [TeX4ht](https://tug.org/tex4ht/) for
-PlainTeX/LaTex/ConTeXt.
-
-[A minimal example](packages/luatexinfo):
-
-```texinfo
-@hoffset-1in
-@voffset-1in
-@node Top
-@top Example
-
-@node First Chapter
-@nodedescription The first chapter is the only chapter in this sample.
-@chapter Hello, @TeX{info}
-
-@cindex chapter, first
-This is the first chapter.
-@bye
-```
-
-```sh
-lx run
-dvipdfmx main.dvi
-pdftocairo -png main.pdf
-magick convert main-1.png -crop 50%x10% main.png
-```
-
-![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)
-
-### ConTeXt
-
-TODO
-
-## TeX Tools
-
-### texdoc
-
-`texdoc` is a tool to search document of any TeX package developed by TeX Live
-team.
-
-```sh
-lx install texdoc
-```
-
-Note, texdoc need a tlpdb database.
-Download
-[it](https://github.com/ustctug/texrocks/releases/download/0.0.1/Data.tlpdb.lua)
-to `~/.local/share/texmf/texdoc/Data.tlpdb.lua`.
-Then create `~/.local/share/texmf/texdoc/texdoc.cnf`:
-
-```ini
-texlive_tlpdb = /home/user_name/.local/share/texmf/texdoc/Data.tlpdb.lua
-```
-
-Now it can work:
-
-```sh
-$ texdoc impatient
-You don't appear to have any local documentation installed.
-
-There may be online documentation available for "impatient" at
-    https://texdoc.org/serve/impatient/0
-This documentation may be for a different version than you have installed.
-
-Would you like to search online? (y/N) y
-```
-
-<https://texdoc.org/serve/impatient/0> is opened.
-
-### l3build
-
-`l3build` is a tool to build TeX packages developed by LaTeX 3 team.
-
-```sh
-lx install l3build
-```
-
-### luafindfont
-
-`l3build` is a simple tool to search fonts.
-
-```sh
-lx install luafindfont
-```
-
-### texluap
-
-Sometimes you need a REPL to debug luatex.
-[texluap](https://github.com/wakatime/prompt-style.lua#luatex) do it:
-
-```sh
-lx install prompt-style
-# For ArchLinux
-paru -S lua53-prompt-style texlua
-```
-
-## Introduction
-
-For example, you create a virtual environment named `my-thesis`:
-
-```sh
-lx new --lua-versions=5.3 my-thesis
+lx new my-thesis
 cd my-thesis
-lx --lua-version=5.3 add your-needed-luatex-package1 you-loved-luatex-package2
-"$EDITOR" main.tex
 ```
 
-PS: luatex supports both luajit (another implementation of lua 5.1) and lua 5.3.
-However, lualatex only supports lua 5.3. So we recommend that you use lua 5.3
-syntax. you can `lx config edit` to edit config to avoid input
-`--lua-version=5.3` every time. We assume you did this at the following code.
+2. Add some dependencies
 
-`~/.config/lux/config.toml`:
+```sh
+# LaTeX support
+lx add -b lualatex
+# \usepackage{hyperref}
+lx add -b hyperref
+# \usepackage{graphicx}
+lx add -b latex-graphics
+# \usepackage{tikz}
+lx add -b pgf
+# lx add -b more packages ...
+```
+
+3. Edit your document
+
+```sh
+$EDITOR main.tex
+```
+
+4. Tell `lx` how to build your document
+
+`lux.toml`:
 
 ```toml
-lua_version = "5.3"
+# ...
+[build]
+type = "command"
+build_command = "lualatex --interaction=nonstopmode main.tex"
 ```
 
-If you build it directly:
+5. Build
 
 ```sh
-luatex main.tex
+lx build
 ```
 
-It will fail, because luatex doesn't know where is
-`your-needed-luatex-package1.sty` in `\usepackage{your-needed-luatex-package1}`
-and `your-needed-luatex-package1.lua` in `\directlua{require"your-needed-luatex-package1"}`.
-So you try:
+6. View your document
 
 ```sh
-lx lua --lua=luatex -- main.tex
-# or
-lx shell
-luatex main.tex
+xdg-open main.pdf
 ```
 
-`lx` will add lua paths of `your-needed-luatex-package1` and
-`you-loved-luatex-package2` to `$LUA_PATH` and `$CLUA_PATH`.
-lua recognize these variables to set `package.path` and `package.cpath`.
-Any `require"package_name"` will search `package_name.lua` in `package.path` and
-`package.cpath`.
-
-However, luatex is not a standard lua. It recognizes `$LUAINPUTS` and
-`$CLUAINPUTS` for lua files. So we must modify `package.path` and
-`package.cpath` to get them. And luatex recognize `$TEXINPUTS` for tex files.
-Notice we install tex files in the same directory of lua files, so we also can
-get them. Font files are similar.
-
-So we create a lua wrapper named `texrocks` to do this work. `texrocks` calls
-`os.setenv()` to set correct environment variables to make luatex work in a
-virtual/system environment. We wrap `luatex`:
+This is your project structure:
 
 ```sh
-luatex main.tex
+$ tree -a
+ .
+├──  .lux  # like node_modules/ or .venv/ :)
+│   ├──  .gitignore
+│   └──  5.3  # pdf's dependencies are build dependencies not runtime
+│       ├──  bin
+│       └──  build_dependencies
+│           ├──  .gitignore
+│           └──  5.3
+│               ├──  bin
+│               │   ├──  lualatex  # LaTeX compiler
+│               │   └──  texlua  # Lua interpreter
+│               ├──  1a043a1a092206fb664a8dd394bdf99e526af762fe7282c6ccf49bc0ec23521e-latex-base@2024.11.01-2
+│               │   ├──  etc
+│               │   │   ├──  conf
+│               │   │   ├──  doc
+│               │   │   │   └──  latex
+│               │   │   │       └──  base
+│               │   │   │           ├── ...
+│               │   │   │           ├──  usrguide.pdf  # RTFM
+│               │   │   │           └── ...
+│               │   │   └──  tex
+│               │   │       └──  latex
+│               │   │           └──  base
+│               │   │               ├── ...
+│               │   │               ├──  article.cls  # \documentclass{article}
+│               │   │               └── ...
+│               │   ├──  lib
+│               │   ├──  package.rockspec
+│               │   └──  src
+│               │       └──  ltluatex.lua
+│               ├──  6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb-amsfonts@3.04-1
+│               │   ├──  etc
+│               │   │   ├──  doc
+│               │   │   │   └──  fonts
+│               │   │   │       └──  amsfonts
+│               │   │   │           ├── ...
+│               │   │   │           └── 󰂺 README
+│               │   │   ├──  fonts
+│               │   │   │   ├──  afm
+│               │   │   │   │   └──  public
+│               │   │   │   │       └──  amsfonts
+│               │   │   │   │           ├──  cm  # computer modern fonts
+│               │   │   │   │           │   └── ...
+│               │   │   │   │           ├── ...
+│               │   │   │   │           └──  symbols  # math symbol fonts
+│               │   │   │   │               └── ...
+│               │   │   │   └── ...  # more font types
+│               │   │   └──  tex
+│               │   │       ├──  latex
+│               │   │       │   └──  amsfonts
+│               │   │       │       ├──  amsfonts.sty  # \usepackage{amsfonts}
+│               │   │       │       └── ...
+│               │   │       └──  plain
+│               │   │           └──  amsfonts
+│               │   │               ├──  amssym.def
+│               │   │               ├──  amssym.tex  # \input{amssym}
+│               │   │               └──  cyracc.def
+│               │   ├──  lib
+│               │   ├──  package.rockspec
+│               │   └──  src
+│               ├── ... # more TeX packages
+│               └──  lux.lock
+├──  lux.lock  # like package-lock.json or requirements.txt
+├──  lux.toml  # like package.json or pyproject.toml
+├──  main.pdf
+└──  main.tex
 ```
 
-If you don't like virtual environment, just use `lx install` to replace `lx add`.
-These packages will be installed to system globally.
+Here are some [demo](packages/)s.
 
-```sh
-lx install your-needed-luatex-package1 you-loved-luatex-package2
-```
-
-It is advised that install TeX tools globally and TeX packages on virtual
-environment, and add `lux.lock` to VCS to keep reproducible of your TeX
-documents.
-
-For nodejs or python users, you can simply understand:
-
-- `lux.toml`: npm's `package.json` or uv's `pyproject.toml` or
-  `requirements.txt`.
-- `lux.lock`: npm's `package-lock.json` or uv's `uv.lock`
-- `.lux`: npm's `node_modules` or uv's `.venv`
-
-## Related Projects
-
-Except environment variables, TeX compilers also read a config file:
-
-`texmf.cnf`:
-
-```texmf
-% comment
-VAR = XXX
-```
-
-is equal to shell's:
-
-```sh
-VAR=XXX texlua
-```
-
-or lua's:
-
-```lua
-os.setenv("VAR", "XXX")
-io.popen("texlua")
-```
-
-Many TeX distributions, like TeX Live, MikTeX, doesn't use environment variables.
-They use `texmf.cnf` to declare a fixed path, like `/usr/share/texmf`. It is
-impossible to support virtual environments.
-
-And these huge TeX distributions usually provide many TeX compilers: pdfTeX,
-XeTeX, LuaTeX, ... and many TeX tools written in lua/perl/python/java/...
-We only provide LuaTeX and those TeX tools written in lua. That's enough, IMO.
+Read [docs](docs/) for more information.
 
 ## TODO
 
