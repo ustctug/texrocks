@@ -32,6 +32,17 @@ build = {
   type = 'command',
   patches = {
       ["fix-build.sh.diff"] = [[
+--- old/build.sh
++++ new/build.sh
+@@ -89,7 +89,7 @@
+ USEMUSL=FALSE
+ TEXLIVEOPT=
+ 
+-CFLAGS="$CFLAGS"
++export CFLAGS="$CFLAGS -std=gnu99"
+ CXXFLAGS="$CXXFLAGS"
+ 
+ 
 ]],
      ["customize-texmf.diff"] = [[
 --- old/source/texk/kpathsea/texmf.cnf

@@ -37,6 +37,10 @@ A minimal (La)TeX distribution powered by lux and luaTeX.
 - [x] package version control
 - [x] virtual environment
 - [x] minimal preinstalled packages
+- [x] no extra dependencies except a package manager and a TeX compiler while
+  TeXLive needs perl, tcl/tk, ...
+- [x] support Unix
+- [ ] support Win32
 
 ## Install
 
