@@ -117,7 +117,7 @@ end
 
 function M.setfontenv(key, value)
     os.setenv(key,
-        "$TEXMFDOTDIR/fonts/" .. value .. ";" .. M.getenv(package.path, "fonts/" .. value) .. ";" .. M.OSFONTDIR)
+        "$TEXMFDOTDIR;" .. M.getenv(package.path, "fonts/" .. value) .. ";" .. M.OSFONTDIR)
 end
 
 if os.type == "windows" then
@@ -164,12 +164,12 @@ function M.setenvs()
     -- create ./texmf.cnf to override
     os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
 
-    os.setenv("LUAINPUTS", "$TEXMFDOTDIR/lua;" .. M.getenv(package.path, ""))
-    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR/lib;" .. M.getenv(package.cpath, ""))
+    os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, ""))
+    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.cpath, ""))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
 
     os.setenv("TEXFONTMAPS", "{.lux,$XDG_DATA_HOME/lux/tree}/" .. constants.LUA_VERSION)
-    os.setenv("TEXFORMATS", "$TEXMFDOTDIR/web2c;" .. M.getenv(package.path, "web2c"))
+    os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
     -- font metrics
     M.setfontenv("TFMFONTS", "tfm")
     M.setfontenv("OFMFONTS", "ofm")
