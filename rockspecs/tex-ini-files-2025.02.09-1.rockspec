@@ -44,7 +44,6 @@ build = {
  \dump
 ]]
   },
-  copy_directories = { 'doc' },
   modules = {
     lualatexquotejobname = 'lualatexquotejobname.lua'
   },
