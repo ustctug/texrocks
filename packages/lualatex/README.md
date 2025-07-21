@@ -29,4 +29,4 @@ Some packages are recommended:
 
 [More packages](https://luarocks.org/m/texmf).
 
-[A more complicated example](packages/demo).
+[A more complicated example](../demo).
