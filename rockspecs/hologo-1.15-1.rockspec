@@ -1,17 +1,19 @@
-local git_ref = '1.15'
-local modrev = git_ref
+local git_ref = 'release-2021-11-16'
+local modrev = '1.15'
 local specrev = '1'
 
 rockspec_format = '3.0'
 package = 'hologo'
 version = modrev .. '-' .. specrev
 
+local repo_url = 'https://github.com/ho-tex/hologo'
+
 description = {
   summary = [[A collection of logos with bookmark support]],
   detailed =
   [[The package defines a single command \hologo, whose argument is the usual case-confused ASCII version of the logo. The command is bookmark-enabled, so that every logo becomes available in bookmarks without further work.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/hologo',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
@@ -21,8 +23,8 @@ dependencies = { 'ltxcmds', 'infwarerr', 'kvsetkeys', 'kvdefinekeys',
   'pdftexcmds', 'iftex', 'kvoptions' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/hologo.zip",
-  dir = 'hologo'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -39,7 +41,7 @@ build = {
   ]],
   install = {
     conf = {
-      ['../doc/latex/hologo/hologo.pdf'] = 'hologo.pdf',
+      -- ['../doc/latex/hologo/hologo.pdf'] = 'hologo.pdf',
       ['../tex/latex/hologo/hologo.sty'] = 'hologo.sty',
     }
   }

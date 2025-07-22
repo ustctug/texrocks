@@ -1,5 +1,6 @@
-local git_ref = '1.12'
-local modrev = git_ref
+local git_ref = 'v1.12-2024-08-07'
+local _git_ref = git_ref:gsub("^v", "")
+local modrev = _git_ref:gsub("%-.*", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/atveryend'
@@ -20,8 +21,8 @@ description = {
 build_dependencies = { 'luatex', 'latex-base' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/atveryend.zip",
-  dir = 'atveryend'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. _git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -38,7 +39,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/atveryend/atveryend.pdf'] = 'atveryend.pdf',
+      -- ['../doc/latex/atveryend/atveryend.pdf'] = 'atveryend.pdf',
       ['../tex/latex/atveryend/atveryend.sty'] = 'atveryend.sty',
     }
   }

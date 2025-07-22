@@ -1,5 +1,5 @@
-local git_ref = '5.9'
-local modrev = git_ref
+local git_ref = 'release-5.9'
+local modrev = git_ref:gsub("^release%-", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/LaTeX-Package-Repositories/geometry'
@@ -21,13 +21,13 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-build_dependencies = { 'lualatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'latex-graphics', 'iftex', 'atbegshi' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/geometry.zip",
-  dir = 'geometry'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -39,40 +39,13 @@ end
 
 build = {
   type = 'command',
-  patches = {
-    ['add-geometry-ins.diff'] = [[
---- old/changes.txt
-+++ new/changes.txt
-@@ -1,3 +1,4 @@
-+\iffalse
- 2020-01-02 Release 5.9
-   * Include German translation (previously distributed as geometry-de on ctan)
-   * Use iftex versions of \ifxetex, \ifpdf
-@@ -355,3 +356,15 @@
-   * Use keyval interface.
- 
- EOF
-+\fi
-+\input docstrip
-+\usedir{tex/latex/geometry}
-+\generate{
-+  \file{geometry.ins}{\from{geometry.dtx}{install}}%
-+  \file{geometry.drv}{\from{geometry.dtx}{driver}}%
-+  \usedir{tex/latex/geometry}%
-+  \file{geometry.sty}{\from{geometry.dtx}{package}}%
-+  \file{geometry.cfg}{\from{geometry.dtx}{config}}%
-+  \file{geometry-samples.tex}{\from{geometry.dtx}{samples}}%
-+}
-+\endbatchfile
-    ]]
-  },
   build_command = [[
-    lualatex --interaction=nonstopmode changes.txt
+    luatex --interaction=nonstopmode geometry.dtx
   ]],
   install = {
     conf = {
       ['../tex/latex/geometry/geometry.sty'] = 'geometry.sty',
-      ['../doc/generic/geometry/geometry.pdf'] = 'geometry.pdf',
+      -- ['../doc/generic/geometry/geometry.pdf'] = 'geometry.pdf',
     }
   }
 }

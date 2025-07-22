@@ -1,5 +1,5 @@
-local git_ref = '1.26'
-local modrev = git_ref
+local git_ref = 'v1.26'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/ltxcmds'
@@ -22,8 +22,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/ltxcmds.zip",
-  dir = 'ltxcmds'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -40,7 +40,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/generic/ltxcmds/ltxcmds.pdf'] = 'ltxcmds.pdf',
+      -- ['../doc/generic/ltxcmds/ltxcmds.pdf'] = 'ltxcmds.pdf',
       ['../tex/generic/ltxcmds/ltxcmds.sty'] = 'ltxcmds.sty',
     }
   }

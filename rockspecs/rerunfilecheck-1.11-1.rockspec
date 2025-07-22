@@ -1,5 +1,5 @@
-local git_ref = '1.11'
-local modrev = git_ref
+local git_ref = 'v1.11'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/rerunfilecheck'
@@ -23,8 +23,8 @@ dependencies = { 'kvoptions', 'infwarerr', 'pdftexcmds', 'atveryend',
   'uniquecounter' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/rerunfilecheck.zip",
-  dir = 'rerunfilecheck'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -41,7 +41,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/rerunfilecheck/rerunfilecheck.pdf'] = 'rerunfilecheck.pdf',
+      -- ['../doc/latex/rerunfilecheck/rerunfilecheck.pdf'] = 'rerunfilecheck.pdf',
       ['../tex/latex/rerunfilecheck/rerunfilecheck.sty'] = 'rerunfilecheck.sty',
     }
   }

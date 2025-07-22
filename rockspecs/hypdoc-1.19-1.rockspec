@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = 'v1.19'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/hypdoc'
@@ -43,7 +43,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/hypdoc/hypdoc.pdf'] = 'hypdoc.pdf',
+      -- ['../doc/latex/hypdoc/hypdoc.pdf'] = 'hypdoc.pdf',
       ['../tex/latex/hypdoc/hypdoc.sty'] = 'hypdoc.sty',
     }
   }

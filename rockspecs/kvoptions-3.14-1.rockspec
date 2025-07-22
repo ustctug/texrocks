@@ -1,5 +1,5 @@
-local git_ref = '3.15'
-local modrev = git_ref
+local git_ref = 'v3.14'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/kvoptions'
@@ -22,8 +22,8 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'etexcmds', 'ltxcmds', 'latex-graphics', 'iftex' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/kvoptions.zip",
-  dir = 'kvoptions'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -40,7 +40,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/kvoptions/kvoptions.pdf'] = 'kvoptions.pdf',
+      -- ['../doc/latex/kvoptions/kvoptions.pdf'] = 'kvoptions.pdf',
       ['../tex/latex/kvoptions/kvoptions.sty'] = 'kvoptions.sty',
       ['../tex/latex/kvoptions/kvoptions-patch.sty'] = 'kvoptions-patch.sty',
     }

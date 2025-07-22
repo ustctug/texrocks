@@ -1,8 +1,8 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = 'v1.0'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
-local repo_url = 'https://ctan.org/pkg/luatex85'
+local repo_url = 'https://github.com/josephwright/luatex85'
 
 rockspec_format = '3.0'
 package = 'luatex85'
@@ -17,7 +17,7 @@ description = {
   license = 'LPPL-1.3'
 }
 
-build_dependencies = { 'lualatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
@@ -33,11 +33,11 @@ end
 build = {
   type = 'command',
   build_command = [[
-    lualatex --interaction=nonstopmode luatex85.ins
+    luatex --interaction=nonstopmode luatex85.ins
   ]],
   install = {
     conf = {
-      ['../doc/generic/luatex85/luatex85.pdf'] = 'luatex85.pdf',
+      -- ['../doc/generic/luatex85/luatex85.pdf'] = 'luatex85.pdf',
       ['../tex/generic/luatex85/luatex85.sty'] = 'luatex85.sty',
     }
   }

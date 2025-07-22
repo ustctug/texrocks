@@ -1,5 +1,5 @@
-local git_ref = '1.19'
-local modrev = git_ref
+local git_ref = 'release-2019-12-15'
+local modrev = '1.19'
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/kvsetkeys'
@@ -18,8 +18,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/kvsetkeys.zip",
-  dir = 'kvsetkeys'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -38,7 +38,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/kvsetkeys/kvsetkeys.pdf'] = 'kvsetkeys.pdf',
+      -- ['../doc/latex/kvsetkeys/kvsetkeys.pdf'] = 'kvsetkeys.pdf',
       ['../tex/latex/kvsetkeys/kvsetkeys.sty'] = 'kvsetkeys.sty',
     }
   }

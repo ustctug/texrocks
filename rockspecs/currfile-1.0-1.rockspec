@@ -26,7 +26,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.zip',
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then

@@ -1,17 +1,19 @@
-local git_ref = '1.5'
-local modrev = git_ref
+local git_ref = 'release-2023-01-07'
+local modrev = '1.5'
 local specrev = '1'
 
 rockspec_format = '3.0'
 package = 'hopatch'
 version = modrev .. '-' .. specrev
 
+local repo_url = 'https://github.com/ho-tex/hopatch'
+
 description = {
   summary = [[Load patches for packages]],
   detailed =
   [[Hopatch provides a command with which the user may register of patch code for a particular package. Hopatch will apply the patch immediately, if the relevant package has already been loaded; otherwise it will store the patch until the package appears.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/hopatch',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
@@ -20,8 +22,8 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'ltxcmds' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/hopatch.zip",
-  dir = 'hopatch'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -38,7 +40,7 @@ build = {
   ]],
   install = {
     conf = {
-      ['../doc/latex/hopatch/hopatch.pdf'] = 'hopatch.pdf',
+      -- ['../doc/latex/hopatch/hopatch.pdf'] = 'hopatch.pdf',
       ['../tex/latex/hopatch/hopatch.sty'] = 'hopatch.sty',
       ['../tex/latex/hopatch/hopatch-2016-05-16.sty'] = 'hopatch-2016-05-16.sty',
     }

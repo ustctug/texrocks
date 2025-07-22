@@ -1,4 +1,4 @@
-local git_ref = '3.02'
+local git_ref = 'v3.01'
 local modrev = git_ref:gsub('v', '')
 local specrev = '1'
 
@@ -18,8 +18,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/xcolor.zip",
-  dir = 'xcolor'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -40,7 +40,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/xcolor/xcolor.pdf'] = 'xcolor.pdf',
+      -- ['../doc/latex/xcolor/xcolor.pdf'] = 'xcolor.pdf',
       ['../tex/latex/xcolor/xcolor.sty'] = 'xcolor.sty',
       ['../tex/latex/xcolor/xcolor-2022-06-12.sty'] = 'xcolor-2022-06-12.sty',
     }

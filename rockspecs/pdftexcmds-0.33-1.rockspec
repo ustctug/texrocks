@@ -1,5 +1,5 @@
-local git_ref = '0.33'
-local modrev = git_ref
+local git_ref = 'v0.33'
+local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/pdftexcmds'
@@ -18,8 +18,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/pdftexcmds.zip",
-  dir = 'pdftexcmds'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -44,7 +44,7 @@ build = {
     },
     conf = {
       ['../tex/generic/pdftexcmds/pdftexcmds.sty'] = 'pdftexcmds.sty',
-      ['../doc/generic/pdftexcmds/pdftexcmds.pdf'] = 'pdftexcmds.pdf',
+      -- ['../doc/generic/pdftexcmds/pdftexcmds.pdf'] = 'pdftexcmds.pdf',
     }
   }
 }

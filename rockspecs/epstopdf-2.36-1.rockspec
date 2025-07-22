@@ -1,5 +1,5 @@
-local git_ref = '2.36'
-local modrev = git_ref
+local git_ref = 'release-2020-01-24'
+local modrev = '2.36'
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/epstopdf'
@@ -22,8 +22,8 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'grfext', 'pdftexcmds', 'infwarerr', 'kvoptions' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/epstopdf-pkg.zip",
-  dir = 'epstopdf-pkg'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -40,7 +40,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../doc/latex/epstopdf/epstopdf.pdf'] = 'epstopdf.pdf',
+      -- ['../doc/latex/epstopdf/epstopdf.pdf'] = 'epstopdf.pdf',
       ['../tex/latex/epstopdf/epstopdf.sty'] = 'epstopdf.sty',
       ['../tex/latex/epstopdf/epstopdf-base.sty'] = 'epstopdf-base.sty',
     }
