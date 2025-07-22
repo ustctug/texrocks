@@ -41,8 +41,12 @@ jobs:
           luarocks install --local luatex
           luarocks install --local luatexinfo
           luarocks install --local lualatex
-          luarocks list --porcelain | cut -f1 | parallel luarocks pack || true
-          rename -f s/linux-x86_64/all/ {texrocks,luatex{,info},lualatex}-*.rock
+          luarocks install --local texdoc
+          luarocks install --local l3build
+          luarocks install --local luafindfont
+          luarocks list --porcelain | cut -f1 | sed 's/^/luarocks pack /' | sh
+          rename -f s/linux-x86_64/all/ \
+            {texrocks,luatex{,info},lualatex,texdoc,l3build,luafindfont}-*.rock
           luarocks-admin make-manifest .
           parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
       - uses: stefanzweifel/git-auto-commit-action@v5

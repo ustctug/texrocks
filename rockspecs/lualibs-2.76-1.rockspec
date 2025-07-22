@@ -33,15 +33,12 @@ end
 
 build = {
   type = 'builtin',
-  copy_directories = { 'doc' },
   modules = {
     ["lualibs-basic-merged"] = "lualibs-basic-merged.lua",
-    ["lualibs-basic"] = "lualibs-basic.lua",
     ["lualibs-boolean"] = "lualibs-boolean.lua",
     ["lualibs-compat"] = "lualibs-compat.lua",
     ["lualibs-dir"] = "lualibs-dir.lua",
     ["lualibs-extended-merged"] = "lualibs-extended-merged.lua",
-    ["lualibs-extended"] = "lualibs-extended.lua",
     ["lualibs-file"] = "lualibs-file.lua",
     ["lualibs-function"] = "lualibs-function.lua",
     ["lualibs-io"] = "lualibs-io.lua",
@@ -71,6 +68,5 @@ build = {
     ["lualibs-util-tab"] = "lualibs-util-tab.lua",
     ["lualibs-util-tpl"] = "lualibs-util-tpl.lua",
     ["lualibs-util-zip"] = "lualibs-util-zip.lua",
-    ["lualibs"] = "lualibs.lua",
   },
 }
