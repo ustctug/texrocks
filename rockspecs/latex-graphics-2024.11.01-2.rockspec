@@ -38,7 +38,9 @@ end
 
 -- \RequirePackage{ifthen}
 -- https://tex.stackexchange.com/questions/340099/cannot-add-picture-to-article-no-driver-specified/648751#648751
-dependencies = { 'latex-base', 'graphics-cfg' }
+-- graphics-cfg -> graphics-def -> epstopdf -> kvoptions -> latex-graphics's keyval
+-- dependencies = { 'latex-base', 'graphics-cfg' }
+dependencies = { 'latex-base' }
 
 build = {
   type = 'builtin',
