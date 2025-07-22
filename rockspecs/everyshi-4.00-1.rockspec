@@ -31,12 +31,12 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'lualatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
   type = 'command',
   build_command = [[
-    lualatex --interaction=nonstopmode everyshi.ins
+    luatex --interaction=nonstopmode everyshi.ins
 ]],
   install = {
     conf = {

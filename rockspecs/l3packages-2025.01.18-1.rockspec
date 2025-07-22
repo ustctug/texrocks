@@ -27,8 +27,7 @@ The appropriate LaTeX kernel releases incorporating the ideas from the packages 
 dependencies = { 'l3kernel' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package
-  .. '.tds.zip',
+  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
   dir = '.'
 }
 

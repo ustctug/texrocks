@@ -1,11 +1,11 @@
-local git_ref = '1.0'
-local modrev = git_ref
+package = 'colortbl'
+local modrev = '1.0'
 local specrev = '11'
+local git_ref = package .. '-1.0' .. package.char(specrev + 0x60)
 
-local repo_url = 'https://ctan.org/pkg/colortbl'
+local repo_url = 'https://github.com/davidcarlisle/dpctex/'
 
 rockspec_format = '3.0'
-package = 'colortbl'
 version = modrev .. '-' .. specrev
 
 description = {
@@ -18,8 +18,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/colortbl.zip",
-  dir = 'colortbl'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = 'dpctex-' .. git_ref .. '/' .. package,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -29,19 +29,19 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'lualatex' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'latex-tools' }
 
 build = {
   type = 'command',
   build_command = [[
-  lualatex --interaction=nonstopmode colortbl.ins
+  luatex --interaction=nonstopmode colortbl.ins
 ]],
   install = {
     conf = {
+      -- ['../doc/latex/colortbl/colortbl.pdf'] = 'colortbl.pdf',
       ['../tex/latex/colortbl/colortbl.sty'] = 'colortbl.sty',
-      ['../doc/latex/colortbl/colortbl.pdf'] = 'colortbl.pdf',
     }
   }
 }

@@ -1,6 +1,6 @@
-local git_ref = '2024-11-01'
-local modrev = git_ref:gsub('-', '.')
-local specrev = '2'
+local git_ref = 'release-2025-06-01-PL1'
+local modrev = git_ref:gsub("^release%-", ""):gsub("%-PL.*", ""):gsub('%-', '.')
+local specrev = git_ref:gsub(".*%-PL", "")
 
 local repo_url = 'https://github.com/latex3/latex2e'
 
@@ -18,7 +18,7 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/release-' .. git_ref .. '-PL' .. specrev .. '/' .. package .. '.tds.zip',
+  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
   dir = '.'
 }
 

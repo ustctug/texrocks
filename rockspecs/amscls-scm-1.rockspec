@@ -22,8 +22,6 @@ The user documentation can be found in the package amscls-doc.]],
 }
 
 source = {
-  url = repo_url .. '/releases/download/release-' .. git_ref .. '-PL' .. specrev .. '/' .. package .. '.tds.zip',
-  dir = '.'
 }
 
 -- \RequirePackage{amsmath}

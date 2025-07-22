@@ -1,5 +1,5 @@
-local git_ref = '2019-11-24'
-local modrev = git_ref:gsub('-', '.')
+local git_ref = 'release-2019-11-24'
+local modrev = git_ref:gsub("^release%-", ""):gsub('%-', '.')
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/pdfcolmk'
@@ -19,13 +19,13 @@ For current releases of pdfTeX (later than version 1.40.0, released in 2007), th
 
 The documented source of the original package is still available at the github repository.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://ctan.org/pkg/pdfcolmk',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
 source = {
-  url = repo_url .. '/archive/refs/tags/release-' .. git_ref .. '.zip',
-  dir = package .. '-release-' .. git_ref,
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
