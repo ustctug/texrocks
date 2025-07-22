@@ -2,8 +2,6 @@ local git_ref = '1.15'
 local modrev = git_ref
 local specrev = '1'
 
-local repo_url = 'https://ctan.org/pkg/hologo'
-
 rockspec_format = '3.0'
 package = 'hologo'
 version = modrev .. '-' .. specrev

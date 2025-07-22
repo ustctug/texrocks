@@ -8,6 +8,8 @@ rockspec_format = '3.0'
 package = 'ltxcmds'
 version = modrev .. '-' .. specrev
 
+build_dependencies = { "luatex", 'latex-base' }
+
 dependencies = {}
 
 description = {

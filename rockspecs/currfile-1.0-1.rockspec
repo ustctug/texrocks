@@ -8,7 +8,7 @@ rockspec_format = '3.0'
 package = 'currfile'
 version = modrev .. '-' .. specrev
 
-build_dependencies = { 'lualatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'filehook', 'latex-graphics' }
 

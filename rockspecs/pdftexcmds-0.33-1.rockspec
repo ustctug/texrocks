@@ -8,8 +8,6 @@ rockspec_format = '3.0'
 package = 'pdftexcmds'
 version = modrev .. '-' .. specrev
 
-dependencies = {}
-
 description = {
   summary = 'LuaTeX support for pdfTeX utility functions',
   detailed =
@@ -31,7 +29,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'luatex' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'infwarerr', 'iftex', 'ltxcmds' }
 

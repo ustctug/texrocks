@@ -32,8 +32,7 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install rename parallel
-      - name: Pack
-        env:
+      - env:
           LUA_PATH: /home/runner/.luarocks/share/lua/5.3/?.lua
           TEXMFDOTDIR: .;/home/runner/.luarocks//
         run: |

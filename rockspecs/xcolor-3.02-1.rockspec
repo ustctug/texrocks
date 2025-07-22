@@ -29,7 +29,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'luatex' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'pdfcolmk', 'colortbl' }
 
