@@ -1,6 +1,7 @@
-local git_ref = 'v1.6'
-local modrev = git_ref:gsub('v', '')
-local specrev = '1'
+local git_ref = 'v1.6a'
+local _git_ref = git_ref:gsub('^v', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
 local repo_url = 'https://github.com/MartinScharrer/newverbs'
 
@@ -24,7 +25,7 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. version.char(specrev + 0x60) .. '/' .. package .. '.tds.zip',
+  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
   dir = '.'
 }
 

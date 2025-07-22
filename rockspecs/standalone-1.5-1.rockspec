@@ -1,6 +1,8 @@
-local git_ref = 'v1.3'
-local modrev = git_ref:gsub('v', '')
-local specrev = '2'
+local git_ref = 'v1.5a'
+local _git_ref = git_ref:gsub('^v', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+local date = '2025-02-22'
 
 local repo_url = 'https://github.com/MartinScharrer/standalone'
 
@@ -26,7 +28,7 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. version.char(specrev + 0x60) .. '/' .. package .. '.tds.zip',
+  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-' .. git_ref .. '-' .. date .. '.tds.zip',
   dir = '.'
 }
 

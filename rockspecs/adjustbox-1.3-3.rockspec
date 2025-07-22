@@ -1,6 +1,8 @@
-local git_ref = 'v1.3'
-local modrev = git_ref:gsub('v', '')
-local specrev = '1'
+local git_ref = 'v1.3c'
+local _git_ref = git_ref:gsub('^v', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+local date = '2025-02-26'
 
 local repo_url = 'https://github.com/MartinScharrer/adjustbox/'
 
@@ -25,7 +27,7 @@ dependencies = { 'pgf', 'latex-graphics', 'collectbox', 'xkeyval',
   'latex-tools' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. version.char(specrev + 0x60) .. '/' .. package .. '.tds.zip',
+  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-' .. git_ref .. '-' .. date .. '.tds.zip',
   dir = '.'
 }
 

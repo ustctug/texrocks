@@ -20,8 +20,6 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. version.char(specrev + 0x60) .. '/' .. package .. '.tds.zip',
-  dir = '.'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
