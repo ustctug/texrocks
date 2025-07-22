@@ -22,12 +22,10 @@ jobs:
         with:
           token: ${{secrets.GH_TOKEN}}
           ref: gh-pages
-      - name: Install Lua
-        uses: leso-kn/gh-actions-lua@master
+      - uses: leso-kn/gh-actions-lua@master
         with:
           luaVersion: "5.3"
-      - name: Install Luarocks
-        uses: hishamhm/gh-actions-luarocks@master
+      - uses: hishamhm/gh-actions-luarocks@master
       - name: Install Dependencies
         run: |
           sudo apt-get -y update
@@ -36,6 +34,13 @@ jobs:
           LUA_PATH: /home/runner/.luarocks/share/lua/5.3/?.lua
           TEXMFDOTDIR: .;/home/runner/.luarocks//
         run: |
+          mkdir ~/.luarocks
+          cat > ~/.luarocks/config-5.3.lua << EOF
+          rocks_servers = {
+            "https://ustctug.github.io/texrocks",
+            "https://luarocks.org"
+          }
+          EOF
           luarocks install --local luahbtex
           luarocks install --local luatex
           luarocks install --local luatexinfo
