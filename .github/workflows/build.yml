@@ -1,4 +1,5 @@
-on:
+---
+"on":
   push:
     paths-ignore:
       - "**.md"
@@ -31,8 +32,7 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -y install rename parallel
       - env:
-          LUA_PATH: /home/runner/.luarocks/share/lua/5.3/?.lua
-          TEXMFDOTDIR: .;/home/runner/.luarocks//
+          TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
         run: |
           mkdir ~/.luarocks
           cat > ~/.luarocks/config-5.3.lua << EOF
