@@ -19,7 +19,7 @@ description = {
   license = 'CC0-1.0'
 }
 
-dependencies = { 'graphics-def' }
+dependencies = { 'graphics-def', 'latex-graphics' }
 
 source = {
   url = "https://github.com/latex3/graphics-cfg/archive/" .. git_ref .. ".zip",

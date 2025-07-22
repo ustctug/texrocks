@@ -61,7 +61,7 @@ lx add -b lualatex
 # \usepackage{hyperref}
 lx add -b hyperref
 # \usepackage{graphicx}
-lx add -b latex-graphics
+lx add -b graphics-cfg
 # \usepackage{tikz}
 lx add -b pgf
 # lx add -b more packages ...
@@ -175,10 +175,8 @@ Read [docs](docs/) for more information.
 
 ## TODO
 
-- `lx` can be configure by `~/.config/lux/config.toml`. `texrocks` should
-  know correct installation positions of TeX files according to it. Currently we
-  use default value without any extra config.
-- more TeX packages
+- read `~/.config/lux/config.toml` to know real installed TeX files's paths.
+- more TeX packages: CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100
 
 ## Credit
 

@@ -85,8 +85,8 @@ build = {
  -- Executable names plus following options
 -typesetexe = typesetexe or "pdflatex"
 -unpackexe  = unpackexe  or "pdftex"
-+typesetexe = typesetexe or "latex"
-+unpackexe  = unpackexe  or "latex"
++typesetexe = typesetexe or "lualatex"
++unpackexe  = unpackexe  or "luatex"
 
  checkopts   = checkopts   or "-interaction=nonstopmode"
  typesetopts = typesetopts or "-interaction=nonstopmode"
