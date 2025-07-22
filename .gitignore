@@ -1,5 +1,9 @@
 *.zip
+# lx pack
 *.rock
+# lx build
+.luarc.json
+# lx generate-rockspec
 packages/*/*.rockspec
 
 *.cp

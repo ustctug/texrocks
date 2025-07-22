@@ -173,8 +173,8 @@ function M.setenvs()
     -- project setting > config > data > cache
     -- create ./*.cnf to override
     os.setenv("TEXMF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
-    -- create ./texmf.cnf to override
-    os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
+    -- create ./texmf.cnf to override lua/texrocks/texmf.cnf
+    os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" .. debug.getinfo(1).source:match("@?(.*)/"))
 
     os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, ""))
     os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.cpath, ""))

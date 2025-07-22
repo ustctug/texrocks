@@ -19,7 +19,7 @@
         },
         "hashes": {
           "rockspec": "sha256-QoFqaNjnJdvGKZVqm+5IWcE0Z43OXPYwXZ+GUYNxhlM=",
-          "source": "sha256-klINMJVJvQqfgnzMAg0Bz357SQEFvA4pKAYS5EPvULg="
+          "source": "sha256-c76DhFxY4jW3gGkoija2wnlTaUJSvrFgQWXvDWX0EDM="
         }
       }
     },
@@ -46,7 +46,7 @@
         },
         "hashes": {
           "rockspec": "sha256-QoFqaNjnJdvGKZVqm+5IWcE0Z43OXPYwXZ+GUYNxhlM=",
-          "source": "sha256-klINMJVJvQqfgnzMAg0Bz357SQEFvA4pKAYS5EPvULg="
+          "source": "sha256-c76DhFxY4jW3gGkoija2wnlTaUJSvrFgQWXvDWX0EDM="
         }
       }
     },

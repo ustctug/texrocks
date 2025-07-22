@@ -5,7 +5,7 @@
 - A LuaTeX compiler named luahbtex. Because LaTeX only support it, not others
   luatex, luajittex, ... It contained in mostly TeX distribution like TeXLive
   and MikTeX. However, you can install it standalone.
-- [lx](https://github.com/nvim-neorocks/lux) >= 0.10.0 as package manager. Note
+- [lx](https://github.com/nvim-neorocks/lux) > 0.11.0 as package manager. Note
   many distributions' `lux-cli` is not latest.
 
 For ArchLinux:

@@ -54,6 +54,7 @@ jobs:
           luarocks install --local graphics-cfg
           luarocks install --local listings
           luarocks install --local hypdoc
+          luarocks install --local hologo
           rm -f ./*.rock
           luarocks list --porcelain | cut -f1 | sed 's/^/luarocks pack /' | sh
           rename -f s/linux-x86_64/all/ \

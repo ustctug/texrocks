@@ -1,5 +1,5 @@
 package = "lualatex"
-version = "0.0.1"
+version = "0.2.3"
 lua = ">=5.1"
 
 [description]
@@ -11,8 +11,8 @@ homepage = "https://www.lualatex.org/"
 license = 'GPL-3.0'
 
 [source]
-url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/empty.zip"
-dir = "."
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 # refer https://ctan.org/pkg/required
 [dependencies]
@@ -20,14 +20,14 @@ texrocks = "0.2.3-1"
 amsfonts = "3.04-1"
 # tex-ini-files provide lualatexquotejobname.lua
 tex-ini-files = "2025.02.09-1"
+latex-base = "2025.06.01-1"
 # latex-base depends on l3backend depends on unicode-data
-latex-base = "2024.11.01-2"
 
 [build_dependencies]
 texrocks = "0.2.3-1"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
-latex-base = "2024.11.01-2"
+latex-base = "2025.06.01-1"
 latex-fonts = "0.0.1"
 
 [run]

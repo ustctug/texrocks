@@ -1,6 +1,8 @@
-local git_ref = '3.6'
-local modrev = git_ref
+local git_ref = 'release-2019-12-15'
+local modrev = '3.6'
 local specrev = '1'
+
+local repo_url = 'https://github.com/ho-tex/refcount'
 
 rockspec_format = '3.0'
 package = 'refcount'
@@ -20,13 +22,13 @@ Commands \setcounterpageref and \addtocounterpageref do the corresponding thing 
 
 No .ins file is distributed; process the .dtx with plain TeX to create one.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/refcount',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/pdfescape.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -36,9 +38,18 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 dependencies = { 'ltxcmds', 'infwarerr' }
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode refcount.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/latex/refcount/refcount.sty'] = 'refcount.sty',
+    }
+  }
 }

@@ -40,7 +40,7 @@ build = {
   ]],
   install = {
     lua = {
-      'pdftexcmds.lua',
+      pdftexcmds = 'pdftexcmds.lua',
     },
     conf = {
       ['../tex/generic/pdftexcmds/pdftexcmds.sty'] = 'pdftexcmds.sty',
