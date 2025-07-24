@@ -50,8 +50,9 @@ jobs:
           luarocks install --local texdoc
           luarocks install --local l3build
           luarocks install --local luafindfont
-          luarocks install --local beamer
           luarocks install --local graphics-cfg
+          luarocks install --local beamer
+          luarocks install --local standalone
           luarocks install --local hologo
           luarocks install --local hypdoc
           luarocks install --local ydoc
