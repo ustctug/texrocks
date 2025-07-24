@@ -34,7 +34,7 @@ jobs:
       - env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
         run: |
-          mkdir ~/.luarocks
+          # mkdir ~/.luarocks
           # cat > ~/.luarocks/config-5.3.lua << EOF
           # rocks_servers = {
           #   "https://ustctug.github.io/texrocks",
@@ -52,9 +52,9 @@ jobs:
           luarocks install --local luafindfont
           luarocks install --local beamer
           luarocks install --local graphics-cfg
-          luarocks install --local listings
-          luarocks install --local hypdoc
           luarocks install --local hologo
+          luarocks install --local hypdoc
+          luarocks install --local ydoc
           rm -f ./*.rock
           luarocks list --porcelain | cut -f1 | sed 's/^/luarocks pack /' | sh
           rename -f s/linux-x86_64/all/ \

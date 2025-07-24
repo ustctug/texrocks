@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '1.42'
 local modrev = git_ref
 local specrev = '1'
 
@@ -18,13 +18,14 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/multido.zip",
+  dir = 'multido'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = 'https://mirrors.ctan.org/macros/generic/multido.zip',
+    dir = 'multido'
   }
 end
 
@@ -33,7 +34,7 @@ build = {
   install = {
     conf = {
       ['../tex/latex/multido/multido.sty'] = 'multido.sty',
-      ['../doc/latex/multido/multido.pdf'] = 'multido.pdf',
+      -- ['../doc/latex/multido/multido.pdf'] = 'multido.pdf',
     }
   }
 }

@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '0.92'
 local modrev = git_ref
 local specrev = '1'
 
@@ -18,13 +18,14 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/varwidth.zip",
+  dir = 'varwidth'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = 'https://mirrors.ctan.org/macros/latex/contrib/varwidth.zip',
+    dir = 'varwidth'
   }
 end
 

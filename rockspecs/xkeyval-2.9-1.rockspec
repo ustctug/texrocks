@@ -21,18 +21,32 @@ dependencies = { 'latex-tools' }
 
 source = {
   url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/xkeyval.zip",
-  dir = '.'
+  dir = 'xkeyval'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = 'https://mirrors.ctan.org/macros/latex/contrib/xkeyval.zip',
-    dir = '.'
+    dir = 'xkeyval'
   }
 end
 
 build = {
   type = 'command',
+  patches = {
+    ["add-bye.diff"] = [[
+--- old/xkeyval.dtx
++++ new/xkeyval.dtx
+@@ -85,6 +85,7 @@
+   \file{xkeyval.bib}{\from{xkeyval.dtx}{bib}}
+ }
+ \endgroup
++\bye
+ %</batchfile>
+ %<*driver>
+ \documentclass[a4paper]{ltxdoc}
+]]
+  },
   build_command = [[
     luatex --interaction=nonstopmode xkeyval.dtx
   ]],

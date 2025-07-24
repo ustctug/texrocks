@@ -1,6 +1,6 @@
-local git_ref = 'scm'
-local modrev = git_ref
-local specrev = '1'
+local git_ref = '1.3d'
+local modrev = git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
 local repo_url = 'https://ctan.org/pkg/float'
 
@@ -19,23 +19,24 @@ description = {
   license = 'LPPL-1.0'
 }
 
-build_dependencies = { 'lualatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/float.zip",
+  dir = "float"
 }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = 'https://mirrors.ctan.org/macros/latex/contrib/float.zip',
+    dir = "float"
   }
 end
 
 build = {
   type = 'command',
   build_command = [[
-    lualatex --interaction=nonstopmode float.ins
+    luatex --interaction=nonstopmode float.ins
   ]],
   install = {
     conf = {

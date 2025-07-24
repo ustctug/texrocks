@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = 'cbc34fa4445e60ac9731867b7e6c58f9dc44ab24'
+local modrev = '0.7'
 local specrev = '1'
 
 local repo_url = 'https://github.com/MartinScharrer/ydoc'
@@ -23,7 +23,8 @@ dependencies = { 'newverbs', 'listings', 'float', 'latex-base',
   'latex-url', 'etoolbox', 'xcolor', 'hyperref', 'latex-tools', 'needspace' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-ctan.zip',
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -35,5 +36,19 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  build = {
+    install = {
+      conf = {
+        ['../tex/generic/ydoc/ydocincl.tex'] = 'ydocincl.tex',
+        ['../tex/generic/ydoc/ydocstrip.tex'] = 'ydocstrip.tex',
+        ['../tex/latex/ydoc/ydoc-code.sty'] = 'ydoc-code.sty',
+        ['../tex/latex/ydoc/ydoc-desc.sty'] = 'ydoc-desc.sty',
+        ['../tex/latex/ydoc/ydoc-doc.sty'] = 'ydoc-doc.sty',
+        ['../tex/latex/ydoc/ydoc-expl.sty'] = 'ydoc-expl.sty',
+        ['../tex/latex/ydoc/ydoc.cfg'] = 'ydoc.cfg',
+        ['../tex/latex/ydoc/ydoc.cls'] = 'ydoc.cls',
+        ['../tex/latex/ydoc/ydoc.sty'] = 'ydoc.sty',
+      }
+    }
+  }
 }

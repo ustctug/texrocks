@@ -1,5 +1,6 @@
-local git_ref = 'v1.2'
-local modrev = git_ref:gsub('v', '')
+local git_ref = 'hg2git'
+-- local modrev = git_ref:gsub('v', '')
+local modrev = '1.2'
 local specrev = '1'
 
 local repo_url = 'https://github.com/MartinScharrer/filemod'
@@ -21,7 +22,7 @@ description = {
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -33,5 +34,12 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  install = {
+    conf = {
+      ['../tex/latex/filemod/filemod.sty'] = 'filemod.sty',
+      ['../tex/latex/filemod/filemod-expmin.sty'] = 'filemod-expmin.sty',
+      -- ['../tex/generic/filemod/filemod.tex'] = 'filemod.tex',
+      -- ['../tex/generic/filemod/filemod-expmin.tex'] = 'filemod-expmin.tex',
+    }
+  }
 }

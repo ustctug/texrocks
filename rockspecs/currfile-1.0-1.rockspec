@@ -8,8 +8,6 @@ rockspec_format = '3.0'
 package = 'currfile'
 version = modrev .. '-' .. specrev
 
-build_dependencies = { 'luatex', 'latex-base' }
-
 dependencies = { 'filehook', 'latex-graphics' }
 
 description = {
@@ -38,13 +36,10 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-        luatex --interaction=nonstopmode currfile.ins
-  ]],
+  type = 'none',
   install = {
     conf = {
-      ['../doc/latex/currfile/currfile.pdf'] = 'currfile.pdf',
+      -- ['../doc/latex/currfile/currfile.pdf'] = 'currfile.pdf',
       ['../tex/latex/currfile/currfile.sty'] = 'currfile.sty',
       ['../tex/latex/currfile/currfile-abspath.sty'] = 'currfile-abspath.sty',
     }

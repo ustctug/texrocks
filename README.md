@@ -73,7 +73,7 @@ lx add -b pgf
 $EDITOR main.tex
 ```
 
-4. Tell `lx` how to build your document
+4. Tell `lx` how to build, install and open your document
 
 `lux.toml`:
 
@@ -82,18 +82,21 @@ $EDITOR main.tex
 [build]
 type = "command"
 build_command = "lualatex --interaction=nonstopmode main.tex"
+
+[build.install.conf]
+'../doc/main.pdf' = 'main.pdf'
+
+[run]
+type = "command"
+command = "sh"
+args = ["-c", "xdg-open .lux/5.3/*/etc/doc/main.pdf"]
 ```
 
-5. Build
+5. Build and view your document
 
 ```sh
 lx build
-```
-
-6. View your document
-
-```sh
-xdg-open main.pdf
+lx run
 ```
 
 This is your project structure:
@@ -105,67 +108,76 @@ $ tree -a
 │   ├──  .gitignore
 │   └──  5.3  # pdf's dependencies are build dependencies not runtime
 │       ├──  bin
-│       └──  build_dependencies
-│           ├──  .gitignore
-│           └──  5.3
-│               ├──  bin
-│               │   ├──  lualatex  # LaTeX compiler
-│               │   └──  texlua  # Lua interpreter
-│               ├──  1a043a1a092206fb664a8dd394bdf99e526af762fe7282c6ccf49bc0ec23521e-latex-base@2024.11.01-2
-│               │   ├──  etc
-│               │   │   ├──  conf
-│               │   │   ├──  doc
-│               │   │   │   └──  latex
-│               │   │   │       └──  base
-│               │   │   │           ├── ...
-│               │   │   │           ├──  usrguide.pdf  # RTFM
-│               │   │   │           └── ...
-│               │   │   └──  tex
-│               │   │       └──  latex
-│               │   │           └──  base
-│               │   │               ├── ...
-│               │   │               ├──  article.cls  # \documentclass{article}
-│               │   │               └── ...
-│               │   ├──  lib
-│               │   ├──  package.rockspec
-│               │   └──  src
-│               │       └──  ltluatex.lua
-│               ├──  6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb-amsfonts@3.04-1
-│               │   ├──  etc
-│               │   │   ├──  conf
-│               │   │   ├──  doc
-│               │   │   │   └──  fonts
-│               │   │   │       └──  amsfonts
-│               │   │   │           ├── ...
-│               │   │   │           └── 󰂺 README
-│               │   │   ├──  fonts
-│               │   │   │   ├──  afm
-│               │   │   │   │   └──  public
-│               │   │   │   │       └──  amsfonts
-│               │   │   │   │           ├──  cm  # computer modern fonts
-│               │   │   │   │           │   └── ...
-│               │   │   │   │           ├── ...
-│               │   │   │   │           └──  symbols  # math symbol fonts
-│               │   │   │   │               └── ...
-│               │   │   │   └── ...  # more font types
-│               │   │   └──  tex
-│               │   │       ├──  latex
-│               │   │       │   └──  amsfonts
-│               │   │       │       ├──  amsfonts.sty  # \usepackage{amsfonts}
-│               │   │       │       └── ...
-│               │   │       └──  plain
-│               │   │           └──  amsfonts
-│               │   │               ├──  amssym.def
-│               │   │               ├──  amssym.tex  # \input{amssym}
-│               │   │               └──  cyracc.def
-│               │   ├──  lib
-│               │   ├──  package.rockspec
-│               │   └──  src
-│               ├── ... # more TeX packages
-│               └──  lux.lock
+│       ├──  build_dependencies
+│       │   ├──  .gitignore
+│       │   └──  5.3
+│       │       ├──  bin
+│       │       │   ├──  lualatex  # LaTeX compiler
+│       │       │   └──  texlua  # Lua interpreter
+│       │       ├──  1a043a1a092206fb664a8dd394bdf99e526af762fe7282c6ccf49bc0ec23521e-latex-base@2024.11.01-2
+│       │       │   ├──  etc
+│       │       │   │   ├──  conf
+│       │       │   │   ├──  doc
+│       │       │   │   │   └──  latex
+│       │       │   │   │       └──  base
+│       │       │   │   │           ├── ...
+│       │       │   │   │           ├──  usrguide.pdf  # RTFM
+│       │       │   │   │           └── ...
+│       │       │   │   └──  tex
+│       │       │   │       └──  latex
+│       │       │   │           └──  base
+│       │       │   │               ├── ...
+│       │       │   │               ├──  article.cls  # \documentclass{article}
+│       │       │   │               └── ...
+│       │       │   ├──  lib
+│       │       │   ├──  package.rockspec
+│       │       │   └──  src
+│       │       │       └──  ltluatex.lua
+│       │       ├──  6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb-amsfonts@3.04-1
+│       │       │   ├──  etc
+│       │       │   │   ├──  conf
+│       │       │   │   ├──  doc
+│       │       │   │   │   └──  fonts
+│       │       │   │   │       └──  amsfonts
+│       │       │   │   │           ├── ...
+│       │       │   │   │           └── 󰂺 README
+│       │       │   │   ├──  fonts
+│       │       │   │   │   ├──  afm
+│       │       │   │   │   │   └──  public
+│       │       │   │   │   │       └──  amsfonts
+│       │       │   │   │   │           ├──  cm  # computer modern fonts
+│       │       │   │   │   │           │   └── ...
+│       │       │   │   │   │           ├── ...
+│       │       │   │   │   │           └──  symbols  # math symbol fonts
+│       │       │   │   │   │               └── ...
+│       │       │   │   │   └── ...  # more font types
+│       │       │   │   └──  tex
+│       │       │   │       ├──  latex
+│       │       │   │       │   └──  amsfonts
+│       │       │   │       │       ├──  amsfonts.sty  # \usepackage{amsfonts}
+│       │       │   │       │       └── ...
+│       │       │   │       └──  plain
+│       │       │   │           └──  amsfonts
+│       │       │   │               ├──  amssym.def
+│       │       │   │               ├──  amssym.tex  # \input{amssym}
+│       │       │   │               └──  cyracc.def
+│       │       │   ├──  lib
+│       │       │   ├──  package.rockspec
+│       │       │   └──  src
+│       │       ├── ... # more TeX packages
+│       │       └──  lux.lock
+│       ├──  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-my-thesis@0.1.0-1
+│       │   ├──  etc
+│       │   │   ├──  conf
+│       │   │   └──  doc
+│       │   │       └──  main.pdf
+│       │   ├──  lib
+│       │   └──  src
+│       ├──  lux.lock
+│       └──  test_dependencies
+│           └──  .gitignore
 ├──  lux.lock  # like package-lock.json or requirements.txt
 ├──  lux.toml  # like package.json or pyproject.toml
-├──  main.pdf
 └──  main.tex
 ```
 

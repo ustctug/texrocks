@@ -1,14 +1,14 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = 'auctex-14.1.0'
+local modrev = git_ref:gsub("^auctex%-", "")
 local specrev = '1'
 
-local repo_url = 'https://git.savannah.gnu.org/gitweb/?p=auctex.git'
+local repo_url = 'git://git.git.savannah.gnu.org/auctex.git'
 
 rockspec_format = '3.0'
 package = 'preview'
 version = modrev .. '-' .. specrev
 
-build_dependencies = { 'lualatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'luatex85' }
 
@@ -22,7 +22,9 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-ctan.zip',
+  url = repo_url,
+  tag = git_ref,
+  dir = 'auctex/latex'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -34,11 +36,12 @@ end
 build = {
   type = 'command',
   build_command = [[
-        lualatex --interaction=nonstopmode preview.ins
+      luatex --interaction=nonstopmode bootstrap.ins
+      luatex --interaction=nonstopmode preview-mk.ins
   ]],
   install = {
     conf = {
-      ['../doc/latex/preview/preview.pdf'] = 'preview.pdf',
+      -- ['../doc/latex/preview/preview.pdf'] = 'preview.pdf',
       ['../tex/latex/preview/prauctex.cfg'] = 'prauctex.cfg',
       ['../tex/latex/preview/prauctex.def'] = 'prauctex.def',
       ['../tex/latex/preview/prcounters.def'] = 'prcounters.def',

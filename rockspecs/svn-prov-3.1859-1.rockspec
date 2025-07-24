@@ -1,5 +1,6 @@
-local git_ref = 'scm'
-local modrev = git_ref:gsub('v', '')
+local git_ref = 'hg2git'
+-- local modrev = git_ref:gsub('v', '')
+local modrev = '3.1859'
 local specrev = '1'
 
 local repo_url = 'https://github.com/MartinScharrer/svn-prov'
@@ -18,8 +19,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -30,6 +31,10 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
-  copy_directories = { 'doc', 'tex' },
+  type = 'none',
+  install = {
+    conf = {
+      ['../tex/latex/svn-prov/svn-prov.sty'] = 'svn-prov.sty',
+    }
+  }
 }

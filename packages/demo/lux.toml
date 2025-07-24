@@ -16,12 +16,13 @@ hologo = "1.15-1"
 
 [run]
 type = "command"
-command = "lualatex"
+command = "sh"
+args = ["-c", "xdg-open .lux/5.3/*/etc/doc/main.pdf"]
 
 [test]
 type = "command"
-command = "lualatex"
-flags = ["main.tex"]
+command = "sh"
+flags = ["-c", "exiftool .lux/5.3/*/etc/doc/main.pdf"]
 
 [build]
 type = "command"
