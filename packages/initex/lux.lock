@@ -18,8 +18,8 @@
           "url": "https://github.com/ustctug/texrocks/archive/0.2.4.zip"
         },
         "hashes": {
-          "rockspec": "sha256-vGSGEgvyfiH1YRjoaUUEnTDydX3D35cDS+amPLSu7Jg=",
-          "source": "sha256-AFmxp38HVu+C3SoVrvOQE1jFo1lGvHMwm489SGQeOmo="
+          "rockspec": "sha256-gm+TX3clofkbiYpAfRBFDWPzVM1Rk/oEcU18oUkA1V8=",
+          "source": "sha256-lM+k34GdQhbUAzLWEZ4aP7Uo93JqK5o16EMIdyWtG4A="
         }
       }
     },
@@ -45,8 +45,8 @@
           "url": "https://github.com/ustctug/texrocks/archive/0.2.4.zip"
         },
         "hashes": {
-          "rockspec": "sha256-vGSGEgvyfiH1YRjoaUUEnTDydX3D35cDS+amPLSu7Jg=",
-          "source": "sha256-AFmxp38HVu+C3SoVrvOQE1jFo1lGvHMwm489SGQeOmo="
+          "rockspec": "sha256-gm+TX3clofkbiYpAfRBFDWPzVM1Rk/oEcU18oUkA1V8=",
+          "source": "sha256-lM+k34GdQhbUAzLWEZ4aP7Uo93JqK5o16EMIdyWtG4A="
         }
       }
     },

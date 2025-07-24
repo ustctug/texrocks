@@ -23,7 +23,7 @@ args = ["-c", "xdg-open .lux/5.3/*/etc/doc/main.pdf"]
 [test]
 type = "command"
 command = "sh"
-flags = ["-c", "exiftool .lux/5.3/*/etc/doc/main.pdf"]
+flags = ["-c", "pdftotext .lux/5.3/*/etc/doc/main.pdf -"]
 
 [build]
 type = "command"

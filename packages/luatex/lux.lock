@@ -2,24 +2,24 @@
   "version": "1.0.0",
   "dependencies": {
     "rocks": {
-      "1e569873efe89280ac880726c5334c01d0e05d21f1593cffafed73bb3bb2d6e1": {
+      "333739cc8803ca5cd65e0a7a84ff5a5981949996d6b879fbbfd0161b0c05b6ec": {
         "name": "texrocks",
-        "version": "0.2.3-1",
+        "version": "0.2.4-1",
         "pinned": false,
         "opt": false,
         "dependencies": [],
-        "constraint": "==0.2.3",
+        "constraint": "==0.2.4",
         "binaries": [
           "texlua"
         ],
-        "source": "luarocks_rock+https://ustctug.github.io/texrocks/",
+        "source": "luarocks_rockspec+https://luarocks.org/",
         "source_url": {
           "type": "url",
-          "url": "https://ustctug.github.io/texrocks/"
+          "url": "https://github.com/ustctug/texrocks/archive/0.2.4.zip"
         },
         "hashes": {
-          "rockspec": "sha256-QoFqaNjnJdvGKZVqm+5IWcE0Z43OXPYwXZ+GUYNxhlM=",
-          "source": "sha256-c76DhFxY4jW3gGkoija2wnlTaUJSvrFgQWXvDWX0EDM="
+          "rockspec": "sha256-gm+TX3clofkbiYpAfRBFDWPzVM1Rk/oEcU18oUkA1V8=",
+          "source": "sha256-lM+k34GdQhbUAzLWEZ4aP7Uo93JqK5o16EMIdyWtG4A="
         }
       },
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb": {
@@ -37,13 +37,13 @@
         },
         "hashes": {
           "rockspec": "sha256-RZE5QmO0RVpexakXWgCqM1J7w5fK6Je6rEXZ8XKRC9g=",
-          "source": "sha256-mhpZWI3OfXJAfvKWRiIEnwNMwjPo3AoKdxhIapgLEM0="
+          "source": "sha256-440//kdwvDa1D10XovMS7gNES8Z8lYRFu1r7llBDUpM="
         }
       }
     },
     "entrypoints": [
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb",
-      "1e569873efe89280ac880726c5334c01d0e05d21f1593cffafed73bb3bb2d6e1"
+      "333739cc8803ca5cd65e0a7a84ff5a5981949996d6b879fbbfd0161b0c05b6ec"
     ]
   },
   "build_dependencies": {
@@ -63,7 +63,7 @@
         },
         "hashes": {
           "rockspec": "sha256-574RQ+T/coHYocX0JJfDBX6Dnk+CzgVytQXsTx2/dcE=",
-          "source": "sha256-cMf93dFloIWf8GkGzT0GYHdDjDVXiPYcepZL8Ift3Vw="
+          "source": "sha256-Ni+ddHNqy1Vzs4rfpcFJGiMz6x8gydWnV9sz+WkoyxU="
         }
       },
       "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e": {
@@ -84,27 +84,27 @@
         },
         "hashes": {
           "rockspec": "sha256-P78/KLkCzlYZGrenAr0o1lnTWBDPbEloIW3jvG0xUeQ=",
-          "source": "sha256-68rh6GPVyCsRaDbqT4v4Ct4mOxzFYTf5H+X0VcsMQug="
+          "source": "sha256-LhUxzPlYqFRD9sdZh3jbv7aok21eiKXLy5keLDZbc3Q="
         }
       },
-      "1e569873efe89280ac880726c5334c01d0e05d21f1593cffafed73bb3bb2d6e1": {
+      "333739cc8803ca5cd65e0a7a84ff5a5981949996d6b879fbbfd0161b0c05b6ec": {
         "name": "texrocks",
-        "version": "0.2.3-1",
+        "version": "0.2.4-1",
         "pinned": false,
         "opt": false,
         "dependencies": [],
-        "constraint": "==0.2.3",
+        "constraint": "==0.2.4",
         "binaries": [
           "texlua"
         ],
-        "source": "luarocks_rock+https://ustctug.github.io/texrocks/",
+        "source": "luarocks_rockspec+https://luarocks.org/",
         "source_url": {
           "type": "url",
-          "url": "https://ustctug.github.io/texrocks/"
+          "url": "https://github.com/ustctug/texrocks/archive/0.2.4.zip"
         },
         "hashes": {
-          "rockspec": "sha256-QoFqaNjnJdvGKZVqm+5IWcE0Z43OXPYwXZ+GUYNxhlM=",
-          "source": "sha256-c76DhFxY4jW3gGkoija2wnlTaUJSvrFgQWXvDWX0EDM="
+          "rockspec": "sha256-gm+TX3clofkbiYpAfRBFDWPzVM1Rk/oEcU18oUkA1V8=",
+          "source": "sha256-lM+k34GdQhbUAzLWEZ4aP7Uo93JqK5o16EMIdyWtG4A="
         }
       },
       "414cfc33951c981ea45dcfddc370cc7c2adc1f157ca71253144d882eb564be84": {
@@ -124,7 +124,7 @@
         },
         "hashes": {
           "rockspec": "sha256-mf9N0F0DfKkDlmrj+zD45u47TvstZrQ6Yu+azJeW7PI=",
-          "source": "sha256-OHUzgEDL454a8c2iQZ3V0/c8G5lUyMrfbPWpkk/7Y6U="
+          "source": "sha256-qRhsyoOSap6GrpzXujw93xbwHKDoAFjB9ZAtV9zL008="
         }
       },
       "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2": {
@@ -142,7 +142,7 @@
         },
         "hashes": {
           "rockspec": "sha256-zdnKE8IVzop9avGHOLTdp2XJxhhXsOL3IqPrwr07lMo=",
-          "source": "sha256-mmgzI1OGTe4gNEUavpXfyk+LDjbVr5S4PJqGAjomHdA="
+          "source": "sha256-IiPHWYBef69m//aTtlKXToJtYFtw6CHVzLzg2L4AxjU="
         }
       },
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb": {
@@ -160,7 +160,7 @@
         },
         "hashes": {
           "rockspec": "sha256-RZE5QmO0RVpexakXWgCqM1J7w5fK6Je6rEXZ8XKRC9g=",
-          "source": "sha256-mhpZWI3OfXJAfvKWRiIEnwNMwjPo3AoKdxhIapgLEM0="
+          "source": "sha256-440//kdwvDa1D10XovMS7gNES8Z8lYRFu1r7llBDUpM="
         }
       },
       "8773a74e01b8f5094af083bc0b9678741186d247a7c72fd73252d7ee59c4da5a": {
@@ -178,7 +178,7 @@
         },
         "hashes": {
           "rockspec": "sha256-YSageq/LKUT9JupFWDUaMD8+L2T/8yCzkXjzA408nRc=",
-          "source": "sha256-m7vGhdvhxUHkZO1VOXxqaYAAK/GsUZ82cH3o00gn2GE="
+          "source": "sha256-SfrNBLvlsVZbQwqTNVhrA8URExqRSGxbgrImpwRpZAE="
         }
       },
       "f20235fb7e695062692792ef918b4fa3335c232082035409c0980ceb72d49a4a": {
@@ -196,16 +196,16 @@
         },
         "hashes": {
           "rockspec": "sha256-DG34Q6HlJUkrkJCdYtKBS3GOrstY3zNTdbmULt5q3dg=",
-          "source": "sha256-aKx0LnArVJD+9Rfs4iiWH/YEczR2kJB05n6PeGLH+2s="
+          "source": "sha256-uKq/+mHdAU0NyWLVt6xFRDT+RIq7cEfVtucaZecNiz4="
         }
       }
     },
     "entrypoints": [
-      "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2",
-      "414cfc33951c981ea45dcfddc370cc7c2adc1f157ca71253144d882eb564be84",
-      "1e569873efe89280ac880726c5334c01d0e05d21f1593cffafed73bb3bb2d6e1",
       "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb",
-      "8773a74e01b8f5094af083bc0b9678741186d247a7c72fd73252d7ee59c4da5a"
+      "8773a74e01b8f5094af083bc0b9678741186d247a7c72fd73252d7ee59c4da5a",
+      "414cfc33951c981ea45dcfddc370cc7c2adc1f157ca71253144d882eb564be84",
+      "333739cc8803ca5cd65e0a7a84ff5a5981949996d6b879fbbfd0161b0c05b6ec",
+      "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2"
     ]
   }
 }
