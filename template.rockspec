@@ -34,7 +34,10 @@ end
 build = {
   type = 'builtin',
   install = {
-    bin = { "bin/texlua" }
+    bin = { "bin/texlua" },
+    lua = {
+        texrocks = 'lua/texrocks/texmf.cnf'
+    },
   }
 }
 

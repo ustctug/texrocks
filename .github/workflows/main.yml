@@ -10,11 +10,6 @@
       - doc/*
   workflow_dispatch:
 
-# Prevent concurrent auto-commits
-concurrency:
-  group: auto-commit
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
