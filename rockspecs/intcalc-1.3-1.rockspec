@@ -1,6 +1,8 @@
-local git_ref = '1.3'
-local modrev = git_ref
+local git_ref = 'release-2019-12-15'
+local modrev = '1.3'
 local specrev = '1'
+
+local repo_url = 'https://github.com/ho-tex/intcalc'
 
 rockspec_format = '3.0'
 package = 'intcalc'
@@ -11,13 +13,15 @@ description = {
   detailed =
   [[This package provides expandable arithmetic operations with integers, using the e-TeX extension \numexpr if it is available.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/intcalc',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/intcalc.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -28,6 +32,13 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode intcalc.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/generic/intcalc/intcalc.sty'] = 'intcalc.sty',
+    }
+  }
 }

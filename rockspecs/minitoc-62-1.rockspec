@@ -1,5 +1,5 @@
-local git_ref = '62'
-local modrev = git_ref
+local git_ref = 'release-v62'
+local modrev = git_ref:gsub("^release%-v", "")
 local specrev = '1'
 
 rockspec_format = '3.0'

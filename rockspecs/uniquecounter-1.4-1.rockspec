@@ -1,5 +1,5 @@
-local git_ref = '1.4'
-local modrev = git_ref
+local git_ref = 'release-2019-12-15'
+local modrev = '1.4'
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/uniquecounter'
@@ -20,8 +20,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/uniquecounter.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -31,7 +31,16 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode uniquecounter.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/generic/uniquecounter/uniquecounter.sty'] = 'uniquecounter.sty',
+    }
+  }
 }

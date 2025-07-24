@@ -1,5 +1,5 @@
-local git_ref = '1.3'
-local modrev = git_ref
+local git_ref = 'release-2019-12-03'
+local modrev = '1.3'
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/grfext'
@@ -17,11 +17,13 @@ description = {
   license = 'LPPL-1.3c'
 }
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 dependencies = { 'infwarerr', 'kvdefinekeys' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/grfext.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -32,6 +34,13 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode grfext.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/latex/grfext/grfext.sty'] = 'grfext.sty',
+    }
+  }
 }

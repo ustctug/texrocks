@@ -1,6 +1,8 @@
-local git_ref = '1.19'
-local modrev = git_ref
+local git_ref = 'release-2019-12-05'
+local modrev = '1.19'
 local specrev = '1'
+
+local repo_url = 'https://github.com/ho-tex/atbegshi'
 
 rockspec_format = '3.0'
 package = 'atbegshi'
@@ -11,15 +13,17 @@ description = {
   detailed =
   [[This package is a modern reimplementation of package everyshi, providing various commands to be executed before a \shipout command. It makes use of e-TeX’s facilities if they are available. The package may be used either with LaTeX or with plain TeX.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/atbegshi',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
+
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'ltxcmds', 'infwarerr', 'iftex' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/atbegshi.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -30,6 +34,13 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode atbegshi.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/generic/atbegshi/atbegshi.sty'] = 'atbegshi.sty',
+    }
+  }
 }

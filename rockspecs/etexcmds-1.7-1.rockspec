@@ -1,12 +1,14 @@
-local git_ref = '1.7'
-local modrev = git_ref
+local git_ref = 'release-2019-12-15'
+local modrev = '1.7'
 local specrev = '1'
 
-local repo_url = 'https://ctan.org/pkg/etexcmds'
+local repo_url = 'https://github.com/ho-tex/etexcmds'
 
 rockspec_format = '3.0'
 package = 'etexcmds'
 version = modrev .. '-' .. specrev
+
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'iftex', 'infwarerr' }
 
@@ -15,13 +17,13 @@ description = {
   detailed =
   [[New primitive commands are introduced in e-TeX; sometimes the names collide with existing macros. This package solves the name clashes by adding a prefix to e-TeX’s commands. For example, ε-TeX’s \unexpanded is provided as \etex@unexpanded.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/etexcmds',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/etexcmds.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -32,6 +34,13 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode etexcmds.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/generic/etexcmds/etexcmds.sty'] = 'etexcmds.sty',
+    }
+  }
 }

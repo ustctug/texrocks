@@ -1,6 +1,7 @@
-local git_ref = '1.0'
-local modrev = git_ref
-local specrev = '7'
+local git_ref = 'v1.0g'
+local _git_ref = git_ref:gsub('^v', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
 local repo_url = 'https://github.com/latex3/iftex'
 
@@ -20,8 +21,8 @@ The package also provides the \RequirePDFTeX, \RequireXeTeX, and \RequireLuaTeX 
 }
 
 source = {
-    url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/iftex.tds.zip",
-    dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. _git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -33,5 +34,14 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  install = {
+    conf = {
+      ['../tex/generic/iftex/ifetex.sty'] = 'ifetex.sty',
+      ['../tex/generic/iftex/ifluatex.sty'] = 'ifluatex.sty',
+      ['../tex/generic/iftex/ifpdf.sty'] = 'ifpdf.sty',
+      ['../tex/generic/iftex/iftex.sty'] = 'iftex.sty',
+      ['../tex/generic/iftex/ifvtex.sty'] = 'ifvtex.sty',
+      ['../tex/generic/iftex/ifxetex.sty'] = 'ifxetex.sty',
+    }
+  }
 }

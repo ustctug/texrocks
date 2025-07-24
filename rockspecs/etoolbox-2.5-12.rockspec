@@ -1,6 +1,9 @@
-local git_ref = '2.5'
-local modrev = git_ref
-local specrev = '12'
+local git_ref = 'v2.5l'
+local _git_ref = git_ref:gsub('^v', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+
+local repo_url = 'https://github.com/josephwright/etoolbox'
 
 rockspec_format = '3.0'
 package = 'etoolbox'
@@ -13,15 +16,15 @@ description = {
 
   The package provides functions that seem to offer alternative ways of implementing some LaTeX kernel commands; nevertheless, the package will not modify any part of the LaTeX kernel.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/josephwright/etoolbox',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
 dependencies = { 'etex' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/etoolbox.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. _git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -33,5 +36,10 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  install = {
+    conf = {
+      ['../tex/latex/etoolbox/etoolbox.sty'] = 'etoolbox.sty',
+      ['../tex/latex/etoolbox/etoolbox.def'] = 'etoolbox.def',
+    }
+  }
 }

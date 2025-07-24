@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = 'v1.2'
 local modrev = git_ref:gsub('v', '')
 local specrev = '1'
 
@@ -20,6 +20,8 @@ description = {
 }
 
 source = {
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then

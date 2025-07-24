@@ -1,6 +1,8 @@
-local git_ref = '1.6'
-local modrev = git_ref
+local git_ref = 'release-2019-12-15'
+local modrev = '1.6'
 local specrev = '1'
+
+local repo_url = 'https://github.com/ho-tex/gettitlestring'
 
 rockspec_format = '3.0'
 package = 'gettitlestring'
@@ -11,15 +13,17 @@ description = {
   detailed =
   [[Cleans up the title string (removing \label commands) for packages (such as nameref) that typeset such strings.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/ho-tex/gettitlestring',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
+
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'kvoptions' }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/gettitlestring.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -30,6 +34,13 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode gettitlestring.dtx
+]],
+  install = {
+    conf = {
+      ['../tex/generic/gettitlestring/gettitlestring.sty'] = 'gettitlestring.sty',
+    }
+  }
 }

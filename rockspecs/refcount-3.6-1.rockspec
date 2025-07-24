@@ -16,7 +16,6 @@ description = {
       ...\label{sec:foo}
       ...
       \setcounterref{foonum}{sec:foo}
-      
 
 Commands \setcounterpageref and \addtocounterpageref do the corresponding thing with the page reference of the label.
 
