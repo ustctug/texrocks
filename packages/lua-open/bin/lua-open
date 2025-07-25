@@ -13,17 +13,29 @@ if not lfs.isfile(file) then
     f:close()
     local data = require 'toml'.parse(text)
     local cwd
+    local pkg = string.format("%s@%s", data.package, data.version)
     for path in package.path:gmatch("[^;]+") do
-        if path:match(string.format("-%s@%s", data.package, data.version)) then
-            cwd = path:gsub("/%?.*", ""):gsub("/src$", "/etc/doc")
+        if path:match("-" .. pkg) then
+            cwd = path:gsub("/%?.*", ""):gsub("/src$", "/etc/conf")
             break
         end
     end
     if cwd == nil then
-        error(string.format("%s still cannot be found", file))
-        os.exit(1)
+        error(string.format("%s cannot be found", pkg))
+        os.exit(2)
     end
-    file = table.concat({cwd, file}, '/')
+    local path
+    for dst, src in pairs(data.build.install.conf) do
+        if src == file then
+            path = dst
+            break
+        end
+    end
+    if path == nil then
+        error(string.format("%s's %s still cannot be found", pkg, file))
+        os.exit(3)
+    end
+    file = table.concat({cwd, path}, '/')
 end
 local cmd
 if os.getenv "DISPLAY" then

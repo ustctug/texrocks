@@ -4,7 +4,7 @@ lua = ">=5.1"
 
 [description]
 summary = "Use system tool to open a file"
-detailed = "If this file doesn't exists in current path, it will search build path's `etc/doc` according to `lux.toml`"
+detailed = "If the file doesn't exist in current path, it will search package path by `lux.toml`"
 maintainer = "Wu"
 labels = ["texlua"]
 
