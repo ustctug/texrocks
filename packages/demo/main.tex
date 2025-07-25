@@ -7,8 +7,7 @@
 \begin{document}
 \begin{tikzpicture}[rounded corners, >=Stealth, auto]
   \graph[layered layout, nodes={draw, align=center}]{%
-    "\TeX" -> "\hologo{eTeX}" -> "\hologo{pdfTeX}" -> "\hologo{LuaTeX}";
-    "\hologo{eTeX}" -> "\hologo{XeTeX}"
+    a -> b -> {c, d}
   };
 \end{tikzpicture}
 \end{document}

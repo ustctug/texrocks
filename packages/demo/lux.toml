@@ -8,7 +8,7 @@ maintainer = "Wu"
 labels = ["texmf"]
 
 [build_dependencies]
-lualatex = "0.0.1-1"
+lualatex = "0.2.4-1"
 pgf = "3.1.10-1"
 graphics-cfg = "0.0.1-1"
 hyperref = "7.01-15"
