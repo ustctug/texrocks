@@ -9,8 +9,8 @@ maintainer = "Wu"
 labels = ["texlua"]
 
 [source]
-url = "https://github.com/ustctug/texrocks/archive/5b3bc383b5fd6479e0377836f7c094e5a0ddb714.zip"
-dir = "texrocks-5b3bc383b5fd6479e0377836f7c094e5a0ddb714/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/ae67947f7e6ab4bc922beb0810a0434b0a8a142b.zip"
+dir = "texrocks-ae67947f7e6ab4bc922beb0810a0434b0a8a142b/packages/$(PACKAGE)"
 # url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 # dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
