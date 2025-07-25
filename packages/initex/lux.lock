@@ -12,14 +12,14 @@
         "binaries": [
           "texlua"
         ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source": "luarocks_rock+https://ustctug.github.io/texrocks/",
         "source_url": {
           "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.2.4.zip"
+          "url": "https://ustctug.github.io/texrocks/"
         },
         "hashes": {
           "rockspec": "sha256-gm+TX3clofkbiYpAfRBFDWPzVM1Rk/oEcU18oUkA1V8=",
-          "source": "sha256-lM+k34GdQhbUAzLWEZ4aP7Uo93JqK5o16EMIdyWtG4A="
+          "source": "sha256-nCHiTprVpp9j7iUDHEXlnrymIBB0FGqWcoEcbtXOBpQ="
         }
       }
     },
@@ -39,14 +39,14 @@
         "binaries": [
           "texlua"
         ],
-        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source": "luarocks_rock+https://ustctug.github.io/texrocks/",
         "source_url": {
           "type": "url",
-          "url": "https://github.com/ustctug/texrocks/archive/0.2.4.zip"
+          "url": "https://ustctug.github.io/texrocks/"
         },
         "hashes": {
           "rockspec": "sha256-gm+TX3clofkbiYpAfRBFDWPzVM1Rk/oEcU18oUkA1V8=",
-          "source": "sha256-lM+k34GdQhbUAzLWEZ4aP7Uo93JqK5o16EMIdyWtG4A="
+          "source": "sha256-nCHiTprVpp9j7iUDHEXlnrymIBB0FGqWcoEcbtXOBpQ="
         }
       }
     },

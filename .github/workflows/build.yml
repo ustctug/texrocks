@@ -31,19 +31,19 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install rename parallel
+          # https://github.com/drivendataorg/repro-zipfile/pull/22
+          # https://github.com/drivendataorg/repro-zipfile/pull/23
+          pip install git+https://github.com/Freed-Wu/repro-zipfile@mode \
+            git+https://github.com/Freed-Wu/repro-zipfile@zip#subdirectory=cli
       - env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
+          REPRO_ZIPFILE_FILE_MODE: ''
         run: |
-          # mkdir ~/.luarocks
-          # cat > ~/.luarocks/config-5.3.lua << EOF
-          # rocks_servers = {
-          #   "https://ustctug.github.io/texrocks",
-          #   "https://luarocks.org"
-          # }
-          # EOF
-          # luarocks install --local luahbtex
-          luarocks install --server=https://ustctug.github.io/texrocks --local \
-            luahbtex
+          luarocks config variables.ZIP rpzip
+          # luarocks config rocks_servers.1 https://ustctug.github.io/texrocks
+          # luarocks config rocks_servers.2 https://luarocks.org
+          luarocks install --local luahbtex \
+            --server=https://ustctug.github.io/texrocks
           luarocks install --local luatex
           luarocks install --local luatexinfo
           luarocks install --local lualatex
