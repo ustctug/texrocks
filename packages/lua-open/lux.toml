@@ -1,0 +1,28 @@
+package = "lua-open"
+version = "0.2.4"
+lua = ">=5.1"
+
+[description]
+summary = "Use system tool to open a file"
+maintainer = "Wu"
+labels = ["texlua"]
+
+[source]
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+
+[dependencies]
+texrocks = "0.2.4-1"
+toml2lua = "3.0.0-1"
+
+[run]
+command = "lua-open"
+
+[deploy]
+wrap_bin_scripts = false
+
+[build]
+type = "builtin"
+
+[build.install.bin]
+lua-open = 'bin/lua-open'

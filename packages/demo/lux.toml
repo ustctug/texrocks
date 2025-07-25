@@ -15,15 +15,12 @@ hyperref = "7.01-15"
 hologo = "1.15-1"
 standalone = "1.5-1"
 
-[run]
-type = "command"
-command = "sh"
-args = ["-c", "xdg-open .lux/5.3/*/etc/doc/main.pdf"]
+[test_dependencies]
 
 [test]
 type = "command"
-command = "sh"
-flags = ["-c", "pdftotext .lux/5.3/*/etc/doc/main.pdf -"]
+command = "lua-open"
+flags = ["main.pdf"]
 
 [build]
 type = "command"

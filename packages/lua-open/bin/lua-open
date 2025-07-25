@@ -1,0 +1,44 @@
+#!/usr/bin/env texlua
+local file = arg[1]
+if not lfs.isfile(file) then
+    if not lfs.isfile('lux.toml') then
+        error(string.format("%s cannot be found", file))
+        os.exit(1)
+    end
+    local f = io.open("lux.toml")
+    if f == nil then
+        os.exit(1)
+    end
+    local text = f:read("*a")
+    f:close()
+    local data = require 'toml'.parse(text)
+    local cwd
+    for path in package.path:gmatch("[^;]+") do
+        if path:match(string.format("-%s@%s", data.package, data.version)) then
+            cwd = path:gsub("/%?.*", ""):gsub("/src$", "/etc/doc")
+            break
+        end
+    end
+    if cwd == nil then
+        error(string.format("%s still cannot be found", file))
+        os.exit(1)
+    end
+    file = table.concat({cwd, file}, '/')
+end
+local cmd
+if os.getenv "DISPLAY" then
+    cmd = "xdg-open %s"
+elseif os.name == 'macosx' then
+    cmd = "open %s"
+elseif os.name == 'windows' or os.name == 'cygwin' then
+    cmd = "start %s"
+elseif os.getenv "PREFIX" then
+    cmd = "termux-open %s"
+else
+    cmd = "pdftotext %s -"
+end
+cmd = cmd:format(file)
+if file ~= arg[1] then
+    print('$ ' .. cmd)
+end
+os.exec(cmd)
