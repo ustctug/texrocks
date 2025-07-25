@@ -16,6 +16,7 @@ hologo = "1.15-1"
 standalone = "1.5-1"
 
 [test_dependencies]
+lua-open = "0.2.4-1"
 
 [test]
 type = "command"

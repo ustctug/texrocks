@@ -64,6 +64,8 @@ lx add -b hyperref
 lx add -b graphics-cfg
 # \usepackage{tikz}
 lx add -b pgf
+# lua-open main.pdf
+lx add -t lua-open
 # lx add -b more packages ...
 ```
 
@@ -86,17 +88,17 @@ build_command = "lualatex --interaction=nonstopmode main.tex"
 [build.install.conf]
 '../doc/main.pdf' = 'main.pdf'
 
-[run]
+[test]
 type = "command"
-command = "sh"
-args = ["-c", "xdg-open .lux/5.3/*/etc/doc/main.pdf"]
+command = "lua-open"
+flags = ["main.pdf"]
 ```
 
 5. Build and view your document
 
 ```sh
 lx build
-lx run
+lx test
 ```
 
 This is your project structure:
@@ -175,7 +177,12 @@ $ tree -a
 │       │   └──  src
 │       ├──  lux.lock
 │       └──  test_dependencies
-│           └──  .gitignore
+│           ├──  .gitignore
+│           └──  5.3
+│               ├──  ...
+│               └──  bin
+│                   ├──  lua-open
+│                   └──  texlua
 ├──  lux.lock  # like package-lock.json or requirements.txt
 ├──  lux.toml  # like package.json or pyproject.toml
 └──  main.tex

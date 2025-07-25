@@ -4,12 +4,15 @@ lua = ">=5.1"
 
 [description]
 summary = "Use system tool to open a file"
+detailed = "If this file doesn't exists in current path, it will search build path's `etc/doc` according to `lux.toml`"
 maintainer = "Wu"
 labels = ["texlua"]
 
 [source]
-url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/5b3bc383b5fd6479e0377836f7c094e5a0ddb714.zip"
+dir = "texrocks-5b3bc383b5fd6479e0377836f7c094e5a0ddb714/packages/$(PACKAGE)"
+# url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+# dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = "0.2.4-1"
