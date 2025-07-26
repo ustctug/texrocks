@@ -13,7 +13,13 @@ if not lfs.isfile(file) then
     f:close()
     local data = require 'toml'.parse(text)
     local cwd
+    if data.package == nil or data.version == nil then
+        os.exit(1)
+    end
     local pkg = string.format("%s@%s", data.package, data.version)
+    if data.version:match("-") == nil then
+        pkg = pkg .. "-1"
+    end
     for path in package.path:gmatch("[^;]+") do
         if path:match("-" .. pkg) then
             cwd = path:gsub("/%?.*", ""):gsub("/src$", "/etc/conf")

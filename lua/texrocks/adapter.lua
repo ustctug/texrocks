@@ -78,7 +78,7 @@ function M.getpaths(path, suffix)
     local processed = {}
     local seen = {}
     for _, part in ipairs(parts) do
-        local cleaned = part:gsub("/%?/init%.lua$", ""):gsub("/%?%.lua$", "")
+        local cleaned = part:gsub("/%?.*", "")
         if seen[cleaned] == nil then
             local old = cleaned
             if suffix ~= "" then

@@ -11,7 +11,7 @@ if os.getenv "LUA_PATH" then
         cmd = arg[1]
     end
     -- --ini/--fmt conflict with --luaonly
-    if cmd:gsub("^-", "") == cmd then
+    if cmd:match("^-") == nil then
         table.insert(args, arg[ -1])
     end
     for _, v in ipairs(arg) do
@@ -24,7 +24,7 @@ if os.getenv "LUA_PATH" then
     for _, opt in ipairs(arg) do
         if opt == "--ini" or opt == "-ini" then
             is_ini = true
-        elseif opt:gsub("%.ini$", "") ~= opt then
+        elseif opt:match("%.ini$") then
             exe = opt:gsub("%.ini$", "")
         end
     end
