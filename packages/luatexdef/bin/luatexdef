@@ -1,0 +1,6 @@
+#!/usr/bin/env -S luatex \\catcode35=14 \\input
+\catcode`\#6
+\nonstopmode
+\directlua{require'texdef'.main()}%
+\bye
+% ex: filetype=tex

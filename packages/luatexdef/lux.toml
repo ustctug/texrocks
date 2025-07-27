@@ -1,0 +1,32 @@
+package = "luatexdef"
+version = "0.2.4"
+lua = ">=5.1"
+
+[description]
+summary = "Show definitions of TeX commands"
+detailed = "A reimplementation of <https://github.com/MartinScharrer/texdef/> by texlua"
+maintainer = "Wu"
+labels = [ "texmf" ]
+
+[test_dependencies]
+luatex = "0.2.4-1"
+lualatex = "0.2.4-1"
+filehook = "0.8-2"
+
+[source]
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+
+[dependencies]
+
+[test]
+type = "command"
+command = "luatexdef"
+flags = ["TeX"]
+
+[build]
+type = "builtin"
+
+[build.install.bin]
+luatexdef = 'bin/luatexdef'
+lualatexdef = 'bin/lualatexdef'

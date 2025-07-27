@@ -1,0 +1,13 @@
+\nonstopmode
+\makeatletter\expandafter\def\csname ver@kvoptions.sty\endcsname{0000/00/00}\let\SetupKeyvalOptions\@gobble\newcommand\DeclareStringOption[2][]{}\newcommand\DeclareBoolOption[2][false]{\expandafter\newif\csname ifcurrfile@#2\endcsname\csname currfile@#2#1\endcsname}\let\DeclareVoidOption\@gobbletwo\def\ProcessKeyvalOptions{\@ifstar{}{}}\def\currfile@mainext{tex}\def\currfile@maindir{\@currdir}\let\ifcurrfile@fink\iffalse\makeatother\RequirePackage{filehook}
+\RequirePackage{currfile}
+\makeatletter\expandafter\let\csname ver@kvoptions.sty\endcsname\relax\let\SetupKeyvalOptions\@undefined\let\DeclareBoolOption\@undefined\let\DeclareStringOption\@undefined\let\DeclareVoidOption\@undefined\let\ProcessKeyvalOptions\@undefined\makeatother\AtBeginOfEveryFile{\message{^^J>> entering file "\currfilename"^^J}}
+\AtEndOfEveryFile{\message{^^J<< leaving file "\currfilename"^^J}}
+\documentclass[]{article}
+\tracingonline=1\relax
+\tracingassigns=1\relax
+\usepackage[]{xspace}
+\tracingonline=0\relax
+\tracingassigns=0\relax
+\begin{document}
+\end{document}

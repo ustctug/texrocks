@@ -200,7 +200,29 @@ function M.run(args, short)
     if #args == 0 then
         args = { os.getenv "SHELL" or os.getenv "ComSpec" or "sh" }
     end
-    os.exec(table.concat(args, ' '))
+    local filename = ""
+    for k, v in ipairs(args) do
+        if k > 1 then
+            local char = v:sub(1, 1)
+            if char ~= "-" and char ~= "\\" then
+                filename = v
+                break
+            end
+        end
+    end
+    filename = filename:gsub("*/", "")
+    local is_successful, mod
+    -- texdef not tex.def
+    if filename:match("%.") == nil then
+        is_successful, mod = pcall(require, 'tex' .. filename:sub( -3))
+        if is_successful then
+            mod.run(args)
+        end
+    end
+    if not is_successful then
+        local cmd = table.concat(args, ' ')
+        os.exec(cmd)
+    end
 end
 
 return M

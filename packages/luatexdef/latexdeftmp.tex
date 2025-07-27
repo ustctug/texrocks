@@ -1,0 +1,18 @@
+\nonstopmode
+\documentclass[handout]{beamer}
+\usepackage[]{tikz}
+\tracingonline=0\relax
+\tracingassigns=0\relax
+\begin{document}
+\begin{frame}
+\begin{tikzpicture}
+\node {
+\immediate\write0{==============================================================================}%
+\begingroup\immediate\write0{\expandafter\string\csname draw\endcsname}%
+\immediate\write0{------------------------------------------------------------------------------}%
+\expandafter\endgroup\expandafter\immediate\expandafter\write\expandafter0\expandafter{\expandafter\meaning\csname draw\endcsname}%
+\immediate\write0{==============================================================================}%
+};
+\end{tikzpicture}
+\end{frame}
+\end{document}

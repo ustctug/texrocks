@@ -1,0 +1,7 @@
+#!/usr/bin/env -S lualatex \\catcode35=14 \\input
+\catcode`\#6
+\nonstopmode
+\def\jobname{.cache/texdeftmp}
+\directlua{require'texdef'.main()}
+\stop
+% ex: filetype=tex

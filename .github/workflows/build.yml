@@ -31,13 +31,10 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install rename parallel
-          # https://github.com/drivendataorg/repro-zipfile/pull/22
           # https://github.com/drivendataorg/repro-zipfile/pull/23
-          pip install git+https://github.com/Freed-Wu/repro-zipfile@mode \
-            git+https://github.com/Freed-Wu/repro-zipfile@zip#subdirectory=cli
+          pip install git+https://github.com/Freed-Wu/repro-zipfile@mode rpzip
       - env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
-          REPRO_ZIPFILE_FILE_MODE: ''
         run: |
           luarocks config variables.ZIP rpzip
           # luarocks config rocks_servers.1 https://ustctug.github.io/texrocks
