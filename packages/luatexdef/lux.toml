@@ -18,15 +18,17 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
+argparse = "0.7.1-1"
+lua-template = "1.0.0-1"
 
 [test]
 type = "command"
-command = "luatexdef"
+command = "texdef"
 flags = ["TeX"]
 
 [build]
 type = "builtin"
 
 [build.install.bin]
-luatexdef = 'bin/luatexdef'
-lualatexdef = 'bin/lualatexdef'
+texdef = 'bin/texdef'
+latexdef = 'bin/latexdef'

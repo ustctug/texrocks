@@ -24,7 +24,6 @@ function M.sync(short)
     if not lfs.isdir(dir) then
         dir = (os.getenv "XDG_DATA_HOME") .. "/lux/tree"
     end
-    dir = dir .. "/" .. constants.LUA_VERSION
     if not lfs.isdir(dir) then
         lfs.mkdirp(dir)
     end
@@ -72,36 +71,23 @@ end
 
 function M.getpaths(path, suffix)
     local parts = {}
+    local paths = {}
     for part in string.gmatch(path, "([^;]+)") do
-        table.insert(parts, part)
-    end
-    local processed = {}
-    local seen = {}
-    for _, part in ipairs(parts) do
-        local cleaned = part:gsub("/%?.*", "")
-        if seen[cleaned] == nil then
-            local old = cleaned
-            if suffix ~= "" then
-                -- https://nvim-neorocks.github.io/explanations/lux-package-conflicts/#the-problem
-                local root = cleaned:gsub("/src$", "")
-                if root == suffix then
-                    cleaned = ""
-                else
-                    cleaned = root .. '/etc/' .. suffix
-                    if lfs.isdir(cleaned) then
-                        cleaned = cleaned .. "//"
-                    else
-                        cleaned = ""
-                    end
+        part = part:gsub("/%?.*", "")
+        if not parts[part] then
+            parts[part] = true
+            if suffix == "" then
+                table.insert(paths, part)
+            else
+                part = part:gsub("/src$", ""):gsub("/lib$", "") .. '/etc/' .. suffix
+                if lfs.isdir(part) then
+                    part = part .. "//"
+                    table.insert(paths, part)
                 end
-            end
-            if cleaned ~= "" then
-                table.insert(processed, cleaned)
-                seen[old] = true
             end
         end
     end
-    return processed
+    return paths
 end
 
 function M.getenv(path, suffix)
@@ -200,29 +186,8 @@ function M.run(args, short)
     if #args == 0 then
         args = { os.getenv "SHELL" or os.getenv "ComSpec" or "sh" }
     end
-    local filename = ""
-    for k, v in ipairs(args) do
-        if k > 1 then
-            local char = v:sub(1, 1)
-            if char ~= "-" and char ~= "\\" then
-                filename = v
-                break
-            end
-        end
-    end
-    filename = filename:gsub("*/", "")
-    local is_successful, mod
-    -- texdef not tex.def
-    if filename:match("%.") == nil then
-        is_successful, mod = pcall(require, 'tex' .. filename:sub( -3))
-        if is_successful then
-            mod.run(args)
-        end
-    end
-    if not is_successful then
-        local cmd = table.concat(args, ' ')
-        os.exec(cmd)
-    end
+    local cmd = table.concat(args, ' ')
+    os.exec(cmd)
 end
 
 return M

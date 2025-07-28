@@ -1,0 +1,18 @@
+<l:if cond="beforeclass"><l:include filename="sub"/></l:if>
+\newwrite\texdefoutput<l:if cond="class ~= nil">
+\documentclass${class}</l:if>
+\tracingonline=0\relax
+\tracingassigns=0\relax
+<l:for names="_, pkg" in="ipairs(package or {})">
+\usepackage${pkg}</l:for>
+<l:if cond="preamble"><l:include filename="sub"/></l:if>
+<l:for names="_, code" in="ipairs(othercode or {})">
+${code}</l:for>
+<l:if cond="class ~= nil">
+\begin{document}</l:if>
+<l:for names="_, env" in="ipairs(environment or {})">
+\begin${env}
+</l:for>
+<l:if cond="not preamble and not beforeclass"><l:include filename="sub"/></l:if>
+<l:for names="k, _" in="ipairs(environment or {})">
+\end${environment[#environment + 1 - k]}</l:for>

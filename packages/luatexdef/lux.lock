@@ -1,5 +1,50 @@
 {
   "version": "1.0.0",
+  "dependencies": {
+    "rocks": {
+      "b2452f70d67b508b9a31b8f775b93f74522197e9876d6654fed3c251b7668c46": {
+        "name": "lua-template",
+        "version": "1.0.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==1.0.0",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "git",
+          "url": "https://github.com/anaef/lua-template.git",
+          "ref": "v1.0.0"
+        },
+        "hashes": {
+          "rockspec": "sha256-U4oADmyImQOlyFNxj3XOzLUDL1VdKPoG90JCnGyLOmg=",
+          "source": "sha256-XtFnxCANJk8lVRXY2Aokh1oiecRIJSBXpzbPuS+bnX0="
+        }
+      },
+      "d528cd52981564259b873ae3f972f48a19522d775240465725a6434109336b92": {
+        "name": "argparse",
+        "version": "0.7.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==0.7.1",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/luarocks/argparse/archive/0.7.1.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-6EUIYsWhm29xlL8arP/3DQoRj/1CYWxs/J8+gz9T0YQ=",
+          "source": "sha256-AJ8n6HTxqHPeQd0NKHiyQLzZ63+ebDsO1uP+0f0vYUE="
+        }
+      }
+    },
+    "entrypoints": [
+      "b2452f70d67b508b9a31b8f775b93f74522197e9876d6654fed3c251b7668c46",
+      "d528cd52981564259b873ae3f972f48a19522d775240465725a6434109336b92"
+    ]
+  },
   "test_dependencies": {
     "rocks": {
       "045975caa2718b720eed805737e68dbe779d48c3743c0b396000cfa937f65b3b": {
@@ -26,8 +71,6 @@
         "pinned": false,
         "opt": false,
         "dependencies": [
-          "f20235fb7e695062692792ef918b4fa3335c232082035409c0980ceb72d49a4a",
-          "045975caa2718b720eed805737e68dbe779d48c3743c0b396000cfa937f65b3b",
           "f20235fb7e695062692792ef918b4fa3335c232082035409c0980ceb72d49a4a",
           "045975caa2718b720eed805737e68dbe779d48c3743c0b396000cfa937f65b3b"
         ],
@@ -190,7 +233,6 @@
         "pinned": false,
         "opt": false,
         "dependencies": [
-          "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e",
           "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e"
         ],
         "constraint": null,
@@ -345,7 +387,6 @@
         "pinned": false,
         "opt": false,
         "dependencies": [
-          "fa22baa077dca8c903ec9c141321eb0a5b4dd25034e6b70ca3e67c6930112af4",
           "fa22baa077dca8c903ec9c141321eb0a5b4dd25034e6b70ca3e67c6930112af4"
         ],
         "constraint": null,
@@ -551,9 +592,9 @@
       }
     },
     "entrypoints": [
+      "bd325a1794d1a6b5e3bc397751b3d068848a3e433c55239ae25ea2ae06c33e87",
       "ba436bbb40318d2a1e54953b1b77cbccc59315f19fb99a8234864b14537c73c6",
-      "1c438a691dcda564f5f9beb6e5d39ee53cf9c1f84e1c848b38a76bee5e2cf42b",
-      "bd325a1794d1a6b5e3bc397751b3d068848a3e433c55239ae25ea2ae06c33e87"
+      "1c438a691dcda564f5f9beb6e5d39ee53cf9c1f84e1c848b38a76bee5e2cf42b"
     ]
   }
 }

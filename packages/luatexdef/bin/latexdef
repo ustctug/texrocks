@@ -1,0 +1,6 @@
+#!/usr/bin/env -S lualatex --draftmode --output-directory=.lux --interaction=batchmode --shell-escape \\catcode35=14 \\input
+\catcode`\#6
+\directlua{require'texdef'.main()}
+\directlua{require'texdef'.output()}
+\stop
+% ex: filetype=tex
