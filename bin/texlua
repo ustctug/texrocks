@@ -1,50 +1,6 @@
 #!/usr/bin/env -S luahbtex --luaonly
 if os.getenv "LUA_PATH" then
-    local arg0 = arg[0]
-    arg0 = arg0:gsub(".*[/\\]", "")
-    local cmd = "--fmt=%s"
-    local args = { arg[ -2] }
-    if arg0 ~= "texlua" then
-        cmd = cmd:format(arg0)
-        table.insert(args, cmd)
-    else
-        cmd = arg[1]
-    end
-    -- --ini/--fmt conflict with --luaonly
-    if cmd:match("^-") == nil then
-        table.insert(args, arg[ -1])
-    end
-    for _, v in ipairs(arg) do
-        table.insert(args, v)
-    end
-
-    -- copy self to a new wrapper
-    local is_ini = false
-    local exe
-    for _, opt in ipairs(arg) do
-        if opt == "--ini" or opt == "-ini" then
-            is_ini = true
-        elseif opt:match("%.ini$") then
-            exe = opt:gsub("%.ini$", "")
-        end
-    end
-    if is_ini and exe ~= nil then
-        local f = io.open(exe, "w")
-        if f then
-            local self = io.open(arg[0])
-            if self then
-                f:write(self:read("*a"))
-                self:close()
-            end
-            f:close()
-            if os.type == "unix" then
-                os.execute(table.concat({ "chmod", "+x", exe }, ' '))
-            else
-                -- TODO: support windows
-            end
-        end
-    end
-    require 'texrocks.adapter'.run(args, false)
+    require 'texrocks'.main(arg)
 else
     local cmd = "lx --lua-version=%s lua --lua=%s --no-loader -- %s"
     cmd = cmd:format(_VERSION:gsub(".* ", ""), arg[0], table.concat(arg, " "))

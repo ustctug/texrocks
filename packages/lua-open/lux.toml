@@ -21,6 +21,11 @@ toml2lua = "3.0.0-1"
 [run]
 command = "lua-open"
 
+[test]
+type = "command"
+command = "lua-open"
+flags = ["bin/lua-open"]
+
 [deploy]
 wrap_bin_scripts = false
 

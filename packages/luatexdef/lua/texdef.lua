@@ -1,3 +1,4 @@
+local texrocks = require 'texrocks'
 local argparse = require 'argparse'
 local template = require 'template'
 local M = {}
@@ -23,27 +24,8 @@ function M.get_parser(name, fmt)
     return parser
 end
 
-function M.preparse(args)
-    local cmd_args = {}
-    local offset
-    local fmt = ''
-    for k, v in ipairs(args) do
-        if v:sub(1, 6) == '--fmt=' then
-            fmt = v:sub(7):gsub('%.fmt', '')
-        end
-        local char = v:sub(1, 1)
-        if offset == nil and char ~= "-" and char ~= "\\" then
-            offset = k
-        end
-        if offset then
-            cmd_args[k - offset] = v
-        end
-    end
-    return cmd_args, fmt
-end
-
 function M.parse(args)
-    local cmd_args, fmt = M.preparse(args)
+    local cmd_args, fmt = texrocks.preparse(args)
     local parser = M.get_parser(cmd_args[0], fmt)
     cmd_args = parser:parse(cmd_args)
     return M.postparse(cmd_args)
