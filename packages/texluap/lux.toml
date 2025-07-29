@@ -1,16 +1,20 @@
-package = "tlua"
+package = "texluap"
 version = "0.3.0"
 lua = ">=5.1"
 
 [description]
-summary = "luatex as Lua interpreter"
+summary = "tlua: luatex as Lua interpreter, texlua's prompt"
 detailed = "Refer <https://github.com/mfussenegger/nlua>"
 maintainer = "Wu"
 labels = [ "texmf" ]
+homepage = "https://github.com/ustctug/texrocks"
+license = 'GPL-3.0'
 
 [source]
-url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+# url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+# dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/.zip"
+dir = "texrocks-/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = "0.3.0-1"

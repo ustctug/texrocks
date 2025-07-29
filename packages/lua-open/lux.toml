@@ -7,6 +7,8 @@ summary = "Use system tool to open a file"
 detailed = "If the file doesn't exist in current path, it will search package path by `lux.toml`"
 maintainer = "Wu"
 labels = ["texlua"]
+homepage = "https://github.com/ustctug/texrocks"
+license = 'GPL-3.0'
 
 [source]
 url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"

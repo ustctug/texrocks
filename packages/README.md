@@ -14,7 +14,7 @@
 - `texdoc`: a tool to search document of any TeX package developed by TeX Live
   team.
 - `luafindfont`: a simple tool to search fonts
-- `tlua`: tlua use luatex as Lua interpreter and provide a REPL for debug.
+- `texluap`'s `tlua`: tlua use luatex as Lua interpreter and provide a REPL for debug.
 - `lua-open`: use correct system tool to open PDF.
 - `texdef`: Show definitions of TeX commands. A reimplementation of
   <https://github.com/MartinScharrer/texdef/>.

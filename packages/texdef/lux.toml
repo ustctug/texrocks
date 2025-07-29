@@ -7,6 +7,8 @@ summary = "Show definitions of TeX commands"
 detailed = "A reimplementation of <https://github.com/MartinScharrer/texdef/> by texlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
+homepage = "https://github.com/ustctug/texrocks"
+license = 'GPL-3.0'
 
 [test_dependencies]
 
