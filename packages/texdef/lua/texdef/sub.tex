@@ -1,13 +1,13 @@
 <l:for names="_, code" in="ipairs(before)">${code}</l:for>
 \immediate\openout\texdefoutput=${output}
 <l:for names="_, mac" in="ipairs(macro)">
+\begingroup
+\immediate\write\texdefoutput{\expandafter\string\csname ${mac}\endcsname=}
+\expandafter\endgroup
 <l:if cond="value">
-\immediate\write\texdefoutput{\string\the\expandafter\string\csname ${mac}\endcsname}
 \immediate\write\texdefoutput{\expandafter\the\csname ${mac}\endcsname}
 <l:else/>
-\begingroup
-\immediate\write\texdefoutput{\expandafter\string\csname ${mac}\endcsname}
-\expandafter\endgroup\expandafter\immediate\expandafter\write\expandafter\texdefoutput\expandafter{\expandafter\meaning\csname ${mac}\endcsname}
+\expandafter\immediate\expandafter\write\expandafter\texdefoutput\expandafter{\expandafter\meaning\csname ${mac}\endcsname}
 </l:if>
 </l:for>
 \immediate\closeout\texdefoutput

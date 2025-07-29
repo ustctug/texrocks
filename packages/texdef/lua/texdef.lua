@@ -8,7 +8,9 @@ function M.get_parser(name, fmt)
     parser:argument('macro', 'macro name without \\'):args('*')
     parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
     if fmt:match 'latex' then
-        parser:option('--list -l', 'List user level/all command sequences of the given packages by -l, -ll, -lll'):args(0):count("*")
+        parser:option('--list -l', 'List all command sequences of the given packages by -l, -ll'):args(0):count("*")
+        parser:option('--ignore-regex -I', 'Ignore all command sequences in the above lists which match lua match()',
+            '[@_]')
         parser:option('--Environment -E', 'Every command name is taken as an environment name'):args(0)
         parser:option('--class -c', 'class name', 'article')
         parser:option('--package -p', 'package name'):count("*")
@@ -123,7 +125,7 @@ function M.output()
                         if def:match '->' == nil then
                             def = ' = ' .. def
                         end
-                        if M.args.list > 2 or not name:match'@' then
+                        if args.ignore_regex == '' or not name:match(args.ignore_regex) then
                             if M.args.list == 1 then
                                 table.insert(lines, name)
                             else
@@ -136,7 +138,7 @@ function M.output()
                     table.insert(pkgs, pkg)
                 elseif pkg and (line:sub(2):match('^into ') or line:sub(2):match('^reassigning ')) then
                     line = line:sub(2, #line - 1):gsub("^%S+ ", ""):gsub("\\ETC%.", "..."):gsub(
-                    'used in a moving argument.', '(moving)')
+                        'used in a moving argument.', '(moving)')
                     local def = line:gsub("^[^=]+=", "")
                     if def:match '->' then
                         local name = def:gsub('->.*', '')
@@ -164,7 +166,7 @@ function M.output()
             end
             text = table.concat(lines, "\n\n")
         else
-            text = M.f:read("*a")
+            text = M.f:read("*a"):gsub('=\n', ' = '):gsub('= macro:%->', '-> ')
         end
         print(text)
         M.f:close()
