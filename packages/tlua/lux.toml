@@ -1,0 +1,34 @@
+package = "tlua"
+version = "0.3.0"
+lua = ">=5.1"
+
+[description]
+summary = "luatex as Lua interpreter"
+detailed = "Refer <https://github.com/mfussenegger/nlua>"
+maintainer = "Wu"
+labels = [ "texmf" ]
+
+[source]
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+
+[dependencies]
+texrocks = "0.3.0-1"
+prompt-style = "0.0.9-1"
+
+[run]
+command = 'tlua'
+
+[test]
+type = 'command'
+command = 'tlua'
+flags = ['-e', 'print(status.banner)']
+
+[deploy]
+wrap_bin_scripts = false
+
+[build]
+type = "builtin"
+
+[build.install.bin]
+tlua = "bin/tlua"

@@ -1,4 +1,4 @@
-package = "demo"
+package = "demo-tikz"
 version = "0.0.1"
 lua = ">=5.1"
 

@@ -2,7 +2,7 @@
 
 ## TeX documents
 
-`demo` is a more complicated example for LaTeX document than tutor.
+`demo-*` are a more complicated examples for LaTeX document than tutor.
 
 ## TeX dialects
 
@@ -10,12 +10,20 @@
 
 ## TeX Tools
 
-### texdoc
+- `l3build`: a tool to build TeX packages developed by LaTeX 3 team
+- `texdoc`: a tool to search document of any TeX package developed by TeX Live
+  team.
+- `luafindfont`: a simple tool to search fonts
+- `tlua`: tlua use luatex as Lua interpreter and provide a REPL for debug.
+- `lua-open`: use correct system tool to open PDF.
+- `texdef`: Show definitions of TeX commands. A reimplementation of
+  <https://github.com/MartinScharrer/texdef/>.
 
-`texdoc` is a tool to search document of any TeX package developed by TeX Live
-team.
+### Config
 
-Note, texdoc need a tlpdb database.
+#### texdoc
+
+texdoc need a tlpdb database.
 Download
 [it](https://github.com/ustctug/texrocks/releases/download/0.0.1/Data.tlpdb.lua)
 to `~/.local/share/texmf/texdoc/Data.tlpdb.lua`.
@@ -39,22 +47,3 @@ Would you like to search online? (y/N) y
 ```
 
 <https://texdoc.org/serve/impatient/0> is opened.
-
-### l3build
-
-`l3build` is a tool to build TeX packages developed by LaTeX 3 team.
-
-### luafindfont
-
-`l3build` is a simple tool to search fonts.
-
-### texluap
-
-Sometimes you need a REPL to debug luatex.
-[texluap](https://github.com/wakatime/prompt-style.lua#luatex) do it:
-
-```sh
-lx install prompt-style
-# For ArchLinux
-paru -S lua53-prompt-style texlua
-```
