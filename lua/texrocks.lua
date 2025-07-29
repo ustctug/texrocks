@@ -195,14 +195,12 @@ function M.run(args)
     if #args == 0 then
         args = { os.getenv "SHELL" or os.getenv "ComSpec" or "sh" }
     end
-    if arg[-1] ~= '--luaonly' then
+    local cmd_args, fmt = M.preparse(args)
+    if fmt ~= 'texlua' then
         local cmd = table.concat(args, ' ')
         os.exec(cmd)
     end
-    for i = 0, #arg - 1 do
-        arg[i] = arg[i + 1]
-    end
-    arg[#arg] = nil
+    arg = cmd_args
     loadfile(arg[0])()
 end
 
@@ -257,10 +255,14 @@ end
 function M.preparse(args)
     local cmd_args = {}
     local offset
-    local fmt = ''
+    local fmt = args[1]
     for k, v in ipairs(args) do
-        if v:sub(1, 6) == '--fmt=' then
-            fmt = v:sub(7):gsub('%.fmt', '')
+        if offset == nil then
+            if v:sub(1, 6) == '--fmt=' then
+                fmt = v:sub(7):gsub('%.fmt', '')
+            elseif v == '--luaonly' then
+                fmt = 'texlua'
+            end
         end
         local char = v:sub(1, 1)
         if offset == nil and char ~= "-" and char ~= "\\" then

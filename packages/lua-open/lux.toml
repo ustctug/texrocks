@@ -1,5 +1,5 @@
 package = "lua-open"
-version = "0.2.4"
+version = "0.3.0"
 lua = ">=5.1"
 
 [description]
@@ -9,14 +9,12 @@ maintainer = "Wu"
 labels = ["texlua"]
 
 [source]
-url = "https://github.com/ustctug/texrocks/archive/ae67947f7e6ab4bc922beb0810a0434b0a8a142b.zip"
-dir = "texrocks-ae67947f7e6ab4bc922beb0810a0434b0a8a142b/packages/$(PACKAGE)"
-# url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-# dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.2.4-1"
 toml2lua = "3.0.0-1"
+texrocks = "0.3.0-1"
 
 [run]
 command = "lua-open"

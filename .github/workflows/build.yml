@@ -51,9 +51,8 @@ jobs:
           luarocks install --local hypdoc
           luarocks install --local ydoc
           rm -f ./*.rock
-          luarocks list --porcelain | cut -f1 | grep -v texrocks |
-            sed 's/^/luarocks pack /' | sh
-          rename -f s/linux-x86_64/all/ {luatex{,info},lualatex}-*.rock
+          luarocks list --porcelain | cut -f1 | sed 's/^/luarocks pack /' | sh
+          rename -f s/linux-x86_64/all/ {texrocks,luatex{,info},lualatex}-*.rock
           luarocks-admin make-manifest .
           parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
       - uses: stefanzweifel/git-auto-commit-action@v5
