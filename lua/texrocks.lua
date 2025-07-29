@@ -255,7 +255,7 @@ end
 function M.preparse(args)
     local cmd_args = {}
     local offset
-    local fmt = args[1]
+    local fmt = args[1]:gsub(".*/", "")
     for k, v in ipairs(args) do
         if offset == nil then
             if v:sub(1, 6) == '--fmt=' then

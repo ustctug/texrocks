@@ -22,8 +22,8 @@
 \let\DeclareVoidOption\@undefined
 \let\ProcessKeyvalOptions\@undefined
 \makeatother
-\AtBeginOfEveryFile{\message{^^J>> entering file "\currfilename"^^J}}
-\AtEndOfEveryFile{\message{^^J<< leaving file "\currfilename"^^J}}
+\AtBeginOfEveryFile{\message{^^J$[n]{entering}\currfilename^^J}}
+\AtEndOfEveryFile{\message{^^J$[n]{leaving}\currfilename^^J}}
 </l:if>
 <l:if cond="beforeclass"><l:include filename="sub"/></l:if>
 <l:if cond="class">\documentclass${class}</l:if>

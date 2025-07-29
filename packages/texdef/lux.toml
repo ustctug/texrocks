@@ -10,11 +10,11 @@ labels = [ "texmf" ]
 homepage = "https://github.com/ustctug/texrocks"
 license = 'GPL-3.0'
 
-[test_dependencies]
-
 [source]
-url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+# url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+# dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/60ae95531ebd55e9054239ab654966120d4ec314.zip"
+dir = "texrocks-60ae95531ebd55e9054239ab654966120d4ec314/packages/$(PACKAGE)"
 
 [dependencies]
 argparse = "0.7.1-1"

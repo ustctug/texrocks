@@ -131,5 +131,73 @@
       "ba238979eff8f48cad534472f053a5d4c619b566c534066d54fab9e73935d81c",
       "cbef9449d13df7ae753d3eb807be7a0b4dc3c3e2f060f1f8d425d613b0fecfa1"
     ]
+  },
+  "test_dependencies": {
+    "rocks": {
+      "3b70bdd439369f70222f08b13c1adae033c0455918d15661b9403d455a3cf727": {
+        "name": "luatex",
+        "version": "0.3.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "ba238979eff8f48cad534472f053a5d4c619b566c534066d54fab9e73935d81c",
+          "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb"
+        ],
+        "constraint": "==0.3.0",
+        "binaries": [
+          "luatex"
+        ],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-dU+fSEKrqdfdGhwA804zChVe7Hq7ndpgjrIxIwuAMmM=",
+          "source": "sha256-P3wT9k8t1jjC4kMXqpbhiWIAXhEqF1dXkNOXfqIDzU0="
+        }
+      },
+      "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb": {
+        "name": "amsfonts",
+        "version": "3.04-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==3.04",
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-RZE5QmO0RVpexakXWgCqM1J7w5fK6Je6rEXZ8XKRC9g=",
+          "source": "sha256-ggK0CyyfvvNyfYXvVz348i02v0UL+jrbJLnrhrPukOc="
+        }
+      },
+      "ba238979eff8f48cad534472f053a5d4c619b566c534066d54fab9e73935d81c": {
+        "name": "texrocks",
+        "version": "0.3.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==0.3.0",
+        "binaries": [
+          "texlua"
+        ],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-uc6vrTbwGGWORhJ6toByRhmZgjqhUIgsBKXVJok0iGA=",
+          "source": "sha256-t7MPJWDYu8w2uvpaA1PfMOooFx1OkFFphEETWUqbFQY="
+        }
+      }
+    },
+    "entrypoints": [
+      "3b70bdd439369f70222f08b13c1adae033c0455918d15661b9403d455a3cf727"
+    ]
   }
 }

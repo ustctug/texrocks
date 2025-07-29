@@ -1,10 +1,10 @@
 # Packages
 
-## TeX documents
+## TeX Documents
 
-`demo-*` are a more complicated examples for LaTeX document than tutor.
+`demo-*` are more complicated examples for LaTeX document than tutor.
 
-## TeX dialects
+## TeX Dialects
 
 `luatex`/`lualatex`/`luatexinfo`/`initex` display how to create a TeX dialect.
 
@@ -19,9 +19,7 @@
 - `texdef`: Show definitions of TeX commands. A reimplementation of
   <https://github.com/MartinScharrer/texdef/>.
 
-### Config
-
-#### texdoc
+### texdoc
 
 texdoc need a tlpdb database.
 Download

@@ -1,0 +1,615 @@
+{
+  "version": "1.0.0",
+  "dependencies": {
+    "rocks": {
+      "045975caa2718b720eed805737e68dbe779d48c3743c0b396000cfa937f65b3b": {
+        "name": "manual",
+        "version": "0.0.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-574RQ+T/coHYocX0JJfDBX6Dnk+CzgVytQXsTx2/dcE=",
+          "source": "sha256-qTCMG2PcEf4Ltx9ajvb9i4QjqDS17G8CMibZWJid44c="
+        }
+      },
+      "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e": {
+        "name": "knuth-lib",
+        "version": "2021.02.05-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "f20235fb7e695062692792ef918b4fa3335c232082035409c0980ceb72d49a4a",
+          "045975caa2718b720eed805737e68dbe779d48c3743c0b396000cfa937f65b3b"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-P78/KLkCzlYZGrenAr0o1lnTWBDPbEloIW3jvG0xUeQ=",
+          "source": "sha256-2NaKQ3V1238IGIijOJjelLAZNeUExavrresszywJqkY="
+        }
+      },
+      "20bf3306f01a1c916edfeb0cf30dad42d4ed2dbfd239cc19584397c3027368de": {
+        "name": "filehook",
+        "version": "0.8-2",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "8bda74e704ed85600ff355782c4f9535200382fcb65caccc86ce9727642b0e16",
+          "287522edc2938db1b451a3955cf5b0826532b34ee15365c105e7b0423fec9618"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-bB8/H1N9JAafNVzFixkCZM8AxwUrgymitfTF+6YRIq8=",
+          "source": "sha256-K5z5KGDv6ngd///jM1GoH9JVxv13DKoIzg6iAlYdtAI="
+        }
+      },
+      "287522edc2938db1b451a3955cf5b0826532b34ee15365c105e7b0423fec9618": {
+        "name": "svn-prov",
+        "version": "3.1859-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-6Lqlub3EM0fANkjFC6PiVQ3U3ymjXmUWWNSlyhwjn3A=",
+          "source": "sha256-gAlh3dl7U7cgFeLsl+mzAgaYwGpJ9KI/VJ8KVq72umc="
+        }
+      },
+      "34ea345040eba0987e6dab977152913b10b8b81ae5f078bb04b733d76695f309": {
+        "name": "latex-tools",
+        "version": "2025.06.01-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "42f6e59160bde4c066f0726bc9a4666247b7d160cf2c2192b59c8a51ddde72ad"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-NEOgAQGqrinzXXCC6+4ymlYTKwJIiPEO8V3wltkL1OI=",
+          "source": "sha256-8yX0tl2Qxrp3KDHNEnCf5PXtjZyF63MDQ9WPkhfHwPA="
+        }
+      },
+      "3b70bdd439369f70222f08b13c1adae033c0455918d15661b9403d455a3cf727": {
+        "name": "luatex",
+        "version": "0.3.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "ba238979eff8f48cad534472f053a5d4c619b566c534066d54fab9e73935d81c",
+          "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb"
+        ],
+        "constraint": "==0.3.0",
+        "binaries": [
+          "luatex"
+        ],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-dU+fSEKrqdfdGhwA804zChVe7Hq7ndpgjrIxIwuAMmM=",
+          "source": "sha256-P3wT9k8t1jjC4kMXqpbhiWIAXhEqF1dXkNOXfqIDzU0="
+        }
+      },
+      "3bcfe10c107187a4d92345afd6c3aa4fc86f7cfbffe53558d557900126c4c0c0": {
+        "name": "l3backend",
+        "version": "2025.01.18-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-LI1j9QaROzKvR36lQOSE+prYVI/mw05xKiwUEcgJxfE=",
+          "source": "sha256-jQfWF6MUfnWURZ1LpZJ3YOhAlm1zmA/kpHApKG+TJqI="
+        }
+      },
+      "3ddbeb0005ca6d4b6e1f70eef7178d6783c27eb68123ad0221153df2c2e47a98": {
+        "name": "colortbl",
+        "version": "1.0-11",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "34ea345040eba0987e6dab977152913b10b8b81ae5f078bb04b733d76695f309"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-ZBsiRcSE3Bf/sM2/TzbRKskIqpc3v3Wbekb/CvL6zj4=",
+          "source": "sha256-WtHu/jPTHOKG38vjC2lZ6czprOcl4qbRYVyNRlp1F7g="
+        }
+      },
+      "42f6e59160bde4c066f0726bc9a4666247b7d160cf2c2192b59c8a51ddde72ad": {
+        "name": "latex-graphics",
+        "version": "2025.06.01-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "c5727282a15039c8332938d6f60d16bfa66481a3ec3e0faf6ff660139834fa0b"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-aiEQdyxzv/EF4edrvPQGOdyV66B3RP9+tFsiJKRxez8=",
+          "source": "sha256-qtppwYXeuGKf3ECApi5Vos8yihtMjcc3sPh9rwPTRsw="
+        }
+      },
+      "55924f766ca4e692e71e75bac98490a1d5cadd091c8c5466ea90c4ea7c585341": {
+        "name": "etex",
+        "version": "2.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-mf9N0F0DfKkDlmrj+zD45u47TvstZrQ6Yu+azJeW7PI=",
+          "source": "sha256-c3p1+GfAzqvkp5FZ1ozi0S4zmBa72EVQt9G3u8EpsGY="
+        }
+      },
+      "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2": {
+        "name": "tex-ini-files",
+        "version": "2025.02.09-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==2025.02.09",
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-zdnKE8IVzop9avGHOLTdp2XJxhhXsOL3IqPrwr07lMo=",
+          "source": "sha256-e9pDoJIPgT5HIfAM4vqRwR/FIVwdvZKgVwm+V+w1yTM="
+        }
+      },
+      "658c1b696d5c60cacab8d55e3dcd672b4c4ba168d4336885259c0dda9857536e": {
+        "name": "currfile",
+        "version": "1.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "20bf3306f01a1c916edfeb0cf30dad42d4ed2dbfd239cc19584397c3027368de",
+          "42f6e59160bde4c066f0726bc9a4666247b7d160cf2c2192b59c8a51ddde72ad"
+        ],
+        "constraint": "==1.0",
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-yU9uSGUck1QpFxqJXQ9ou7xBzjF3s2f5Y85bbnMaIck=",
+          "source": "sha256-T3thoBk9G4s0NbpC8ddu7ckVyD7pYNmjEavAGAgEYjQ="
+        }
+      },
+      "674d179d5a392f4e3476bb5a11e6d0520b90a423a2b07719bb3db819be76c006": {
+        "name": "xkeyval",
+        "version": "2.9-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "34ea345040eba0987e6dab977152913b10b8b81ae5f078bb04b733d76695f309"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-tUlnRvwEBginpIryRvr7GjAIWVy2zV8Ok2M09ymuUZQ=",
+          "source": "sha256-Z35cCEg4sOSPI/kDm840851u07myWtnoF0T4xZozhcA="
+        }
+      },
+      "6eee2fbd83d959a9ab759e8bbe77b4896367f4e3185e461d9a7139920a781aca": {
+        "name": "collectbox",
+        "version": "0.4-3",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-gl7LMjcChiLA9et/3yePF2UMoekmpWKP5yiT2tI8Kpg=",
+          "source": "sha256-Ff60XonJtqN7WoLe/0nVXFxKDPuYW2YA42bOuXms6zA="
+        }
+      },
+      "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb": {
+        "name": "amsfonts",
+        "version": "3.04-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==3.04",
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-RZE5QmO0RVpexakXWgCqM1J7w5fK6Je6rEXZ8XKRC9g=",
+          "source": "sha256-ggK0CyyfvvNyfYXvVz348i02v0UL+jrbJLnrhrPukOc="
+        }
+      },
+      "7203fbf9a585749d3b3be791b41b005f6c8201fd0e95aba250817fda914163e9": {
+        "name": "pdfcolmk",
+        "version": "2019.11.24-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-A3X0+4BVuVbo5T9fe/tu1pY4m/8VJo0fNpbc9sK9XV8=",
+          "source": "sha256-ngTJL+bOV9oeOyNWTcU4/fVeWd7Nov69vztFnAIohWw="
+        }
+      },
+      "87f7beca8ebbb56e7ae9ff9b99ebb70dfb17997dea4842f51ea61b51083e6f48": {
+        "name": "lualatex",
+        "version": "0.3.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "6fcffa0eeadc4a75dc246d6869dcfe79594d6e0114ece5b260b9216a3d40cdfb",
+          "55fc270842402ff6fc85b8fa05be657f391600415c969c3cc30e8e976da82ec2",
+          "ba238979eff8f48cad534472f053a5d4c619b566c534066d54fab9e73935d81c",
+          "d28742e0f9d3e103b2c5f614b1282c80582a4750f7b3406edd3ed35f112e950f"
+        ],
+        "constraint": "==0.3.0",
+        "binaries": [
+          "lualatex"
+        ],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-HYd7ppBWDnYs96ofAOTqLUMmKsJgQVSSRFQ3Hw0igC8=",
+          "source": "sha256-83HZtJfqwJpgZrxqsyp6fpBD/40gajnk+dws+eS3UME="
+        }
+      },
+      "8bda74e704ed85600ff355782c4f9535200382fcb65caccc86ce9727642b0e16": {
+        "name": "adjustbox",
+        "version": "1.3-3",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "d11757ca898865c8c5a397049a43d4b2d49b0f200a4c0656184cb47c8287473e",
+          "42f6e59160bde4c066f0726bc9a4666247b7d160cf2c2192b59c8a51ddde72ad",
+          "6eee2fbd83d959a9ab759e8bbe77b4896367f4e3185e461d9a7139920a781aca",
+          "674d179d5a392f4e3476bb5a11e6d0520b90a423a2b07719bb3db819be76c006",
+          "34ea345040eba0987e6dab977152913b10b8b81ae5f078bb04b733d76695f309"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-/lrSu2DBXlJSlhhsNmLh9Pt2sm5Xtx2/N85lUIlznPY=",
+          "source": "sha256-6s9x2WECu19ewRIBNsf1dJebi7MbvaNfhU0MTF5jcxw="
+        }
+      },
+      "9d30c278ce6738129492ba18692faf0bd87368b477c94e5db31e632f16acee21": {
+        "name": "latex-url",
+        "version": "3.4-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-S66YhnDxcmr238lfQweym8Td1T0IrlNWgJ+pdUCTmVo=",
+          "source": "sha256-OXarCfWD9srGV+LJMlMxU+hNGXjjxaXlQWlQIxET7NY="
+        }
+      },
+      "a99560db1fee03c651f0d6a44b9476a47fbb60fe5cc66cf9edcbfc376311067f": {
+        "name": "l3kernel",
+        "version": "2025.01.18-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "fa22baa077dca8c903ec9c141321eb0a5b4dd25034e6b70ca3e67c6930112af4"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-74nA5l6MJO4SmMTL/f9fFtsAp/bbZBm5b92oftMJdRA=",
+          "source": "sha256-cGDCD3qMwWKsCwwyze06bc6bVQruAnTnZ+FYz1fSgOs="
+        }
+      },
+      "b2452f70d67b508b9a31b8f775b93f74522197e9876d6654fed3c251b7668c46": {
+        "name": "lua-template",
+        "version": "1.0.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==1.0.0",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "git",
+          "url": "https://github.com/anaef/lua-template.git",
+          "ref": "v1.0.0"
+        },
+        "hashes": {
+          "rockspec": "sha256-U4oADmyImQOlyFNxj3XOzLUDL1VdKPoG90JCnGyLOmg=",
+          "source": "sha256-XtFnxCANJk8lVRXY2Aokh1oiecRIJSBXpzbPuS+bnX0="
+        }
+      },
+      "ba238979eff8f48cad534472f053a5d4c619b566c534066d54fab9e73935d81c": {
+        "name": "texrocks",
+        "version": "0.3.0-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==0.3.0",
+        "binaries": [
+          "texlua"
+        ],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-uc6vrTbwGGWORhJ6toByRhmZgjqhUIgsBKXVJok0iGA=",
+          "source": "sha256-t7MPJWDYu8w2uvpaA1PfMOooFx1OkFFphEETWUqbFQY="
+        }
+      },
+      "c1ece3bdf3d0c5ae82d388e0d00fcbdabdadce1ca1f6892032e0101a8a195886": {
+        "name": "xcolor",
+        "version": "3.01-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "7203fbf9a585749d3b3be791b41b005f6c8201fd0e95aba250817fda914163e9",
+          "3ddbeb0005ca6d4b6e1f70eef7178d6783c27eb68123ad0221153df2c2e47a98"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-h63976eHDj2Qcow2P/YJfsw5hfjbqAwE3EX7t6tRxas=",
+          "source": "sha256-fvPrxQ0xz4rEUufBf0/FYXSj2Kw83mSNPl7elvGM9gs="
+        }
+      },
+      "c5727282a15039c8332938d6f60d16bfa66481a3ec3e0faf6ff660139834fa0b": {
+        "name": "latex-base",
+        "version": "2025.06.01-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "a99560db1fee03c651f0d6a44b9476a47fbb60fe5cc66cf9edcbfc376311067f",
+          "3bcfe10c107187a4d92345afd6c3aa4fc86f7cfbffe53558d557900126c4c0c0",
+          "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e",
+          "9d30c278ce6738129492ba18692faf0bd87368b477c94e5db31e632f16acee21",
+          "55924f766ca4e692e71e75bac98490a1d5cadd091c8c5466ea90c4ea7c585341"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-4clSGl7ENjp9Xc+lpmvXrim96Nzw049NISc3jiDIGN0=",
+          "source": "sha256-DL3S1Xk0JTRw6MfGu85/IxkZak2jlSlFF7BfQ9+QtyI="
+        }
+      },
+      "d11757ca898865c8c5a397049a43d4b2d49b0f200a4c0656184cb47c8287473e": {
+        "name": "pgf",
+        "version": "3.1.10-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "dba862c5cb2a69b8398f5125154d417574a0430def62f4858bb9b9bbe96c16c2",
+          "42f6e59160bde4c066f0726bc9a4666247b7d160cf2c2192b59c8a51ddde72ad",
+          "c1ece3bdf3d0c5ae82d388e0d00fcbdabdadce1ca1f6892032e0101a8a195886"
+        ],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-8pRa3uQU8e/LOujDK8r56T9/wRFBvNQZbkPdzDmkCBs=",
+          "source": "sha256-SuiOP9YKgcS0hvcVWb+c5XITTaNpAvaqAEKeC71s73c="
+        }
+      },
+      "d28742e0f9d3e103b2c5f614b1282c80582a4750f7b3406edd3ed35f112e950f": {
+        "name": "latex-base",
+        "version": "2025.06.01-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [
+          "a99560db1fee03c651f0d6a44b9476a47fbb60fe5cc66cf9edcbfc376311067f",
+          "3bcfe10c107187a4d92345afd6c3aa4fc86f7cfbffe53558d557900126c4c0c0",
+          "16948597cb51a548293a1f8bd3779d20ea61e19b3a23f4aae5df742de319d70e",
+          "9d30c278ce6738129492ba18692faf0bd87368b477c94e5db31e632f16acee21",
+          "55924f766ca4e692e71e75bac98490a1d5cadd091c8c5466ea90c4ea7c585341"
+        ],
+        "constraint": "==2025.06.01",
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-4clSGl7ENjp9Xc+lpmvXrim96Nzw049NISc3jiDIGN0=",
+          "source": "sha256-DL3S1Xk0JTRw6MfGu85/IxkZak2jlSlFF7BfQ9+QtyI="
+        }
+      },
+      "d528cd52981564259b873ae3f972f48a19522d775240465725a6434109336b92": {
+        "name": "argparse",
+        "version": "0.7.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": "==0.7.1",
+        "binaries": [],
+        "source": "luarocks_rockspec+https://luarocks.org/",
+        "source_url": {
+          "type": "url",
+          "url": "https://github.com/luarocks/argparse/archive/0.7.1.zip"
+        },
+        "hashes": {
+          "rockspec": "sha256-6EUIYsWhm29xlL8arP/3DQoRj/1CYWxs/J8+gz9T0YQ=",
+          "source": "sha256-AJ8n6HTxqHPeQd0NKHiyQLzZ63+ebDsO1uP+0f0vYUE="
+        }
+      },
+      "dba862c5cb2a69b8398f5125154d417574a0430def62f4858bb9b9bbe96c16c2": {
+        "name": "everyshi",
+        "version": "4.00-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-47+BR0rGdjQWmjjwIokoEK5pfsYaDTMydZzBiI/LngQ=",
+          "source": "sha256-wESu+dEbNIqjt8uU5s2Nk+dh0fSgT6AjqVKlGE5lOTY="
+        }
+      },
+      "f20235fb7e695062692792ef918b4fa3335c232082035409c0980ceb72d49a4a": {
+        "name": "cm-tfm",
+        "version": "0.0.1-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-DG34Q6HlJUkrkJCdYtKBS3GOrstY3zNTdbmULt5q3dg=",
+          "source": "sha256-HRTqCejBkdcktjP8RMzuPh6bNRBa/xZS45q9LN5eZkk="
+        }
+      },
+      "fa22baa077dca8c903ec9c141321eb0a5b4dd25034e6b70ca3e67c6930112af4": {
+        "name": "unicode-data",
+        "version": "1.18-1",
+        "pinned": false,
+        "opt": false,
+        "dependencies": [],
+        "constraint": null,
+        "binaries": [],
+        "source": "luarocks_rock+http://127.0.0.1:8000/",
+        "source_url": {
+          "type": "url",
+          "url": "http://127.0.0.1:8000/"
+        },
+        "hashes": {
+          "rockspec": "sha256-YSageq/LKUT9JupFWDUaMD8+L2T/8yCzkXjzA408nRc=",
+          "source": "sha256-8jfVlZLQMRCd0Ys5FHPE8euZM55AUwxi6Xw9tx9Xe14="
+        }
+      }
+    },
+    "entrypoints": [
+      "3b70bdd439369f70222f08b13c1adae033c0455918d15661b9403d455a3cf727",
+      "87f7beca8ebbb56e7ae9ff9b99ebb70dfb17997dea4842f51ea61b51083e6f48",
+      "b2452f70d67b508b9a31b8f775b93f74522197e9876d6654fed3c251b7668c46",
+      "d528cd52981564259b873ae3f972f48a19522d775240465725a6434109336b92",
+      "658c1b696d5c60cacab8d55e3dcd672b4c4ba168d4336885259c0dda9857536e"
+    ]
+  }
+}

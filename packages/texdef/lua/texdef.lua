@@ -6,10 +6,9 @@ local M = {}
 function M.get_parser(name, fmt)
     local parser = argparse(name)
     parser:argument('macro', 'macro name without \\'):args('*')
-    parser:option('--output -o', 'output file name', tex.jobname .. '.tex')
     parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
     if fmt:match 'latex' then
-        parser:option('--list -l', 'List user level command sequences of the given packages'):args(0)
+        parser:option('--list -l', 'List user level/all command sequences of the given packages by -l, -ll, -lll'):args(0):count("*")
         parser:option('--Environment -E', 'Every command name is taken as an environment name'):args(0)
         parser:option('--class -c', 'class name', 'article')
         parser:option('--package -p', 'package name'):count("*")
@@ -20,7 +19,11 @@ function M.get_parser(name, fmt)
     end
     parser:option('--before -b', 'Place code before definition is shown'):count("*")
     parser:option('--after -a', 'Place code after definition is shown'):count("*")
+
     parser:option('--dry-run -n', 'Do not run'):args(0)
+    parser:option('--output', 'output file name', tex.jobname .. '.tex')
+    parser:option('--entering', 'entering file prompt', '>> entering file ')
+    parser:option('--leaving', 'leaving file prompt', '<< leaving file ')
     return parser
 end
 
@@ -50,7 +53,7 @@ function M.postparse(args)
         end
     end
     if args.Environment then
-        for i=1,#args.macro do
+        for i = 1, #args.macro do
             table.insert(args.macro, 'end' .. args.macro[i])
         end
     end
@@ -65,6 +68,7 @@ end
 function M.main()
     print()
     local args = M.parse(arg)
+    M.args = args
     local filename = 'texdef/main.tex'
     local subfilename = 'texdef/sub.tex'
     local root = debug.getinfo(1).source:match("@?(.*)/")
@@ -82,17 +86,87 @@ function M.main()
     local code = template.render(file, args)
     if args.dry_run then
         print(code)
-    else
+        return
+    end
+    if args.list == 0 then
         M.f = io.open('.lux/' .. args.output, 'w+')
-        if M.f then
-            M.print(code)
-        end
+    else
+        M.f = io.open('.lux/' .. tex.jobname .. '.log', 'w+')
+    end
+    if M.f then
+        M.print(code)
     end
 end
 
 function M.output()
     if M.f then
-        print(M.f:read("*a"))
+        local text = ""
+        local args = M.args
+        if args and args.list ~= 0 then
+            local macros = {}
+            local pkgs = {}
+            local pkg, macro
+            for line in M.f:lines() do
+                if line:match(args.entering) then
+                    pkg = line:gsub(args.entering, '')
+                    table.insert(pkgs, pkg)
+                    macros[pkg] = {}
+                elseif pkg and line:match(args.leaving) then
+                    local names = {}
+                    for name, _ in pairs(macros[pkg]) do
+                        table.insert(names, name)
+                    end
+                    table.sort(names)
+                    local lines = {}
+                    for _, name in ipairs(names) do
+                        local def = macros[pkg][name]
+                        if def:match '->' == nil then
+                            def = ' = ' .. def
+                        end
+                        if M.args.list > 2 or not name:match'@' then
+                            if M.args.list == 1 then
+                                table.insert(lines, name)
+                            else
+                                table.insert(lines, name .. def)
+                            end
+                        end
+                    end
+                    macros[pkg] = lines
+                    pkg = table.remove(pkgs)
+                    table.insert(pkgs, pkg)
+                elseif pkg and (line:sub(2):match('^into ') or line:sub(2):match('^reassigning ')) then
+                    line = line:sub(2, #line - 1):gsub("^%S+ ", ""):gsub("\\ETC%.", "..."):gsub(
+                    'used in a moving argument.', '(moving)')
+                    local def = line:gsub("^[^=]+=", "")
+                    if def:match '->' then
+                        local name = def:gsub('->.*', '')
+                        def = line:gsub(".*->", '')
+                        local is_long = 0
+                        name, is_long = name:gsub([[\long macro:]], '')
+                        name = name:gsub('macro:', '')
+                        if is_long > 0 then
+                            def = name .. ' --> ' .. def
+                        else
+                            def = name .. ' -> ' .. def
+                        end
+                    end
+                    macro = line:match("^[^=]+")
+                    macros[pkg][macro] = def
+                end
+            end
+            table.sort(pkgs)
+            local lines = {}
+            for _, pkg in ipairs(pkgs) do
+                if #macros[pkg] > 0 then
+                    table.insert(lines, pkg)
+                    table.insert(lines, table.concat(macros[pkg], "\n"))
+                end
+            end
+            text = table.concat(lines, "\n\n")
+        else
+            text = M.f:read("*a")
+        end
+        print(text)
         M.f:close()
     end
 end

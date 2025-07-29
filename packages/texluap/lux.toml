@@ -13,20 +13,23 @@ license = 'GPL-3.0'
 [source]
 # url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 # dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
-url = "https://github.com/ustctug/texrocks/archive/.zip"
-dir = "texrocks-/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/60ae95531ebd55e9054239ab654966120d4ec314.zip"
+dir = "texrocks-60ae95531ebd55e9054239ab654966120d4ec314/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = "0.3.0-1"
 prompt-style = "0.0.9-1"
+
+[test_dependencies]
+luatex = "0.3.0-1"
 
 [run]
 command = 'tlua'
 
 [test]
 type = 'command'
-command = 'tlua'
-flags = ['-e', 'print(status.banner)']
+command = 'luatex'
+flags = ['--shell-escape', 'test.tex']
 
 [deploy]
 wrap_bin_scripts = false
