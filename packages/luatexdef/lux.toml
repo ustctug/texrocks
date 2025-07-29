@@ -9,9 +9,6 @@ maintainer = "Wu"
 labels = [ "texmf" ]
 
 [test_dependencies]
-luatex = "0.2.4-1"
-lualatex = "0.2.4-1"
-filehook = "0.8-2"
 
 [source]
 url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
@@ -20,6 +17,9 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 [dependencies]
 argparse = "0.7.1-1"
 lua-template = "1.0.0-1"
+currfile = "1.0-1"
+lualatex = "0.2.4-1"
+luatex = "0.2.4-1"
 
 [test]
 type = "command"

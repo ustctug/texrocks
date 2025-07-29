@@ -6,7 +6,10 @@ function M.get_parser(name, fmt)
     local parser = argparse(name)
     parser:argument('macro', 'macro name without \\'):args('*')
     parser:option('--output -o', 'output file name', tex.jobname .. '.tex')
+    parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
     if fmt:match 'latex' then
+        parser:option('--list -l', 'List user level command sequences of the given packages'):args(0)
+        parser:option('--Environment -E', 'Every command name is taken as an environment name'):args(0)
         parser:option('--class -c', 'class name', 'article')
         parser:option('--package -p', 'package name'):count("*")
         parser:option('--environment -e', 'environment name'):count("*")
@@ -64,11 +67,16 @@ function M.postparse(args)
             end
         end
     end
+    if args.Environment then
+        for i=1,#args.macro do
+            table.insert(args.macro, 'end' .. args.macro[i])
+        end
+    end
     return args
 end
 
 function M.print(code)
-    code = code:gsub("\n", "")
+    code = code:gsub("%.*\n", ""):gsub("\n", "")
     tex.print(code)
 end
 

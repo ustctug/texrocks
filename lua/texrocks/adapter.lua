@@ -166,7 +166,7 @@ function M.setenvs()
     os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.cpath, ""))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
 
-    os.setenv("TEXFONTMAPS", "{.lux,$XDG_DATA_HOME/lux/tree}/" .. constants.LUA_VERSION)
+    os.setenv("TEXFONTMAPS", ".lux;$XDG_DATA_HOME/lux/tree")
     os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
     -- font metrics
     M.setfontenv("TFMFONTS", "tfm")
