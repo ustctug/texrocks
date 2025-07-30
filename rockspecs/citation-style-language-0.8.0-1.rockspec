@@ -29,6 +29,8 @@ dependencies = {
    "mhluaxml-temp >= 0.1",
    "citation-style-language-styles",
    "citation-style-language-locales",
+   "l3packages",
+   "lualibs",
 }
 build = {
    type = "builtin",

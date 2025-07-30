@@ -44,6 +44,7 @@ jobs:
           luarocks install --local luatex
           luarocks install --local luatexinfo
           luarocks install --local lualatex
+          luarocks install --local lualibs
           luarocks install --local texdef
           luarocks install --local graphics-cfg
           luarocks install --local beamer

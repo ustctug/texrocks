@@ -15,7 +15,7 @@ description = {
 
 The bundle is based on lua modules shipped with ConTeXt, and made available in this bundle for use independent of ConTeXt.]],
   labels = { 'tex', 'luatex' },
-  homepage = 'https://github.com/latex3/lualibs',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
@@ -31,42 +31,50 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 build = {
-  type = 'builtin',
-  modules = {
-    ["lualibs-basic-merged"] = "lualibs-basic-merged.lua",
-    ["lualibs-boolean"] = "lualibs-boolean.lua",
-    ["lualibs-compat"] = "lualibs-compat.lua",
-    ["lualibs-dir"] = "lualibs-dir.lua",
-    ["lualibs-extended-merged"] = "lualibs-extended-merged.lua",
-    ["lualibs-file"] = "lualibs-file.lua",
-    ["lualibs-function"] = "lualibs-function.lua",
-    ["lualibs-io"] = "lualibs-io.lua",
-    ["lualibs-lpeg"] = "lualibs-lpeg.lua",
-    ["lualibs-lua"] = "lualibs-lua.lua",
-    ["lualibs-math"] = "lualibs-math.lua",
-    ["lualibs-md5"] = "lualibs-md5.lua",
-    ["lualibs-number"] = "lualibs-number.lua",
-    ["lualibs-os"] = "lualibs-os.lua",
-    ["lualibs-package"] = "lualibs-package.lua",
-    ["lualibs-set"] = "lualibs-set.lua",
-    ["lualibs-string"] = "lualibs-string.lua",
-    ["lualibs-table"] = "lualibs-table.lua",
-    ["lualibs-trac-inf"] = "lualibs-trac-inf.lua",
-    ["lualibs-unicode"] = "lualibs-unicode.lua",
-    ["lualibs-url"] = "lualibs-url.lua",
-    ["lualibs-util-deb"] = "lualibs-util-deb.lua",
-    ["lualibs-util-dim"] = "lualibs-util-dim.lua",
-    ["lualibs-util-fil"] = "lualibs-util-fil.lua",
-    ["lualibs-util-jsn"] = "lualibs-util-jsn.lua",
-    ["lualibs-util-lua"] = "lualibs-util-lua.lua",
-    ["lualibs-util-prs"] = "lualibs-util-prs.lua",
-    ["lualibs-util-sac"] = "lualibs-util-sac.lua",
-    ["lualibs-util-sta"] = "lualibs-util-sta.lua",
-    ["lualibs-util-sto"] = "lualibs-util-sto.lua",
-    ["lualibs-util-str"] = "lualibs-util-str.lua",
-    ["lualibs-util-tab"] = "lualibs-util-tab.lua",
-    ["lualibs-util-tpl"] = "lualibs-util-tpl.lua",
-    ["lualibs-util-zip"] = "lualibs-util-zip.lua",
-  },
+  type = 'command',
+  build_command = [[
+    luatex --interaction=nonstopmode lualibs.dtx
+  ]],
+  install = {
+    lua = {
+        ["lualibs"] = "lualibs.lua",
+        ["lualibs-basic-merged"] = "lualibs-basic-merged.lua",
+        ["lualibs-boolean"] = "lualibs-boolean.lua",
+        ["lualibs-compat"] = "lualibs-compat.lua",
+        ["lualibs-dir"] = "lualibs-dir.lua",
+        ["lualibs-extended-merged"] = "lualibs-extended-merged.lua",
+        ["lualibs-file"] = "lualibs-file.lua",
+        ["lualibs-function"] = "lualibs-function.lua",
+        ["lualibs-io"] = "lualibs-io.lua",
+        ["lualibs-lpeg"] = "lualibs-lpeg.lua",
+        ["lualibs-lua"] = "lualibs-lua.lua",
+        ["lualibs-math"] = "lualibs-math.lua",
+        ["lualibs-md5"] = "lualibs-md5.lua",
+        ["lualibs-number"] = "lualibs-number.lua",
+        ["lualibs-os"] = "lualibs-os.lua",
+        ["lualibs-package"] = "lualibs-package.lua",
+        ["lualibs-set"] = "lualibs-set.lua",
+        ["lualibs-string"] = "lualibs-string.lua",
+        ["lualibs-table"] = "lualibs-table.lua",
+        ["lualibs-trac-inf"] = "lualibs-trac-inf.lua",
+        ["lualibs-unicode"] = "lualibs-unicode.lua",
+        ["lualibs-url"] = "lualibs-url.lua",
+        ["lualibs-util-deb"] = "lualibs-util-deb.lua",
+        ["lualibs-util-dim"] = "lualibs-util-dim.lua",
+        ["lualibs-util-fil"] = "lualibs-util-fil.lua",
+        ["lualibs-util-jsn"] = "lualibs-util-jsn.lua",
+        ["lualibs-util-lua"] = "lualibs-util-lua.lua",
+        ["lualibs-util-prs"] = "lualibs-util-prs.lua",
+        ["lualibs-util-sac"] = "lualibs-util-sac.lua",
+        ["lualibs-util-sta"] = "lualibs-util-sta.lua",
+        ["lualibs-util-sto"] = "lualibs-util-sto.lua",
+        ["lualibs-util-str"] = "lualibs-util-str.lua",
+        ["lualibs-util-tab"] = "lualibs-util-tab.lua",
+        ["lualibs-util-tpl"] = "lualibs-util-tpl.lua",
+        ["lualibs-util-zip"] = "lualibs-util-zip.lua",
+    }
+  }
 }
