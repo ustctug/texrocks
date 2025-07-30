@@ -7,13 +7,14 @@ summary = "Standalone path lookup and expansion for the Kpathsea library"
 detailed = "A reimplementation of <https://tug.org/kpathsea>'s kpsewhich by texlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
+homepage = "https://github.com/ustctug/texrocks"
 license = "GPL-3.0"
 
 [source]
 # url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 # dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
-url = "https://github.com/ustctug/texrocks/archive/b8374b7c2935a56328af6c09a837b98987cc5673.zip"
-dir = "texrocks-b8374b7c2935a56328af6c09a837b98987cc5673/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/f76fcbdde576bdb70df56008749d1c09e106abb2.zip"
+dir = "texrocks-f76fcbdde576bdb70df56008749d1c09e106abb2/packages/$(PACKAGE)"
 
 [run]
 command = 'kpsewhich'

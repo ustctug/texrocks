@@ -190,7 +190,6 @@ function M.setenvs()
 end
 
 function M.run(args)
-    M.setenvs()
     if #args == 0 then
         args = { os.getenv "SHELL" or os.getenv "ComSpec" or "sh" }
     end
@@ -204,7 +203,25 @@ function M.run(args)
     loadfile(arg[0])()
 end
 
-function M.main(args)
+function M.cp(src, dst)
+    local exe = dst
+    local f = io.open(exe, "w")
+    if f then
+        local self = io.open(src)
+        if self then
+            f:write(self:read("*a"))
+            self:close()
+        end
+        f:close()
+        if os.type == "unix" then
+            os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+        else
+            -- TODO: support windows
+        end
+    end
+end
+
+function M.parse(args)
     local arg0 = args[0]
     arg0 = arg0:gsub(".*[/\\]", "")
     local cmd = "--fmt=%s"
@@ -222,8 +239,11 @@ function M.main(args)
     for _, v in ipairs(args) do
         table.insert(cmd_args, v)
     end
+    return cmd_args
+end
 
-    -- copy self to a new wrapper
+--- copy self to a new wrapper
+function M.wrap(args)
     local is_ini = false
     local exe
     for _, opt in ipairs(args) do
@@ -234,21 +254,14 @@ function M.main(args)
         end
     end
     if is_ini and exe ~= nil then
-        local f = io.open(exe, "w")
-        if f then
-            local self = io.open(args[0])
-            if self then
-                f:write(self:read("*a"))
-                self:close()
-            end
-            f:close()
-            if os.type == "unix" then
-                os.execute(table.concat({ "chmod", "+x", exe }, ' '))
-            else
-                -- TODO: support windows
-            end
-        end
+        M.cp(args[0], exe)
     end
+end
+
+function M.main(args)
+    local cmd_args = M.parse(args)
+    M.wrap(args)
+    M.setenvs()
     M.run(cmd_args)
 end
 

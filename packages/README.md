@@ -18,6 +18,8 @@
 - `lua-open`: use correct system tool to open PDF.
 - `texdef`: Show definitions of TeX commands. A reimplementation of
   <https://github.com/MartinScharrer/texdef/>.
+- `kpathsea`'s `kpsewhich`: provide a CLI API for other TeX tools written in
+  other languages.
 
 ### texdoc
 
