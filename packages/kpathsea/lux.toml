@@ -1,14 +1,13 @@
-package = "texluap"
+package = "kpathsea"
 version = "0.3.0"
 lua = ">=5.1"
 
 [description]
-summary = "tlua: luatex as Lua interpreter, texlua's prompt"
-detailed = "Refer <https://github.com/mfussenegger/nlua>"
+summary = "Standalone path lookup and expansion for the Kpathsea library"
+detailed = "A reimplementation of <https://tug.org/kpathsea>'s kpsewhich by texlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
-homepage = "https://github.com/ustctug/texrocks"
-license = 'GPL-3.0'
+license = "GPL-3.0"
 
 [source]
 # url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
@@ -16,26 +15,23 @@ license = 'GPL-3.0'
 url = "https://github.com/ustctug/texrocks/archive/b8374b7c2935a56328af6c09a837b98987cc5673.zip"
 dir = "texrocks-b8374b7c2935a56328af6c09a837b98987cc5673/packages/$(PACKAGE)"
 
-[dependencies]
-texrocks = "0.3.0-1"
-prompt-style = "0.0.9-1"
-
-[test_dependencies]
-luatex = "0.3.0-1"
-
 [run]
-command = 'tlua'
+command = 'kpsewhich'
 
 [test]
 type = 'command'
-command = 'luatex'
-flags = ['--shell-escape', 'test.tex']
+command = 'kpsewhich'
+flags = ['texrocks.lua']
 
 [deploy]
 wrap_bin_scripts = false
+
+[dependencies]
+texrocks = "0.3.0-1"
+argparse = "0.7.1-1"
 
 [build]
 type = "builtin"
 
 [build.install.bin]
-tlua = "bin/tlua"
+kpsewhich = "bin/kpsewhich"
