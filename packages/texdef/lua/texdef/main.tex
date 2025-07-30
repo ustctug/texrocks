@@ -1,11 +1,11 @@
 \newwrite\texdefoutput
-<l:if cond="list">
+\immediate\openout\texdefoutput=${output}
+<l:if cond="list + find > 0">
 \makeatletter
 \expandafter\def\csname ver@kvoptions.sty\endcsname{0000/00/00}
 \let\SetupKeyvalOptions\@gobble
 \newcommand\DeclareStringOption[2][]{}
-\newcommand\DeclareBoolOption[2][false]
-{\expandafter\newif\csname ifcurrfile@#2\endcsname\csname currfile@#2#1\endcsname}
+\newcommand\DeclareBoolOption[2][false]{\expandafter\newif\csname ifcurrfile@#2\endcsname\csname currfile@#2#1\endcsname}
 \let\DeclareVoidOption\@gobbletwo
 \def\ProcessKeyvalOptions{\@ifstar{}{}}
 \def\currfile@mainext{tex}
@@ -22,17 +22,45 @@
 \let\DeclareVoidOption\@undefined
 \let\ProcessKeyvalOptions\@undefined
 \makeatother
+</l:if>
+<l:if cond="list > 0">
 \AtBeginOfEveryFile{\message{^^J$[n]{entering}\currfilename^^J}}
 \AtEndOfEveryFile{\message{^^J$[n]{leaving}\currfilename^^J}}
 </l:if>
+<l:if cond="find > 0">
+<l:for names="_, mac" in="ipairs(macro)">
+{\expandafter}\expandafter
+\ifx\csname ${mac}\expandafter\endcsname\csname @undefined\endcsname
+  \AtBeginOfFiles{{{\expandafter}\expandafter
+    \ifx\csname ${mac}\expandafter\endcsname\csname @undefined\endcsname
+    \else
+      \ClearHook\AtBeginOfFiles{}\relax
+      \ClearHook\AtEndOfFiles{}\relax
+      \csname currfile@pop\endcsname
+      \begingroup\immediate\write\texdefoutput{\expandafter\string\csname ${mac}\endcsname${defined}\currfilename}\expandafter\endgroup
+    \fi}}
+  \csname currfile@push\endcsname
+  \AtEndOfFiles{{{\expandafter}\expandafter
+    \ifx\csname ${mac}\expandafter\endcsname\csname @undefined\endcsname
+    \else
+      \ClearHook\AtBeginOfFiles{}\relax
+      \ClearHook\AtEndOfFiles{}\relax
+      \begingroup\immediate\write\texdefoutput{\expandafter\string\csname ${mac}\endcsname${defined}\currfilename}\expandafter\endgroup
+    \fi}}
+\else
+  \begingroup\immediate\write\texdefoutput{\expandafter\string\csname ${mac}\endcsname${defined}${fmt}}\expandafter\endgroup
+\fi
+</l:for>
+</l:if>
 <l:if cond="beforeclass"><l:include filename="sub"/></l:if>
 <l:if cond="class">\documentclass${class}</l:if>
-<l:if cond="list">\tracingassigns=1\relax</l:if>
+<l:if cond="list > 0">\tracingassigns=1\relax</l:if>
 <l:for names="_, pkg" in="ipairs(package or {})">\usepackage${pkg}</l:for>
 <l:if cond="preamble"><l:include filename="sub"/></l:if>
 <l:for names="_, code" in="ipairs(othercode or {})">${code}</l:for>
-<l:if cond="list">\tracingassigns=0\relax</l:if>
+<l:if cond="list > 0">\tracingassigns=0\relax</l:if>
 <l:if cond="class">\begin{document}</l:if>
 <l:for names="_, env" in="ipairs(environment or {})">\begin${env}</l:for>
 <l:if cond="not preamble and not beforeclass"><l:include filename="sub"/></l:if>
 <l:for names="k, _" in="ipairs(environment or {})">\end${environment[#environment + 1 - k]}</l:for>
+\immediate\closeout\texdefoutput

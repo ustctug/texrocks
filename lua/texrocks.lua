@@ -191,12 +191,12 @@ end
 
 function M.run(args)
     M.setenvs()
-    M.sync(false)
     if #args == 0 then
         args = { os.getenv "SHELL" or os.getenv "ComSpec" or "sh" }
     end
     local cmd_args, fmt = M.preparse(args)
     if fmt ~= 'texlua' then
+        M.sync(false)
         local cmd = table.concat(args, ' ')
         os.exec(cmd)
     end

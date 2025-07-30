@@ -9,6 +9,8 @@ function M.get_parser(name, fmt)
     parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
     if fmt:match 'latex' then
         parser:option('--list -l', 'List all command sequences of the given packages by -l, -ll'):args(0):count("*")
+        parser:option('--find -f', 'Show full filepath of the file where the command sequence was defined by -f, -ff')
+            :args(0):count("*")
         parser:option('--ignore-regex -I', 'Ignore all command sequences in the above lists which match lua match()',
             '[@_]')
         parser:option('--Environment -E', 'Every command name is taken as an environment name'):args(0)
@@ -26,6 +28,7 @@ function M.get_parser(name, fmt)
     parser:option('--output', 'output file name', tex.jobname .. '.tex')
     parser:option('--entering', 'entering file prompt', '>> entering file ')
     parser:option('--leaving', 'leaving file prompt', '<< leaving file ')
+    parser:option('--defined', 'defined prompt', ': defined by ')
     return parser
 end
 
@@ -33,6 +36,7 @@ function M.parse(args)
     local cmd_args, fmt = texrocks.preparse(args)
     local parser = M.get_parser(cmd_args[0], fmt)
     cmd_args = parser:parse(cmd_args)
+    cmd_args.fmt = fmt .. '.fmt'
     return M.postparse(cmd_args)
 end
 
@@ -59,11 +63,13 @@ function M.postparse(args)
             table.insert(args.macro, 'end' .. args.macro[i])
         end
     end
+    args.list = args.list or 0
+    args.find = args.find or 0
     return args
 end
 
 function M.print(code)
-    code = code:gsub("%.*\n", ""):gsub("\n", "")
+    code = code:gsub('^%s+', ''):gsub("%.*\n", ""):gsub("\n", "")
     tex.print(code)
 end
 
@@ -167,6 +173,15 @@ function M.output()
             text = table.concat(lines, "\n\n")
         else
             text = M.f:read("*a"):gsub('=\n', ' = '):gsub('= macro:%->', '-> ')
+            if args.find > 1 then
+                local paths = {}
+                for file in text:gmatch(args.defined .. '(%S+)') do
+                    paths[file] = kpse.lookup(file)
+                end
+                for file, path in pairs(paths) do
+                    text = text:gsub(args.defined .. file, args.defined .. path)
+                end
+            end
         end
         print(text)
         M.f:close()
