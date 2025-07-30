@@ -174,6 +174,7 @@ function M.setenvs()
     os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, ""))
     os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.cpath, ""))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
+    os.setenv("KPSEWHICHINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
 
     os.setenv("TEXFONTMAPS", ".lux;$XDG_DATA_HOME/lux/tree")
     os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
@@ -198,6 +199,7 @@ function M.run(args)
         M.sync(false)
         os.exec(args)
     end
+    -- luacheck: ignore 121
     arg = cmd_args
     loadfile(arg[0])()
 end
@@ -214,8 +216,8 @@ function M.cp(src, dst)
         f:close()
         if os.type == "unix" then
             os.execute(table.concat({ "chmod", "+x", exe:gsub(' ', '\\ ') }, ' '))
-        else
             -- TODO: support windows
+            -- else
         end
     end
 end
