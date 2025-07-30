@@ -44,7 +44,6 @@ jobs:
           luarocks install --local luatex
           luarocks install --local luatexinfo
           luarocks install --local lualatex
-          luarocks install --local citation-style-language
           luarocks install --local texdef
           luarocks install --local graphics-cfg
           luarocks install --local beamer
@@ -54,8 +53,7 @@ jobs:
           luarocks install --local ydoc
           rm -f ./*.rock
           luarocks list --porcelain | cut -f1 | sed 's/^/luarocks pack /' | sh
-          rename -f s/linux-x86_64/all/ {citation-style-language,texdef,\
-          texrocks,luatex{,info},lualatex}-*.rock
+          rename -f s/linux-x86_64/all/ {texrocks,luatex{,info},lualatex}-*.rock
           luarocks-admin make-manifest .
           parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
       - uses: stefanzweifel/git-auto-commit-action@v5
