@@ -137,7 +137,7 @@ elseif os.name == "cygwin" then
     M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
 end
 
-function M.setenvs()
+function M.setenvs(progname)
     M.setenv("TEXMFDOTDIR", ".")
     if os.getenv "USERPROFILE" == nil then
         M.setenv("HOME", "~")
@@ -174,7 +174,7 @@ function M.setenvs()
     os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, ""))
     os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.cpath, ""))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
-    os.setenv("KPSEWHICHINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
+    M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
 
     os.setenv("TEXFONTMAPS", ".lux;$XDG_DATA_HOME/lux/tree")
     os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
@@ -262,7 +262,8 @@ end
 function M.main(args)
     local cmd_args = M.parse(args)
     M.wrap(args)
-    M.setenvs()
+    local _, fmt = M.preparse(args)
+    M.setenvs(fmt)
     M.run(cmd_args)
 end
 
