@@ -15,10 +15,10 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.0-1"
+texrocks = "0.3.1-1"
 
 [build_dependencies]
-texrocks = "0.3.0-1"
+texrocks = "0.3.1-1"
 
 [run]
 command = "initex"

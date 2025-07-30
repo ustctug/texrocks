@@ -4,7 +4,7 @@ local template = require 'template'
 local M = {}
 
 function M.get_parser(name, fmt)
-    local parser = argparse(name)
+    local parser = argparse(name):add_complete()
     parser:argument('macro', 'macro name without \\'):args('*')
     parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
     if fmt:match 'latex' then

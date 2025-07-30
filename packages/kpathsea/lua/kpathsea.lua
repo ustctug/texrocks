@@ -1,4 +1,5 @@
 local argparse = require 'argparse'
+local semver = require 'semver'
 local M = {}
 
 function M.get_parser(name)
@@ -7,12 +8,20 @@ function M.get_parser(name)
     parser:option('--progname', 'set program name', arg[-2])
     parser:option('--help-formats -l', 'display information about all supported file formats by -l, -ll'):args(0):count(
         '*')
-    parser:option('--expand-braces', 'output variable and brace expansion'):count('*'):
-    parser:option('--expand-path', 'output complete path expansion'):count('*'):
-    parser:option('--expand-var', 'output variable expansion'):count('*'):
-    parser:option('--var-value', 'output variable-expanded value of variable'):count('*'):
-    parser:option('--show-path', 'output search path for file type'):count('*'):
-    parser:option('--version', 'display version information number and exit.'):count('*'):args(0)
+    parser:option('--expand-braces', 'output variable and brace expansion'):count('*')
+    parser:option('--expand-path', 'output complete path expansion'):count('*')
+    parser:option('--expand-var', 'output variable expansion'):count('*')
+    parser:option('--var-value', 'output variable-expanded value of variable'):count('*')
+    local names = {}
+    for name, _ in pairs(M.formats) do
+        table.insert(names, name)
+    end
+    for alias, _ in pairs(M.aliases) do
+        table.insert(names, alias)
+    end
+    table.sort(names)
+    parser:option('--show-path', 'output search path for file type'):count('*'):choices(names)
+    parser:option('--version', 'display version information number and exit.'):args(0)
     parser:option('--debug -d', 'set debug flags'):args(0):count('*')
     return parser
 end
@@ -34,8 +43,12 @@ function M.main(args)
         table.sort(names)
         for _, name in ipairs(names) do
             local format = M.formats[name]
-            local aliases = format.aliases or {}
-            table.insert(aliases, name)
+            local aliases = { name }
+            for k, v in pairs(M.aliases) do
+                if v == name then
+                    table.insert(aliases, k)
+                end
+            end
             print(table.concat(aliases, ', ') ..
                 ': ' .. table.concat(format.vars, ', ') .. ': defined by ' .. (format.source or 'texmf.cnf'))
             if args.help_formats > 1 then
@@ -74,18 +87,42 @@ function M.main(args)
         print(v)
     end
     for _, v in ipairs(args.show_path or {}) do
+        v = M.aliases[v] or v
         if args.debug == 0 then
             v = v .. ': ' .. kpse.show_path(v)
         end
         print(v)
     end
-    for _, v in ipairs(args.file) do
+    local err
+    for k, v in ipairs(args.file) do
         if args.debug == 0 then
-            v = kpse.lookup(v) or ''
+            v = kpse.lookup(v)
+        end
+        if v == nil then
+            v = args.file[k] .. ' not found'
+            err = true
         end
         print(v)
     end
+    if err then
+        os.exit(1)
+    end
 end
+
+M.aliases = {
+    bitmapfont = 'bitmap font',
+    mpsupport = 'MetaPost support',
+    source = 'TeX system sources',
+    doc = 'TeX system documentation',
+    trofffont = 'Troff fonts',
+    dvipsconfig = 'dvips config',
+    web2c = 'web2c files',
+    othertext = 'other text files',
+    otherbin = 'other binary files',
+    miscfont = 'misc fonts',
+    cmap = 'cmap files',
+    pdftexconfig = 'pdftex config',
+}
 
 M.formats = {
     gf = {
@@ -96,8 +133,7 @@ M.formats = {
         patterns = { '*.pk' },
         vars = { 'PKFONTS', 'TEXPKS', 'GLYPHFONTS', 'TEXFONTS' }
     },
-    bitmapfont = {
-        aliases = { 'bitmap font' },
+    ['bitmap font'] = {
         vars = { 'GLYPHFONTS', 'TEXFONTS' }
     },
     tfm = {
@@ -161,8 +197,7 @@ M.formats = {
         patterns = { '*.pool' },
         vars = { 'MPPOOL', 'TEXMFINI' }
     },
-    mpsupport = {
-        aliases = { 'MetaPost support' },
+    ['MetaPost support'] = {
         vars = { 'MPSUPPORT' }
     },
     ocp = {
@@ -197,15 +232,14 @@ M.formats = {
         patterns = { '*.tex', '*.sty', '*.cls', '*.fd', '*.aux', '.bbl', '.def', '.clo', '.ldf' },
         vars = { 'TEXINPUTS' }
     },
-    doc = {
+    ['TeX system documentation'] = {
         vars = { 'TEXDOCS' }
     },
     texpool = {
         patterns = { '*.pool' },
         vars = { 'TEXPOOL', 'TEXMFINI' }
     },
-    source = {
-        aliases = { 'TeX system sources' },
+    ['TeX system sources'] = {
         patterns = { '*.dtx', '*.ins' },
         vars = { 'TEXSOURCES' }
     },
@@ -213,8 +247,7 @@ M.formats = {
         patterns = { '*.pro' },
         vars = { 'TEXPSHEADERS', 'PSHEADERS' }
     },
-    trofffont = {
-        aliases = { 'Troff fonts' },
+    ['Troff fonts'] = {
         vars = { 'TRFONTS' }
     },
     ['type1 fonts'] = {
@@ -225,8 +258,7 @@ M.formats = {
         patterns = { '*.vf' },
         vars = { 'VFFONTS', 'TEXFONTS' }
     },
-    dvipsconfig = {
-        aliases = { 'dvips config' },
+    ['dvips config'] = {
         vars = { 'TEXCONFIG' }
     },
     ist = {
@@ -241,20 +273,16 @@ M.formats = {
         patterns = { '*.t42 ', '*.T42 ' },
         vars = { 'T42FONTS', 'TEXFONTS' }
     },
-    web2c = {
-        aliases = { 'web2c files' },
+    ['web2c files'] = {
         vars = { 'WEB2C' }
     },
-    othertext = {
-        aliases = { 'other text files' },
+    ['other text files'] = {
         vars = { 'KPSEWHICHINPUTS' }
     },
-    otherbin = {
-        aliases = { 'other binary files' },
+    ['other binary files'] = {
         vars = { 'KPSEWHICHINPUTS' }
     },
-    miscfont = {
-        aliases = { 'misc fonts' },
+    ['misc fonts'] = {
         vars = { 'MISCFONTS', 'TEXFONTS' }
     },
     web = {
@@ -269,8 +297,7 @@ M.formats = {
         patterns = { '*.enc' },
         vars = { 'ENCFONTS', 'TEXFONTS' }
     },
-    cmap = {
-        aliases = { 'cmap files' },
+    ['cmap files'] = {
         vars = { 'CMAPFONTS', 'TEXFONTS' }
     },
     ['subfont definition files'] = {
@@ -281,8 +308,7 @@ M.formats = {
         patterns = { '*.otf', '*.OTF' },
         vars = { 'OPENTYPEFONTS', 'TEXFONTS' }
     },
-    pdftexconfig = {
-        aliases = { 'pdftex config' },
+    ['pdftex config'] = {
         vars = { 'PDFTEXCONFIG' }
     },
     ['lig files'] = {
@@ -325,5 +351,10 @@ M.formats = {
         vars = { 'BLTXMLINPUTS' }
     },
 }
+local v = semver(kpse.version():gsub(".* ", ''):gsub("/dev", ""))
+if v < semver(6, 4, 0) then
+    M.formats.ris = nil
+    M.formats.bltxml = nil
+end
 
 return M

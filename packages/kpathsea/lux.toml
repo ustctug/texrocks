@@ -11,10 +11,8 @@ homepage = "https://github.com/ustctug/texrocks"
 license = "GPL-3.0"
 
 [source]
-# url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-# dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
-url = "https://github.com/ustctug/texrocks/archive/f76fcbdde576bdb70df56008749d1c09e106abb2.zip"
-dir = "texrocks-f76fcbdde576bdb70df56008749d1c09e106abb2/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [run]
 command = 'kpsewhich'
@@ -28,8 +26,9 @@ flags = ['texrocks.lua']
 wrap_bin_scripts = false
 
 [dependencies]
-texrocks = "0.3.0-1"
+texrocks = "0.3.1-1"
 argparse = "0.7.1-1"
+lua-semver = "1.2.2-1"
 
 [build]
 type = "builtin"

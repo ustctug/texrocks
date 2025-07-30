@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 toml2lua = "3.0.0-1"
-texrocks = "0.3.0-1"
+texrocks = "0.3.1-1"
 
 [run]
 command = "lua-open"
