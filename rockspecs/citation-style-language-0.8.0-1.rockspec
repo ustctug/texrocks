@@ -24,9 +24,9 @@ dependencies = {
    "api7-lua-tinyyaml >= 0.4.3",
    "datafile >= 0.8",
    -- "lpeg >= 1.0.2",
-   "lua-uca >= 0.1",
+   "lua-uca-temp >= 0.1",
    -- "luautf8 >= 0.1",
-   "mhluaxml >= 0.1",
+   "mhluaxml-temp >= 0.1",
    "citation-style-language-styles",
    "citation-style-language-locales",
 }
