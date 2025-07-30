@@ -1,4 +1,4 @@
-local git_ref = '1.17.0'
+local git_ref = '1.23.3'
 local modrev = git_ref
 local specrev = '1'
 
