@@ -196,8 +196,7 @@ function M.run(args)
     local cmd_args, fmt = M.preparse(args)
     if fmt ~= 'texlua' then
         M.sync(false)
-        local cmd = table.concat(args, ' ')
-        os.exec(cmd)
+        os.exec(args)
     end
     arg = cmd_args
     loadfile(arg[0])()
@@ -214,7 +213,7 @@ function M.cp(src, dst)
         end
         f:close()
         if os.type == "unix" then
-            os.execute(table.concat({ "chmod", "+x", exe }, ' '))
+            os.execute(table.concat({ "chmod", "+x", exe:gsub(' ', '\\ ') }, ' '))
         else
             -- TODO: support windows
         end

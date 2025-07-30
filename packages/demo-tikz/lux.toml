@@ -3,7 +3,7 @@ version = "0.0.1"
 lua = ">=5.1"
 
 [description]
-summary = "Example for LaTeX"
+summary = "Example for tikz"
 maintainer = "Wu"
 labels = ["texmf"]
 
