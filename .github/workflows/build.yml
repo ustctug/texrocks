@@ -39,8 +39,8 @@ jobs:
           luarocks config variables.ZIP rpzip
           # luarocks config rocks_servers.1 https://ustctug.github.io/texrocks
           # luarocks config rocks_servers.2 https://luarocks.org
-          luarocks install --local luahbtex
-            # --server=https://ustctug.github.io/texrocks
+          luarocks install --local luahbtex \
+            --server=https://ustctug.github.io/texrocks
           luarocks install --local luatex
           luarocks install --local luatexinfo
           luarocks install --local lualatex

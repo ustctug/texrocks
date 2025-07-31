@@ -13,7 +13,7 @@ source = {
 
 dependencies = {
    "lua >= 5.3",
-   "lpeg >= 1.0.2"
+   -- "lpeg >= 1.0.2"
 }
 description = {
    summary = "LuaXML is pure lua library for reading and serializing of the XML files.",
