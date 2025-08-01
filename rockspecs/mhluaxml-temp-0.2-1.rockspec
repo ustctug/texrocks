@@ -30,7 +30,7 @@ In this version, some files not useful for luaTeX were dropped. ]],
    license = "MIT"
 }
 build = {
-   type = "build",
+   type = "command",
    build_command = "lua data/jsontolua.lua < data/entities.json > luaxml-namedentities.lua",
    install = {
       lua = {
