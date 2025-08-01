@@ -3,12 +3,17 @@ local _git_ref = git_ref:gsub('^v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local specrev = '1'
 
+rockspec_format = "3.0"
 package = "MHLuaXML-temp"
 local repo_url = "https://github.com/michal-h21/LuaXML"
 version = modrev .. '-' .. specrev
 source = {
-  url = repo_url .. "/archive/" .. git_ref .. ".zip",
-  dir = 'LuaXML-' .. _git_ref
+   url = repo_url .. "/archive/" .. git_ref .. ".zip",
+   dir = 'LuaXML-' .. _git_ref
+}
+
+build_dependencies = {
+   "dkjson",
 }
 
 dependencies = {
@@ -18,27 +23,30 @@ dependencies = {
 description = {
    summary = "LuaXML is pure lua library for reading and serializing of the XML files.",
    detailed = [[
-LuaXML is pure lua library for reading and serializing of the XML files. Current release is aimed mainly as support 
-for the odsfile package. The documentation was created by automatic conversion of original documentation in the source code. 
+LuaXML is pure lua library for reading and serializing of the XML files. Current release is aimed mainly as support
+for the odsfile package. The documentation was created by automatic conversion of original documentation in the source code.
 In this version, some files not useful for luaTeX were dropped. ]],
    homepage = repo_url,
    license = "MIT"
 }
 build = {
-   type = "builtin",
-   modules = {
-      ["luaxml.cssquery"] = "luaxml-cssquery.lua",
-      ["luaxml.domobject"] = "luaxml-domobject.lua",
-      ["luaxml.encodings"] = "luaxml-encodings.lua",
-      ["luaxml.entities"] = "luaxml-entities.lua",
-      ["luaxml.mod-handler"] = "luaxml-mod-handler.lua",
-      ["luaxml.mod-html"] = "luaxml-mod-html.lua",
-      ["luaxml.mod-xml"] = "luaxml-mod-xml.lua",
-      -- ["luaxml.namedentities"] = "luaxml-namedentities.lua",
-      ["luaxml.parse-query"] = "luaxml-parse-query.lua",
-      ["luaxml.pretty"] = "luaxml-pretty.lua",
-      ["luaxml.stack"] = "luaxml-stack.lua",
-      ["luaxml.testxml"] = "luaxml-testxml.lua",
-      ["luaxml.transform"] = "luaxml-transform.lua"
+   type = "build",
+   build_command = "lua data/jsontolua.lua < data/entities.json > luaxml-namedentities.lua",
+   install = {
+      lua = {
+         ["luaxml-cssquery"] = "luaxml-cssquery.lua",
+         ["luaxml-domobject"] = "luaxml-domobject.lua",
+         ["luaxml-encodings"] = "luaxml-encodings.lua",
+         ["luaxml-entities"] = "luaxml-entities.lua",
+         ["luaxml-mod-handler"] = "luaxml-mod-handler.lua",
+         ["luaxml-mod-html"] = "luaxml-mod-html.lua",
+         ["luaxml-mod-xml"] = "luaxml-mod-xml.lua",
+         ["luaxml-namedentities"] = "luaxml-namedentities.lua",
+         ["luaxml-parse-query"] = "luaxml-parse-query.lua",
+         ["luaxml-pretty"] = "luaxml-pretty.lua",
+         ["luaxml-stack"] = "luaxml-stack.lua",
+         ["luaxml-testxml"] = "luaxml-testxml.lua",
+         ["luaxml-transform"] = "luaxml-transform.lua"
+      }
    }
 }

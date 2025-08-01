@@ -330,7 +330,7 @@ end
 ---we need to shift it
 function M.run(args)
     local cmd_args = M.parse(args)
-    M.setotherenv(M.get_program_name(args))
+    M.setotherenv(M.get_program_name(cmd_args))
     M.sync(false)
     M.exec(cmd_args)
 end

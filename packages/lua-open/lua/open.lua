@@ -29,7 +29,7 @@ function M.get_path(file)
         pkg = pkg .. "-1"
     end
     for path in package.path:gmatch("[^;]+") do
-        if path:match("-" .. pkg) then
+        if path:match("%-" .. pkg:gsub("%-", "%%-")) then
             cwd = path:gsub("/%?.*", ""):gsub("/src$", "/etc/conf")
             break
         end

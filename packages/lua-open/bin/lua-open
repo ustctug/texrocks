@@ -1,2 +1,2 @@
 #!/usr/bin/env texlua
-require'open'.main()
+require'open'.main(arg)

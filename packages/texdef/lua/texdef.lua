@@ -67,6 +67,8 @@ function M.postparse(args)
     end
     args.list = args.list or 0
     args.find = args.find or 0
+    args.sub = M.get_path('texdef/sub.tex')
+    args.ipairs = ipairs
     return args
 end
 
@@ -75,117 +77,113 @@ function M.print(code)
     tex.print(code)
 end
 
-function M.main()
-    print()
-    local args = M.parse(arg)
-    M.args = args
-    local filename = 'texdef/main.tex'
-    local subfilename = 'texdef/sub.tex'
+---https://github.com/nvim-neorocks/lux/issues/922
+function M.get_path(filename)
     local root = debug.getinfo(1).source:match("@?(.*)/")
     local file = root .. '/' .. filename
-    local subfile = root .. '/' .. filename
-    -- https://github.com/nvim-neorocks/lux/issues/922
     if not lfs.isfile(file) then
         file = lfs.currentdir() .. '/lua/' .. filename
     end
-    if not lfs.isfile(subfile) then
-        subfile = lfs.currentdir() .. '/lua/' .. subfilename
-    end
-    args.sub = subfile
-    args.ipairs = ipairs
-    local code = template.render(file, args)
-    if args.dry_run then
+    return file
+end
+
+function M.main(args)
+    print()
+    local cmd_args = M.parse(args)
+    local code = template.render(M.get_path('texdef/main.tex'), cmd_args)
+    if cmd_args.dry_run then
         print(code)
         return
     end
-    if args.list == 0 then
-        M.f = io.open('.lux/' .. args.output, 'w+')
-    else
-        M.f = io.open('.lux/' .. tex.jobname .. '.log', 'w+')
+    local output = cmd_args.output
+    if cmd_args.list > 0 then
+        output = tex.jobname .. '.log'
     end
-    if M.f then
+    cmd_args.f = io.open('.lux/' .. output, 'w+')
+    if cmd_args.f then
         M.print(code)
     end
+    return cmd_args
 end
 
-function M.output()
-    if M.f then
-        local text
-        local args = M.args
-        if args and args.list ~= 0 then
-            local macros = {}
-            local pkgs = {}
-            local pkg, macro
-            for line in M.f:lines() do
-                if line:match(args.entering) then
-                    pkg = line:gsub(args.entering, '')
-                    table.insert(pkgs, pkg)
-                    macros[pkg] = {}
-                elseif pkg and line:match(args.leaving) then
-                    local names = {}
-                    for name, _ in pairs(macros[pkg]) do
-                        table.insert(names, name)
+function M.output(args)
+    if args == nil or args.f == nil then
+        return
+    end
+    local text
+    if args.list ~= 0 then
+        local macros = {}
+        local pkgs = {}
+        local pkg, macro
+        for line in args.f:lines() do
+            if line:match(args.entering) then
+                pkg = line:gsub(args.entering, '')
+                table.insert(pkgs, pkg)
+                macros[pkg] = {}
+            elseif pkg and line:match(args.leaving) then
+                local names = {}
+                for name, _ in pairs(macros[pkg]) do
+                    table.insert(names, name)
+                end
+                table.sort(names)
+                local lines = {}
+                for _, name in ipairs(names) do
+                    local def = macros[pkg][name]
+                    if def:match '->' == nil then
+                        def = ' = ' .. def
                     end
-                    table.sort(names)
-                    local lines = {}
-                    for _, name in ipairs(names) do
-                        local def = macros[pkg][name]
-                        if def:match '->' == nil then
-                            def = ' = ' .. def
-                        end
-                        if args.ignore_regex == '' or not name:match(args.ignore_regex) then
-                            if M.args.list == 1 then
-                                table.insert(lines, name)
-                            else
-                                table.insert(lines, name .. def)
-                            end
-                        end
-                    end
-                    macros[pkg] = lines
-                    pkg = table.remove(pkgs)
-                    table.insert(pkgs, pkg)
-                elseif pkg and (line:sub(2):match('^into ') or line:sub(2):match('^reassigning ')) then
-                    line = line:sub(2, #line - 1):gsub("^%S+ ", ""):gsub("\\ETC%.", "..."):gsub(
-                        'used in a moving argument.', '(moving)')
-                    local def = line:gsub("^[^=]+=", "")
-                    if def:match '->' then
-                        def = line:gsub(".*->", '')
-                        local name, is_long = def:gsub([[\long macro:]], '')
-                        name = name:gsub('macro:', ''):gsub('->.*', '')
-                        if is_long > 0 then
-                            def = name .. ' --> ' .. def
+                    if args.ignore_regex == '' or not name:match(args.ignore_regex) then
+                        if M.args.list == 1 then
+                            table.insert(lines, name)
                         else
-                            def = name .. ' -> ' .. def
+                            table.insert(lines, name .. def)
                         end
                     end
-                    macro = line:match("^[^=]+")
-                    macros[pkg][macro] = def
                 end
-            end
-            table.sort(pkgs)
-            local lines = {}
-            for _, pkg_name in ipairs(pkgs) do
-                if #macros[pkg_name] > 0 then
-                    table.insert(lines, pkg_name)
-                    table.insert(lines, table.concat(macros[pkg_name], "\n"))
+                macros[pkg] = lines
+                pkg = table.remove(pkgs)
+                table.insert(pkgs, pkg)
+            elseif pkg and (line:sub(2):match('^into ') or line:sub(2):match('^reassigning ')) then
+                line = line:sub(2, #line - 1):gsub("^%S+ ", ""):gsub("\\ETC%.", "..."):gsub(
+                    'used in a moving argument.', '(moving)')
+                local def = line:gsub("^[^=]+=", "")
+                if def:match '->' then
+                    def = line:gsub(".*->", '')
+                    local name, is_long = def:gsub([[\long macro:]], '')
+                    name = name:gsub('macro:', ''):gsub('->.*', '')
+                    if is_long > 0 then
+                        def = name .. ' --> ' .. def
+                    else
+                        def = name .. ' -> ' .. def
+                    end
                 end
-            end
-            text = table.concat(lines, "\n\n")
-        else
-            text = M.f:read("*a"):gsub('=\n', ' = '):gsub('= macro:%->', '-> ')
-            if args.find > 1 then
-                local paths = {}
-                for file in text:gmatch(args.defined .. '(%S+)') do
-                    paths[file] = kpse.lookup(file)
-                end
-                for file, path in pairs(paths) do
-                    text = text:gsub(args.defined .. file, args.defined .. path)
-                end
+                macro = line:match("^[^=]+")
+                macros[pkg][macro] = def
             end
         end
-        print(text)
-        M.f:close()
+        table.sort(pkgs)
+        local lines = {}
+        for _, pkg_name in ipairs(pkgs) do
+            if #macros[pkg_name] > 0 then
+                table.insert(lines, pkg_name)
+                table.insert(lines, table.concat(macros[pkg_name], "\n"))
+            end
+        end
+        text = table.concat(lines, "\n\n")
+    else
+        text = args.f:read("*a"):gsub('=\n', ' = '):gsub('= macro:%->', '-> ')
+        if args.find > 1 then
+            local paths = {}
+            for file in text:gmatch(args.defined .. '(%S+)') do
+                paths[file] = kpse.lookup(file)
+            end
+            for file, path in pairs(paths) do
+                text = text:gsub(args.defined .. file, args.defined .. path)
+            end
+        end
     end
+    print(text)
+    args.f:close()
 end
 
 return M
