@@ -1,8 +1,8 @@
 -- luacheck: ignore 143
 ---@diagnostic disable: undefined-field
-local lfs    = require "lfs"
+local lfs = require "lfs"
 
-local M = {
+local M   = {
     fontmap_name = "luatex.map"
 }
 
@@ -315,12 +315,11 @@ end
 
 --- luahbtex --luaonly texlua luatex:
 --- texlua will call preparse(), then loadfile("luatex")()
---- luatex will call parse(), then os.exec{"luahbtex", "--fmt=luatex"}
+--- luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
 function M.parse(args)
-    local cmd_args = M.shift(args, -2)
-    local begin = M.get_begin_index(args)
-    cmd_args[1] = cmd_args[begin]
-    cmd_args[2] = "--fmt=" .. M.name(cmd_args[2])
+    local cmd_args = M.shift(args, -1)
+    local begin = M.get_begin_index(cmd_args)
+    cmd_args[0] = cmd_args[begin]
     return cmd_args
 end
 

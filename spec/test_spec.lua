@@ -5,9 +5,9 @@ local texrocks = require "lua.texrocks"
 describe("test", function()
     it("tests parse", function()
         local input = {
-            [-2]="luahbtex",
-            [-1]="--luaonly",
-            [0]="/usr/bin/texlua",
+            [-2] = "luahbtex",
+            [-1] = "--luaonly",
+            [0] = "/usr/bin/texlua",
             "--option",
             "/usr/bin/luatex",
             "--option",
@@ -15,11 +15,11 @@ describe("test", function()
             "main.tex",
         }
         local output = {
-            [-4]="luahbtex",
-            [-3]="--luaonly",
-            [-2]="/usr/bin/texlua",
-            [-1]="--option",
-            [0]="/usr/bin/luatex",
+            [-4] = "luahbtex",
+            [-3] = "--luaonly",
+            [-2] = "/usr/bin/texlua",
+            [-1] = "--option",
+            [0] = "/usr/bin/luatex",
             "--option",
             "\\macro",
             "main.tex",
@@ -28,18 +28,19 @@ describe("test", function()
             assert.are.equal(v, output[i])
         end
         local expected = {
-            "luahbtex",
-            "--fmt=luatex",
+            [0] = "luahbtex",
+            "/usr/bin/luatex",
             "--option",
             "\\macro",
             "main.tex",
         }
-        for i, v in ipairs(texrocks.parse(output)) do
-            assert.are.equal(v, expected[i])
+        local result = texrocks.parse(output)
+        for i = 0, #result do
+            assert.are.equal(result[i], expected[i])
         end
     end)
 
-    it("tests get_program_name", function ()
+    it("tests get_program_name", function()
         local input = {
             "luahbtex",
             "--fmt=luatex",

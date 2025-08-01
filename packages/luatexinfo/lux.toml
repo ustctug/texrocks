@@ -40,7 +40,7 @@ wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texlua --ini --interaction=nonstopmode luatexinfo.ini"
+build_command = "../initex/bin/initex --ini --interaction=nonstopmode luatexinfo.ini"
 
 [build.install.bin]
 luatexinfo = "../initex/bin/initex"

@@ -14,6 +14,9 @@ license = "GPL-3.0"
 url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
+[build_dependencies]
+texrocks = "0.3.2-1"
+
 [dependencies]
 texrocks = "0.3.2-1"
 
@@ -30,7 +33,7 @@ wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "luahbtex --ini --interaction=nonstopmode initex.ini"
+build_command = "bin/initex --ini --interaction=nonstopmode initex.ini"
 
 [build.install.bin]
 initex = "bin/initex"
