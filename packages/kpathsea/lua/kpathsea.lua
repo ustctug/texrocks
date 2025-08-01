@@ -1,11 +1,12 @@
+local kpse = require 'kpse'
 local argparse = require 'argparse'
 local semver = require 'semver'
 local M = {}
 
-function M.get_parser(name)
-    local parser = argparse(name):add_complete()
+function M.get_parser(arg0)
+    local parser = argparse(arg0):add_complete()
     parser:argument('file', 'file name'):args('*')
-    parser:option('--progname', 'set program name', arg[-2])
+    parser:option('--progname', 'set program name', arg[0])
     parser:option('--help-formats -l', 'display information about all supported file formats by -l, -ll'):args(0):count(
         '*')
     parser:option('--expand-braces', 'output variable and brace expansion'):count('*')
@@ -28,7 +29,7 @@ end
 
 function M.main(args)
     local parser = M.get_parser(args[0])
-    local args = parser:parse(args)
+    args = parser:parse(args)
     if args.version then
         print(kpse.version())
         return
@@ -277,10 +278,10 @@ M.formats = {
         vars = { 'WEB2C' }
     },
     ['other text files'] = {
-        vars = { 'KPSEWHICHINPUTS' }
+        vars = { '${PROGNAME}INPUTS' }
     },
     ['other binary files'] = {
-        vars = { 'KPSEWHICHINPUTS' }
+        vars = { '${PROGNAME}INPUTS' }
     },
     ['misc fonts'] = {
         vars = { 'MISCFONTS', 'TEXFONTS' }

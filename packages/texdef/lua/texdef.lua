@@ -1,3 +1,6 @@
+local lfs = require 'lfs'
+local tex = require 'tex'
+local kpse = require 'kpse'
 local texrocks = require 'texrocks'
 local argparse = require 'argparse'
 local template = require 'template'
@@ -33,10 +36,9 @@ function M.get_parser(name, fmt)
 end
 
 function M.parse(args)
-    local cmd_args, fmt = texrocks.preparse(args)
-    local parser = M.get_parser(cmd_args[0], fmt)
+    local cmd_args = texrocks.preparse(args)
+    local parser = M.get_parser(cmd_args[0], tex.formatname)
     cmd_args = parser:parse(cmd_args)
-    cmd_args.fmt = fmt .. '.fmt'
     return M.postparse(cmd_args)
 end
 
@@ -108,7 +110,7 @@ end
 
 function M.output()
     if M.f then
-        local text = ""
+        local text
         local args = M.args
         if args and args.list ~= 0 then
             local macros = {}
@@ -147,11 +149,9 @@ function M.output()
                         'used in a moving argument.', '(moving)')
                     local def = line:gsub("^[^=]+=", "")
                     if def:match '->' then
-                        local name = def:gsub('->.*', '')
                         def = line:gsub(".*->", '')
-                        local is_long = 0
-                        name, is_long = name:gsub([[\long macro:]], '')
-                        name = name:gsub('macro:', '')
+                        local name, is_long = def:gsub([[\long macro:]], '')
+                        name = name:gsub('macro:', ''):gsub('->.*', '')
                         if is_long > 0 then
                             def = name .. ' --> ' .. def
                         else
@@ -164,10 +164,10 @@ function M.output()
             end
             table.sort(pkgs)
             local lines = {}
-            for _, pkg in ipairs(pkgs) do
-                if #macros[pkg] > 0 then
-                    table.insert(lines, pkg)
-                    table.insert(lines, table.concat(macros[pkg], "\n"))
+            for _, pkg_name in ipairs(pkgs) do
+                if #macros[pkg_name] > 0 then
+                    table.insert(lines, pkg_name)
+                    table.insert(lines, table.concat(macros[pkg_name], "\n"))
                 end
             end
             text = table.concat(lines, "\n\n")

@@ -1,5 +1,5 @@
 package = "kpathsea"
-version = "0.3.1"
+version = "0.3.2"
 lua = ">=5.1"
 
 [description]
@@ -26,7 +26,7 @@ flags = ['texrocks.lua']
 wrap_bin_scripts = false
 
 [dependencies]
-texrocks = "0.3.1-1"
+texrocks = "0.3.2-1"
 argparse = "0.7.1-1"
 lua-semver = "1.2.2-1"
 

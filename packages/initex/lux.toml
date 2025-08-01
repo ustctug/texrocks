@@ -1,13 +1,13 @@
 package = "initex"
-version = "0.3.1"
+version = "0.3.2"
 lua = ">=5.1"
 
 [description]
 summary = "initex"
 maintainer = "Wu"
 labels = ["texmf"]
-detailed = "An initial TeX without any extra features except generating other TeXs by `initex --ini XXX.ini` and called by other TeXs by `initex --fmt XXX`"
-homepage = "https://www.luatex.org/"
+detailed = "An initial TeX without any extra features except generating other TeXs by `initex --ini XXX.ini`"
+homepage = "https://github.com/ustctug/texrocks"
 license = "GPL-3.0"
 
 [source]
@@ -15,10 +15,7 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.1-1"
-
-[build_dependencies]
-texrocks = "0.3.1-1"
+texrocks = "0.3.2-1"
 
 [run]
 command = "initex"
@@ -33,10 +30,10 @@ wrap_bin_scripts = false
 
 [build]
 type = "command"
-build_command = "texlua --ini --interaction=nonstopmode initex.ini"
+build_command = "luahbtex --ini --interaction=nonstopmode initex.ini"
 
 [build.install.bin]
-initex = "initex"
+initex = "bin/initex"
 
 [build.install.conf]
 '../web2c/luahbtex/initex.fmt' = 'initex.fmt'

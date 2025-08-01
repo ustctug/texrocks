@@ -23,6 +23,11 @@ description = {
   license = 'LPPL-1.3'
 }
 
+dependencies = {
+   "lua >= 5.1",
+   "unicode-data"
+}
+
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
   dir = package .. '-' .. modrev
@@ -45,7 +50,7 @@ build = {
   },
   install = {
     conf = {
-      ['../doc/luatex/lua-uni-algos/lua-uni-algos.pdf'] = 'lua-uni-algos.pdf',
+      -- ['../doc/luatex/lua-uni-algos/lua-uni-algos.pdf'] = 'lua-uni-algos.pdf',
     }
   }
 }

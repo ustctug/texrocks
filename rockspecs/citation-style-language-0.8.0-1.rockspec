@@ -31,6 +31,7 @@ dependencies = {
    "citation-style-language-locales",
    "l3packages",
    "lualibs",
+   "lua-uni-algos",
 }
 build = {
    type = "builtin",

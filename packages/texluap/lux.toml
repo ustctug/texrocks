@@ -1,5 +1,5 @@
 package = "texluap"
-version = "0.3.1"
+version = "0.3.2"
 lua = ">=5.1"
 
 [description]
@@ -15,11 +15,11 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.1-1"
+texrocks = "0.3.2-1"
 prompt-style = "0.0.9-1"
 
 [test_dependencies]
-luatex = "0.3.1-1"
+luatex = "0.3.2-1"
 
 [run]
 command = 'tlua'

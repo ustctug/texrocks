@@ -8,7 +8,7 @@ maintainer = "Wu"
 labels = ["texmf"]
 
 [build_dependencies]
-lualatex = "0.3.1-1"
+lualatex = "0.3.2-1"
 pgf = "3.1.10-1"
 graphics-cfg = "0.0.1-1"
 hyperref = "7.01-15"
@@ -16,7 +16,7 @@ hologo = "1.15-1"
 standalone = "1.5-1"
 
 [test_dependencies]
-lua-open = "0.3.1-1"
+lua-open = "0.3.2-1"
 
 [test]
 type = "command"
