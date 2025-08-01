@@ -53,7 +53,8 @@ jobs:
           luarocks install --local hypdoc
           luarocks install --local ydoc
           rm -f ./*.rock
-          luarocks list --porcelain | cut -f1 | sed 's/^/luarocks pack /' | sh
+          luarocks list --porcelain |
+            sed 's/\(\S\+\).*/luarocks pack \1 \&\& luarocks download \1/' | sh
           rename -f s/linux-x86_64/all/ {texrocks,luatex{,info},lualatex}-*.rock
           luarocks-admin make-manifest .
           parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
