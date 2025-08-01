@@ -4,7 +4,7 @@ lua = ">=5.1"
 
 [description]
 summary = "Standalone path lookup and expansion for the Kpathsea library"
-detailed = "A reimplementation of <https://tug.org/kpathsea>'s kpsewhich by texlua"
+detailed = "A reimplementation of https://tug.org/kpathsea's kpsewhich by texlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
 homepage = "https://github.com/ustctug/texrocks"

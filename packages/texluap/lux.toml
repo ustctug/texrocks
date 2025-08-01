@@ -4,7 +4,7 @@ lua = ">=5.1"
 
 [description]
 summary = "tlua: luatex as Lua interpreter, texlua's prompt"
-detailed = "Refer <https://github.com/mfussenegger/nlua>"
+detailed = "Refer https://github.com/mfussenegger/nlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
 homepage = "https://github.com/ustctug/texrocks"
