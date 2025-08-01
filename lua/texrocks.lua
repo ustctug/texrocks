@@ -291,7 +291,7 @@ function M.get_program_name(args)
         elseif args[i]:match("^%-") == args[i]:match("^\\") then
             if opt == "--fmt" then
                 return args[i]
-            else
+            elseif opt == "--ini" then
                 return args[i]:gsub(".*/", ""):gsub("%.*", "")
             end
         end

@@ -42,20 +42,31 @@ describe("test", function()
 
     it("tests get_program_name", function()
         local input = {
-            "luahbtex",
-            "--fmt=luatex",
+            [0] = "luahbtex",
+            "luatex",
             "--option",
             "\\macro",
             "main.tex",
         }
         assert.are.equal(texrocks.get_program_name(input), "luatex")
         input = {
-            "luahbtex",
-            "--fmt=luatex",
-            "--progname=lualatex",
+            [0] = "luahbtex",
+            "luatex",
+            "--fmt=lualatex",
+            "--option",
             "\\macro",
             "main.tex",
         }
         assert.are.equal(texrocks.get_program_name(input), "lualatex")
+        input = {
+            [0] = "luahbtex",
+            "luatex",
+            "--fmt=lualatex",
+            "--progname=luatexinfo",
+            "--option",
+            "\\macro",
+            "main.tex",
+        }
+        assert.are.equal(texrocks.get_program_name(input), "luatexinfo")
     end)
 end)
