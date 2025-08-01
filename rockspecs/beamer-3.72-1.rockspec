@@ -8,9 +8,10 @@ rockspec_format = '3.0'
 package = 'beamer'
 version = modrev .. '-' .. specrev
 
+-- \usepackage{beamerbasetheorems}
 dependencies = { 'atbegshi', 'etoolbox', 'hyperref', 'iftex',
   'pgf', 'translator', 'latex-amsmath', 'latex-graphics',
-  'latex-tools', 'geometry' }
+  'latex-tools', 'geometry', 'amscls' }
 
 description = {
   summary = 'A LaTeX class for producing presentations and slides',

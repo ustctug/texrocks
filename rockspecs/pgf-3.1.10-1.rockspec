@@ -31,7 +31,7 @@ end
 
 build_dependencies = {  }
 
-dependencies = { 'everyshi', 'latex-graphics', 'xcolor' }
+dependencies = { 'everyshi', 'latex-graphics', 'graphics-cfg', 'xcolor' }
 
 build = {
   type = 'command',

@@ -1,8 +1,6 @@
-local git_ref = 'scm'
+local git_ref = '2.20.6'
 local modrev = git_ref
 local specrev = '1'
-
-local repo_url = 'https://ctan.org/pkg/amscls'
 
 rockspec_format = '3.0'
 package = 'amscls'
@@ -22,6 +20,8 @@ The user documentation can be found in the package amscls-doc.]],
 }
 
 source = {
+  url = 'https://www.ams.org/arc/tex/amscls/amscls2.zip',
+  dir = '.'
 }
 
 -- \RequirePackage{amsmath}
