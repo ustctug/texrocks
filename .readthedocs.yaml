@@ -2,15 +2,12 @@
 ---
 version: 2
 
-python:
-  install:
-    - requirements: docs/requirements.txt
-
 build:
   os: ubuntu-22.04
   tools:
     python: "3"
   commands:
+    - pip install rename
     - asdf plugin add lua
     - asdf install lua 5.1
     # full path can declare lua version
