@@ -13,7 +13,7 @@ version = modrev .. '-' .. specrev
 dependencies = { 'l3packages', 'luaotfload' }
 
 description = {
-  summary = 'Graphics package-alike macros for “general” boxes',
+  summary = 'Graphics package-alike macros for "general" boxes',
   detailed =
   [[The package provides several macros to adjust boxed content. One purpose is to supplement the standard graphics package, which defines the macros \resizebox, \scalebox and \rotatebox , with the macros\trimbox and \clipbox. The main feature is the general \adjustbox macro which extends the “key=value” interface of \includegraphics from the graphics package and applies it to general text content. Additional provided box macros are \lapbox, \marginbox, \minsizebox, \maxsizebox and \phantombox.
 

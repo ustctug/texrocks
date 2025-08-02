@@ -1,11 +1,18 @@
--- luacheck: ignore 143
+---texrocks is a lua library for a fake texlua/luatex, it does two things:
+---
+---1. set correct environment variables
+---2. use correct command line arguments to call luahbtex
+---@module texrocks
 ---@diagnostic disable: undefined-field
+-- luacheck: ignore 143
 local lfs = require "lfs"
 
 local M   = {
     fontmap_name = "luatex.map"
 }
 
+---update font map file: `.lux/luatex.map`
+---@param short boolean use relative (short)/absolute (long) path for font files
 function M.sync(short)
     local dir = ".lux"
     if not lfs.isdir(dir) then
@@ -58,6 +65,10 @@ function M.sync(short)
     f:close()
 end
 
+---get paths from `package.path`/`package.cpath`. see tests.
+---@param path string paths concatenated by `;`
+---@param suffix string | nil add `../${suffix}//` to paths when it is not nil
+---@return string[] paths
 function M.getpaths(path, suffix)
     local parts = {}
     local paths = {}
@@ -67,7 +78,8 @@ function M.getpaths(path, suffix)
             parts[part] = true
             if suffix then
                 part = part:gsub("/src$", ""):gsub("/lib$", "") .. '/etc/' .. suffix
-                if lfs.isdir(part) then
+                -- for test
+                if lfs.isdir == nil or lfs.isdir(part) then
                     part = part .. "//"
                     table.insert(paths, part)
                 end
@@ -79,17 +91,28 @@ function M.getpaths(path, suffix)
     return paths
 end
 
+---concatenate `getpaths()`
+---@param path string same as `getpaths()`
+---@param suffix string | nil same as `getpaths()`
+---@return string path concatenated by `;`
+---@see getpaths
 function M.getenv(path, suffix)
     local processed = M.getpaths(path, suffix)
     return table.concat(processed, ";")
 end
 
+---call `os.setenv()` when environment variable doesn't exist
+---@param key string
+---@param value string
 function M.setenv(key, value)
     if os.getenv(key) == nil then
         os.setenv(key, value)
     end
 end
 
+---wrap `os.setenv()` for font files due to `OSFONTDIR`
+---@param key string
+---@param value string
 function M.setfontenv(key, value)
     os.setenv(key,
         "$TEXMFDOTDIR;" .. M.getenv(package.path, "fonts/" .. value) .. ";" .. M.OSFONTDIR)
@@ -118,7 +141,8 @@ elseif os.name == "cygwin" then
     M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
 end
 
----refer kpathsea
+---set environment variables for kpathsea
+---@source ../packages/kpathsea/lua/kpathsea.lua
 function M.setenvs()
     M.setenv("TEXMFDOTDIR", ".")
     if os.getenv "USERPROFILE" == nil then
@@ -213,10 +237,15 @@ function M.setenvs()
     M.setfontenv("FONTCIDMAPS", "cid")
 end
 
+---set environment variables for `kpsewhich --show-path 'other text files'`
+---@param progname string read <https://texdoc.org/serve/kpathsea/0>
 function M.setotherenv(progname)
     M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
 end
 
+---get the first non-nil element's index
+---@param args string[] index can be negative
+---@return integer begin begin index
 function M.get_begin_index(args)
     local begin = -1
     while args[begin] do
@@ -226,6 +255,13 @@ function M.get_begin_index(args)
     return begin
 end
 
+---texlua has a behaviour about command line arguments.
+---`arg` starts from index 0: `arg = {[0] = "ls", "-al"}`
+---`os.exec()` starts from index 1: `os.exec{"ls", "-al"}`
+---we need to shift it
+---@param args string[] command line arguments
+---@param offset integer e.g., `-1` means `args[i + 1] = args[i]`
+---@return string[] cmd_args
 function M.shift(args, offset)
     local begin = M.get_begin_index(args)
 
@@ -236,6 +272,11 @@ function M.shift(args, offset)
     return cmd_args
 end
 
+---get offset from one script to another script
+---such as `texlua --option main.lua --option` -> `main.lua --option`
+---offset should be 2
+---@param args string[] command line arguments
+---@return integer offset
 function M.get_offset(args)
     local offset
     for i, v in ipairs(args) do
@@ -249,6 +290,10 @@ function M.get_offset(args)
     return offset
 end
 
+---refer `parse`
+---@see parse
+---@param args string[] command line arguments
+---@return string[] cmd_args parsed result
 function M.preparse(args)
     local offset = M.get_offset(args)
     if offset == nil then
@@ -259,7 +304,8 @@ function M.preparse(args)
     return M.shift(args, offset)
 end
 
----for texlua
+---**entry for texlua**
+---@param args string[] `arg`
 function M.main(args)
     M.setenvs()
     -- progname should be texlua
@@ -270,12 +316,15 @@ function M.main(args)
     loadfile(arg[0])()
 end
 
----https://texdoc.org/serve/luatex/0
+---see <https://texdoc.org/serve/luatex/0>'s command line options
+---@param args string[] command line arguments not `arg`
+---@return string progname
 function M.get_program_name(args)
     -- --progname is latter first
     for i = #args, 2, -1 do
         if args[i]:match("^--progname=") then
-            return args[i]:gsub("^--progname=", "")
+            local progname = args[i]:gsub("^--progname=", "")
+            return progname
         elseif args[i - 1] == "--progname" then
             return args[i]
         end
@@ -285,14 +334,16 @@ function M.get_program_name(args)
     local opt
     for i = 2, #args do
         if args[i]:match("^--fmt=") then
-            return args[i]:gsub("^--fmt=", "")
+            local progname = args[i]:gsub("^--fmt=", "")
+            return progname
         elseif args[i] == "--fmt" or args[i] == "--ini" then
             opt = args[i]
         elseif args[i]:match("^%-") == args[i]:match("^\\") then
             if opt == "--fmt" then
                 return args[i]
             elseif opt == "--ini" then
-                return args[i]:gsub(".*/", ""):gsub("%.*", "")
+                local progname = args[i]:gsub(".*/", ""):gsub("%.*", "")
+                return progname
             end
         end
     end
@@ -301,21 +352,35 @@ function M.get_program_name(args)
     return M.name(args[1])
 end
 
-function M.dirname(path)
-    return path:gsub(".*/", "")
+---base name
+---@param path string
+---@return string path
+function M.basename(path)
+    path = path:gsub(".*/", "")
+    return path
 end
 
+---path without extension name
+---@param path string
+---@return string path
 function M.rootname(path)
-    return path:gsub("%.*", "")
+    path = path:gsub("%.*", "")
+    return path
 end
 
+---base name without extension name
+---@param path string
+---@return string path
 function M.name(path)
-    return M.rootname(M.dirname(path))
+    return M.rootname(M.basename(path))
 end
 
---- luahbtex --luaonly texlua luatex:
---- texlua will call preparse(), then loadfile("luatex")()
---- luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
+---luahbtex --luaonly texlua luatex:
+---texlua will call preparse(), then loadfile("luatex")()
+---luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
+---@param args string[] command line arguments
+---@return string[] cmd_args parsed result
+---@see preparse
 function M.parse(args)
     local cmd_args = M.shift(args, -1)
     local begin = M.get_begin_index(cmd_args)
@@ -323,11 +388,8 @@ function M.parse(args)
     return cmd_args
 end
 
----for luatex
----lua has a weird behaviour about command line arguments.
----arg started from index 0: arg = {[0] = "ls", "-al"}
----os.exec() started from index 1: os.exec{"ls", "-al"}
----we need to shift it
+---**entry for luatex**
+---@param args string[] `arg`
 function M.run(args)
     local cmd_args = M.parse(args)
     M.setotherenv(M.get_program_name(cmd_args))
@@ -335,6 +397,9 @@ function M.run(args)
     M.exec(cmd_args)
 end
 
+---texlua's `os.exec()` will not fork and exec when meet error
+---we wrap it to add `os.exit()`
+---@param args string[] command line arguments
 function M.exec(args)
     local _, msg, code = os.exec(args)
     error(msg)

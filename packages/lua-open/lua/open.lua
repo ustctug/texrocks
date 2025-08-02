@@ -1,5 +1,7 @@
--- luacheck: ignore 143
+---lua-open
+---@module open
 ---@diagnostic disable: undefined-field
+-- luacheck: ignore 143
 local lfs = require 'lfs'
 local texrocks = require 'texrocks'
 

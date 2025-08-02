@@ -1,6 +1,6 @@
 #!/usr/bin/env -S luahbtex --luaonly
--- luacheck: ignore 143
 ---@diagnostic disable: undefined-field
+-- luacheck: ignore 143
 if os.getenv "LUA_PATH" then
     require 'texrocks'.main(arg)
 else

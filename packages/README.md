@@ -2,7 +2,7 @@
 
 ## TeX Documents
 
-`demo-*` are more complicated examples for LaTeX document than tutor.
+`demo-*` are more complicated examples for LaTeX document than tutorial.
 
 ## TeX Dialects
 

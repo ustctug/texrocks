@@ -23,7 +23,7 @@ mkShell {
     (lua5_3.withPackages (
       p: with p; [
         busted
-        # ldoc
+        ldoc
       ]
     ))
   ];

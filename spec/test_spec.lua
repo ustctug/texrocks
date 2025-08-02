@@ -69,4 +69,22 @@ describe("test", function()
         }
         assert.are.equal(texrocks.get_program_name(input), "luatexinfo")
     end)
+
+    it("tests getpaths", function()
+        local input = "/a/src/?/init.lua;/b/lib/?.so"
+        local expected = {
+            "/a/src",
+            "/b/lib",
+        }
+        for i, v in ipairs(texrocks.getpaths(input)) do
+            assert.are.equal(v, expected[i])
+        end
+        expected = {
+            "/a/etc/doc//",
+            "/b/etc/doc//",
+        }
+        for i, v in ipairs(texrocks.getpaths(input, "doc")) do
+            assert.are.equal(v, expected[i])
+        end
+    end)
 end)
