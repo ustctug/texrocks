@@ -1,5 +1,6 @@
 # texrocks
 
+[![readthedocs](https://shields.io/readthedocs/texrocks)](https://texrocks.readthedocs.io)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ustctug/texrocks/main.svg)](https://results.pre-commit.ci/latest/github/ustctug/texrocks/main)
 [![github/workflow](https://github.com/ustctug/texrocks/actions/workflows/main.yml/badge.svg)](https://github.com/ustctug/texrocks/actions)
 
@@ -31,29 +32,32 @@
 
 A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 
-## Features
-
-- [x] install packages in parallel, thanks to lx
-- [x] package version control, thanks to rockspec
-- [x] virtual environment, thanks to lx
-- [x] minimal preinstalled packages
-- [x] no extra dependencies while TeXLive needs perl, tcl/tk, ...
-- [x] support Unix
-- [ ] support Win32. We use shebang so a cmd wrapper is needed
-- [x] a server to host packages: <https://ustctug.github.io/texrocks/>
-
 ## Tutorial
 
-<!-- markdownlint-disable MD029 -->
-
-1. Create a project
+### Create a project
 
 ```sh
+# answer some questions of lx
 lx new my-thesis
 cd my-thesis
+
 ```
 
-2. Add some dependencies
+A `lux.toml` will be created:
+
+```toml
+package = "my-thesis"
+version = "0.1.0"
+lua = "==5.3"
+
+[description]
+summary = "My thesis"
+maintainer = "A TeX user"
+labels = ["thesis"]
+license = "GPL-3.0"
+```
+
+### Add some dependencies
 
 ```sh
 # LaTeX support
@@ -69,13 +73,27 @@ lx add -t lua-open
 # lx add -b more packages ...
 ```
 
-3. Edit your document
+`lux.toml`:
+
+```toml
+# ...
+[build_dependencies]
+lualatex = "X.Y.Z-1"
+hyperref = "X.Y.Z-1"
+graphics-cfg = "X.Y.Z-1"
+pgf = "X.Y.Z-1"
+
+[test_dependencies]
+lua-open = "X.Y.Z-1"
+```
+
+### Edit your document
 
 ```sh
 $EDITOR main.tex
 ```
 
-4. Tell `lx` how to build, install and open your document
+### Tell `lx` how to build, install and open your document
 
 `lux.toml`:
 
@@ -94,7 +112,7 @@ command = "lua-open"
 flags = ["main.pdf"]
 ```
 
-5. Build and view your document
+### Build and view your document
 
 ```sh
 lx build
@@ -188,28 +206,4 @@ $ tree -a
 └──  main.tex
 ```
 
-Here are some [demo](packages/)s.
-
-Read [docs](docs/) for more information.
-
-## TODO
-
-- read `~/.config/lux/config.toml` to know real installed TeX files's paths.
-- more TeX dialects:
-  - ConTeXt
-  - [publisher](https://github.com/speedata/publisher/)
-- more TeX packages: CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100
-  - luaotfload: Opentype font support, necessary for some languages like
-    Chinese.
-- Use lua to rewrite some TeX tools written in perl
-  - [epstopdf](https://ctan.org/pkg/epstopdf): convert eps to pdf for
-    `\includegraphics{XXX.eps}`. Since now, you have to convert it by yourself:
-    `gs -sOutputFile=XXX.pdf XXX.eps` then `\includegraphics{XXX.pdf}`.
-  - [latexmk](https://github.com/debian-tex/latexmk): read XXX.log to decide if
-    rerun TeX compiler. Since now, you have to rerun lualatex by yourself.
-
-## Credit
-
-- [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim): a neovim package
-  manager powered by luarocks
-- [apltex](https://github.com/RadioNoiseE/apltex): inspiration origin
+See [documents](https://texrocks.readthedocs.io/) to know more.

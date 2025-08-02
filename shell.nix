@@ -16,6 +16,7 @@ mkShell {
     pkg-config
 
     readline
+    rename
 
     # too old
     # lux-cli

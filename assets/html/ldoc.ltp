@@ -367,8 +367,21 @@
 # if ldoc.full_description then
   <p>$(M(ldoc.full_description,nil))</p>
 # end
-
-TeXRocks, a minimal (La)TeX distribution.
+# for kind, mods in ldoc.kinds() do
+# if kind == 'Modules' then
+<h2>$(kind)</h2>
+API reference for developers
+# kind = kind:lower()
+<table class="module_list">
+# for m in mods() do
+	<tr>
+		<td class="name"$(nowrap)><a href="$(no_spaces(kind))/$(m.name).html">$(m.name)</a></td>
+		<td class="summary">$(M(ldoc.strip_header(m.summary),m))</td>
+	</tr>
+#  end -- for modules
+</table>
+# end
+# end -- for kinds
 
 # end -- if module
 

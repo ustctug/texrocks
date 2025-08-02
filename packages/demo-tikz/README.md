@@ -1,4 +1,4 @@
-# Demo
+# Draw a graph
 
 WIP
 
