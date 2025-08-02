@@ -1,5 +1,10 @@
 # Principle
 
+texrocks is a lua library for a fake texlua/luatex, it does two things:
+
+1. set correct environment variables
+2. use correct command line arguments to call luahbtex
+
 ## Introduction
 
 For example, you create a virtual environment named `my-thesis`:

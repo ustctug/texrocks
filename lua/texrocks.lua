@@ -1,7 +1,4 @@
----texrocks is a lua library for a fake texlua/luatex, it does two things:
----
----1. set correct environment variables
----2. use correct command line arguments to call luahbtex
+---library for `luatex`, `lualatex`, `luatexinfo` and `texlua`
 ---@module texrocks
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143

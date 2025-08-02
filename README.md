@@ -34,7 +34,9 @@ A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 
 ## Tutorial
 
-### Create a project
+<!-- markdownlint-disable MD029 -->
+
+1. Create a project
 
 ```sh
 # answer some questions of lx
@@ -57,7 +59,7 @@ labels = ["thesis"]
 license = "GPL-3.0"
 ```
 
-### Add some dependencies
+2. Add some dependencies
 
 ```sh
 # LaTeX support
@@ -87,13 +89,13 @@ pgf = "X.Y.Z-1"
 lua-open = "X.Y.Z-1"
 ```
 
-### Edit your document
+3. Edit your document
 
 ```sh
 $EDITOR main.tex
 ```
 
-### Tell `lx` how to build, install and open your document
+4. Tell `lx` how to build, install and open your document
 
 `lux.toml`:
 
@@ -112,7 +114,7 @@ command = "lua-open"
 flags = ["main.pdf"]
 ```
 
-### Build and view your document
+5. Build and view your document
 
 ```sh
 lx build

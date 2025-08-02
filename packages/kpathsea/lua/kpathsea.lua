@@ -1,12 +1,17 @@
+---library for `kpsewhich`
+---@module kpathsea
 local kpse = require 'kpse'
 local argparse = require 'argparse'
 local semver = require 'semver'
 local M = {}
 
-function M.get_parser(arg0)
-    local parser = argparse(arg0):add_complete()
+---get parser
+---@param progname string program name
+---@return table parser
+function M.get_parser(progname)
+    local parser = argparse(progname):add_complete()
     parser:argument('file', 'file name'):args('*')
-    parser:option('--progname', 'set program name', arg[0])
+    parser:option('--progname', 'set program name', progname)
     parser:option('--help-formats -l', 'display information about all supported file formats by -l, -ll'):args(0):count(
         '*')
     parser:option('--expand-braces', 'output variable and brace expansion'):count('*')
@@ -27,6 +32,8 @@ function M.get_parser(arg0)
     return parser
 end
 
+---**entry for kpsewhich**
+---@param args string[] command line arguments
 function M.main(args)
     local parser = M.get_parser(args[0])
     args = parser:parse(args)

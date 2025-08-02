@@ -1,4 +1,4 @@
----lua-open
+---library for lua-open
 ---@module open
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143
@@ -7,6 +7,9 @@ local texrocks = require 'texrocks'
 
 local M = {}
 
+---get file path according to `lux.toml`
+---@param file string PDF file name
+---@return string file PDF file path
 function M.get_path(file)
     if lfs.isfile(file) then
         return file
@@ -54,6 +57,9 @@ function M.get_path(file)
     return table.concat({ cwd, path }, '/')
 end
 
+---escape and concatenate command line arguments for printing
+---@param args string[] command line arguments
+---@return string cmd command line
 function M.get_cmd(args)
     local cmd = {}
     for _, v in ipairs(args) do
@@ -63,6 +69,9 @@ function M.get_cmd(args)
     return table.concat(cmd, " ")
 end
 
+---use correct system tool to open PDF
+---@param file string PDF file path
+---@return string[] args command line arguments
 function M.get_cmd_args(file)
     if os.name == 'macosx' then
         return { "open", file }
@@ -77,6 +86,8 @@ function M.get_cmd_args(file)
     end
 end
 
+---**entry for lua-open**
+---@param args string[] command line arguments
 function M.main(args)
     local file = M.get_path(args[1])
     local cmd_args = M.get_cmd_args(file)

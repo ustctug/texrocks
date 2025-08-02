@@ -1,3 +1,5 @@
+---library for `texdef` and `latexdef`
+---@module texdef
 local lfs = require 'lfs'
 local tex = require 'tex'
 local kpse = require 'kpse'
@@ -6,6 +8,10 @@ local argparse = require 'argparse'
 local template = require 'template'
 local M = {}
 
+---get parser
+---@param name string program name
+---@param fmt string TeX format name
+---@return table parser
 function M.get_parser(name, fmt)
     local parser = argparse(name):add_complete()
     parser:argument('macro', 'macro name without \\'):args('*')
@@ -65,6 +71,7 @@ function M.postparse(args)
             table.insert(args.macro, 'end' .. args.macro[i])
         end
     end
+    args.fmt = tex.formatname .. '.fmt'
     args.list = args.list or 0
     args.find = args.find or 0
     args.sub = M.get_path('texdef/sub.tex')
@@ -72,12 +79,17 @@ function M.postparse(args)
     return args
 end
 
+---wrap `tex.print()`
+---@param code string TeX code
 function M.print(code)
     code = code:gsub('^%s+', ''):gsub("%.*\n", ""):gsub("\n", "")
     tex.print(code)
 end
 
+---get path of template
 ---https://github.com/nvim-neorocks/lux/issues/922
+---@param filename string template name
+---@return string file template path
 function M.get_path(filename)
     local root = debug.getinfo(1).source:match("@?(.*)/")
     local file = root .. '/' .. filename
@@ -87,6 +99,9 @@ function M.get_path(filename)
     return file
 end
 
+---**first entry for texdef and latexdef**
+---@param args string[] command line arguments
+---@return table | nil cmd_args parsed command line arguments
 function M.main(args)
     print()
     local cmd_args = M.parse(args)
@@ -106,6 +121,8 @@ function M.main(args)
     return cmd_args
 end
 
+---**final entry for texdef and latexdef**
+---@param args table parsed command line arguments
 function M.output(args)
     if args == nil or args.f == nil then
         return
@@ -133,7 +150,7 @@ function M.output(args)
                         def = ' = ' .. def
                     end
                     if args.ignore_regex == '' or not name:match(args.ignore_regex) then
-                        if M.args.list == 1 then
+                        if args.list == 1 then
                             table.insert(lines, name)
                         else
                             table.insert(lines, name .. def)

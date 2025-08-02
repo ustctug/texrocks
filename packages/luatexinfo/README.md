@@ -6,6 +6,8 @@ to convert texinfo to `info`, `HTML`, ..., while other TeX dialects doesn't have
 good support for outputting HTML like [TeX4ht](https://tug.org/tex4ht/) for
 PlainTeX/LaTex/ConTeXt.
 
+PDF output has bug. You have to:
+
 ```sh
 dvipdfmx main.dvi
 pdftocairo -png main.pdf

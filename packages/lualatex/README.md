@@ -23,10 +23,7 @@ Some packages are recommended:
 - [hyperref](https://luarocks.org/modules/ustctug/hyperref): hyperlinks.
 - [pgf](https://luarocks.org/modules/ustctug/pgf): PGF/TikZ.
 - [beamer](https://luarocks.org/modules/ustctug/beamer): slides.
-- [ctex](https://luarocks.org/modules/ustctug/ctex): Chinese support. **bug**
+- [ctex](https://luarocks.org/modules/ustctug/ctex): Chinese support.
+  **bug** due to luaotfload's package: Opentype font support
 - [citation-style-language](https://luarocks.org/modules/ustctug/citation-style-language):
   use [csl](https://citationstyles.org/) for bibliography.
-
-[More packages](https://luarocks.org/m/texmf).
-
-[A more complicated example](../demo).

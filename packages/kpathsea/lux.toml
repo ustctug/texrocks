@@ -20,7 +20,7 @@ command = 'kpsewhich'
 [test]
 type = 'command'
 command = 'kpsewhich'
-flags = ['texrocks.lua']
+flags = ['url.sty']
 
 [deploy]
 wrap_bin_scripts = false
@@ -29,6 +29,9 @@ wrap_bin_scripts = false
 texrocks = "0.3.4-1"
 argparse = "0.7.1-1"
 lua-semver = "1.2.2-1"
+
+[test_dependencies]
+lualatex = "0.3.4-1"
 
 [build]
 type = "builtin"

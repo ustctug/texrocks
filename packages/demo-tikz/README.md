@@ -1,4 +1,4 @@
-# Draw a graph
+# Draw a Graph
 
 Drawing is basic usage of TeX. Perhaps you know
 [graphviz](https://graphviz.org/), another drawing languages:
@@ -67,7 +67,8 @@ TeX has a TikZ library named `graph drawing` to provide same feature.
 ```
 
 Different from graphviz, you can use powerful TeX syntax in `graph drawing`.
-Run `lx build` to see this example:
+Run `lx build` for
+[this example](https://github.com/ustctug/texrocks/tree/main/packages/demo-tikz):
 
 ![graph](https://github.com/user-attachments/assets/131a8a31-0dd4-49fa-84dd-1531c89da55c)
 
