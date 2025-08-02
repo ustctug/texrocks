@@ -18,9 +18,9 @@ full_description = [[
 First coming?
 
 - [tutorial](topics/README.md.html): the steps to build a TeX project
-- [install](topics/install.md.html): install and configure
-- [drawing a graph](topics/demo-tikz.md.html): An example!
-- [use bibliography](topics/demo-bib.md.html): Another example!
+- [install and configure](topics/install.md.html): read it before all examples
+- [drawing a graph](topics/demo-tikz.md.html): an example
+- [use bibliography](topics/demo-bib.md.html): another example
 
 ## Learn More
 

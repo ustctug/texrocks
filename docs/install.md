@@ -4,15 +4,15 @@
 
 ### lux-cli
 
-In [tutorial](../README.md.html), you have found the core program is `lx`, a
+In [tutorial](README.md.html), you have found the core program is `lx`, a
 package manager written in rust. It is provided by `lux-cli`.
 The version must be `> 0.11.1` due to many bug fixes.
 
 ### luahbtex
 
 luahbtex is a TeX compiler and Lua 5.3 interpreter. Its sisters, luatex,
-luajittex and ..., are not supported by LaTeX.
-It is contained in mostly TeX distribution like TeXLive and MikTeX.
+luajittex and ..., are not supported by LaTeX. That's why we choose it.
+It is contained in mostly TeX distribution such as TeXLive and MikTeX.
 However, you can install it standalone.
 
 ## Install
@@ -25,8 +25,7 @@ lx install luahbtex
 For ArchLinux:
 
 ```sh
-paru -S lux-cli
-paru -S luahbtex
+paru -S lux-cli luahbtex
 ```
 
 For Nix:
@@ -36,7 +35,7 @@ nix-env -iA nixos.lux-cli
 nix-env -iA nur.repos.Freed-Wu.luahbtex
 ```
 
-Remember to check `lux-cli`'s version.
+**Remember to check the version** of `lux-cli`!
 
 ## Configure
 
@@ -76,3 +75,5 @@ extra_servers = [
   "http://127.0.0.1:8000",
 ]
 ```
+
+It will be fast beyond your imagination.
