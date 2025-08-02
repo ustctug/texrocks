@@ -19,7 +19,7 @@ First coming?
 
 - [tutorial](topics/README.md.html): the steps to build a TeX project
 - [install and configure](topics/install.md.html): read it before all examples
-- [drawing a graph](topics/demo-tikz.md.html): an example
+- [draw a graph](topics/demo-tikz.md.html): an example
 - [use bibliography](topics/demo-bib.md.html): another example
 
 ## Learn More

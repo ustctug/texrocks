@@ -15,7 +15,7 @@ digraph G{
 dot -Tpng -omain.png main.gv
 ```
 
-![dot](https://github.com/user-attachments/assets/2cbc2d53-9e93-401d-8278-fe789afb66a4)
+![dot](https://github.com/user-attachments/assets/2ad933b7-b40b-4d13-97c0-f1db34842204)
 
 You don't need to declare the position of node a, b, c and d.
 The compiler of graphviz will calculate it:
