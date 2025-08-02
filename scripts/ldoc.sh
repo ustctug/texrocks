@@ -10,8 +10,9 @@ fi
 rm -rf _readthedocs/{markdown,lua}
 install -d _readthedocs/{markdown,lua}
 if [ -z "$READTHEDOCS_OUTPUT" ]; then
-  opt=-l
+  rename 's|packages/([^/]+)/README\.md|_readthedocs/markdown/\1.md|' packages/*/README.md
+else
+  rename 'packages/([^/]+)/README\.md' '_readthedocs/markdown/\1.md'
 fi
-rename $opt 's|packages/([^/]+)/README\.md|_readthedocs/markdown/\1.md|' packages/*/README.md
 cp -r packages/*/lua/* _readthedocs/lua
 ldoc .
