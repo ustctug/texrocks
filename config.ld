@@ -66,10 +66,12 @@ TODO:
 
 Know what is under the hood.
 
-- [How to pack a TeX package](topics/package.md.html): More TeX packages are
+- [How to pack a TeX package](topics/pack.md.html): More TeX packages are
   needed: CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100.
   Welcome to pack!
 - [How texrocks work](topics/principle.md.html): see its principle.
+- [Roadmap](topics/roadmap.md.html): which features texrocks have supported and
+  will support?
 
 ## Others
 

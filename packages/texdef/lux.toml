@@ -1,5 +1,5 @@
 package = "texdef"
-version = "0.3.4"
+version = "0.3.5"
 lua = ">=5.1"
 
 [description]
@@ -18,8 +18,8 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 argparse = "0.7.1-1"
 lua-template = "1.0.0-1"
 currfile = "1.0-1"
-lualatex = "0.3.4-1"
-luatex = "0.3.4-1"
+lualatex = "0.3.5-1"
+luatex = "0.3.5-1"
 
 [run]
 type = "command"

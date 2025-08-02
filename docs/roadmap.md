@@ -1,4 +1,4 @@
-# Future
+# Roadmap
 
 ## Features
 
@@ -10,10 +10,7 @@
 - [x] support Unix
 - [ ] support Win32. We use shebang so a cmd wrapper is needed
 - [x] a server to host packages: <https://ustctug.github.io/texrocks/>
-
-## TODO
-
-- read `~/.config/lux/config.toml` to know real installed TeX files's paths.
+- [ ] support lx's config's `entrypoint_layout` to customize search path
 
 ## Credit
 

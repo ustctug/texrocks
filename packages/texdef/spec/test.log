@@ -1,0 +1,5 @@
+>> entering file test.sty
+{into \ds@=\relax}
+{into \Url@unmove=\long macro:#1\Url@y ->\endgroup \ifx \protect \ETC.}
+{into \Url@FormatString=macro:->\UrlFont \Url@MathSetup $\fam \z@ \ETC.}
+<< leaving file test.sty
