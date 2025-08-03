@@ -21,6 +21,7 @@ First coming?
 - [install and configure](topics/install.md.html): read it before all examples
 - [draw a graph](topics/demo-tikz.md.html): an example for LaTeX
 - [use bibliography](topics/demo-bib.md.html): another example for LaTeX
+- [write markdown](topics/demo-markdown.md.html): try markdown!
 
 ## TeX Dialects
 

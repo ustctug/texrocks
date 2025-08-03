@@ -46,7 +46,7 @@ jobs:
           luarocks install --local lualatex
           luarocks install --local lualibs
           luarocks install --local texdef
-          luarocks install --local graphics-cfg
+          luarocks install --local markdown2tex
           luarocks install --local beamer
           luarocks install --local standalone
           luarocks install --local hologo
@@ -55,7 +55,8 @@ jobs:
           rm -f ./*.rock
           luarocks list --porcelain | sed 's/\(\S\+\).*/luarocks pack \1 \&\& \
           luarocks download --rockspec \1/' | sh
-          rename -f s/linux-x86_64/all/ {texrocks,luatex{,info},lualatex}-*.rock
+          rename -f s/linux-x86_64/all/ \
+            {texrocks,markdown2tex,luatex{,info},lualatex}-*.rock
           luarocks-admin make-manifest .
           parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
           rm -f ./*.rockspec manifest{,-5.{1..4}}
