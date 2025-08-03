@@ -394,7 +394,7 @@ function M.sync(short)
     f:close()
 end
 
----texlua's `os.exec()` will not fork and exec when meet error
+---texlua's `os.exec()` will not exec when meet error
 ---we wrap it to add `os.exit()`
 ---@param args string[] command line arguments
 function M.exec(args)
