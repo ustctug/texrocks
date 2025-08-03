@@ -8,58 +8,88 @@ local M   = {
     fontmap_name = "luatex.map"
 }
 
----update font map file: `.lux/luatex.map`
----@param short boolean use relative (short)/absolute (long) path for font files
-function M.sync(short)
-    local dir = ".lux"
-    if not lfs.isdir(dir) then
-        lfs.mkdir(dir)
-    end
-    local fontmap_name = dir .. "/" .. M.fontmap_name
-    local f = io.open(fontmap_name, 'w')
-    if f == nil then
-        print("fail to generate " .. fontmap_name)
-        return
-    end
-    local fonts = {}
-
-    local function walk(path)
-        for file in lfs.dir(path) do
-            if file:sub(1, 1) ~= '.' then
-                local newpath = path .. '/' .. file
-                if lfs.isdir(newpath) then
-                    walk(newpath)
-                elseif lfs.isfile(newpath) then
-                    local ext = file:gsub(".*%.", "")
-                    if ext == "pfb" or ext == "t3" then
-                        table.insert(fonts, newpath)
-                    end
-                end
-            end
+if os.type == "windows" then
+    M.OSFONTDIR = "C:/Windows/System32/Fonts"
+elseif os.type == "unix" then
+    if os.getenv "XDG_DATA_DIRS" ~= nil then
+        M.OSFONTDIR = "{" .. os.getenv("XDG_DATA_DIRS"):gsub(":", ",") .. "}/share/fonts//"
+    else
+        local prefixes = { "/usr" }
+        if os.getenv "PREFIX" ~= nil then
+            prefixes = { os.getenv "PREFIX" }
+        elseif os.name ~= "cygwin" then
+            table.insert(prefixes, "/usr/local")
+        elseif os.getenv "MINGW_PREFIX" ~= nil then
+            table.insert(prefixes, os.getenv "MINGW_PREFIX")
         end
+        M.OSFONTDIR = "{" .. table.concat(prefixes, ",") .. "}/share/fonts//"
     end
+end
+if os.name == "macosx" then
+    M.OSFONTDIR = M.OSFONTDIR .. ";{/System,}/Library/Fonts//"
+elseif os.name == "cygwin" then
+    M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
+end
 
-    for _, path in ipairs(M.getpaths(package.path, "fonts")) do
-        walk(path:gsub("//$", ""))
+---base name
+---@param path string
+---@return string path
+function M.basename(path)
+    path = path:gsub(".*/", "")
+    return path
+end
+
+---path without extension name
+---@param path string
+---@return string path
+function M.rootname(path)
+    path = path:gsub("%.*", "")
+    return path
+end
+
+---base name without extension name
+---@param path string
+---@return string path
+function M.name(path)
+    return M.rootname(M.basename(path))
+end
+
+---get the first non-nil element's index
+---@param args string[] index can be negative
+---@return integer begin begin index
+function M.get_begin_index(args)
+    local begin = -1
+    while args[begin] do
+        begin = begin - 1
     end
-    local lines = {}
-    for _, font in ipairs(fonts) do
-        local basename = font:gsub(".*/", '')
-        local name = basename:gsub("%..*", '')
-        local path = font
-        if short then
-            path = basename
-        end
-        table.insert(lines, string.format("%s %s <%s", name, name:upper(), path))
+    begin = begin + 1
+    return begin
+end
+
+---texlua has a behaviour about command line arguments.
+---`arg` starts from index 0: `arg = {[0] = "ls", "-al"}`
+---`os.exec()` starts from index 1: `os.exec{"ls", "-al"}`
+---we need to shift it
+---@param args string[] command line arguments
+---@param offset integer e.g., `-1` means `args[i + 1] = args[i]`
+---@return string[] cmd_args
+function M.shift(args, offset)
+    local begin = M.get_begin_index(args)
+
+    local cmd_args = {}
+    for i = begin, #args do
+        cmd_args[i - offset] = args[i]
     end
-    local template = debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks/' .. M.fontmap_name
-    local t = io.open(template)
-    if t then
-        f:write(t:read("*a"))
-        t:close()
+    return cmd_args
+end
+
+---call `os.setenv()` when environment variable doesn't exist
+---@param key string
+---@param value string
+function M.setenv(key, value)
+    if os.getenv(key) == nil then
+        os.setenv(key, value)
     end
-    f:write(table.concat(lines, "\n"))
-    f:close()
 end
 
 ---get paths from `package.path`/`package.cpath`. see tests.
@@ -98,13 +128,16 @@ function M.getenv(path, suffix)
     return table.concat(processed, ";")
 end
 
----call `os.setenv()` when environment variable doesn't exist
----@param key string
----@param value string
-function M.setenv(key, value)
-    if os.getenv(key) == nil then
-        os.setenv(key, value)
-    end
+---**entry for texlua**
+---@param args string[] `arg`
+function M.main(args)
+    M.setenvs()
+    -- progname should be texlua
+    M.setotherenv(M.name(args[0]))
+
+    -- luacheck: ignore 121
+    arg = M.preparse(args)
+    loadfile(arg[0])()
 end
 
 ---wrap `os.setenv()` for font files due to `OSFONTDIR`
@@ -113,29 +146,6 @@ end
 function M.setfontenv(key, value)
     os.setenv(key,
         "$TEXMFDOTDIR;" .. M.getenv(package.path, "fonts/" .. value) .. ";" .. M.OSFONTDIR)
-end
-
-if os.type == "windows" then
-    M.OSFONTDIR = "C:/Windows/System32/Fonts"
-elseif os.type == "unix" then
-    if os.getenv "XDG_DATA_DIRS" ~= nil then
-        M.OSFONTDIR = "{" .. os.getenv("XDG_DATA_DIRS"):gsub(":", ",") .. "}/share/fonts//"
-    else
-        local prefixes = { "/usr" }
-        if os.getenv "PREFIX" ~= nil then
-            prefixes = { os.getenv "PREFIX" }
-        elseif os.name ~= "cygwin" then
-            table.insert(prefixes, "/usr/local")
-        elseif os.getenv "MINGW_PREFIX" ~= nil then
-            table.insert(prefixes, os.getenv "MINGW_PREFIX")
-        end
-        M.OSFONTDIR = "{" .. table.concat(prefixes, ",") .. "}/share/fonts//"
-    end
-end
-if os.name == "macosx" then
-    M.OSFONTDIR = M.OSFONTDIR .. ";{/System,}/Library/Fonts//"
-elseif os.name == "cygwin" then
-    M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
 end
 
 ---set environment variables for kpathsea
@@ -240,35 +250,6 @@ function M.setotherenv(progname)
     M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
 end
 
----get the first non-nil element's index
----@param args string[] index can be negative
----@return integer begin begin index
-function M.get_begin_index(args)
-    local begin = -1
-    while args[begin] do
-        begin = begin - 1
-    end
-    begin = begin + 1
-    return begin
-end
-
----texlua has a behaviour about command line arguments.
----`arg` starts from index 0: `arg = {[0] = "ls", "-al"}`
----`os.exec()` starts from index 1: `os.exec{"ls", "-al"}`
----we need to shift it
----@param args string[] command line arguments
----@param offset integer e.g., `-1` means `args[i + 1] = args[i]`
----@return string[] cmd_args
-function M.shift(args, offset)
-    local begin = M.get_begin_index(args)
-
-    local cmd_args = {}
-    for i = begin, #args do
-        cmd_args[i - offset] = args[i]
-    end
-    return cmd_args
-end
-
 ---get offset from one script to another script
 ---such as `texlua --option main.lua --option` -> `main.lua --option`
 ---offset should be 2
@@ -301,16 +282,26 @@ function M.preparse(args)
     return M.shift(args, offset)
 end
 
----**entry for texlua**
+---**entry for luatex**
 ---@param args string[] `arg`
-function M.main(args)
-    M.setenvs()
-    -- progname should be texlua
-    M.setotherenv(M.name(args[0]))
+function M.run(args)
+    local cmd_args = M.parse(args)
+    M.setotherenv(M.get_program_name(cmd_args))
+    M.sync(false)
+    M.exec(cmd_args)
+end
 
-    -- luacheck: ignore 121
-    arg = M.preparse(args)
-    loadfile(arg[0])()
+---luahbtex --luaonly texlua luatex:
+---texlua will call preparse(), then loadfile("luatex")()
+---luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
+---@param args string[] command line arguments
+---@return string[] cmd_args parsed result
+---@see preparse
+function M.parse(args)
+    local cmd_args = M.shift(args, -1)
+    local begin = M.get_begin_index(cmd_args)
+    cmd_args[0] = cmd_args[begin]
+    return cmd_args
 end
 
 ---see <https://texdoc.org/serve/luatex/0>'s command line options
@@ -349,49 +340,58 @@ function M.get_program_name(args)
     return M.name(args[1])
 end
 
----base name
----@param path string
----@return string path
-function M.basename(path)
-    path = path:gsub(".*/", "")
-    return path
-end
+---update font map file: `.lux/luatex.map`
+---@param short boolean use relative (short)/absolute (long) path for font files
+function M.sync(short)
+    local dir = ".lux"
+    if not lfs.isdir(dir) then
+        lfs.mkdir(dir)
+    end
+    local fontmap_name = dir .. "/" .. M.fontmap_name
+    local f = io.open(fontmap_name, 'w')
+    if f == nil then
+        print("fail to generate " .. fontmap_name)
+        return
+    end
+    local fonts = {}
 
----path without extension name
----@param path string
----@return string path
-function M.rootname(path)
-    path = path:gsub("%.*", "")
-    return path
-end
+    local function walk(path)
+        for file in lfs.dir(path) do
+            if file:sub(1, 1) ~= '.' then
+                local newpath = path .. '/' .. file
+                if lfs.isdir(newpath) then
+                    walk(newpath)
+                elseif lfs.isfile(newpath) then
+                    local ext = file:gsub(".*%.", "")
+                    if ext == "pfb" or ext == "t3" then
+                        table.insert(fonts, newpath)
+                    end
+                end
+            end
+        end
+    end
 
----base name without extension name
----@param path string
----@return string path
-function M.name(path)
-    return M.rootname(M.basename(path))
-end
-
----luahbtex --luaonly texlua luatex:
----texlua will call preparse(), then loadfile("luatex")()
----luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
----@param args string[] command line arguments
----@return string[] cmd_args parsed result
----@see preparse
-function M.parse(args)
-    local cmd_args = M.shift(args, -1)
-    local begin = M.get_begin_index(cmd_args)
-    cmd_args[0] = cmd_args[begin]
-    return cmd_args
-end
-
----**entry for luatex**
----@param args string[] `arg`
-function M.run(args)
-    local cmd_args = M.parse(args)
-    M.setotherenv(M.get_program_name(cmd_args))
-    M.sync(false)
-    M.exec(cmd_args)
+    for _, path in ipairs(M.getpaths(package.path, "fonts")) do
+        walk(path:gsub("//$", ""))
+    end
+    local lines = {}
+    for _, font in ipairs(fonts) do
+        local basename = font:gsub(".*/", '')
+        local name = basename:gsub("%..*", '')
+        local path = font
+        if short then
+            path = basename
+        end
+        table.insert(lines, string.format("%s %s <%s", name, name:upper(), path))
+    end
+    local template = debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks/' .. M.fontmap_name
+    local t = io.open(template)
+    if t then
+        f:write(t:read("*a"))
+        t:close()
+    end
+    f:write(table.concat(lines, "\n"))
+    f:close()
 end
 
 ---texlua's `os.exec()` will not fork and exec when meet error

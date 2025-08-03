@@ -7,6 +7,23 @@ if [[ -d "$asdf_path" ]]; then
   PATH="$asdf_path:$PATH"
 fi
 
+has_cmd() {
+  local opt
+  for opt; do
+    if command -v "$opt" >/dev/null; then
+      continue
+    else
+      return $?
+    fi
+  done
+}
+
+if has_cmd perl-rename; then
+  rename() {
+    command perl-rename "$@"
+  }
+fi
+
 rm -rf _readthedocs/{markdown,lua}
 install -d _readthedocs/{markdown,lua}
 rename -l 's|packages/([^/]+)/README\.md|_readthedocs/markdown/\1.md|' packages/*/README.md
