@@ -78,46 +78,47 @@ url.sty
 $ latexdef -llpurl
 # ...
 url.sty
-\CurrentFile->
-\CurrentFilePath->
-\CurrentFilePathUsed->
-\CurrentFileUsed->
-\CurrentOption->
-\DeclareUrlCommand#1#2->\def #1{\leavevmode \begingroup ...
-\Url->\Url@movingtest \ifmmode \@inmatherr ...
-\Url Error->\url (moving)
-\UrlBigBreakPenalty=\mathchar"01F4
-\UrlBigBreaks->\do \:\do@url@hyp
-\UrlBreakPenalty=\mathchar"02BC
-\UrlBreaks->\do \.\do \@ \do \\\do \/\do \!\do ...
-\UrlFont->\ttfamily
-\UrlLeft->
-\UrlNoBreaks->\do \(\do \[\do \{\do \<
-\UrlOrds->\do \*\do \-\do \~\do \'\do \"\do ...
-\UrlRight->
-\UrlSpecials->\do \ {\Url@space }\do \%{\Url@percent ...
-\UrlTildeSpecial->\do \~{\raise .45ex\hbox {\m@th ...
-\Urlmuskip=\muskip17
-\count128=0
-\count13=17
-\count197=0
-\count21=17
-\count32=0
-\currfilebase->latexdef
-\currfiledir->
-\currfileext->tex
-\currfilename->latexdef.tex
-\currfilepath->latexdef.tex
-\muskip17=0.0mu
-\nolocaldirs=0
-\nolocalwhatsits=0
-\path->\leavevmode \begingroup \urlstyle ...
-\protect=\relax
-\toks0=\expandafter \let \csname unproc...
-\tracingassigns=0
-\unprocessedoptions-url.sty=\unprocessedoptions-url.sty=undefined
-\url->\leavevmode \begingroup \Url
-\url (moving)=\url (moving)=undefined
-\urldef#1#2->\begingroup \setbox \z@ \hbox ...
-\urlstyle#1->\expandafter \protect \csname ...
+
+\CurrentFile -->
+\CurrentFilePath -->
+\CurrentFilePathUsed -->
+\CurrentFileUsed -->
+\CurrentOption -->
+\DeclareUrlCommand#1#2 --> \def #1{\leavevmode \begingroup ...
+\Url --> \Url@movingtest \ifmmode \@inmatherr ...
+\Url Error --> \url (moving)
+\UrlBigBreakPenalty = \mathchar"01F4
+\UrlBigBreaks --> \do \:\do@url@hyp
+\UrlBreakPenalty = \mathchar"02BC
+\UrlBreaks --> \do \.\do \@ \do \\\do \/\do \!\do ...
+\UrlFont --> \ttfamily
+\UrlLeft -->
+\UrlNoBreaks --> \do \(\do \[\do \{\do \<
+\UrlOrds --> \do \*\do \-\do \~\do \'\do \"\do ...
+\UrlRight -->
+\UrlSpecials --> \do \ {\Url@space }\do \%{\Url@percent ...
+\UrlTildeSpecial --> \do \~{\raise .45ex\hbox {\m@th ...
+\Urlmuskip = \muskip17
+\count128 = 0
+\count13 = 17
+\count197 = 0
+\count21 = 17
+\count32 = 0
+\currfilebase --> latexdef
+\currfiledir -->
+\currfileext --> tex
+\currfilename --> latexdef.tex
+\currfilepath --> latexdef.tex
+\muskip17 = 0.0mu
+\nolocaldirs = 0
+\nolocalwhatsits = 0
+\path --> \leavevmode \begingroup \urlstyle ...
+\protect = \relax
+\toks0 = \expandafter \let \csname unproc...
+\tracingassigns = 0
+\unprocessedoptions-url.sty = undefined
+\url --> \leavevmode \begingroup \Url
+\url (moving) = undefined
+\urldef#1#2 --> \begingroup \setbox \z@ \hbox ...
+\urlstyle#1 --> \expandafter \protect \csname ...
 ```
