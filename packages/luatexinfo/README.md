@@ -6,12 +6,17 @@ to convert texinfo to `info`, `HTML`, ..., while other TeX dialects doesn't have
 good support for outputting HTML like [TeX4ht](https://tug.org/tex4ht/) for
 PlainTeX/LaTex/ConTeXt.
 
-PDF output has bug. You have to:
+```texinfo
+@node Top
+@top Example
 
-```sh
-dvipdfmx main.dvi
-pdftocairo -png main.pdf
-magick convert main-1.png -crop 50%x10% main.png
+@node First Chapter
+@nodedescription The first chapter is the only chapter in this sample.
+@chapter Hello, @TeX{}info
+
+@cindex chapter, first
+This is the first chapter.
+@bye
 ```
 
 ![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)

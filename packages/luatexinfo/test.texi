@@ -1,11 +1,17 @@
 @hoffset-1in
 @voffset-1in
+@hsize85mm
+@pagewidth@hsize
+@vsize25mm
+@pageheight@vsize
+@parindent0mm
+
 @node Top
 @top Example
 
 @node First Chapter
 @nodedescription The first chapter is the only chapter in this sample.
-@chapter Hello, @TeX{info}
+@chapter Hello, @TeX{}info
 
 @cindex chapter, first
 This is the first chapter.
