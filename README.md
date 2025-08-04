@@ -1,4 +1,4 @@
-# texrocks
+# TeXRocks
 
 [![readthedocs](https://shields.io/readthedocs/texrocks)](https://texrocks.readthedocs.io)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ustctug/texrocks/main.svg)](https://results.pre-commit.ci/latest/github/ustctug/texrocks/main)

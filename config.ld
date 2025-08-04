@@ -13,6 +13,26 @@ file = {
 }
 description = title
 full_description = [[
+TeXRocks is a minimal (La)TeX distribution powered by Luarocks/Lux and LuaTeX.
+
+It has the following features:
+
+- virtual environment: all TeX packages are installed to
+`.lux/5.3/XXXXX-package_name@version/`, like nodejs's `node_modules/` and
+python's `.venv/`. After development of PDF, You can delete it safely, and it
+will not affect your next development of PDF.
+- minimal: we only install required packages
+- package version control: when you declare `latex-base == "2025.06.01-1"`, it
+will install <https://luarocks.org/modules/freed-wu/latex-base/2025.06.01-1> not
+other versions! pin the version like nodejs's `package.json` and python's
+`requirements.txt`
+- package installation in parallel: install many packages at the same time
+- a server to host compiled TeX packages: <https://ustctug.github.io/texrocks/>
+- use lua to develop TeX packages: <https://luarocks.org/m/texmf>
+
+We also provide some related TeX tools, like kpsewhich and texdef written in
+lua. See official website <https://texrocks.readthedocs.io/>
+
 ## Quick Start
 
 First coming?
@@ -25,7 +45,7 @@ First coming?
 
 ## TeX Dialects
 
-Which TeX you want to use?
+Which TeX do you want to use?
 
 - [plainTeX](topics/luatex.md.html): first TeX
 - [LaTeX](topics/lualatex.md.html): most people needed TeX

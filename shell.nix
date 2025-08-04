@@ -12,7 +12,7 @@ mkShell {
     READLINE_LIBDIR = "${readline.out}/lib";
   };
   buildInputs = [
-    # https://github.com/nvim-neorocks/lux/issues/789
+    # how lx find lua
     pkg-config
 
     readline

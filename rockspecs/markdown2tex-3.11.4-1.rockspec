@@ -21,7 +21,9 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-dependencies = {'lt3luabridge'}
+-- TODO:
+-- 'unicode-math',
+dependencies = {'lt3luabridge', 'paralist', 'latex-amsmath', 'ltxcmds', 'l3kernel', 'graphics-cfg', 'fancyvrb', 'csvsimple', 'enumitem', 'latex-url', 'latex-verse', 'lua-ul', 'luacolor'}
 
 source = {
   url = repo_url .. '/releases/download/' .. git_ref .. '/markdown.zip',
