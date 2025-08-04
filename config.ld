@@ -10,6 +10,7 @@ readme = {
   "README.md",
   "docs",
   "_readthedocs/markdown",
+  -- for build.lua
   [0] = [[
 TeXRocks is a minimal (La)TeX distribution powered by Luarocks/Lux and LuaTeX.
 
@@ -104,4 +105,5 @@ Know what is under the hood.
 - [manifest](https://luarocks.org/m/texmf): list all current TeX packages
 - [rocks](https://ustctug.github.io/texrocks/): some packages cost many time to build. We provide compiled packages for them!
 - [repository](https://github.com/ustctug/texrocks): git repository, also include this website.
+- [CTAN](https://ctan.org/pkg/texrocks): CTAN homepage
 ]]
