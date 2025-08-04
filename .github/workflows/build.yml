@@ -30,35 +30,35 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install rename parallel
+          sudo apt-get -y install rename
           # https://github.com/drivendataorg/repro-zipfile/pull/23
           pip install git+https://github.com/Freed-Wu/repro-zipfile@mode rpzip
       - env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
         run: |
           luarocks config variables.ZIP rpzip
+          # https://github.com/luarocks/luarocks/issues/1817
+          echo 'local_by_default = true' >> ~/.luarocks/config-5.3.lua
           # luarocks config rocks_servers.1 https://ustctug.github.io/texrocks
           # luarocks config rocks_servers.2 https://luarocks.org
-          luarocks install --local luahbtex \
-            --server=https://ustctug.github.io/texrocks
-          luarocks install --local luatex
-          luarocks install --local luatexinfo
-          luarocks install --local lualatex
-          luarocks install --local lualibs
-          luarocks install --local texdef
-          luarocks install --local markdown2tex
-          luarocks install --local beamer
-          luarocks install --local standalone
-          luarocks install --local hologo
-          luarocks install --local hypdoc
-          luarocks install --local ydoc
-          rm -f ./*.rock
+          luarocks install luahbtex --server=https://ustctug.github.io/texrocks
+          luarocks install luatex
+          luarocks install luatexinfo
+          luarocks install lualatex
+          luarocks install lualibs
+          luarocks install texdef
+          luarocks install markdown2tex
+          luarocks install beamer
+          luarocks install standalone
+          luarocks install hologo
+          luarocks install hypdoc
+          luarocks install ydoc
+          rm -f ./*.rock ./*.zip
           luarocks list --porcelain | sed 's/\(\S\+\).*/luarocks pack \1 \&\& \
           luarocks download --rockspec \1/' | sh
-          rename -f s/linux-x86_64/all/ \
-            {texrocks,markdown2tex,luatex{,info},lualatex}-*.rock
+          rename -f s/linux-x86_64/all/ texrocks-*.rock
           luarocks-admin make-manifest .
-          parallel zip manifest-5.{}.zip manifest-5.{} ::: {1..4}
+          zip manifest-5.3.zip manifest-5.3
           rm -f ./*.rockspec manifest{,-5.{1..4}}
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
