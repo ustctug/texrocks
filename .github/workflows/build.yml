@@ -53,7 +53,7 @@ jobs:
           luarocks install hologo
           luarocks install hypdoc
           luarocks install ydoc
-          rm -f ./*.rock
+          rm -f ./*.rock ./*.zip
           luarocks list --porcelain | sed 's/\(\S\+\).*/luarocks pack \1 \&\& \
           luarocks download --rockspec \1/' | sh
           # https://github.com/luarocks/luarocks/issues/1817

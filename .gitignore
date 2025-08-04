@@ -8,6 +8,8 @@ lux.lock
 .luarc.json
 # lx generate-rockspec
 packages/*/*.rockspec
+# l3build upload
+*.curlopt
 
 *.cp
 

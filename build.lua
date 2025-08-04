@@ -1,8 +1,7 @@
-#!/usr/bin/env texlua
 ---@diagnostic disable: lowercase-global
 -- luacheck: ignore 111 121
 local lfs = require 'lfs'
-module = "texrocks"
+pkg = "texrocks"
 -- lx test clean
 cleanfiles = { "**/*.rock", "**/*.zip", "packages/*/.lux/**", "packages/*/.luarc.json", "packages/*/lux.lock" }
 
@@ -37,7 +36,7 @@ for file in lfs.dir("packages") do
 end
 
 ---lx test upload
-local repository = "https://github.com/ustctug/" .. module
+local repository = "https://github.com/ustctug/" .. pkg
 local config = {}
 loadfile("config.ld", "t", config)()
 local version = "0.0.1"
@@ -54,9 +53,9 @@ if f then
 end
 uploadconfig = {
     announcement = "Release " .. version,
-    ctanPath = "/system/" .. module,
+    ctanPath = "/systems/" .. pkg,
     license = "gpl3+",
-    pkg = module,
+    pkg = pkg,
     summary = config.description,
     description = config.readme[0],
     version = version,
@@ -65,9 +64,8 @@ uploadconfig = {
     bugtracker = repository .. "/issues",
     development = repository .. "/pulls",
     support = repository .. "/discussions",
-    announce = repository .. "/releases",
     note = [[Uploaded automatically by l3build uploadconfig.]],
-    topic = ""
+    topic = "distribution",
 }
 
 local p = io.popen("git config user.name")
@@ -80,11 +78,6 @@ p = io.popen("git config user.email")
 if p then
     uploadconfig.email = p:read()
     p:close()
-end
-if arg[0]:match("([^/]+)$") == 'build.lua' then
-    for i,v in pairs(uploadconfig) do
-        print(i .. ' = ' .. v)
-    end
 end
 
 ---lx test tag X.Y.Z-r
