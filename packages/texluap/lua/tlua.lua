@@ -1,5 +1,6 @@
 ---library for `tlua`
 ---@module tlua
+---@copyright 2025
 local utils = require "prompt.utils"
 local status = require'status'
 local M = {}

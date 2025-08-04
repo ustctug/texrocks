@@ -1,3 +1,4 @@
+build/
 _readthedocs/
 lux.lock
 *.zip

@@ -94,7 +94,7 @@ build = {
 
  -- Engines for testing
 -checkengines = checkengines or {"pdftex", "xetex", "luatex"}
-+checkengines = checkengines or {}
++checkengines = checkengines or {"luatex"}
  checkformat  = checkformat  or "latex"
  specialformats = specialformats or { }
  specialformats.context = specialformats.context or {

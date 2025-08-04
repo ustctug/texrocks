@@ -1,5 +1,6 @@
 ---library for `kpsewhich`
 ---@module kpathsea
+---@copyright 2025
 local kpse = require 'kpse'
 local argparse = require 'argparse'
 local semver = require 'semver'

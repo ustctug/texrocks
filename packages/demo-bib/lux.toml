@@ -1,5 +1,5 @@
 package = "demo-bib"
-version = "0.0.1"
+version = "0.3.6"
 lua = ">=5.1"
 
 [description]
@@ -9,12 +9,12 @@ labels = [ "texmf" ]
 license = "GPL-3.0"
 
 [build_dependencies]
-lualatex = "0.3.5-1"
+lualatex = "0.3.6-1"
 citation-style-language = "0.8.0-1"
 beamer = "3.72-1"
 
 [test_dependencies]
-lua-open = "0.3.5-1"
+lua-open = "0.3.6-1"
 
 [test]
 type = "command"

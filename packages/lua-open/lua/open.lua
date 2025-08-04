@@ -1,5 +1,6 @@
 ---library for lua-open
 ---@module open
+---@copyright 2025
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143
 local lfs = require 'lfs'

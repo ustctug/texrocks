@@ -1,5 +1,5 @@
 package = "luatexinfo"
-version = "0.3.5"
+version = "0.3.6"
 lua = ">=5.1"
 
 [description]
@@ -15,14 +15,14 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [build_dependencies]
-texrocks = "0.3.5-1"
+texrocks = "0.3.6-1"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
 knuth-lib = "2021.02.05-1"
 texinfo = "7.2-2"
 
 [dependencies]
-texrocks = "0.3.5-1"
+texrocks = "0.3.6-1"
 amsfonts = "3.04-1"
 
 [run]
@@ -43,7 +43,7 @@ type = "command"
 build_command = "../initex/bin/initex --ini --interaction=nonstopmode luatexinfo.ini"
 
 [build.install.bin]
-luatexinfo = "../initex/bin/initex"
+luatexinfo = "0.3.6-1"
 
 [build.install.conf]
 '../web2c/luahbtex/luatexinfo.fmt' = 'luatexinfo.fmt'

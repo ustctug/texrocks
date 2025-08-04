@@ -37,10 +37,10 @@ jobs:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
         run: |
           luarocks config variables.ZIP rpzip
-          # https://github.com/luarocks/luarocks/issues/1817
-          echo 'local_by_default = true' >> ~/.luarocks/config-5.3.lua
           # luarocks config rocks_servers.1 https://ustctug.github.io/texrocks
           # luarocks config rocks_servers.2 https://luarocks.org
+          # https://github.com/luarocks/luarocks/issues/1817
+          echo local_by_default = true >>~/.luarocks/etc/luarocks/config-5.3.lua
           luarocks install luahbtex --server=https://ustctug.github.io/texrocks
           luarocks install luatex
           luarocks install luatexinfo
@@ -53,9 +53,10 @@ jobs:
           luarocks install hologo
           luarocks install hypdoc
           luarocks install ydoc
-          rm -f ./*.rock ./*.zip
+          rm -f ./*.rock
           luarocks list --porcelain | sed 's/\(\S\+\).*/luarocks pack \1 \&\& \
           luarocks download --rockspec \1/' | sh
+          # https://github.com/luarocks/luarocks/issues/1817
           rename -f s/linux-x86_64/all/ texrocks-*.rock
           luarocks-admin make-manifest .
           zip manifest-5.3.zip manifest-5.3

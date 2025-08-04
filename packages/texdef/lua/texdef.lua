@@ -1,5 +1,6 @@
 ---library for `texdef` and `latexdef`
 ---@module texdef
+---@copyright 2025
 local lfs = require 'lfs'
 local tex = require 'tex'
 local kpse = require 'kpse'

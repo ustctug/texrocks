@@ -6,13 +6,11 @@ title = "TeXRocks, a minimal (La)TeX distribution"
 format = "markdown"
 dir = "_readthedocs/html"
 template = "assets/html"
-readme = {"README.md", "docs", "_readthedocs/markdown"}
-file = {
-    "lua",
-    "_readthedocs/lua",
-}
-description = title
-full_description = [[
+readme = {
+  "README.md",
+  "docs",
+  "_readthedocs/markdown",
+  [0] = [[
 TeXRocks is a minimal (La)TeX distribution powered by Luarocks/Lux and LuaTeX.
 
 It has the following features:
@@ -32,7 +30,14 @@ other versions! pin the version like nodejs's `package.json` and python's
 
 We also provide some related TeX tools, like kpsewhich and texdef written in
 lua. See official website <https://texrocks.readthedocs.io/>
-
+]]
+}
+file = {
+  "lua",
+  "_readthedocs/lua",
+}
+description = title
+full_description = readme[0] .. [[
 ## Quick Start
 
 First coming?
