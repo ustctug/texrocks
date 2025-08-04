@@ -39,7 +39,7 @@ build = {
 ]],
   install = {
     conf = {
-      ['../tex/latex/verse/verse.sty'] = 'tex/latex/verse/verse.sty',
+      ['../tex/latex/verse/verse.sty'] = 'verse.sty',
     },
   }
 }

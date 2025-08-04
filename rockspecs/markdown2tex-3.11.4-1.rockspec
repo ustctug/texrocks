@@ -23,7 +23,7 @@ description = {
 
 -- TODO:
 -- 'unicode-math',
-dependencies = {'lt3luabridge', 'paralist', 'latex-amsmath', 'ltxcmds', 'l3kernel', 'graphics-cfg', 'fancyvrb', 'csvsimple', 'enumitem', 'latex-url', 'latex-verse', 'lua-ul', 'luacolor'}
+dependencies = {'lt3luabridge', 'paralist', 'latex-amsmath', 'ltxcmds', 'l3kernel', 'graphics-cfg', 'fancyvrb', 'csvsimple', 'enumitem', 'latex-url', 'latex-verse', 'lua-ul', 'luacolor', 'lua-uni-algos'}
 
 source = {
   url = repo_url .. '/releases/download/' .. git_ref .. '/markdown.zip',
