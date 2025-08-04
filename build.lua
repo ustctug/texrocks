@@ -2,25 +2,36 @@
 -- luacheck: ignore 111 121
 local lfs = require 'lfs'
 pkg = "texrocks"
--- lx test clean
-cleanfiles = { "**/*.rock", "**/*.zip", "packages/*/.lux/**", "packages/*/.luarc.json", "packages/*/lux.lock" }
+---l3build clean
+-- keep .lux/ and lux.lock for l3build
+cleanfiles = {
+    "**/*.rock",
+    "**/*.zip",
+    "*-1.rockspec",
+    "*.curlopt",
+    ".luarc.json",
+    "packages/*/*.rockspec",
+    "packages/*/lux.lock",
+    "packages/*/.luarc.json",
+    "packages/*/.lux/**",
+}
 
----lx test unpack
+---l3build unpack
 -- unpacked/: merge texrocks and its subprojects' bin/ and lua/
 sourcefiles = { "bin", "lua", "packages/*/bin", "packages/*/lua" }
 -- local/: same as unpacked/ due to no any unpack(build) dependencies
 installfiles = sourcefiles
 
----lx test doc
+---l3build doc
 docfiledir = "."
 
----lx test install
+---l3build install
 tdsroot = "generic"
 scriptfiles = { "*" }
--- run `lx test clean` firstly
+-- run `l3build clean` firstly
 demofiles = { "packages/demo-*" }
 
----lx test ctan
+---l3build ctan
 docfiles = { "docs/*.md", "*.md" }
 exefiles = {}
 local function add_bin(files, bindir)
@@ -35,7 +46,7 @@ for file in lfs.dir("packages") do
     add_bin(exefiles, "packages/" .. file .. '/bin')
 end
 
----lx test upload
+---l3build upload
 local repository = "https://github.com/ustctug/" .. pkg
 local config = {}
 loadfile("config.ld", "t", config)()
@@ -80,7 +91,7 @@ if p then
     p:close()
 end
 
----lx test tag X.Y.Z-r
+---l3build tag X.Y.Z-r
 tagfiles = { "**/lux.toml", "**/lua/*.lua" }
 local packages = {}
 for file in lfs.dir("packages") do
