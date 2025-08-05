@@ -102,6 +102,14 @@ build = {
  
  -- the library was formally named splib. luaglue is a layer (see #570).
  local splib = require("luaglue")
+@@ -69,6 +69,7 @@
+   return dofile(a)
+ end
+ 
++splib.add_dir(debug.getinfo(1).source:match("@?(.*)/[^/]+/"))
+ do_luafile("sd-debug.lua")
+ do_luafile("sd-callbacks.lua")
+ 
 ]],
       ['change-err-to-warning.diff'] = [[
 --- old/src/lua/publisher.lua

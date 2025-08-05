@@ -8,7 +8,7 @@ rockspec_format = '3.0'
 package = 'graphics-def'
 version = modrev .. '-' .. specrev
 
-dependencies = { 'epstopdf' }
+dependencies = { 'epstopdf-pkg' }
 
 description = {
   summary = 'Colour and graphics option files',

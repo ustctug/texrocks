@@ -272,15 +272,16 @@ end
 ---refer `parse`
 ---@see parse
 ---@param args string[] command line arguments
+---@param extra_offset integer | nil extra offset
 ---@return string[] cmd_args parsed result
-function M.preparse(args)
+function M.preparse(args, extra_offset)
     local offset = M.get_offset(args)
     if offset == nil then
         error("haven't support")
         os.exit(1)
     end
 
-    return M.shift(args, offset)
+    return M.shift(args, offset + (extra_offset or 0))
 end
 
 ---**entry for luatex**
@@ -404,6 +405,18 @@ function M.exec(args)
     -- 2: No such file or directory
     -- nil: invalid command line passed
     os.exit(code or 1)
+end
+
+---escape and concatenate command line arguments for printing
+---@param args string[] command line arguments
+---@return string cmd command line
+function M.get_cmd(args)
+    local cmd = {}
+    for _, v in ipairs(args) do
+        v = v:gsub(" ", "\\ ")
+        table.insert(cmd, v)
+    end
+    return table.concat(cmd, " ")
 end
 
 return M

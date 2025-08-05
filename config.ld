@@ -80,12 +80,10 @@ Some useful tools for development!
 - [lua-open](topics/lua-open.md.html): view your PDF
 - [texdef](topics/texdef.md.html): which TeX package defines `\macro`?
 - [kpsewhich](topics/kpathsea.md.html): where is TeX package XXX?
+- [epstopdf](topics/epstopdf.md.html): call ghostscript to convert eps to pdf
 
 TODO:
 
-- [epstopdf](https://ctan.org/pkg/epstopdf): convert eps to pdf for
-    `\includegraphics{XXX.eps}`. So far you have to convert it by yourself:
-    `gs -sOutputFile=XXX.pdf XXX.eps` then `\includegraphics{XXX.pdf}`.
 - [latexmk](https://github.com/debian-tex/latexmk): read XXX.log to decide if
     rerun TeX compiler. So far you have to rerun lualatex by yourself.
 

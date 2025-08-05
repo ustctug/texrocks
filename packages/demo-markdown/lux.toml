@@ -1,5 +1,5 @@
 package = "demo-markdown"
-version = "0.3.6"
+version = "0.3.7"
 lua = ">=5.1"
 
 [description]
@@ -8,7 +8,7 @@ maintainer = "Wu"
 labels = ["texmf"]
 
 [build_dependencies]
-lualatex = "0.3.6-1"
+lualatex = "0.3.7-1"
 markdown2tex = "3.11.4-1"
 
 [test_dependencies]

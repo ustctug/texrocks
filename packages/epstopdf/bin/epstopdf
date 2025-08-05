@@ -1,0 +1,2 @@
+#!/usr/bin/env -S texlua
+require 'epstopdf'.main(arg)

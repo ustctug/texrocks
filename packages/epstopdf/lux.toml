@@ -1,12 +1,12 @@
-package = "texluap"
+package = "epstopdf"
 version = "0.3.7"
 lua = ">=5.1"
 
 [description]
-summary = "tlua: luatex as Lua interpreter, texlua's prompt"
-detailed = "Refer https://github.com/mfussenegger/nlua"
+summary = "Convert EPS to PDF using Ghostscript"
+detailed = "A reimplementation of https://ctan.org/pkg/epstopdf by texlua"
 maintainer = "Wu"
-labels = [ "texmf" ]
+labels = [ "texlua" ]
 homepage = "https://github.com/ustctug/texrocks"
 license = 'GPL-3.0'
 
@@ -16,18 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = "0.3.7-1"
-prompt-style = "0.0.9-1"
-
-[test_dependencies]
-luatex = "0.3.7-1"
-
-[run]
-command = 'tlua'
-
-[test]
-type = 'command'
-command = 'luatex'
-flags = ['--shell-escape', 'test.tex']
+argparse = "0.7.1-1"
 
 [deploy]
 wrap_bin_scripts = false
@@ -36,4 +25,4 @@ wrap_bin_scripts = false
 type = "builtin"
 
 [build.install.bin]
-tlua = "bin/tlua"
+epstopdf = "0.3.7-1"

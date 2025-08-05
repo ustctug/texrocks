@@ -5,7 +5,7 @@ local specrev = '1'
 local repo_url = 'https://github.com/ho-tex/epstopdf'
 
 rockspec_format = '3.0'
-package = 'epstopdf'
+package = 'epstopdf-pkg'
 version = modrev .. '-' .. specrev
 
 description = {
@@ -23,7 +23,7 @@ dependencies = { 'grfext', 'pdftexcmds', 'infwarerr', 'kvoptions' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. git_ref,
+  dir = 'epstopdf-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then

@@ -58,18 +58,6 @@ function M.get_path(file)
     return table.concat({ cwd, path }, '/')
 end
 
----escape and concatenate command line arguments for printing
----@param args string[] command line arguments
----@return string cmd command line
-function M.get_cmd(args)
-    local cmd = {}
-    for _, v in ipairs(args) do
-        v = v:gsub(" ", "\\ ")
-        table.insert(cmd, v)
-    end
-    return table.concat(cmd, " ")
-end
-
 ---use correct system tool to open PDF
 ---@param file string PDF file path
 ---@return string[] args command line arguments
@@ -93,7 +81,7 @@ function M.main(args)
     local file = M.get_path(args[1])
     local cmd_args = M.get_cmd_args(file)
     if file ~= args[1] then
-        print('$ ' .. M.get_cmd(cmd_args))
+        print('$ ' .. texrocks.get_cmd(cmd_args))
     end
     texrocks.exec(cmd_args)
 end

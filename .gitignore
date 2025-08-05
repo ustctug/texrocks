@@ -10,6 +10,10 @@ lux.lock
 packages/*/*.rockspec
 # l3build upload
 *.curlopt
+# sdluatex
+sdluatex-aux.xml
+publisher.status
+publisher-protocol.xml
 
 *.cp
 

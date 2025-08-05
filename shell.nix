@@ -15,8 +15,11 @@ mkShell {
     # how lx find lua
     pkg-config
 
-    readline
     rename
+    # epstopdf
+    ghostscript
+    # tlue
+    readline
 
     # too old
     # lux-cli
