@@ -42,7 +42,7 @@ type = "command"
 build_command = "../initex/bin/initex --ini --interaction=nonstopmode luatex.ini"
 
 [build.install.bin]
-luatex = "0.3.6-1"
+luatex = '../initex/bin/initex'
 
 [build.install.conf]
 '../web2c/luahbtex/luatex.fmt' = 'luatex.fmt'

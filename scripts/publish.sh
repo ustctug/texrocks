@@ -5,7 +5,7 @@ cd "$(dirname "$(dirname "$(readlink -f "$0")")")"
 cd packages
 rm -f ./*/*.rock{,spec}
 for dir in ./*/; do
-  if [[ "$dir" = ./demo-*/ || "$dir" == ./initex/ ]]; then
+  if [[ "$dir" = ./demo-*/ ]]; then
     continue
   fi
   cd "$dir"

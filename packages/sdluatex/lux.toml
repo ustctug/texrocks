@@ -1,0 +1,36 @@
+package = "sdluatex"
+version = "0.1.0"
+lua = ">=5.1"
+
+[description]
+summary = "LuaTeX for sdLuaTeX"
+maintainer = "Wu"
+labels = ["texmf"]
+detailed = "See https://github.com/ustctug/texrocks"
+homepage = "https://www.speedata.de/"
+license = 'GPL-3.0'
+
+[dependencies]
+initex = "0.3.6-1"
+publisher = "5.1.18-1"
+
+[run]
+command = "sdluatex"
+
+[test]
+type = "command"
+command = "sdluatex"
+flags = ["layout.xml", "data.xml"]
+
+[deploy]
+wrap_bin_scripts = false
+
+[build]
+type = "command"
+build_command = "../initex/bin/initex --ini --interaction=nonstopmode sdluatex.ini"
+
+[build.install.bin]
+"sdluatex" = "bin/sdluatex"
+
+[build.install.conf]
+'../web2c/luahbtex/sdluatex.fmt' = 'sdluatex.fmt'

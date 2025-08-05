@@ -56,11 +56,11 @@ Which TeX do you want to use?
 - [plainTeX](topics/luatex.md.html): first TeX
 - [LaTeX](topics/lualatex.md.html): most people needed TeX
 - [TeXinfo](topics/luatexinfo.md.html): GNU's TeX
+- [sdLuaTeX](topics/sdluatex.md.html): [speedata](https://www.speedata.de/)'s TeX
 - [A toy TeX](topics/initex.md.html): how to create a new TeX dialect?
 
 TODO:
 
-- [publisher](https://github.com/speedata/publisher/)
 - ConTeXt
 
 ## TeX Tools

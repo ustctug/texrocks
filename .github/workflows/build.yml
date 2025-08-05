@@ -23,12 +23,15 @@ jobs:
         with:
           token: ${{secrets.GH_TOKEN}}
           ref: gh-pages
+      - uses: actions/setup-go@v5
+      - uses: ruby/setup-ruby@v1
       - uses: leso-kn/gh-actions-lua@master
         with:
           luaVersion: "5.3"
       - uses: hishamhm/gh-actions-luarocks@master
       - name: Install Dependencies
         run: |
+          gem install rake
           sudo apt-get -y update
           sudo apt-get -y install rename
           # https://github.com/drivendataorg/repro-zipfile/pull/23
@@ -42,6 +45,7 @@ jobs:
           # https://github.com/luarocks/luarocks/issues/1817
           echo local_by_default = true >> \
             ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
+          luarocks install publisher
           luarocks install luahbtex --server=https://ustctug.github.io/texrocks
           luarocks install luatex
           luarocks install luatexinfo

@@ -1,0 +1,10 @@
+#!/usr/bin/env -S initex --shell-escape \\catcode35=14 \\input
+\catcode`\#6
+\catcode`\{=1
+\catcode`\}=2
+
+\def\pdfoutline{\pdfextension outline }
+\directlua{require'sdluatex'.main(arg)}
+
+\end
+% ex: filetype=tex

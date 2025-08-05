@@ -37,6 +37,10 @@ nix-env -iA nur.repos.Freed-Wu.luahbtex
 
 **Remember to check the version** of `lux-cli`!
 
+```sh
+lx --version
+```
+
 ## Configure
 
 `~/.config/lux/config.toml`:

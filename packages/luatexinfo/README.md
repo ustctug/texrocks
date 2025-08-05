@@ -6,6 +6,8 @@ to convert texinfo to `info`, `HTML`, ..., while other TeX dialects doesn't have
 good support for outputting HTML like [TeX4ht](https://tug.org/tex4ht/) for
 PlainTeX/LaTex/ConTeXt.
 
+`main.texi`:
+
 ```texinfo
 @node Top
 @top Example
@@ -17,6 +19,12 @@ PlainTeX/LaTex/ConTeXt.
 @cindex chapter, first
 This is the first chapter.
 @bye
+```
+
+```sh
+lx add -b luatexinfo
+lx shell --build
+lualatex main.texi
 ```
 
 ![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)

@@ -3,6 +3,8 @@
 LaTeX is the most popular TeX Dialect. It can use all LuaTeX registers, which
 means you can create a bigger document than PlainTeX.
 
+`main.tex`:
+
 ```tex
 \documentclass{article}
 \begin{document}
@@ -11,6 +13,12 @@ Hello, \LaTeX!
 $$\sum_{n = 1}^\infty\frac1{n^2} = \frac{\pi^2}{6}$$
 
 \end{document}
+```
+
+```sh
+lx add -b lualatex
+lx shell --build
+lualatex main.tex
 ```
 
 ![lualatex](https://github.com/user-attachments/assets/09dd5ddb-8bac-4207-9cc5-ee61724ef7c0)

@@ -1,5 +1,5 @@
 ---@diagnostic disable: lowercase-global
--- luacheck: ignore 111 121
+-- luacheck: ignore 111 112 113 121
 local lfs = require 'lfs'
 pkg = "texrocks"
 ---l3build clean
@@ -24,6 +24,7 @@ installfiles = sourcefiles
 
 ---l3build doc
 docfiledir = "."
+docfiles = { "docs/*.md", "*.md" }
 
 ---l3build install
 tdsroot = "generic"
@@ -32,7 +33,6 @@ scriptfiles = { "*" }
 demofiles = { "packages/demo-*" }
 
 ---l3build ctan
-docfiles = { "docs/*.md", "*.md" }
 exefiles = {}
 local function add_bin(files, bindir)
     if lfs.isdir(bindir) then
@@ -93,7 +93,7 @@ end
 
 ---l3build tag X.Y.Z-r
 tagfiles = { "**/lux.toml", "**/lua/*.lua" }
-local packages = {}
+local packages = { pkg }
 for file in lfs.dir("packages") do
     if file:match("^%.") == nil then
         table.insert(packages, file)
@@ -115,8 +115,7 @@ function update_tag(file, content, tagname, tagdate)
         tagname = tagname .. "-1"
     end
     if file == "lux.toml" then
-        local version = tagname:gsub("%-.*", "")
-        content = tag(content, "version", version)
+        content = tag(content, "version", tagname:gsub("%-.*", ""))
         for _, package in ipairs(packages) do
             content = tag(content, package, tagname)
         end
