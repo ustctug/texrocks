@@ -31,9 +31,7 @@ command = "luatexinfo"
 [test]
 type = "command"
 command = "luatexinfo"
-# pdf has some bug about fonts' paths
-# args = ["main.texi"]
-flags = ["--output-format=dvi", "test.texi"]
+flags = ["test.texi"]
 
 [deploy]
 wrap_bin_scripts = false

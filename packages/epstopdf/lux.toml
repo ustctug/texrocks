@@ -18,6 +18,14 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 texrocks = "0.3.7-1"
 argparse = "0.7.1-1"
 
+[run]
+command = "epstopdf"
+
+[test]
+type = "command"
+command = "epstopdf"
+flags = ["--debug", "--nogs", "test.eps"]
+
 [deploy]
 wrap_bin_scripts = false
 
