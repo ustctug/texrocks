@@ -1,7 +1,6 @@
 ---@diagnostic disable: lowercase-global
 -- luacheck: ignore 111 112 113 121
 local lfs = require 'lfs'
-pkg = "texrocks"
 ---l3build clean
 -- keep .lux/ and lux.lock for l3build
 cleanfiles = {
@@ -33,6 +32,7 @@ scriptfiles = { "*" }
 demofiles = { "packages/demo-*" }
 
 ---l3build ctan
+module = "texrocks"
 exefiles = {}
 local function add_bin(files, bindir)
     if lfs.isdir(bindir) then
@@ -47,7 +47,7 @@ for file in lfs.dir("packages") do
 end
 
 ---l3build upload
-local repository = "https://github.com/ustctug/" .. pkg
+local repository = "https://github.com/ustctug/" .. module
 local config = {}
 loadfile("config.ld", "t", config)()
 local version = "0.0.1"
@@ -64,9 +64,9 @@ if f then
 end
 uploadconfig = {
     announcement = "Release " .. version,
-    ctanPath = "/systems/" .. pkg,
+    ctanPath = "/systems/" .. module,
     license = "gpl3+",
-    pkg = pkg,
+    module = module,
     summary = config.description,
     description = config.readme[0],
     version = version,
@@ -93,7 +93,7 @@ end
 
 ---l3build tag X.Y.Z-r
 tagfiles = { "**/lux.toml", "**/lua/*.lua" }
-local packages = { pkg }
+local packages = { module }
 for file in lfs.dir("packages") do
     if file:match("^%.") == nil then
         table.insert(packages, file)

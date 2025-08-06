@@ -32,3 +32,17 @@ jobs:
           extra_luarocks_args: |
             --force
           template: template.rockspec
+      - uses: zauguin/install-texlive@v4
+      - run: l3build ctan
+      - uses: actions/upload-artifact@v4
+        if: "! startsWith(github.ref, 'refs/tags/')"
+        with:
+          path: |
+            build/distrib/ctan/*-ctan.zip
+            build/distrib/tds/*.tds.zip
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            build/distrib/ctan/*-ctan.zip
+            build/distrib/tds/*.tds.zip
