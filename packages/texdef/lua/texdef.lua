@@ -10,11 +10,11 @@ local template = require 'template'
 local M = {}
 
 ---get parser
----@param name string program name
+---@param progname string program name
 ---@param fmt string TeX format name
 ---@return table parser
-function M.get_parser(name, fmt)
-    local parser = argparse(name):add_complete()
+function M.get_parser(progname, fmt)
+    local parser = argparse(progname):add_complete()
     parser:argument('macro', 'macro name without \\'):args('*')
     parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
     if fmt:match 'latex' then
@@ -43,18 +43,18 @@ function M.get_parser(name, fmt)
 end
 
 ---parse command line arguments
----@param args string[] command line arguments
----@return table cmd_args parsed result
-function M.parse(args)
-    local cmd_args = texrocks.preparse(args)
-    local parser = M.get_parser(cmd_args[0], tex.formatname)
-    cmd_args = parser:parse(cmd_args)
-    return M.postparse(cmd_args)
+---@param argv string[] command line arguments
+---@return table args parsed result
+function M.parse(argv)
+    local args = texrocks.preparse(argv)
+    local parser = M.get_parser(args[0], tex.formatname)
+    args = parser:parse(args)
+    return M.postparse(args)
 end
 
 ---change some values by command line arguments
 ---@param args table parsed result
----@return table cmd_args processed result
+---@return table args processed result
 function M.postparse(args)
     if args.ignore_regex == '' then
         args.ignore_regex = '$^'
@@ -110,25 +110,25 @@ function M.get_path(filename)
 end
 
 ---**first entry for texdef and latexdef**
----@param args string[] command line arguments
----@return table | nil cmd_args parsed command line arguments
-function M.main(args)
+---@param argv string[] command line arguments
+---@return table | nil args parsed command line arguments
+function M.main(argv)
     print()
-    local cmd_args = M.parse(args)
-    local code = template.render(M.get_path('texdef/main.tex'), cmd_args)
-    if cmd_args.dry_run then
+    local args = M.parse(argv)
+    local code = template.render(M.get_path('texdef/main.tex'), args)
+    if args.dry_run then
         print(code)
         return
     end
-    local output = cmd_args.output
-    if cmd_args.list > 0 then
+    local output = args.output
+    if args.list > 0 then
         output = tex.jobname .. '.log'
     end
-    cmd_args.f = io.open('.lux/' .. output, 'w+')
-    if cmd_args.f then
+    args.f = io.open('.lux/' .. output, 'w+')
+    if args.f then
         M.print(code)
     end
-    return cmd_args
+    return args
 end
 
 ---replace package names with their full paths

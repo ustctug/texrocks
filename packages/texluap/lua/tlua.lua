@@ -6,17 +6,17 @@ local status = require'status'
 local M = {}
 
 ---**entry for tlua**
----@param args string[] command line arguments
-function M.main(args)
+---@param argv string[] command line arguments
+function M.main(argv)
     utils.init()
     utils.source_configs()
     local parser = utils.get_parser()
-    local cmd_args = parser:parse(args)
+    local args = parser:parse(argv)
     if args.v then
         print(status.banner)
         os.exit(0)
     end
-    utils.process_args(cmd_args, parser)
+    utils.process_args(args, parser)
 end
 
 return M

@@ -71,17 +71,17 @@ end
 ---`arg` starts from index 0: `arg = {[0] = "ls", "-al"}`
 ---`os.exec()` starts from index 1: `os.exec{"ls", "-al"}`
 ---we need to shift it
----@param args string[] command line arguments
+---@param argv string[] command line arguments
 ---@param offset integer e.g., `-1` means `args[i + 1] = args[i]`
----@return string[] cmd_args
-function M.shift(args, offset)
-    local begin = M.get_begin_index(args)
+---@return string[] args
+function M.shift(argv, offset)
+    local begin = M.get_begin_index(argv)
 
-    local cmd_args = {}
-    for i = begin, #args do
-        cmd_args[i - offset] = args[i]
+    local args = {}
+    for i = begin, #argv do
+        args[i - offset] = argv[i]
     end
-    return cmd_args
+    return args
 end
 
 ---call `os.setenv()` when environment variable doesn't exist
@@ -273,7 +273,7 @@ end
 ---@see parse
 ---@param args string[] command line arguments
 ---@param extra_offset integer | nil extra offset
----@return string[] cmd_args parsed result
+---@return string[] args parsed result
 function M.preparse(args, extra_offset)
     local offset = M.get_offset(args)
     if offset == nil then
@@ -285,25 +285,25 @@ function M.preparse(args, extra_offset)
 end
 
 ---**entry for luatex**
----@param args string[] `arg`
-function M.run(args)
-    local cmd_args = M.parse(args)
-    M.setotherenv(M.get_program_name(cmd_args))
+---@param argv string[] `arg`
+function M.run(argv)
+    local args = M.parse(argv)
+    M.setotherenv(M.get_program_name(args))
     M.sync(false)
-    M.exec(cmd_args)
+    M.exec(args)
 end
 
 ---luahbtex --luaonly texlua luatex:
 ---texlua will call preparse(), then loadfile("luatex")()
 ---luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
----@param args string[] command line arguments
----@return string[] cmd_args parsed result
+---@param argv string[] command line arguments
+---@return string[] args parsed result
 ---@see preparse
-function M.parse(args)
-    local cmd_args = M.shift(args, -1)
-    local begin = M.get_begin_index(cmd_args)
-    cmd_args[0] = cmd_args[begin]
-    return cmd_args
+function M.parse(argv)
+    local args = M.shift(argv, -1)
+    local begin = M.get_begin_index(args)
+    args[0] = args[begin]
+    return args
 end
 
 ---see <https://texdoc.org/serve/luatex/0>'s command line options

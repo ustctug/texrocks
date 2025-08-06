@@ -34,10 +34,10 @@ function M.get_parser(progname)
 end
 
 ---**entry for kpsewhich**
----@param args string[] command line arguments
-function M.main(args)
-    local parser = M.get_parser(args[0])
-    args = parser:parse(args)
+---@param argv string[] command line arguments
+function M.main(argv)
+    local parser = M.get_parser(argv[0])
+    local args = parser:parse(argv)
     if args.version then
         print(kpse.version())
         return

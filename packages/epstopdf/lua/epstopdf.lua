@@ -35,17 +35,17 @@ function M.get_parser(progname)
 end
 
 ---parse command line arguments
----@param args string[] command line arguments
----@return table cmd_args parsed result
-function M.parse(args)
-    local parser = M.get_parser(args[0])
-    local cmd_args = parser:parse(args)
-    return M.postparse(cmd_args)
+---@param argv string[] command line arguments
+---@return table args parsed result
+function M.parse(argv)
+    local parser = M.get_parser(argv[0])
+    local args = parser:parse(argv)
+    return M.postparse(args)
 end
 
 ---change some values by command line arguments
 ---@param args table parsed result
----@return table cmd_args processed result
+---@return table args processed result
 function M.postparse(args)
     args.pdffile = args.outfile or args.pdffile or args.epsfile:gsub("%.eps$", ".pdf")
     for opt in args.gsopt:gmatch('(%S+)%s*') do
@@ -88,17 +88,17 @@ function M.postparse(args)
 end
 
 ---**entry for epstopdf**
----@param args string[] command line arguments
-function M.main(args)
-    local cmd_args = M.parse(args)
-    local cmd = { cmd_args.gscmd }
-    for _, opt in ipairs(cmd_args.gsopts) do
+---@param argv string[] command line arguments
+function M.main(argv)
+    local args = M.parse(argv)
+    local cmd = { args.gscmd }
+    for _, opt in ipairs(args.gsopts) do
         table.insert(cmd, opt)
     end
-    if cmd_args.debug then
+    if args.debug then
         print('$ ' .. texrocks.get_cmd(cmd))
     end
-    if cmd_args.nogs then
+    if args.nogs then
         return
     end
     texrocks.exec(cmd)

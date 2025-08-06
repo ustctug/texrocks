@@ -76,14 +76,14 @@ function M.get_cmd_args(file)
 end
 
 ---**entry for lua-open**
----@param args string[] command line arguments
-function M.main(args)
-    local file = M.get_path(args[1])
-    local cmd_args = M.get_cmd_args(file)
-    if file ~= args[1] then
-        print('$ ' .. texrocks.get_cmd(cmd_args))
+---@param argv string[] command line arguments
+function M.main(argv)
+    local file = M.get_path(argv[1])
+    local args = M.get_cmd_args(file)
+    if file ~= argv[1] then
+        print('$ ' .. texrocks.get_cmd(args))
     end
-    texrocks.exec(cmd_args)
+    texrocks.exec(args)
 end
 
 return M
