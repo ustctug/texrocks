@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '1.0'
 local modrev = git_ref
 local specrev = '1'
 
@@ -18,8 +18,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/ctablestack.tds.zip",
+  dir = '.'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -31,5 +31,5 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  copy_directories = { 'tex' },
 }

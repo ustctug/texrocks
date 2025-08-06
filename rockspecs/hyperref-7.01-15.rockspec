@@ -34,7 +34,8 @@ end
 dependencies = { 'ntheorem', 'rerunfilecheck', 'refcount', 'gettitlestring', 'minitoc', 'atveryend', 'kvoptions', 'iftex',
   'pdfescape', 'hycolor', 'etoolbox', 'stringenc', 'intcalc', 'bitset', 'atbegshi', 'kvsetkeys', 'kvdefinekeys' }
 
+-- https://github.com/latex3/hyperref/issues/392
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  copy_directories = { 'tex' },
 }

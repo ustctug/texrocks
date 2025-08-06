@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = '730eb338a28cb8f6cd1f191280029a54767588da'
+local modrev = '1.1.1'
 local specrev = '1'
 
 local repo_url = 'https://github.com/tanukihee/ChineseJFM'
@@ -20,7 +20,8 @@ description = {
 dependencies = { 'luatexja' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-ctan.zip',
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = 'ChineseJFM-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -38,7 +39,7 @@ build = {
   },
   install = {
     conf = {
-      ['../doc/latex/chinese-jfm/chinese-jfm.pdf'] = 'chinese-jfm.pdf',
+      -- ['../doc/latex/chinese-jfm/chinese-jfm.pdf'] = 'chinese-jfm.pdf',
     }
   }
 }

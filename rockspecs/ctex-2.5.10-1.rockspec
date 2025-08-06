@@ -1,8 +1,8 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = 'ctex-v2.5.10'
+local modrev = git_ref:gsub('.*%-v', '')
 local specrev = '1'
 
-local repo_url = 'https://github.com/ctex/ctex'
+local repo_url = 'https://github.com/CTeX-org/ctex-kit'
 
 rockspec_format = '3.0'
 package = 'ctex'
@@ -17,11 +17,11 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-dependencies = { 'chinese-jfm', 'l3kernel', 'fontspec', 'zhnumber' }
+dependencies = { 'chinese-jfm', 'l3kernel', 'fontspec', 'ctex' }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. git_ref .. '.zip',
+  dir = '.',
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -32,8 +32,10 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  type = 'command',
+  -- https://github.com/CTeX-org/ctex-kit/issues/741
+  build_command = [[unzip ctex.tds.zip || 7z x ctex.tds.zip]],
+  copy_directories = { 'tex' },
   install = {
     lua = {
       ['ctex-zhconv-index'] = 'tex/luatex/ctex/ctex-zhconv-index.lua',

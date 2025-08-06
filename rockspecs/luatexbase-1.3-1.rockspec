@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '1.3'
 local modrev = git_ref
 local specrev = '1'
 
@@ -22,8 +22,8 @@ This ‘stub’ package provides a compatibility layer to allow existing package
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/luatexbase.tds.zip",
+  dir = '.'
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -35,7 +35,7 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  copy_directories = { 'tex' },
   install = {
     lua = {
       ['luatexbase.loader'] = 'tex/luatex/luatexbase/luatexbase.loader.lua'

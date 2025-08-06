@@ -85,7 +85,12 @@ Some useful tools for development!
 TODO:
 
 - [latexmk](https://github.com/debian-tex/latexmk): read XXX.log to decide if
-    rerun TeX compiler. So far you have to rerun lualatex by yourself.
+  rerun TeX compiler. So far you have to rerun lualatex by yourself.
+- a new syntax highlight system based on
+  [lua-tree-sitter](https://github.com/xcb-xwii/lua-tree-sitter) to use
+  [tree-sitter grammars](https://nvim-neorocks.github.io/rocks-binaries/) to
+  replace [minted](https://github.com/gpoore/minted) based on python's
+  [pygments](https://pygments.org/)
 
 ## Learn More
 

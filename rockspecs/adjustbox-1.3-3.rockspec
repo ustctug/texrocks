@@ -39,5 +39,5 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  copy_directories = { 'tex' },
 }

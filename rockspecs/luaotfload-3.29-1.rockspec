@@ -1,4 +1,4 @@
-local git_ref = 'v3.28'
+local git_ref = 'v3.29'
 local modrev = git_ref:gsub('v', '')
 local specrev = '1'
 
@@ -15,7 +15,7 @@ description = {
   detailed =
   [[The package adopts the TrueType/OpenType Font loader code provided in ConTeXt, and adapts it to use in Plain TeX and LaTeX. It works under LuaLaTeX only.]],
   labels = { 'tex', 'latex', 'luatex' },
-  homepage = 'https://ctan.org/pkg/luaotfload',
+  homepage = repo_url,
   license = 'GPL-2.0'
 }
 

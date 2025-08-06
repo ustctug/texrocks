@@ -1,8 +1,8 @@
-local git_ref = 'scm'
+local git_ref = '25.12'
 local modrev = git_ref
 local specrev = '1'
 
-local repo_url = 'https://ctan.org/pkg/babel-base'
+local repo_url = 'https://github.com/latex3/babel'
 
 rockspec_format = '3.0'
 package = 'babel-base'
@@ -33,11 +33,16 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+-- https://github.com/latex3/babel/issues/350
 build = {
   type = 'command',
   build_command = [[
-    mkdir -p lua
-    mv tex/generic/babel/*.lua lua
-  ]],
-  copy_directories = { 'doc', 'tex', 'lua', 'makeindex' },
+    luatex --interaction=nonstopmode babel.ins
+]],
+  install = {
+    lua = {
+    },
+    conf = {
+    }
+  }
 }

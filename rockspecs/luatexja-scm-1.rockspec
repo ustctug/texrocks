@@ -1,5 +1,5 @@
-local git_ref = 'scm'
-local modrev = git_ref
+local git_ref = '20250723.0'
+local modrev = 'scm'
 local specrev = '1'
 
 local repo_url = 'https://github.com/luatexja/luatexja'
@@ -35,7 +35,7 @@ build = {
   type = 'command',
   patches = {
     ["fix-path.diff"] = [[
---- old/src/luatexja-core.sty	2024-10-14 03:29:58.000000000 +0800
+--- old/src/luatexja-core.sty
 +++ new/src/luatexja-core.sty
 @@ -179,7 +179,7 @@
  \directlua{%
@@ -46,7 +46,7 @@ build = {
        "File `luatexja.lua' not found"))
  }
  
-    ]]
+]]
   },
   build_command = [[
   sh -c 'install -Dm644 src/*.lua -t lua &&
@@ -56,5 +56,5 @@ build = {
     mv src tex/luatex/luatexja &&
     mv luatex doc'
   ]],
-  copy_directories = { 'doc', 'tex', 'lua' },
+  copy_directories = { 'doc', 'tex' },
 }
