@@ -24,7 +24,7 @@ This is the first chapter.
 ```sh
 lx add -b luatexinfo
 lx shell --build
-lualatex main.texi
+luatexinfo main.texi
 ```
 
 ![texinfo](https://github.com/user-attachments/assets/35507747-65ba-4d76-bfec-a614826ce4c7)

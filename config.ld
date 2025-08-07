@@ -81,16 +81,14 @@ Some useful tools for development!
 - [texdef](topics/texdef.md.html): which TeX package defines `\macro`?
 - [kpsewhich](topics/kpathsea.md.html): where is TeX package XXX?
 - [epstopdf](topics/epstopdf.md.html): call ghostscript to convert eps to pdf
+- [texcat](topics/texcat.md.html): a new syntax highlight system to
+  replace [minted](https://github.com/gpoore/minted) based on python's
+  [pygments](https://pygments.org/)
 
 TODO:
 
 - [latexmk](https://github.com/debian-tex/latexmk): read XXX.log to decide if
   rerun TeX compiler. So far you have to rerun lualatex by yourself.
-- a new syntax highlight system based on
-  [lua-tree-sitter](https://github.com/xcb-xwii/lua-tree-sitter) to use
-  [tree-sitter grammars](https://nvim-neorocks.github.io/rocks-binaries/) to
-  replace [minted](https://github.com/gpoore/minted) based on python's
-  [pygments](https://pygments.org/)
 
 ## Learn More
 

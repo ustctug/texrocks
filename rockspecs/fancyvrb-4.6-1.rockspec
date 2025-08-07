@@ -27,6 +27,8 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+dependencies = { 'latex-graphics' }
+
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {

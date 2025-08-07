@@ -42,7 +42,7 @@ build = {
     mv tex/generic/pgf/graphdrawing/lua/pgf.lua lua
     rm -rf tex/generic/pgf/graphdrawing/lua/LUA_CODING_STYLE
   ]],
-  copy_directories = { 'doc', 'tex' },
+  copy_directories = { 'tex' },
   install = {
     lua = {
       ["pgf.gd.bindings.Binding"] = "lua/pgf/gd/bindings/Binding.lua",

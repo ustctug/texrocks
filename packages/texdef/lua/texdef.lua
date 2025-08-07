@@ -1,7 +1,6 @@
 ---library for `texdef` and `latexdef`
 ---@module texdef
 ---@copyright 2025
-local lfs = require 'lfs'
 local tex = require 'tex'
 local kpse = require 'kpse'
 local texrocks = require 'texrocks'
@@ -89,13 +88,6 @@ function M.postparse(args)
     return args
 end
 
----wrap `tex.print()`
----@param code string TeX code
-function M.print(code)
-    code = code:gsub('^%s+', ''):gsub("%.*\n", ""):gsub("\n", "")
-    tex.print(code)
-end
-
 ---get path of template
 ---https://github.com/nvim-neorocks/lux/issues/922
 ---@param filename string template name
@@ -103,9 +95,6 @@ end
 function M.get_path(filename)
     local root = debug.getinfo(1).source:match("@?(.*)/")
     local file = root .. '/' .. filename
-    if not lfs.isfile(file) then
-        file = lfs.currentdir() .. '/lua/' .. filename
-    end
     return file
 end
 
@@ -126,7 +115,7 @@ function M.main(argv)
     end
     args.f = io.open('.lux/' .. output, 'w+')
     if args.f then
-        M.print(code)
+        texrocks.print(code)
     end
     return args
 end

@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = "0.3.7-1"
-prompt-style = "0.0.9-1"
+prompt-style = "0.0.10-1"
 
 [test_dependencies]
 luatex = "0.3.7-1"

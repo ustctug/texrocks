@@ -419,4 +419,11 @@ function M.get_cmd(args)
     return table.concat(cmd, " ")
 end
 
+---wrap `tex.print()`
+---@param code string TeX code
+function M.print(code)
+    code = code:gsub("%[^\n]*\n", ""):gsub("\n", " ")
+    tex.print(code)
+end
+
 return M
