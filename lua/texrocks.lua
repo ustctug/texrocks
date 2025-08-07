@@ -4,6 +4,7 @@
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143
 local lfs = require "lfs"
+local tex = require "tex"
 
 local M   = {
     fontmap_name = "luatex.map"
