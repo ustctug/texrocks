@@ -33,27 +33,11 @@ elseif os.name == "cygwin" then
     M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
 end
 
----base name
----@param path string
----@return string path
-function M.basename(path)
-    path = path:gsub(".*/", "")
-    return path
-end
-
----path without extension name
----@param path string
----@return string path
-function M.rootname(path)
-    path = path:gsub("%.*", "")
-    return path
-end
-
 ---base name without extension name
 ---@param path string
 ---@return string path
 function M.name(path)
-    return M.rootname(M.basename(path))
+    return path:match('/([^/.]+)%.?[^/]*$')
 end
 
 ---get the first non-nil element's index

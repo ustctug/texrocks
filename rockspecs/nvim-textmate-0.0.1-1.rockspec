@@ -1,4 +1,4 @@
-local git_ref = 'e2bb80a58a41234e5e81a28250bc583422c02157'
+local git_ref = '4a6473a060f29829007c2f2e2b239e5ab4ea9bdd'
 local modrev = '0.0.1'
 local specrev = '1'
 
@@ -28,18 +28,11 @@ build = {
       ['fix-build.diff'] = [[
 --- old/Makefile
 +++ new/Makefile
-@@ -3,16 +3,17 @@ all: prebuild build install
- .PHONY: prebuild build install
- 
- prebuild:
-+	cd libs/jsoncpp && ./amalgamate.py
- 	cd libs/Onigmo && ./autogen.sh && ./configure
- 
+@@ -9,11 +9,11 @@ prebuild:
  build:
  	mkdir -p build
--	cd build && cmake ../cmake && make
+ 	cd build && cmake ../cmake && cmake --build .
 -	cp build/textmate.so ./lua/nvim-textmate/
-+	cd build && cmake ../cmake && cmake --build .
 +	# cp build/textmate.so ./lua/nvim-textmate/
  
  install:
