@@ -1,5 +1,5 @@
 package = "luatex"
-version = "0.3.7"
+version = "0.3.8"
 lua = ">=5.1"
 
 [description]
@@ -15,11 +15,11 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.7-1"
+texrocks = "0.3.8-1"
 amsfonts = "3.04-1"
 
 [build_dependencies]
-texrocks = "0.3.7-1"
+texrocks = "0.3.8-1"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
 unicode-data = "1.18-1"

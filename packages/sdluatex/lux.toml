@@ -1,5 +1,5 @@
 package = "sdluatex"
-version = "0.3.7"
+version = "0.3.8"
 lua = ">=5.1"
 
 [description]
@@ -15,7 +15,7 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-initex = "0.3.7-1"
+initex = "0.3.8-1"
 publisher = "5.1.18-1"
 
 [run]

@@ -1,5 +1,5 @@
 package = "demo-tikz"
-version = "0.3.7"
+version = "0.3.8"
 lua = ">=5.1"
 
 [description]
@@ -8,7 +8,7 @@ maintainer = "Wu"
 labels = ["texmf"]
 
 [build_dependencies]
-lualatex = "0.3.7-1"
+lualatex = "0.3.8-1"
 pgf = "3.1.10-1"
 hyperref = "7.01-15"
 hologo = "1.15-1"

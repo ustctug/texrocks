@@ -61,6 +61,16 @@ If you use texrocks, you can install parsers by yourself.
 lx add -b tree-sitter-XXX
 ```
 
+Add <https://nvim-neorocks.github.io/rocks-binaries/> to
+`~/.config/lux/config.toml` to save compile time.
+
+```toml
+extra_servers = [
+  "https://nvim-neorocks.github.io/rocks-binaries/",
+  "https://ustctug.github.io/texrocks/",
+]
+```
+
 ## Usage
 
 <!-- markdownlint-disable MD013 -->

@@ -1,5 +1,5 @@
 package = "epstopdf"
-version = "0.3.7"
+version = "0.3.8"
 lua = ">=5.1"
 
 [description]
@@ -15,7 +15,7 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.7-1"
+texrocks = "0.3.8-1"
 argparse = "0.7.1-1"
 
 [run]
@@ -33,4 +33,4 @@ wrap_bin_scripts = false
 type = "builtin"
 
 [build.install.bin]
-epstopdf = "0.3.7-1"
+epstopdf = "0.3.8-1"

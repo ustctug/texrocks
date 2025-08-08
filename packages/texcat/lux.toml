@@ -1,5 +1,5 @@
 package = "texcat"
-version = "0.1.0"
+version = "0.3.8"
 lua = ">=5.1"
 
 [description]
@@ -31,12 +31,11 @@ flags = ["--shell-escape", "test.tex"]
 type = "builtin"
 
 [build.install.bin]
-texcat = "bin/texcat"
+texcat = 'bin/texcat'
 
 [test_dependencies]
-texluap = "0.3.7-1"
 fancyvrb = "4.6-1"
-lualatex = "0.3.7-1"
+lualatex = "0.3.8-1"
 graphics-cfg = "0.0.1-1"
 vscode-extensions = "1.102.3-1"
 tree-sitter-lua = "0.0.36-1"
