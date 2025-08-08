@@ -1,0 +1,1 @@
+<l:for names="_, hl" in="ipairs(hls)"><l:if cond="color_map[hl.scope][1] < 0">$[n]{hl.text}<l:else/>$[n]{warna.format('%{rgb:' .. table.concat(color_map[hl.scope], ',') .. '}' .. hl.text)}</l:if></l:for>

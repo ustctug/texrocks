@@ -1,0 +1,9 @@
+\documentclass{article}
+\usepackage{fancyvrb}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\begin{document}
+
+<l:include filename="tex"/>
+
+\end{document}

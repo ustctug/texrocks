@@ -1,0 +1,42 @@
+package = "texcat"
+version = "0.1.0"
+lua = ">=5.1"
+
+[description]
+summary = "syntax highlight code in LaTeX"
+detailed = "A reimplementation of https://pygments.org/docs/formatters/#LatexFormatter by texlua"
+maintainer = "Wu"
+labels = [ "tex" ]
+homepage = "https://github.com/ustctug/texrocks"
+license = 'GPL-3.0'
+
+[dependencies]
+argparse = "0.7.1-1"
+lua-template = "1.0.0-1"
+warna = "0.3.5-2"
+ltreesitter = "0.1.0-1"
+nvim-textmate = "0.0.1-1"
+luafilesystem = "1.8.0-1"
+
+[run]
+type = "command"
+command = "texcat"
+
+[test]
+type = "command"
+command = "lualatex"
+flags = ["--shell-escape", "test.tex"]
+
+[build]
+type = "builtin"
+
+[build.install.bin]
+texcat = "bin/texcat"
+
+[test_dependencies]
+texluap = "0.3.7-1"
+fancyvrb = "4.6-1"
+lualatex = "0.3.7-1"
+graphics-cfg = "0.0.1-1"
+vscode-extensions = "1.102.3-1"
+tree-sitter-lua = "0.0.36-1"
