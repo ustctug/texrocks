@@ -126,7 +126,7 @@ function M.get_parser(progname)
     parser:option('--list', 'list all themes/languages/...', 'none'):choices {
         'none', 'themes', 'languages', 'extensions_dirs', 'colors', 'links'
     }
-    parser:option('--command-prefix', 'command prefix for TeX', [[PY]])
+    parser:option('--command-prefix', 'command prefix for TeX'):count('*')
     -- parser:option('--math-escape', 'escape $math TeX code$'):args(0)
     return parser
 end
@@ -174,8 +174,10 @@ function M.postparse(args)
 
     if #args.output == 0 then
         if tex and tex.print then
-            args.output[1] = '.lux/%s.tex'
-            args.output[1] = args.output[1]:format(args.file[1])
+            for i, file in ipairs(args.file) do
+                args.output[i] = '.lux/%s.tex'
+                args.output[i] = args.output[i]:format(file)
+            end
         else
             args.output[1] = '-'
         end
@@ -212,6 +214,16 @@ function M.postparse(args)
                     end
                 end
             end
+        end
+    end
+
+    local s = #args.command_prefix
+    local prefix = "PY"
+    -- PYa, PYb, ..., PYz, PYXa, PYxb, ...
+    for i = s, #args.file - 1 do
+        args.command_prefix[i + 1] = prefix .. string.char(0x61 + i % 26)
+        if i % 26 == 25 then
+            prefix = prefix .. "X"
         end
     end
 
@@ -288,11 +300,12 @@ end
 
 ---**entry for texcat**
 ---@param argv string[] command line arguments
+---@return string[] output
 function M.main(argv)
     local args = M.parse(argv)
     if args.list then
         print(args.list)
-        return
+        return {}
     end
     -- cache
     local themes = {}
@@ -361,10 +374,16 @@ function M.main(argv)
             args.table = table
             args.warna = warna
             args.escape = M.escape
+            args.preamble = M.get_path('texcat/main.preamble.tex')
             args.tex = M.get_path('texcat/main.tex')
+            args.prefix = args.command_prefix[i]
+            if tex and tex.print then
+                M.output(M.get_output('preamble.tex', args), '-')
+            end
             M.output(M.get_output(args.output_format, args), args.output[i])
         end
     end
+    return args.output
 end
 
 ---convert theme information to color map
@@ -555,7 +574,8 @@ end
 function M.output(out, filename)
     if filename == '-' then
         if tex and tex.print then
-            tex.print(out:gsub("%[^\n]*\n", ""):gsub("\n", " "))
+            out = out:gsub("^%s+", ""):gsub("\n", "")
+            tex.print(out)
         else
             print(out)
         end
@@ -572,10 +592,6 @@ function M.output(out, filename)
         if f then
             f:write(out)
             f:close()
-            if tex and tex.print then
-                -- tex.print() cannot accept "\n"
-                tex.print([[\input ]] .. filename)
-            end
         end
     end
 end

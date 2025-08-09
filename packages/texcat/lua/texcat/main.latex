@@ -2,8 +2,11 @@
 \usepackage{fancyvrb}
 \usepackage{color}
 \usepackage[utf8]{inputenc}
+<l:include filename="preamble"/>
 \begin{document}
 
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
 <l:include filename="tex"/>
+\end{Verbatim}
 
 \end{document}

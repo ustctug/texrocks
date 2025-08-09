@@ -131,8 +131,6 @@ return get_last_index
 `texcat test.lua --output-format=tex` will generate:
 
 ```tex
-% ...
-\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
 \PY{comment}{\PYZhy{}\PYZhy{}\PYZhy{}comment}
 \PY{keyword}{local}\PY{source}{ }\PY{keyword.function}{function}\PY{source}{ }\PY{variable}{get\PYZus{}last\PYZus{}index}\PY{source}{(}\PY{variable}{input}\PY{source}{)}
 \PY{source}{    }\PY{keyword}{local}\PY{source}{ }\PY{variable}{offsets}\PY{source}{ }\PY{operator}{=}\PY{source}{ }\PY{constructor}{\PYZob{}}\PY{source}{ }\PY{number}{1}\PY{source}{ }\PY{constructor}{\PYZcb{}}
@@ -142,22 +140,7 @@ return get_last_index
 \PY{source}{    }\PY{keyword.return}{return}\PY{source}{ true}
 \PY{keyword.function}{end}
 \PY{keyword.return}{return}\PY{source}{ }\PY{variable}{get\PYZus{}last\PYZus{}index}
-\end{Verbatim}
 ```
 
-You can directly use it in your LuaLaTeX document.
-
-```sh
-lualatex --shell-escape main.tex
-```
-
-```tex
-\documentclass{article}
-\usepackage{fancyvrb}
-\usepackage{color}
-\begin{document}
-
-\directlua{require'texcat'.main{'test.lua'}}
-
-\end{document}
-```
+See [example](https://github.com/ustctug/texrocks/tree/main/packages/texcat) to
+know how to use it in your LuaLaTeX document.

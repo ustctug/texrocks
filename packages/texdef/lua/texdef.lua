@@ -115,7 +115,8 @@ function M.main(argv)
     end
     args.f = io.open('.lux/' .. output, 'w+')
     if args.f then
-        texrocks.print(code)
+        code = code:gsub("^%s+", ""):gsub("\n", "")
+        tex.print(code)
     end
     return args
 end

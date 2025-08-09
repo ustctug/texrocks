@@ -4,7 +4,6 @@
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143
 local lfs = require "lfs"
-local tex = require "tex"
 
 local M   = {
     fontmap_name = "luatex.map"
@@ -402,13 +401,6 @@ function M.get_cmd(args)
         table.insert(cmd, v)
     end
     return table.concat(cmd, " ")
-end
-
----wrap `tex.print()`
----@param code string TeX code
-function M.print(code)
-    code = code:gsub("%[^\n]*\n", ""):gsub("\n", " ")
-    tex.print(code)
 end
 
 return M

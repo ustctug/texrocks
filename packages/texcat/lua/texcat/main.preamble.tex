@@ -1,0 +1,25 @@
+\makeatletter
+\def\$[u]{prefix}@reset{\let\$[u]{prefix}@it=\relax\let\$[u]{prefix}@bf=\relax\let\$[u]{prefix}@ul=\relax \let\$[u]{prefix}@tc=\relax\let\$[u]{prefix}@bc=\relax \let\$[u]{prefix}@ff=\relax}
+\def\$[u]{prefix}@tok#1{\csname $[u]{prefix}@tok@#1\endcsname}
+\def\$[u]{prefix}@toks#1+{\ifx\relax#1\empty\else\$[u]{prefix}@tok{#1}\expandafter\$[u]{prefix}@toks\fi}
+\def\$[u]{prefix}@do#1{\$[u]{prefix}@bc{\$[u]{prefix}@tc{\$[u]{prefix}@ul{\$[u]{prefix}@it{\$[u]{prefix}@bf{\$[u]{prefix}@ff{#1}}}}}}}
+\def\$[u]{prefix}#1#2{\$[u]{prefix}@reset\$[u]{prefix}@toks#1+\relax+\$[u]{prefix}@do{#2}}
+<l:for names="_, scope" in="ipairs(scopes)">
+\@namedef{$[u]{prefix}@tok@$[u]{scope:gsub('%-', '_')}}{\def\$[u]{prefix}@tc##1{<l:if cond="color_map[scope][1] < 0">##1<l:else/>\textcolor[rgb]{${color_map[scope][1]/255},${color_map[scope][2]/255},${color_map[scope][3]/255}}{##1}</l:if>}}</l:for>
+
+\def\$[u]{prefix}Zbs{\char`\\}
+\def\$[u]{prefix}Zus{\char`\_}
+\def\$[u]{prefix}Zob{\char`\{}
+\def\$[u]{prefix}Zcb{\char`\}}
+\def\$[u]{prefix}Zca{\char`\^}
+\def\$[u]{prefix}Zam{\char`\&}
+\def\$[u]{prefix}Zlt{\char`\<}
+\def\$[u]{prefix}Zgt{\char`\>}
+\def\$[u]{prefix}Zsh{\char`\#}
+\def\$[u]{prefix}Zpc{\char`\%}
+\def\$[u]{prefix}Zdl{\char`\$}
+\def\$[u]{prefix}Zhy{\char`\-}
+\def\$[u]{prefix}Zsq{\char`\'}
+\def\$[u]{prefix}Zdq{\char`\"}
+\def\$[u]{prefix}Zti{\char`\~}
+\makeatother
