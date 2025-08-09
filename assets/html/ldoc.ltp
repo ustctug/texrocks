@@ -50,11 +50,13 @@
 #   end
 # end
 
-# if not ldoc.single and module then -- reference back to project index
 <ul>
+# if not ldoc.single and module then -- reference back to project index
   <li><a href="../$(ldoc.output).html">Index</a></li>
-</ul>
+# else
+  <li><strong>texrocks</strong> at <a href="https://luarocks.org/modules/freed-wu/texrocks">luarocks</a></li>
 # end
+</ul>
 
 # --------- contents of module -------------
 # if module and not ldoc.no_summary and #module.items > 0 then
@@ -127,7 +129,7 @@
 #       if name:match"^demo-" == nil then
 #          if mod.file.filename:match"_readthedocs" then
 #            if mod.name == this_mod then
-  <li><strong>$(name)</strong></li>
+  <li><strong>$(name)</strong> at <a href="https://luarocks.org/modules/freed-wu/$(name)">luarocks</a></li>
 #            else
   <li><a href="$(ldoc.ref_to_module(mod))">$(name)</a></li>
 #            end
