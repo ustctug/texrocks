@@ -60,6 +60,7 @@ jobs:
           luarocks install luatexinfo
           luarocks install lualatex
           luarocks install lualibs
+          luarocks install texcat
           luarocks install texdef
           luarocks install markdown2tex
           luarocks install beamer
