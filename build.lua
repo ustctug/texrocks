@@ -116,6 +116,9 @@ end
 ---@param tagdate string %Y-%m-%d
 ---@return string content
 function update_tag(file, content, tagname, tagdate)
+    if tagname == nil then
+        tagname = data.version
+    end
     if tagname:match("%-") == nil then
         tagname = tagname .. "-1"
     end

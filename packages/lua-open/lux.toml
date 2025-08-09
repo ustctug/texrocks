@@ -1,5 +1,5 @@
 package = "lua-open"
-version = "0.3.9"
+version = "0.3.10"
 lua = ">=5.1"
 
 [description]
@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 toml2lua = "3.0.0-1"
-texrocks = "0.3.9-1"
+texrocks = "0.3.10-1"
 
 [run]
 command = "lua-open"
