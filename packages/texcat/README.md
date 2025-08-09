@@ -131,7 +131,7 @@ return get_last_index
 `texcat test.lua --output-format=tex` will generate:
 
 ```tex
-# ...
+% ...
 \begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
 \PY{comment}{\PYZhy{}\PYZhy{}\PYZhy{}comment}
 \PY{keyword}{local}\PY{source}{ }\PY{keyword.function}{function}\PY{source}{ }\PY{variable}{get\PYZus{}last\PYZus{}index}\PY{source}{(}\PY{variable}{input}\PY{source}{)}
