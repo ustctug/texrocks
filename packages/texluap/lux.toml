@@ -1,5 +1,5 @@
 package = "texluap"
-version = "0.3.8"
+version = "0.3.9"
 lua = ">=5.1"
 
 [description]
@@ -15,11 +15,11 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.8-1"
+texrocks = "0.3.9-1"
 prompt-style = "0.0.10-1"
 
 [test_dependencies]
-luatex = "0.3.8-1"
+luatex = "0.3.9-1"
 l3build = "2024.10.16-1"
 toml2lua = "3.0.0-1"
 
