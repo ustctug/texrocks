@@ -19,8 +19,7 @@ cleanfiles = {
 ---l3build unpack
 -- unpacked/: merge texrocks and its subprojects' bin/ and lua/
 sourcefiles = {
-    "bin",
-    "lua",
+    ".lux/5.3/bin",
     ".lux/5.3/*/lib",
     ".lux/5.3/*/src",
 }
