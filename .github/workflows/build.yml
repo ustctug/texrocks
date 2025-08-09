@@ -41,6 +41,7 @@ jobs:
       - env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CGO_CFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
+          CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
         run: |
           luarocks config variables.ZIP rpzip
           # luarocks config rocks_servers.1 https://ustctug.github.io/texrocks
