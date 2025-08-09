@@ -6,6 +6,8 @@ lua = ">=5.1"
 summary = "Example for markdown"
 maintainer = "Wu"
 labels = ["texmf"]
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/demo-markdown.md.html"
+license = "GPL-3.0"
 
 [build_dependencies]
 lualatex = "0.3.8-1"

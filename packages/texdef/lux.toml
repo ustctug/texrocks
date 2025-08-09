@@ -7,7 +7,7 @@ summary = "Show definitions of TeX commands"
 detailed = "A reimplementation of https://github.com/MartinScharrer/texdef/ by texlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
-homepage = "https://github.com/ustctug/texrocks"
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/texdef.md.html"
 license = 'GPL-3.0'
 
 [source]
@@ -36,3 +36,7 @@ type = "builtin"
 [build.install.bin]
 texdef = 'bin/texdef'
 latexdef = 'bin/latexdef'
+
+[test_dependencies]
+l3build = "2024.10.16-1"
+toml2lua = "3.0.0-1"

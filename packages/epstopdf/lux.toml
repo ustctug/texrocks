@@ -7,7 +7,7 @@ summary = "Convert EPS to PDF using Ghostscript"
 detailed = "A reimplementation of https://ctan.org/pkg/epstopdf by texlua"
 maintainer = "Wu"
 labels = [ "texlua" ]
-homepage = "https://github.com/ustctug/texrocks"
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/epstopdf.md.html"
 license = 'GPL-3.0'
 
 [source]
@@ -34,3 +34,7 @@ type = "builtin"
 
 [build.install.bin]
 epstopdf = "0.3.8-1"
+
+[test_dependencies]
+l3build = "2024.10.16-1"
+toml2lua = "3.0.0-1"

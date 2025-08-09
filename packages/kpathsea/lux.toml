@@ -7,7 +7,7 @@ summary = "Standalone path lookup and expansion for the Kpathsea library"
 detailed = "A reimplementation of https://tug.org/kpathsea's kpsewhich by texlua"
 maintainer = "Wu"
 labels = [ "texmf" ]
-homepage = "https://github.com/ustctug/texrocks"
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/kpathsea.md.html"
 license = "GPL-3.0"
 
 [source]
@@ -32,6 +32,8 @@ lua-semver = "1.2.2-1"
 
 [test_dependencies]
 lualatex = "0.3.8-1"
+toml2lua = "3.0.0-1"
+l3build = "2024.10.16-1"
 
 [build]
 type = "builtin"

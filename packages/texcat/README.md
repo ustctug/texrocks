@@ -147,6 +147,10 @@ return get_last_index
 
 You can directly use it in your LuaLaTeX document.
 
+```sh
+lualatex --shell-escape main.tex
+```
+
 ```tex
 \documentclass{article}
 \usepackage{fancyvrb}

@@ -7,7 +7,7 @@ summary = "syntax highlight code in LaTeX"
 detailed = "A reimplementation of https://pygments.org/docs/formatters/#LatexFormatter by texlua"
 maintainer = "Wu"
 labels = [ "tex" ]
-homepage = "https://github.com/ustctug/texrocks"
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/texcat.md.html"
 license = 'GPL-3.0'
 
 [source]
@@ -43,3 +43,5 @@ lualatex = "0.3.8-1"
 graphics-cfg = "0.0.1-1"
 vscode-extensions = "1.102.3-1"
 tree-sitter-lua = "0.0.36-1"
+l3build = "2024.10.16-1"
+toml2lua = "3.0.0-1"

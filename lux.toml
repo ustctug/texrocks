@@ -7,9 +7,12 @@ summary = "rockspec is generated from template.rockspec"
 detailed = "this file is to create a virtual environment for l3build to pack"
 maintainer = "Wu"
 labels = ["texmf"]
+homepage = "https://texrocks.readthedocs.io"
+license = 'GPL-3.0'
 
 [test_dependencies]
 l3build = "2024.10.16-1"
+toml2lua = "3.0.0-1"
 
 [test]
 type = "command"

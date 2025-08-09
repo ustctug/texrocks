@@ -7,7 +7,7 @@ summary = "LuaTeX for TeXinfo"
 maintainer = "Wu"
 labels = ["texmf"]
 detailed = "See https://github.com/ustctug/texrocks"
-homepage = "https://www.luatex.org/"
+homepage = "https://www.gnu.org/software/texinfo/"
 license = 'GPL-3.0'
 
 [source]

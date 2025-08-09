@@ -7,7 +7,7 @@ summary = "An initial TeX without any extra features except generating other TeX
 maintainer = "Wu"
 labels = ["texmf"]
 detailed = "See https://github.com/ustctug/texrocks"
-homepage = "https://github.com/ustctug/texrocks"
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/initex.md.html"
 license = "GPL-3.0"
 
 [source]
