@@ -46,7 +46,7 @@ jobs:
       - uses: hishamhm/gh-actions-luarocks@master
       - run: |
           luarocks install toml2lua
-          l3build ctan
+          scripts/ctan.sh
         env:
           TEXMFDOTDIR: .;~/work/texrocks/texrocks/.luarocks/share/lua/5.3//
       - uses: actions/upload-artifact@v4
