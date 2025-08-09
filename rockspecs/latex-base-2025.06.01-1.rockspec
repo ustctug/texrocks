@@ -8,7 +8,7 @@ rockspec_format = '3.0'
 package = 'latex-base'
 version = modrev .. '-' .. specrev
 
-dependencies = { 'l3kernel', 'l3backend', 'knuth-lib', 'latex-url', 'etex' }
+dependencies = { 'l3kernel', 'l3backend', 'knuth-lib', 'latex-url', 'etex', 'lm', 'luaotfload' }
 
 description = {
   summary = 'Base sources of LaTeX',
