@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,8 +52,10 @@ jobs:
           # https://github.com/speedata/publisher/issues/665
           luarocks install publisher --server=https://ustctug.github.io/texrocks
           luarocks install luahbtex --server=https://ustctug.github.io/texrocks
-          luarocks install nvim-textmate
-          luarocks install ltreesitter
+          luarocks install nvim-textmate \
+            --server=https://ustctug.github.io/texrocks
+          luarocks install ltreesitter \
+            --server=https://ustctug.github.io/texrocks
           luarocks install luatex
           luarocks install luatexinfo
           luarocks install lualatex

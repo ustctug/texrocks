@@ -10,6 +10,10 @@ labels = [ "tex" ]
 homepage = "https://github.com/ustctug/texrocks"
 license = 'GPL-3.0'
 
+[source]
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+
 [dependencies]
 argparse = "0.7.1-1"
 lua-template = "1.0.0-1"
