@@ -9,15 +9,15 @@ cleanfiles = {
     "*-1.rockspec",
     "*.curlopt",
     ".luarc.json",
-    "packages/*/*.rockspec",
-    "packages/*/lux.lock",
-    "packages/*/.luarc.json",
-    "packages/*/.lux/**",
+    "packages/demo-*/*.rockspec",
+    "packages/demo-*/lux.lock",
+    "packages/demo-*/.luarc.json",
+    "packages/demo-*/.lux/**",
 }
 
 ---l3build unpack
 -- unpacked/: merge texrocks and its subprojects' bin/ and lua/
-sourcefiles = { "bin", "lua", "packages/*/bin", "packages/*/lua" }
+sourcefiles = { "bin", "lua" }
 -- local/: same as unpacked/ due to no any unpack(build) dependencies
 installfiles = sourcefiles
 
