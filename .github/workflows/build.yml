@@ -50,8 +50,10 @@ jobs:
             ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
           # https://github.com/speedata/publisher/issues/665
           sudo ln -sf "${CGO_CFLAGS##-I}" /usr/include/lua5.3
-          luarocks install publisher
+          luarocks install publisher --server=https://ustctug.github.io/texrocks
           luarocks install luahbtex --server=https://ustctug.github.io/texrocks
+          luarocks install nvim-textmate
+          luarocks install ltreesitter
           luarocks install luatex
           luarocks install luatexinfo
           luarocks install lualatex
