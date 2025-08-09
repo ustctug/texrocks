@@ -378,7 +378,7 @@ function M.get_color_map()
     local color_map = {}
     -- FIXME: https://github.com/icedman/nvim-textmate/issues/10
     -- color_map.source = { theme[1], theme[2], theme[3] }
-    color_map.source = { 255, 255, 255 }
+    color_map.source = { 0, 0, 0 }
     -- bg
     color_map.directive = { theme[7], theme[8], theme[9] }
     color_map.comment = { theme[10], theme[11], theme[12] }

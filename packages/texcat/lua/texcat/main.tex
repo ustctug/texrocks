@@ -1,11 +1,11 @@
 \makeatletter
-\def\$[u]{command_prefix}@reset{\let\$[u]{command_prefix}@it=\relax \let\$[u]{command_prefix}@bf=\relax
-    \let\$[u]{command_prefix}@ul=\relax \let\$[u]{command_prefix}@tc=\relax
+\def\$[u]{command_prefix}@reset{\let\$[u]{command_prefix}@it=\relax \let\$[u]{command_prefix}@bf=\relax%
+    \let\$[u]{command_prefix}@ul=\relax \let\$[u]{command_prefix}@tc=\relax%
     \let\$[u]{command_prefix}@bc=\relax \let\$[u]{command_prefix}@ff=\relax}
 \def\$[u]{command_prefix}@tok#1{\csname $[u]{command_prefix}@tok@#1\endcsname}
-\def\$[u]{command_prefix}@toks#1+{\ifx\relax#1\empty\else
+\def\$[u]{command_prefix}@toks#1+{\ifx\relax#1\empty\else%
     \$[u]{command_prefix}@tok{#1}\expandafter\$[u]{command_prefix}@toks\fi}
-\def\$[u]{command_prefix}@do#1{\$[u]{command_prefix}@bc{\$[u]{command_prefix}@tc{\$[u]{command_prefix}@ul{
+\def\$[u]{command_prefix}@do#1{\$[u]{command_prefix}@bc{\$[u]{command_prefix}@tc{\$[u]{command_prefix}@ul{%
     \$[u]{command_prefix}@it{\$[u]{command_prefix}@bf{\$[u]{command_prefix}@ff{#1}}}}}}}
 \def\$[u]{command_prefix}#1#2{\$[u]{command_prefix}@reset\$[u]{command_prefix}@toks#1+\relax+\$[u]{command_prefix}@do{#2}}
 <l:for names="_, scope" in="ipairs(scopes)">
