@@ -35,7 +35,7 @@ jobs:
         run: |
           gem install rake
           sudo apt-get -y update
-          sudo apt-get -y install rename
+          sudo apt-get -y install rename liblua5.3-dev
           # https://github.com/drivendataorg/repro-zipfile/pull/23
           pip install git+https://github.com/Freed-Wu/repro-zipfile@mode rpzip
       - env:
@@ -49,7 +49,6 @@ jobs:
           echo local_by_default = true >> \
             ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
           # https://github.com/speedata/publisher/issues/665
-          sudo ln -sf "${CGO_CFLAGS##-I}" /usr/include/lua5.3
           luarocks install publisher --server=https://ustctug.github.io/texrocks
           luarocks install luahbtex --server=https://ustctug.github.io/texrocks
           luarocks install nvim-textmate
