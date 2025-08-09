@@ -118,13 +118,16 @@ function M.get_parser(progname)
     if tex and tex.print then
         format = 'tex'
     end
-    parser:option('--output-format', 'output format, latex means full code not a snippet', format):choices {
-        'tex', 'latex', 'ansi', 'test', 'empty', 'txt'
-    }
+    local formats = {}
+    for fmt in lfs.dir(M.get_path('texcat')) do
+        table.insert(formats, fmt:match('[^.]+%.(.*)$'))
+    end
+    parser:option('--output-format', 'output format', format):choices(formats)
     parser:option('--list', 'list all themes/languages/...', 'none'):choices {
         'none', 'themes', 'languages', 'extensions_dirs', 'colors', 'links'
     }
     parser:option('--command-prefix', 'command prefix for TeX', [[PY]])
+    -- parser:option('--math-escape', 'escape $math TeX code$'):args(0)
     return parser
 end
 
@@ -359,7 +362,7 @@ function M.main(argv)
             args.warna = warna
             args.escape = M.escape
             args.tex = M.get_path('texcat/main.tex')
-            M.output(M.get_output(args), args.output[i])
+            M.output(M.get_output(args.output_format, args), args.output[i])
         end
     end
 end
@@ -551,7 +554,11 @@ end
 ---@param filename string file name
 function M.output(out, filename)
     if filename == '-' then
-        print(out)
+        if tex and tex.print then
+            tex.print(out:gsub("%[^\n]*\n", ""):gsub("\n", " "))
+        else
+            print(out)
+        end
     else
         local dir = filename:match('(.*)/[^/]+$')
         if dir then
@@ -565,8 +572,8 @@ function M.output(out, filename)
         if f then
             f:write(out)
             f:close()
-            -- tex.print() cannot accept "\n"
             if tex and tex.print then
+                -- tex.print() cannot accept "\n"
                 tex.print([[\input ]] .. filename)
             end
         end
@@ -631,10 +638,11 @@ function M.get_path(filename)
 end
 
 ---get output in format
+---@param format string
 ---@param args table
 ---@return string text
-function M.get_output(args)
-    return template.render(M.get_path('texcat/main.' .. args.output_format), args):gsub("\n$", "")
+function M.get_output(format, args)
+    return template.render(M.get_path('texcat/main.' .. format), args):gsub("\n$", "")
 end
 
 return M
