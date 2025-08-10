@@ -1,5 +1,7 @@
 # texcat
 
+<!-- markdownlint-disable MD013 -->
+
 ![screenshot](https://github.com/user-attachments/assets/e0692a72-c8c4-4d17-a95f-a9018e3bed27)
 
 ![PDF](https://github.com/user-attachments/assets/b2053a55-8b3d-481b-a3b1-d84209040823)
@@ -15,6 +17,13 @@ It supports color themes:
 - [ ] [syncat themes](https://github.com/foxfriends/syncat-themes)
 
 ## Dependencies
+
+For texlive's `ctan.zip` and `tds.zip`, vscode-extensions, tree-sitter-lua and
+tree-sitter-latex for GNU/Linux are attached. Tell correct environment variables:
+
+```sh
+LUA_CPATH="$HOME/.texlive/texmf-config/scripts/texcat/lib/?.so" CLUAINPUTS='$LUAINPUTS' lualatex --shell-escape test.tex
+```
 
 ### TextMate
 
@@ -74,8 +83,6 @@ extra_servers = [
 ```
 
 ## Usage
-
-<!-- markdownlint-disable MD013 -->
 
 ```sh
 $ texcat --help

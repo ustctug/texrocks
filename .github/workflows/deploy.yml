@@ -52,8 +52,7 @@ jobs:
           # https://github.com/speedata/publisher/issues/665
           luarocks install publisher --server=https://ustctug.github.io/texrocks
           luarocks install luahbtex --server=https://ustctug.github.io/texrocks
-          luarocks install nvim-textmate \
-            --server=https://ustctug.github.io/texrocks
+          luarocks install nvim-textmate
           luarocks install ltreesitter \
             --server=https://ustctug.github.io/texrocks
           luarocks install luatex

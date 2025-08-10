@@ -65,10 +65,6 @@ function M.get_scope_link()
     local hl_scope_map = {}
     for _, scope_hl in ipairs(require 'nvim-textmate.colormap'.scope_hl_map) do
         local scope, hl = scope_hl[1], scope_hl[2]
-        -- FIXME: https://github.com/icedman/nvim-textmate/issues/10
-        if scope == 'variable' then
-            hl = 'Variable'
-        end
         if hl_scope_map[hl] == nil then
             hl_scope_map[hl] = {}
         end

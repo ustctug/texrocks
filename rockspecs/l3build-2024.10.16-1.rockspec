@@ -99,8 +99,68 @@ build = {
  specialformats = specialformats or { }
  specialformats.context = specialformats.context or {
 ]],
+    -- https://github.com/latex3/l3build/pull/428
+    ["fix-upload.diff"] = [[
+--- old/scripts/l3build/l3build-upload.lua
++++ new/scripts/l3build/l3build-upload.lua
+@@ -139,29 +139,13 @@
+   ctan_post = construct_ctan_post(uploadfile,options["debug"])
+ 
+ 
+--- curl file version
+-  local curloptfile = uploadconfig.curlopt_file or (ctanzip .. ".curlopt")
+-  ---@type file*?
+-  local curlopt=assert(open(curloptfile,"w"))
+-  ---@cast curlopt file*
+-  output(curlopt)
+-  write(ctan_post)
+-  curlopt:close()
+-  curlopt = nil
+-
+-  ctan_post=curlexe .. " --config " .. curloptfile
+-
+-
+ if options["debug"] then
+-    ctan_post = ctan_post ..  ' https://httpbin.org/post'
+     fp_return = shell(ctan_post)
+     print('\n\nCURL COMMAND:')
+     print(ctan_post)
+     print("\n\nHTTP RESPONSE:")
+     print(fp_return)
+     return 1
+-else
+-    ctan_post = ctan_post ..  ' https://ctan.org/submit/'
+ end
+ 
+   -- call post command to validate the upload at CTAN's validate URL
+@@ -287,6 +271,24 @@
+ 
+   ctan_post = ctan_post .. '\nform="file=@' .. tostring(uploadfile) .. ';filename=' .. tostring(uploadfile) .. '"'
+ 
++-- curl file version
++  local curloptfile = uploadconfig.curlopt_file or (ctanzip .. ".curlopt")
++  ---@type file*?
++  local curlopt=assert(open(curloptfile,"w"))
++  ---@cast curlopt file*
++  output(curlopt)
++  write(ctan_post)
++  curlopt:close()
++  curlopt = nil
++
++  ctan_post=curlexe .. " --config " .. curloptfile
++
++  if debug then
++    ctan_post = ctan_post ..  ' https://httpbin.org/post'
++  else
++    ctan_post = ctan_post ..  ' https://ctan.org/submit/'
++  end
++
+   return ctan_post
+ 
+ end
+]],
   },
-  copy_directories = { 'tex', 'doc' },
+  copy_directories = { },
   modules = {
     ["l3build-arguments"] = "scripts/l3build/l3build-arguments.lua",
     ["l3build-aux"] = "scripts/l3build/l3build-aux.lua",

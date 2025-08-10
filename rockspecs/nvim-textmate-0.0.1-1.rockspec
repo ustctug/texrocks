@@ -1,4 +1,4 @@
-local git_ref = '4a6473a060f29829007c2f2e2b239e5ab4ea9bdd'
+local git_ref = '30e118056684dd3ff9d76830e0db5b5ab22e4b29'
 local modrev = '0.0.1'
 local specrev = '1'
 

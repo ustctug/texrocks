@@ -55,16 +55,16 @@ if data.build.install or data.build.install.bin ~= nil then
 end
 
 ---l3build upload
-local repository = "https://github.com/ustctug/" .. module
+local repository = "https://github.com/ustctug/texrocks"
 uploadconfig = {
     announcement = "Release " .. data.version,
     ctanPath = '/support/' .. module,
-    license = data.license,
+    license = data.description.license,
     module = module,
-    summary = data.summary,
-    description = data.detailed,
+    summary = data.description.summary,
+    description = data.description.detailed,
     version = data.version,
-    home = data.homepage,
+    home = data.description.homepage,
     repository = repository,
     bugtracker = repository .. "/issues",
     development = repository .. "/pulls",
