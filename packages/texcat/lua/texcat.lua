@@ -1,8 +1,8 @@
 ---library for `texcat`
 ---@module texcat
 ---@copyright 2025
--- luacheck: ignore 111 113
 ---@diagnostic disable: undefined-global
+-- luacheck: ignore 111 113
 local lfs = require 'lfs'
 local argparse = require 'argparse'
 local template = require 'template'

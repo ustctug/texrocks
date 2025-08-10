@@ -2,6 +2,8 @@
 
 ![screenshot](https://github.com/user-attachments/assets/e0692a72-c8c4-4d17-a95f-a9018e3bed27)
 
+![PDF](https://github.com/user-attachments/assets/b2053a55-8b3d-481b-a3b1-d84209040823)
+
 It supports syntax parser:
 
 - [x] [tree-sitter grammars](https://nvim-neorocks.github.io/rocks-binaries/)
