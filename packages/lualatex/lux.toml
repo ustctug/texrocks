@@ -1,5 +1,5 @@
 package = "lualatex"
-version = "0.3.10"
+version = "0.3.11"
 lua = ">=5.1"
 
 [description]
@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 # refer https://ctan.org/pkg/required
 [dependencies]
-texrocks = "0.3.10-1"
+texrocks = "0.3.11-1"
 amsfonts = "3.04-1"
 # tex-ini-files provide lualatexquotejobname.lua
 tex-ini-files = "2025.02.09-1"
@@ -26,7 +26,7 @@ luaotfload = "3.29-1"
 lm = "2.005-1"
 
 [build_dependencies]
-texrocks = "0.3.10-1"
+texrocks = "0.3.11-1"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
 latex-base = "2025.06.01-1"
