@@ -326,6 +326,21 @@ function M.get_program_name(args)
     return M.name(args[1])
 end
 
+---walk all directories except
+---@param dir string
+---@param callback function
+function M.walk(dir, callback)
+    if lfs.isdir(dir) then
+        for file in lfs.dir(dir) do
+            if file ~= "." and file ~= ".." then
+                M.walk(dir .. '/' .. file, callback)
+            end
+        end
+    else
+        callback(dir)
+    end
+end
+
 ---update font map file: `.lux/luatex.map`
 ---@param short boolean use relative (short)/absolute (long) path for font files
 function M.sync(short)
@@ -339,44 +354,30 @@ function M.sync(short)
         print("fail to generate " .. fontmap_name)
         return
     end
-    local fonts = {}
-
-    local function walk(path)
-        for file in lfs.dir(path) do
-            if file:sub(1, 1) ~= '.' then
-                local newpath = path .. '/' .. file
-                if lfs.isdir(newpath) then
-                    walk(newpath)
-                elseif lfs.isfile(newpath) then
-                    local ext = file:gsub(".*%.", "")
-                    if ext == "pfb" or ext == "t3" then
-                        table.insert(fonts, newpath)
-                    end
-                end
-            end
-        end
-    end
-
-    for _, path in ipairs(M.getpaths(package.path, "fonts")) do
-        walk(path:gsub("//$", ""))
-    end
-    local lines = {}
-    for _, font in ipairs(fonts) do
-        local basename = font:gsub(".*/", '')
-        local name = basename:gsub("%..*", '')
-        local path = font
-        if short then
-            path = basename
-        end
-        table.insert(lines, string.format("%s %s <%s", name, name:upper(), path))
-    end
     local template = debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks/' .. M.fontmap_name
     local t = io.open(template)
     if t then
         f:write(t:read("*a"))
         t:close()
     end
-    f:write(table.concat(lines, "\n"))
+
+    local function callback(file)
+        local ext = file:match("%.([^.]+)$")
+        if ext ~= "pfb" and ext ~= "t3" then
+            return
+        end
+        local basename = file:match('/([^/]+)$')
+        local path = file
+        if short then
+            path = basename
+        end
+        local name = M.name(file)
+        f:write(string.format("%s %s <%s\n", name, name:upper(), path))
+    end
+
+    for _, path in ipairs(M.getpaths(package.path, "fonts")) do
+        M.walk(path:gsub("//$", ""), callback)
+    end
     f:close()
 end
 

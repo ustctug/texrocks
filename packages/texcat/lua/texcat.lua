@@ -11,6 +11,9 @@ local ltreesitter = require 'ltreesitter'
 local warna = require 'warna'
 warna.options.level = 3
 local M = {
+    -- cache
+    themes = {},
+    languages = {},
     protect_map = {
         bs = [[\]],
         ob = [[{]],
@@ -123,7 +126,7 @@ function M.get_parser(progname)
         'none', 'themes', 'languages', 'extensions_dirs', 'colors', 'links'
     }
     parser:option('--command-prefix', 'command prefix for TeX'):count('*')
-    -- parser:option('--math-escape', 'escape $math TeX code$'):args(0)
+    parser:option('--math-escape', 'escape $math TeX code$'):args(0)
     return parser
 end
 
@@ -294,6 +297,86 @@ function M.search(extensions_dir, subdir)
     return parsers
 end
 
+---render text
+---@param text string
+---@param theme_name string
+---@param language_name string
+---@param output string
+---@param output_format string
+---@param prefix string
+---@param syntax_type string
+---@param theme_type string
+---@param extensions_dir string[]
+---@param math_escape string
+function M.render(text, theme_name, language_name, output, output_format, prefix,
+                  syntax_type, theme_type, extensions_dir, math_escape)
+    local color_map = {}
+    if theme_type == 'textmate' then
+        if M.themes[theme_name] == nil then
+            M.themes[theme_name] = textmate.highlight_load_theme(theme_name)
+        end
+        textmate.highlight_set_theme(M.themes[theme_name])
+        if syntax_type ~= 'textmate' then
+            color_map = M.get_color_map()
+            local link = M.get_scope_link()
+            color_map = M.link_color_map(color_map, link)
+        end
+    end
+
+    local captures = {}
+    if syntax_type == 'textmate' then
+        if M.languages[language_name] == nil then
+            M.languages[language_name] = textmate.highlight_load_language(language_name)
+        end
+        textmate.highlight_set_language(M.languages[language_name])
+
+        -- FIXME: https://github.com/icedman/nvim-textmate/issues/11
+        local results = textmate.highlight_line(text, M.themes[theme_name], M.languages[language_name], 0)
+        for _, result in ipairs(results) do
+            local idx, len, r, g, b, scope = result[1] + 1, result[2], result[3], result[4], result[5], result
+                [6]
+            color_map[scope] = {}
+            local str = '%d'
+            for _, v in ipairs { r, g, b } do
+                table.insert(color_map[scope], tonumber(str:format(v)))
+            end
+            table.insert(captures, { start_index = idx, end_index = idx + len - 1, scope = scope })
+        end
+    elseif syntax_type == 'tree-sitter' then
+        if M.languages[language_name] == nil then
+            M.languages[language_name] = M.get_language(language_name, extensions_dir)
+        end
+        local tree = M.languages[language_name].parser:parse_string(text)
+        local node = tree:root()
+        for capture, name in M.languages[language_name].query:capture(node) do
+            -- lua index start from 1
+            table.insert(captures,
+                { start_index = capture:start_byte() + 1, end_index = capture:end_byte(), scope = name })
+        end
+        color_map = M.add_scope(color_map, captures)
+        captures = M.filter_captures(captures, color_map)
+        captures = M.cut_captures(captures, #text)
+    end
+
+    local args = {
+        hls = M.get_hls(text, captures),
+        color_map = color_map,
+        ipairs = ipairs,
+        table = table,
+        warna = warna,
+        escape = M.escape,
+        preamble = M.get_path('texcat/main.preamble.tex'),
+        tex = M.get_path('texcat/main.tex'),
+        prefix = prefix,
+        math_escape = math_escape,
+    }
+    args.scopes = M.get_sorted_keys(args.color_map)
+    if tex and tex.print then
+        M.output(M.get_output('preamble.tex', args), '-')
+    end
+    M.output(M.get_output(output_format, args), output)
+end
+
 ---**entry for texcat**
 ---@param argv string[] command line arguments
 ---@return string[] output
@@ -303,80 +386,22 @@ function M.main(argv)
         print(args.list)
         return {}
     end
-    -- cache
-    local themes = {}
-    local languages = {}
     for i, file in ipairs(args.file) do
         local f = io.open(file)
         if f then
             local text = f:read('*a'):gsub("\n$", '')
             f:close()
-
-            local color_map = {}
-            local theme_name = args.theme[i]
-            if args.theme_type == 'textmate' then
-                if themes[theme_name] == nil then
-                    themes[theme_name] = textmate.highlight_load_theme(theme_name)
-                end
-                textmate.highlight_set_theme(themes[theme_name])
-                if args.syntax_type ~= 'textmate' then
-                    color_map = M.get_color_map()
-                    local link = M.get_scope_link()
-                    color_map = M.link_color_map(color_map, link)
-                end
-            end
-
-            local captures = {}
-            if args.syntax_type == 'textmate' then
-                local language_name = args.language[i]
-                if languages[language_name] == nil then
-                    languages[language_name] = textmate.highlight_load_language(language_name)
-                end
-                textmate.highlight_set_language(languages[language_name])
-
-                -- FIXME: https://github.com/icedman/nvim-textmate/issues/11
-                local results = textmate.highlight_line(text, themes[theme_name], languages[language_name], 0)
-                for _, result in ipairs(results) do
-                    local idx, len, r, g, b, scope = result[1] + 1, result[2], result[3], result[4], result[5], result
-                        [6]
-                    color_map[scope] = {}
-                    local str = '%d'
-                    for _, v in ipairs { r, g, b } do
-                        table.insert(color_map[scope], tonumber(str:format(v)))
-                    end
-                    table.insert(captures, { start_index = idx, end_index = idx + len - 1, scope = scope })
-                end
-            elseif args.syntax_type == 'tree-sitter' then
-                local language_name = args.language[i]
-                if languages[language_name] == nil then
-                    languages[language_name] = M.get_language(language_name, args.extensions_dir)
-                end
-                local tree = languages[language_name].parser:parse_string(text)
-                local node = tree:root()
-                for capture, name in languages[language_name].query:capture(node) do
-                    -- lua index start from 1
-                    table.insert(captures,
-                        { start_index = capture:start_byte() + 1, end_index = capture:end_byte(), scope = name })
-                end
-                color_map = M.add_scope(color_map, captures)
-                captures = M.filter_captures(captures, color_map)
-                captures = M.cut_captures(captures, #text)
-            end
-
-            args.hls = M.get_hls(text, captures)
-            args.color_map = color_map
-            args.scopes = M.get_sorted_keys(color_map)
-            args.ipairs = ipairs
-            args.table = table
-            args.warna = warna
-            args.escape = M.escape
-            args.preamble = M.get_path('texcat/main.preamble.tex')
-            args.tex = M.get_path('texcat/main.tex')
-            args.prefix = args.command_prefix[i]
-            if tex and tex.print then
-                M.output(M.get_output('preamble.tex', args), '-')
-            end
-            M.output(M.get_output(args.output_format, args), args.output[i])
+            M.render(text,
+                args.theme[i],
+                args.language[i],
+                args.output[i],
+                args.output_format,
+                args.command_prefix[i],
+                args.syntax_type,
+                args.theme_type,
+                args.extensions_dir,
+                args.math_escape
+            )
         end
     end
     return args.output
@@ -622,7 +647,7 @@ end
 ---@param text string
 ---@param prefix string
 ---@return string text
-function M.escape(text, prefix)
+function M.escape_tex(text, prefix)
     local cs = [[\%sZ%s{}]]
     text = text:gsub([=[([\\{}])]=], cs:format(prefix, '%1'))
     for name, char in pairs(M.escape_map) do
@@ -637,6 +662,32 @@ function M.escape(text, prefix)
         text = text:gsub(pat, cs:format(prefix, name))
     end
     return text
+end
+
+---escape TeX with math escape
+---@param text string
+---@param prefix string
+---@param math_escape boolean
+---@return string text
+function M.escape(text, prefix, math_escape)
+    local texts = {}
+    if math_escape then
+        local is_math = false
+        for str in text:gmatch("([^$]*)%$?") do
+            if is_math then
+                table.insert(texts, str)
+            else
+                table.insert(texts, M.escape_tex(str, prefix))
+            end
+            is_math = not is_math
+        end
+        if not is_math then
+            table.insert(texts, '')
+        end
+    else
+        texts = { M.escape_tex(text, prefix) }
+    end
+    return table.concat(texts, '$')
 end
 
 ---get path of template

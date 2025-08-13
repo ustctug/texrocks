@@ -1,21 +1,22 @@
 \documentclass{article}
 \usepackage{fancyvrb}
 \usepackage{color}
+\usepackage{amsfonts}
 \directlua{
-  local outputs = require'texcat'.main{'test.lua', 'test.tex'}
+  local outputs = require'texcat'.main{'test.lua', 'test.tex', '--math-escape'}
   token.set_macro('mylua', outputs[1])
   token.set_macro('mytex', outputs[2])
 }
 \begin{document}
 
-\TeX{}Cat is a rewrite of pygments. This is a PDF to demonstrate its effect.
-For a test file:
+\TeX{}Cat is a rewrite of pygments. For a test file:
 
 \VerbatimInput[
   numbers=left,
   commandchars=\\\{\},
   frame=single,
   label=test.lua,
+  codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax},
 ]{\mylua}
 
 We can display it in \LaTeX{} document:
