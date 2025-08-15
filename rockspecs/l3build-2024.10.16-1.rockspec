@@ -39,6 +39,19 @@ dependencies = { "texrocks" }
 build = {
   type = 'builtin',
   patches = {
+    ["fix-set_program.diff"] = [[
+--- old/scripts/l3build/l3build-install.lua
++++ new/scripts/l3build/l3build-install.lua
+@@ -36,7 +36,7 @@
+ local insert = table.insert
+ 
+ local function gethome()
+-  set_program("latex")
++  -- set_program("latex")
+   local result = options["texmfhome"] or var_value("TEXMFHOME")
+   if not result or result == "" or match(result, os_pathsep) then
+     print("Ambiguous TEXMFHOME setting: please use the --texmfhome option")
+]],
     ["fix-require.diff"] = [[
 --- old/scripts/l3build/l3build.lua
 +++ new/scripts/l3build/l3build.lua
@@ -48,7 +61,7 @@ build = {
  -- l3build setup and functions
 -kpse.set_program_name("kpsewhich")
 -build_kpse_path = match(lookup("l3build.lua"),"(.*[/])")
-+kpse.set_program_name(arg[0])
++-- kpse.set_program_name("kpsewhich")
  local function build_require(s)
 -  require(lookup("l3build-"..s..".lua", { path = build_kpse_path } ) )
 +  require("l3build-"..s)

@@ -27,7 +27,6 @@ sourcefiles = {
 installfiles = sourcefiles
 
 ---l3build doc
-docfiledir = "."
 docfiles = { "docs/*.md", "*.md" }
 
 ---l3build install
