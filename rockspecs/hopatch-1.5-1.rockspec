@@ -34,15 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode hopatch.dtx
-  ]],
-  install = {
-    conf = {
-      -- ['../doc/latex/hopatch/hopatch.pdf'] = 'hopatch.pdf',
-      ['../tex/latex/hopatch/hopatch.sty'] = 'hopatch.sty',
-      ['../tex/latex/hopatch/hopatch-2016-05-16.sty'] = 'hopatch-2016-05-16.sty',
-    }
-  }
+  type = 'l3build',
 }

@@ -37,14 +37,5 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'latex-base', 'atveryend', 'latex-tools' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode hypdoc.dtx
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/hypdoc/hypdoc.pdf'] = 'hypdoc.pdf',
-      ['../tex/latex/hypdoc/hypdoc.sty'] = 'hypdoc.sty',
-    }
-  }
+  type = 'l3build',
 }

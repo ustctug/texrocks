@@ -34,14 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-  luatex --interaction=nonstopmode ltxcmds.dtx
-]],
-  install = {
-    conf = {
-      -- ['../doc/generic/ltxcmds/ltxcmds.pdf'] = 'ltxcmds.pdf',
-      ['../tex/generic/ltxcmds/ltxcmds.sty'] = 'ltxcmds.sty',
-    }
-  }
+  type = 'l3build',
 }

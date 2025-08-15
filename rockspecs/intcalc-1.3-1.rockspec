@@ -32,13 +32,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode intcalc.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/intcalc/intcalc.sty'] = 'intcalc.sty',
-    }
-  }
+  type = 'l3build',
 }

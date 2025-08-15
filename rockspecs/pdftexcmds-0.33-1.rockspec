@@ -34,17 +34,5 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'infwarerr', 'iftex', 'ltxcmds' }
 
 build = {
-  type = 'command',
-  build_command = [[
-        luatex --interaction=nonstopmode pdftexcmds.dtx
-  ]],
-  install = {
-    lua = {
-      pdftexcmds = 'pdftexcmds.lua',
-    },
-    conf = {
-      ['../tex/generic/pdftexcmds/pdftexcmds.sty'] = 'pdftexcmds.sty',
-      -- ['../doc/generic/pdftexcmds/pdftexcmds.pdf'] = 'pdftexcmds.pdf',
-    }
-  }
+  type = 'l3build',
 }

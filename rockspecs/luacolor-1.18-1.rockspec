@@ -32,16 +32,5 @@ end
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode luacolor.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/latex/luacolor/luacolor.sty'] = 'luacolor.sty',
-    },
-    lua = {
-      ['luacolor'] = 'luacolor.lua',
-    },
-  }
+  type = 'l3build',
 }

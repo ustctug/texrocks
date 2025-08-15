@@ -33,14 +33,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode atveryend.dtx
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/atveryend/atveryend.pdf'] = 'atveryend.pdf',
-      ['../tex/latex/atveryend/atveryend.sty'] = 'atveryend.sty',
-    }
-  }
+  type = 'l3build',
 }

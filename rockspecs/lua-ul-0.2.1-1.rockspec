@@ -20,8 +20,8 @@ The package requires LuaTeX version >= 1.12.0.]],
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/lua-ul-ctan.zip',
-  dir = 'lua-ul'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = 'luaul-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -34,18 +34,5 @@ end
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode lua-ul.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/lualatex/lua-ul/lua-ul.sty'] = 'lua-ul.sty',
-    },
-    lua = {
-      ['lua-ul'] = 'lua-ul.lua',
-      ['lua-ul-patches-preserve-attr'] = 'lua-ul-patches-preserve-attr.lua',
-      ['pre_append_to_vlist_filter'] = 'pre_append_to_vlist_filter.lua',
-    },
-  }
+  type = 'l3build',
 }

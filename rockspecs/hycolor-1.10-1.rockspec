@@ -34,14 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode hycolor.dtx
-  ]],
-  install = {
-    conf = {
-      -- ['../doc/latex/hycolor/hycolor.pdf'] = 'hycolor.pdf',
-      ['../tex/latex/hycolor/hycolor.sty'] = 'hycolor.sty',
-    }
-  }
+  type = 'l3build',
 }

@@ -42,13 +42,5 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'ltxcmds', 'infwarerr' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode refcount.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/latex/refcount/refcount.sty'] = 'refcount.sty',
-    }
-  }
+  type = 'l3build',
 }

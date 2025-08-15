@@ -6,7 +6,7 @@ lua = ">=5.1"
 summary = "Build lua rock file by l3build's build.lua"
 detailed = "Make TeX ecosystem available for lua ecosystem"
 maintainer = "Wu"
-labels = [ "texmf" ]
+labels = ["texmf"]
 homepage = "https://texrocks.readthedocs.io/en/latest/topics/luarocks-build-l3build.md.html"
 license = 'GPL-3.0'
 
@@ -26,7 +26,17 @@ command = "luarocks"
 [test]
 type = "command"
 command = "luarocks"
-flags = [ "build", "../../rockspecs/hyperref-7.01-15.rockspec" ]
+flags = [
+  "--lua-version=5.3",
+  "--tree=.lux",
+  "build",
+  "--deps-mode=none",
+  "../../rockspecs/hyperref-7.01-15.rockspec",
+]
 
 [build]
 type = "builtin"
+
+[test_dependencies]
+luatex = "0.3.11-1"
+latex-base = "2025.06.01-1"

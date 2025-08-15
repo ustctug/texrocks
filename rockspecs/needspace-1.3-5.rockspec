@@ -33,7 +33,7 @@ end
 build_dependencies = { 'lualatex', 'filecontents' }
 
 build = {
-  type = 'command',
+  type = 'l3build',
   patches = {
     ["stop.diff"] = [[
 --- old/needspace.dtx
@@ -46,14 +46,18 @@ build = {
  %%%%%%%%%1%%%%%%%%%2%%%%%%%%%3%%%%%%%%%4%%%%%%%%%5
  
  
-]]
-  },
-  build_command = [[
-  lualatex --interaction=nonstopmode needspace.ins
 ]],
-  install = {
-    conf = {
-      ['../tex/latex/needspace/needspace.sty'] = 'needspace.sty',
-    }
-  }
+    ["unpack.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -4,6 +4,7 @@
+ textfiles  ={"README.md", "changes.txt"}
+ 
+ packtdszip  = false
++unpackexe = 'lualatex'
+ 
+ maxprintline=10000
+ checkruns = 2
+]],
+  },
 }

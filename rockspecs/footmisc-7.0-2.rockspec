@@ -1,8 +1,9 @@
-local git_ref = 'scm'
-local modrev = git_ref
-local specrev = '1'
+local git_ref = 'v7.0b'
+local _git_ref = git_ref:gsub('^v', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
-local repo_url = 'https://ctan.org/pkg/footmisc'
+local repo_url = 'https://github.com/frankmittelbach/fmitex-footmisc'
 
 rockspec_format = '3.0'
 package = 'footmisc'
@@ -25,7 +26,7 @@ dependencies = { 'bigfoot' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  dir = 'fmitex-footmisc-' .. _git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -35,14 +36,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    lualatex --interaction=nonstopmode footmisc.ins
-  ]],
-  install = {
-    conf = {
-      ['../tex/latex/footmisc/footmisc.sty'] = 'footmisc.sty',
-      ['../doc/latex/footmisc/footmisc.pdf'] = 'footmisc-code.pdf',
-    }
-  }
+  type = 'l3build',
 }

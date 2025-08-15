@@ -34,15 +34,5 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'pdfcolmk', 'colortbl' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode xcolor.ins
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/xcolor/xcolor.pdf'] = 'xcolor.pdf',
-      ['../tex/latex/xcolor/xcolor.sty'] = 'xcolor.sty',
-      ['../tex/latex/xcolor/xcolor-2022-06-12.sty'] = 'xcolor-2022-06-12.sty',
-    }
-  }
+  type = 'l3build',
 }

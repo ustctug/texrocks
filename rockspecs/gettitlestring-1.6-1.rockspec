@@ -34,13 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode gettitlestring.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/gettitlestring/gettitlestring.sty'] = 'gettitlestring.sty',
-    }
-  }
+  type = 'l3build',
 }

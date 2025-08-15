@@ -34,13 +34,5 @@ end
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode bigintcalc.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/bigintcalc/bigintcalc.sty'] = 'bigintcalc.sty',
-    }
-  }
+  type = 'l3build',
 }

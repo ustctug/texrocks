@@ -34,13 +34,5 @@ end
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode uniquecounter.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/uniquecounter/uniquecounter.sty'] = 'uniquecounter.sty',
-    }
-  }
+  type = 'l3build',
 }

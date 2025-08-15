@@ -31,14 +31,19 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode luatex85.ins
-  ]],
-  install = {
-    conf = {
-      -- ['../doc/generic/luatex85/luatex85.pdf'] = 'luatex85.pdf',
-      ['../tex/generic/luatex85/luatex85.sty'] = 'luatex85.sty',
-    }
-  }
+  type = 'l3build',
+  patches = {
+    ["fix-kpsewhich.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -31,5 +31,5 @@
+ end
+ 
+ -- Find and run the build system
+-kpse.set_program_name ("kpsewhich")
+-dofile (kpse.lookup ("l3build.lua"))
++-- kpse.set_program_name ("kpsewhich")
++-- dofile (kpse.lookup ("l3build.lua"))
+]],
+  },
 }

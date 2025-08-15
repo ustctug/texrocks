@@ -34,13 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode grfext.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/latex/grfext/grfext.sty'] = 'grfext.sty',
-    }
-  }
+  type = 'l3build',
 }

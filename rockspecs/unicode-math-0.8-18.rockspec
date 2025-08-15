@@ -37,16 +37,5 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = {'lm-math', 'fontspec', 'l3kernel', 'l3packages', 'lualatex-math'}
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode unicode-math.ins
-]],
-  install = {
-    conf = {
-      ['../tex/latex/unicode-math/unicode-math.sty'] = 'unicode-math.sty',
-      ['../tex/latex/unicode-math/unicode-math-table.tex'] = 'unicode-math-table.tex',
-      ['../tex/latex/unicode-math/unicode-math-luatex.sty'] = 'unicode-math-luatex.sty',
-      ['../tex/latex/unicode-math/unicode-math-xetex.sty'] = 'unicode-math-xetex.sty',
-    },
-  }
+  type = 'l3build',
 }

@@ -34,13 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode pdfescape.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/pdfescape/pdfescape.sty'] = 'pdfescape.sty',
-    }
-  }
+  type = 'l3build',
 }

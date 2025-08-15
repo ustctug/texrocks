@@ -34,13 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode atbegshi.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/atbegshi/atbegshi.sty'] = 'atbegshi.sty',
-    }
-  }
+  type = 'l3build',
 }

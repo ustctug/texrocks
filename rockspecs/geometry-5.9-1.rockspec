@@ -38,14 +38,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode geometry.dtx
-  ]],
-  install = {
-    conf = {
-      ['../tex/latex/geometry/geometry.sty'] = 'geometry.sty',
-      -- ['../doc/generic/geometry/geometry.pdf'] = 'geometry.pdf',
-    }
-  }
+  type = 'l3build',
 }

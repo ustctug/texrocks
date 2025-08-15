@@ -35,14 +35,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode hologo.dtx
-  ]],
-  install = {
-    conf = {
-      -- ['../doc/latex/hologo/hologo.pdf'] = 'hologo.pdf',
-      ['../tex/latex/hologo/hologo.sty'] = 'hologo.sty',
-    }
-  }
+  type = 'l3build',
 }

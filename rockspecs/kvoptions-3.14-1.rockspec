@@ -34,15 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode kvoptions.dtx
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/kvoptions/kvoptions.pdf'] = 'kvoptions.pdf',
-      ['../tex/latex/kvoptions/kvoptions.sty'] = 'kvoptions.sty',
-      ['../tex/latex/kvoptions/kvoptions-patch.sty'] = 'kvoptions-patch.sty',
-    }
-  }
+  type = 'l3build',
 }

@@ -19,11 +19,12 @@ function M.run(rockspec, no_install)
     fs.delete(dir.path(rootdir, 'source'))
     fs.delete(dir.path(rootdir, 'fonts', 'source'))
 
-    if fs.is_dir(dir.path(rootdir, 'scripts')) then
-        local luadir = path.lua_dir(rockspec.name, rockspec.version)
-        local bindir = path.bin_dir(rockspec.name, rockspec.version)
-        for _, name in ipairs(fs.find(dir.path(rootdir, 'scripts'))) do
-            local file = dir.path(rootdir, 'scripts', name)
+    local luadir = path.lua_dir(rockspec.name, rockspec.version)
+    local bindir = path.bin_dir(rockspec.name, rockspec.version)
+    local scriptsdir = dir.path(rootdir, 'scripts')
+    if fs.is_dir(scriptsdir) then
+        for _, name in ipairs(fs.find(scriptsdir)) do
+            local file = dir.path(scriptsdir, name)
             if not fs.is_dir(file) then
                 local f = io.open(file)
                 local line = ""
@@ -39,7 +40,17 @@ function M.run(rockspec, no_install)
                 end
             end
         end
-        fs.delete(dir.path(rootdir, 'scripts'))
+        fs.delete(scriptsdir)
+    end
+    local texdir = dir.path(rootdir, 'tex')
+    if fs.is_dir(texdir) then
+        for _, name in ipairs(fs.find(texdir)) do
+            local file = dir.path(texdir, name)
+            if not fs.is_dir(file) and (file:match("%.lua$") or file:match("%.tlu$")) then
+                fs.copy(file, luadir)
+                fs.delete(file)
+            end
+        end
     end
     return true
 end

@@ -3,7 +3,7 @@ local _git_ref = git_ref:gsub('.*%-', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
-local repo_url = 'https://github.com/davidcarlisle/dpctex/'
+local repo_url = 'https://github.com/davidcarlisle/dpctex'
 
 rockspec_format = '3.0'
 package = 'colortbl'
@@ -35,14 +35,5 @@ build_dependencies = { 'luatex', 'latex-base' }
 dependencies = { 'latex-tools' }
 
 build = {
-  type = 'command',
-  build_command = [[
-  luatex --interaction=nonstopmode colortbl.ins
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/colortbl/colortbl.pdf'] = 'colortbl.pdf',
-      ['../tex/latex/colortbl/colortbl.sty'] = 'colortbl.sty',
-    }
-  }
+  type = 'l3build',
 }

@@ -34,13 +34,5 @@ end
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode infwarerr.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/infwarerr/infwarerr.sty'] = 'infwarerr.sty',
-    }
-  }
+  type = 'l3build',
 }

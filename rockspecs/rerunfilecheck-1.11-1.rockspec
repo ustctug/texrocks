@@ -35,14 +35,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode rerunfilecheck.dtx
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/rerunfilecheck/rerunfilecheck.pdf'] = 'rerunfilecheck.pdf',
-      ['../tex/latex/rerunfilecheck/rerunfilecheck.sty'] = 'rerunfilecheck.sty',
-    }
-  }
+  type = 'l3build',
 }

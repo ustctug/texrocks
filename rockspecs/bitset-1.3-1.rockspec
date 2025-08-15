@@ -34,13 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode bitset.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/bitset/bitset.sty'] = 'bitset.sty',
-    }
-  }
+  type = 'l3build',
 }

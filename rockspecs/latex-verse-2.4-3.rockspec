@@ -2,6 +2,7 @@ local git_ref = 'verse-v2.4c'
 local _git_ref = git_ref:gsub('.*%-v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+git_ref = '534e04c2cb54b70a76ce003130e284dfb086e546'
 
 local repo_url = 'https://github.com/LaTeX-Package-Repositories/herries-press'
 
@@ -33,13 +34,20 @@ end
 build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode verse.ins
+  type = 'l3build',
+  patches = {
+    ["fix-wspr.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -49,7 +49,7 @@
+         "\nToday:    "..today)
+ end
+ 
+-require("l3build-wspr.lua")
++-- require("l3build-wspr.lua")
+ 
+ --[===========[--
+      TAGGING
 ]],
-  install = {
-    conf = {
-      ['../tex/latex/verse/verse.sty'] = 'verse.sty',
-    },
-  }
+  },
 }

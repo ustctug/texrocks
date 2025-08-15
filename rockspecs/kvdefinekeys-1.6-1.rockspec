@@ -32,13 +32,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode kvdefinekeys.dtx
-]],
-  install = {
-    conf = {
-      ['../tex/generic/kvdefinekeys/kvdefinekeys.sty'] = 'kvdefinekeys.sty',
-    }
-  }
+  type = 'l3build',
 }

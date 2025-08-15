@@ -23,7 +23,7 @@ Babel uses contributed configuration files that provide the detail of what has t
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  dir = 'babel-' .. modrev,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -33,16 +33,24 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
--- https://github.com/latex3/babel/issues/350
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode babel.ins
+  patches = {
+    ["fix-kpsewhich.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -36,7 +36,7 @@
+ checkconfigs = {"build","config-lua"}
+ 
+ -- Find and run the build system
+-kpse.set_program_name ("kpsewhich")
+-if not release_date then
+-  dofile(kpse.lookup("l3build.lua"))
+-end
++-- kpse.set_program_name ("kpsewhich")
++-- if not release_date then
++--   dofile(kpse.lookup("l3build.lua"))
++-- end
 ]],
-  install = {
-    lua = {
-    },
-    conf = {
-    }
-  }
+  },
+  type = 'l3build',
 }

@@ -34,15 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode epstopdf.dtx
-]],
-  install = {
-    conf = {
-      -- ['../doc/latex/epstopdf/epstopdf.pdf'] = 'epstopdf.pdf',
-      ['../tex/latex/epstopdf/epstopdf.sty'] = 'epstopdf.sty',
-      ['../tex/latex/epstopdf/epstopdf-base.sty'] = 'epstopdf-base.sty',
-    }
-  }
+  type = 'l3build',
 }

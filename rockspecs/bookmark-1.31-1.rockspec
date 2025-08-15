@@ -34,18 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  build_command = [[
-    lualatex --interaction=nonstopmode bookmark.ins
-  ]],
-  install = {
-    conf = {
-      ['../tex/latex/bookmark/bkm-dvipdfm.def'] = 'bkm-dvipdfm.def',
-      ['../tex/latex/bookmark/bkm-dvips.def'] = 'bkm-dvips.def',
-      ['../tex/latex/bookmark/bkm-pdftex.def'] = 'bkm-pdftex.def',
-      ['../tex/latex/bookmark/bkm-vtex.def'] = 'bkm-vtex.def',
-      ['../tex/latex/bookmark/bookmark.sty'] = 'bookmark.sty',
-      -- ['../doc/latex/bookmark/bookmark.pdf'] = 'bookmark.pdf',
-    }
-  }
+  type = 'l3build',
 }
