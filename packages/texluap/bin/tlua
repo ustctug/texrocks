@@ -1,2 +1,9 @@
 #!/usr/bin/env -S texlua
-require 'tlua'.main(arg)
+local status = require 'status'
+require 'prompt.utils'.main(arg, nil, function(args)
+    if args.v then
+        print(status.banner)
+        os.exit(0)
+    end
+    return args
+end)
