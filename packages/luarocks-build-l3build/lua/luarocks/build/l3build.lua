@@ -12,10 +12,8 @@ function M.run(rockspec, no_install)
     local confdir = path.conf_dir(rockspec.name, rockspec.version)
     local rootdir = dir.dir_name(confdir)
     -- l3build uses texlua
-    local p = io.popen([[l3build install --texmfhome ]] .. rootdir)
-    if p then
-        print(p:read '*a')
-        p:close()
+    if not fs.execute_string([[l3build install --texmfhome ]] .. rootdir) then
+        return nil, "Failed run l3build"
     end
     -- don't pack source code
     fs.delete(dir.path(rootdir, 'source'))
