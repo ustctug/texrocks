@@ -48,9 +48,17 @@ if type(module) ~= type("") then
     module = data.package
 end
 exefiles = {}
-if data.build.install or data.build.install.bin ~= nil then
+if data.build and data.build.install and data.build.install.bin then
     for _, exe in pairs(data.build.install.bin) do
         table.insert(exefiles, exe)
+    end
+end
+if data.build and data.build.type == 'builtin' then
+    local dir = 'bin'
+    if lfs.isdir(dir) then
+        for exe in lfs.dir(dir) do
+            table.insert(exefiles, dir .. '/' .. exe)
+        end
     end
 end
 
