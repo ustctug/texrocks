@@ -35,8 +35,5 @@ wrap_bin_scripts = false
 type = "command"
 build_command = "bin/initex --ini --interaction=nonstopmode initex.ini"
 
-[build.install.bin]
-initex = 'bin/initex'
-
 [build.install.conf]
 '../web2c/luahbtex/initex.fmt' = 'initex.fmt'

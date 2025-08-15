@@ -32,9 +32,6 @@ wrap_bin_scripts = false
 [build]
 type = "builtin"
 
-[build.install.bin]
-epstopdf = "0.3.11-1"
-
 [test_dependencies]
 l3build = "2024.10.16-1"
 toml2lua = "3.0.0-1"

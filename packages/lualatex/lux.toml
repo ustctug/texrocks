@@ -47,8 +47,5 @@ wrap_bin_scripts = false
 type = "command"
 build_command = "../initex/bin/initex --ini --interaction=nonstopmode lualatex.ini"
 
-[build.install.bin]
-lualatex = '../initex/bin/initex'
-
 [build.install.conf]
 '../web2c/luahbtex/lualatex.fmt' = 'lualatex.fmt'

@@ -21,6 +21,10 @@ currfile = "1.0-1"
 lualatex = "0.3.11-1"
 luatex = "0.3.11-1"
 
+[test_dependencies]
+l3build = "2024.10.16-1"
+toml2lua = "3.0.0-1"
+
 [run]
 type = "command"
 command = "latexdef"
@@ -32,11 +36,3 @@ flags = ["TeX"]
 
 [build]
 type = "builtin"
-
-[build.install.bin]
-texdef = 'bin/texdef'
-latexdef = 'bin/latexdef'
-
-[test_dependencies]
-l3build = "2024.10.16-1"
-toml2lua = "3.0.0-1"

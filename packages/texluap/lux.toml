@@ -36,6 +36,3 @@ wrap_bin_scripts = false
 
 [build]
 type = "builtin"
-
-[build.install.bin]
-tlua = "bin/tlua"

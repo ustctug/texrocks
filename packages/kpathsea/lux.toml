@@ -37,6 +37,3 @@ l3build = "2024.10.16-1"
 
 [build]
 type = "builtin"
-
-[build.install.bin]
-kpsewhich = "bin/kpsewhich"
