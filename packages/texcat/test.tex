@@ -3,9 +3,9 @@
 \usepackage{color}
 \usepackage{amsfonts}
 \directlua{
-  local outputs = require'texcat'.main{'test.lua', 'test.tex', '--math-escape'}
-  token.set_macro('mylua', outputs[1])
-  token.set_macro('mytex', outputs[2])
+  local texcat = require'texcat'
+  token.set_macro('mylua', texcat.render{'test.lua', extra_opts = {math_escape = 'comment'}})
+  token.set_macro('mytex', texcat.render{'test.tex', theme = 'Monokai'})
 }
 \begin{document}
 

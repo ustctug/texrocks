@@ -2,9 +2,7 @@
 
 <!-- markdownlint-disable MD013 -->
 
-![screenshot](https://github.com/user-attachments/assets/e0692a72-c8c4-4d17-a95f-a9018e3bed27)
-
-![PDF](https://github.com/user-attachments/assets/b2053a55-8b3d-481b-a3b1-d84209040823)
+![screenshot](https://github.com/user-attachments/assets/6c5b13b2-6d8a-498c-a519-8ff6cfe82af0)
 
 It supports syntax parser:
 
@@ -17,13 +15,6 @@ It supports color themes:
 - [ ] [syncat themes](https://github.com/foxfriends/syncat-themes)
 
 ## Dependencies
-
-For texlive's `ctan.zip` and `tds.zip`, vscode-extensions, tree-sitter-lua and
-tree-sitter-latex for GNU/Linux are attached. Tell correct environment variables:
-
-```sh
-LUA_CPATH="$HOME/.texlive/texmf-config/scripts/texcat/lib/?.so" CLUAINPUTS='$LUAINPUTS' lualatex --shell-escape test.tex
-```
 
 ### TextMate
 
@@ -42,7 +33,7 @@ Abyss theme for Visual Studio Code
 publisher: vscode
 
 # ...
-$ texcat --list languages --syntax-type=tree-sitter
+$ texcat --list syntaxes --syntax-type=textmate
 bat: .bat
 %description%
 
@@ -60,7 +51,7 @@ lx add -b vscode-extensions
 By default, it will search syntax parsers in Neovim directory.
 
 ```sh
-$ texcat --list languages --syntax-type=tree-sitter
+$ texcat --list syntaxes
 c: /usr/lib/nvim/parser/c.so
 
 # ...
@@ -86,14 +77,15 @@ extra_servers = [
 
 ```sh
 $ texcat --help
-Usage: /home/wzy/Desktop/texrocks/packages/texcat/.lux/5.3/bin/texcat
-       [-h] [--completion {bash,zsh,fish}] [--output <output>]
-       [--language <language>] [--theme <theme>]
+Usage: /home/wzy/Desktop/texrocks/packages/texcat/bin/texcat [-h]
+       [--completion {bash,zsh,fish}] [--output <output>]
+       [--syntax <syntax>] [--theme <theme>]
        [--syntax-type {textmate,tree-sitter}]
        [--theme-type {textmate}] [--extensions-dir <extensions_dir>]
-       [--output-format {tex,latex,ansi,test,empty,txt}]
-       [--list {none,themes,languages,extensions_dirs,colors,links}]
-       [--command-prefix <command_prefix>] [<file>] ...
+       [--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}]
+       [--list {themes,syntaxes,extensions_dirs,colors,links}]
+       [--command-prefix <command_prefix>]
+       [--math-escape <math_escape>] [<file>] ...
 
 Arguments:
    file                  file name
@@ -103,20 +95,22 @@ Options:
    --completion {bash,zsh,fish}
                          Output a shell completion script for the specified shell.
    --output <output>     output file name, - means stdout
-   --language <language> set language, auto means decided by extension
+   --syntax <syntax>     set syntax, auto means decided by extension
    --theme <theme>       set theme, auto means first theme such as Abyss
    --syntax-type {textmate,tree-sitter}
                          syntax highlight type (default: tree-sitter)
    --theme-type {textmate}
                          color scheme type (default: textmate)
    --extensions-dir <extensions_dir>
-                         directories for VSCode extensions (~/.vscode) and tree-sitter grammars/queries (/usr/lib/nvim, /usr/share/nvim/runtime)
-   --output-format {tex,latex,ansi,test,empty,txt}
-                         output format, latex means full code not a snippet (default: ansi)
-   --list {none,themes,languages,extensions_dirs,colors,links}
-                         list all themes/languages/... (default: none)
+                         directories for VSCode extensions and tree-sitter grammars/queries
+   --output-format {ansi,empty,latex,preamble.tex,test,tex,txt}
+                         output format (default: ansi)
+   --list {themes,syntaxes,extensions_dirs,colors,links}
+                         list all themes/syntaxes/... (default: themes)
    --command-prefix <command_prefix>
-                         command prefix for TeX (default: PY)
+                         command prefix for TeX
+   --math-escape <math_escape>
+                         the scope to escape $math TeX code$ (default: comment)
 $ texcat lua/texcat.lua --output-format=latex --output=main.tex
 $ lualatex main.tex
 ```
@@ -126,7 +120,7 @@ For a source code:
 `test.lua`:
 
 ```lua
----comment
+---last index $i\in\mathbb{Z}$
 local function get_last_index(input)
     local offsets = { 1 }
     if input ~= nil then
@@ -140,16 +134,25 @@ return get_last_index
 `texcat test.lua --output-format=tex` will generate:
 
 ```tex
-\PY{comment}{\PYZhy{}\PYZhy{}\PYZhy{}comment}
-\PY{keyword}{local}\PY{source}{ }\PY{keyword.function}{function}\PY{source}{ }\PY{variable}{get\PYZus{}last\PYZus{}index}\PY{source}{(}\PY{variable}{input}\PY{source}{)}
-\PY{source}{    }\PY{keyword}{local}\PY{source}{ }\PY{variable}{offsets}\PY{source}{ }\PY{operator}{=}\PY{source}{ }\PY{constructor}{\PYZob{}}\PY{source}{ }\PY{number}{1}\PY{source}{ }\PY{constructor}{\PYZcb{}}
-\PY{source}{    }\PY{keyword.conditional}{if}\PY{source}{ }\PY{variable}{input}\PY{source}{ }\PY{operator}{\PYZti{}=}\PY{source}{ }\PY{constant.builtin}{nil}\PY{source}{ }\PY{keyword.conditional}{then}
-\PY{source}{        }\PY{variable}{print}\PY{source}{(}\PY{operator}{\PYZsh{}}\PY{variable}{input}\PY{source}{ }\PY{operator}{\PYZhy{}}\PY{source}{ }\PY{variable}{offsets}\PY{source}{[}\PY{number}{1}\PY{source}{])}
-\PY{source}{    }\PY{keyword.conditional}{end}
-\PY{source}{    }\PY{keyword.return}{return}\PY{source}{ true}
-\PY{keyword.function}{end}
-\PY{keyword.return}{return}\PY{source}{ }\PY{variable}{get\PYZus{}last\PYZus{}index}
+\PYAbyss{comment}{\PYAbyssZhy{}\PYAbyssZhy{}\PYAbyssZhy{}last index $i\in\mathbb{Z}$}
+\PYAbyss{keyword}{local}\PYAbyss{source}{ }\PYAbyss{keyword.function}{function}\PYAbyss{source}{ }\PYAbyss{variable}{get\PYAbyssZus{}last\PYAbyssZus{}index}\PYAbyss{source}{(}\PYAbyss{variable}{input}\PYAbyss{source}{)}
+\PYAbyss{source}{    }\PYAbyss{keyword}{local}\PYAbyss{source}{ }\PYAbyss{variable}{offsets}\PYAbyss{source}{ }\PYAbyss{operator}{=}\PYAbyss{source}{ }\PYAbyss{constructor}{\PYAbyssZob{}}\PYAbyss{source}{ }\PYAbyss{number}{1}\PYAbyss{source}{ }\PYAbyss{constructor}{\PYAbyssZcb{}}
+\PYAbyss{source}{    }\PYAbyss{keyword.conditional}{if}\PYAbyss{source}{ }\PYAbyss{variable}{input}\PYAbyss{source}{ }\PYAbyss{operator}{\PYAbyssZti{}=}\PYAbyss{source}{ }\PYAbyss{constant.builtin}{nil}\PYAbyss{source}{ }\PYAbyss{keyword.conditional}{then}
+\PYAbyss{source}{        }\PYAbyss{variable}{print}\PYAbyss{source}{(}\PYAbyss{operator}{\PYAbyssZsh{}}\PYAbyss{variable}{input}\PYAbyss{source}{ }\PYAbyss{operator}{\PYAbyssZhy{}}\PYAbyss{source}{ }\PYAbyss{variable}{offsets}\PYAbyss{source}{[}\PYAbyss{number}{1}\PYAbyss{source}{])}
+\PYAbyss{source}{    }\PYAbyss{keyword.conditional}{end}
+\PYAbyss{source}{    }\PYAbyss{keyword.return}{return}\PYAbyss{source}{ true}
+\PYAbyss{keyword.function}{end}
+\PYAbyss{keyword.return}{return}\PYAbyss{source}{ }\PYAbyss{variable}{get\PYAbyssZus{}last\PYAbyssZus{}index}
 ```
 
 See [example](https://github.com/ustctug/texrocks/tree/main/packages/texcat) to
 know how to use it in your LuaLaTeX document.
+
+For texlive's `ctan.zip` and `tds.zip`, vscode-extensions, tree-sitter-lua and
+tree-sitter-latex for GNU/Linux are attached. Tell correct environment variables:
+
+```sh
+LUA_CPATH="$HOME/.texlive/texmf-config/scripts/texcat/lib/?.so" CLUAINPUTS='$LUAINPUTS' lualatex --shell-escape test.tex
+```
+
+![PDF](https://github.com/user-attachments/assets/3ebe9d8f-4ea9-495c-8cd9-187b2dc0200b)

@@ -12,13 +12,16 @@ local warna = require 'warna'
 warna.options.level = 3
 local M = {
     -- cache
+    dirs = {},
     themes = {},
-    languages = {},
+    syntaxes = {},
+    -- protect escape
     protect_map = {
         bs = [[\]],
         ob = [[{]],
         cb = [[}]],
     },
+    -- directly escape
     escape_map = {
         us = [[_]],
         ca = [[^]],
@@ -106,7 +109,7 @@ function M.get_parser(progname)
     local parser = argparse(progname):add_complete()
     parser:argument('file', 'file name'):args('*')
     parser:option('--output', 'output file name, - means stdout'):count('*')
-    parser:option('--language', 'set language, auto means decided by extension'):count('*')
+    parser:option('--syntax', 'set syntax, auto means decided by extension'):count('*')
     parser:option('--theme', 'set theme, auto means first theme such as Abyss'):count('*')
     parser:option('--syntax-type', 'syntax highlight type', 'tree-sitter'):choices { 'textmate', 'tree-sitter' }
     parser:option('--theme-type', 'color scheme type', 'textmate'):choices { 'textmate' }
@@ -122,15 +125,54 @@ function M.get_parser(progname)
         table.insert(formats, fmt:match('[^.]+%.(.*)$'))
     end
     parser:option('--output-format', 'output format', format):choices(formats)
-    parser:option('--list', 'list all themes/languages/...', 'none'):choices {
-        'none', 'themes', 'languages', 'extensions_dirs', 'colors', 'links'
+    parser:option('--list', 'list all themes/syntaxes/...', 'themes'):choices {
+        'themes', 'syntaxes', 'extensions_dirs', 'colors', 'links'
     }
     parser:option('--command-prefix', 'command prefix for TeX'):count('*')
-    parser:option('--math-escape', 'escape $math TeX code$'):args(0)
+    parser:option('--math-escape', 'the scope to escape $math TeX code$', 'comment')
     return parser
 end
 
----list themes or languages
+---@alias str string | nil
+---@alias cfg
+---| {
+---  text: str,
+---  syntax: string,
+---  syntax_type: str,
+---  theme: str,
+---  theme_type: str,
+---  extensions_dir: string[] | nil,
+---  format: str,
+---  output: str,
+---  extra_opts: table<string, any> | nil}
+
+---load extensions directories
+---@param extensions_dir string[]
+function M.load_extensions_dir(extensions_dir)
+    for _, dir in ipairs(extensions_dir) do
+        if not M.dirs[dir] then
+            textmate.highlight_set_extensions_dir(dir .. '/extensions/')
+        end
+    end
+end
+
+---parse command line arguments
+---@param argv string[] command line arguments
+---@return cfg[] cfgs parsed configs
+function M.parse(argv)
+    local parser = M.get_parser(argv[0])
+    local args = parser:parse(argv)
+    if #args.file == 0 then
+        if args.theme_type == 'textmate' or args.syntax_type == 'textmate' then
+            M.load_extensions_dir(args.extensions_dir)
+        end
+        print(M.get_list(args.list, args.theme, args.theme_type, args.extensions_dir))
+        return {}
+    end
+    return M.args_to_cfgs(args)
+end
+
+---list themes or syntaxes
 ---@param data string[][]
 ---@return string information
 function M.list(data)
@@ -141,110 +183,30 @@ function M.list(data)
     return table.concat(lines, "\n\n")
 end
 
----fill a table by the last element
----@param input table
----@param number integer
----@return table
-function M.fill(input, number)
-    for i = #input + 1, number do
-        input[i] = input[i - 1]
-    end
-    return input
-end
-
----parse command line arguments
----@param argv string[] command line arguments
----@return table args parsed result
-function M.parse(argv)
-    local parser = M.get_parser(argv[0])
-    local args = parser:parse(argv)
-    return M.postparse(args)
-end
-
----change some values by command line arguments
----@param args table parsed result
----@return table args processed result
-function M.postparse(args)
-    if args.theme_type == 'textmate' or args.syntax_type == 'textmate' then
-        for _, dir in ipairs(args.extensions_dir) do
-            textmate.highlight_set_extensions_dir(dir .. '/extensions/')
-        end
-    end
-
-    if #args.output == 0 then
-        if tex and tex.print then
-            for i, file in ipairs(args.file) do
-                args.output[i] = '.lux/%s.tex'
-                args.output[i] = args.output[i]:format(file)
-            end
-        else
-            args.output[1] = '-'
-        end
-    end
-    args.output = M.fill(args.output, #args.file)
-
-    if #args.theme == 0 then
-        args.theme[1] = 'auto'
-    end
-    args.theme = M.fill(args.theme, #args.file)
-    local themes = textmate.highlight_themes()
-    if #themes > 0 then
-        for i, name in ipairs(args.theme) do
-            if name == 'auto' then
-                args.theme[i] = themes[1][1]
-            end
-        end
-    end
-
-    if #args.language == 0 then
-        args.language[1] = 'auto'
-    end
-    args.language = M.fill(args.language, #args.file)
-    local languages = textmate.highlight_languages()
-    if #languages > 0 then
-        for i, name in ipairs(args.language) do
-            if name == 'auto' then
-                local ext = args.file[i] or ''
-                ext = ext:match('(%.[^.]+)$')
-                for _, data in ipairs(languages) do
-                    if ext == data[3] then
-                        args.language[i] = data[1]
-                        break
-                    end
-                end
-            end
-        end
-    end
-
-    local s = #args.command_prefix
-    local prefix = "PY"
-    -- PYa, PYb, ..., PYz, PYXa, PYxb, ...
-    for i = s, #args.file - 1 do
-        args.command_prefix[i + 1] = prefix .. string.char(0x61 + i % 26)
-        if i % 26 == 25 then
-            prefix = prefix .. "X"
-        end
-    end
-
-    if args.list == 'none' then
-        args.list = nil
-    elseif args.list == 'links' then
+---get list output
+---@param list_type string list type
+---@param theme string[] theme names
+---@param theme_type string theme type
+---@param extensions_dir string[] extensions directory
+function M.get_list(list_type, theme, theme_type, extensions_dir)
+    local list
+    if list_type == 'links' then
         local link = M.get_scope_link()
         local scopes = M.get_sorted_keys(link)
         local lines = {}
         for _, scope in ipairs(scopes) do
             table.insert(lines, scope .. ' -> ' .. link[scope])
         end
-        args.list = table.concat(lines, "\n")
-    elseif args.list == 'colors' then
+        list = table.concat(lines, "\n")
+    elseif list_type == 'colors' then
         local theme_infos = {}
-        for _, theme_name in ipairs(args.theme) do
-            if args.theme_type == 'textmate' then
-                if themes[theme_name] == nil then
-                    themes[theme_name] = textmate.highlight_load_theme(theme_name)
+        for _, theme_name in ipairs(theme) do
+            if theme_type == 'textmate' then
+                if M.themes[theme_name] == nil then
+                    M.themes[theme_name] = textmate.highlight_load_theme(theme_name)
                 end
-                themes[theme_name] = textmate.highlight_load_theme(theme_name)
-                textmate.highlight_set_theme(themes[theme_name])
+                M.themes[theme_name] = textmate.highlight_load_theme(theme_name)
+                textmate.highlight_set_theme(M.themes[theme_name])
                 local color_map = M.get_color_map()
                 local scopes = M.get_sorted_keys(color_map)
                 local lines = { theme_name }
@@ -254,25 +216,50 @@ function M.postparse(args)
                 table.insert(theme_infos, table.concat(lines, "\n"))
             end
         end
-        args.list = table.concat(theme_infos, "\n\n")
-    elseif args.list == 'themes' then
-        args.list = M.list(textmate.highlight_themes())
-    elseif args.list == 'extensions_dirs' then
-        args.list = table.concat(args.extensions_dir, "\n")
-    elseif args.list == 'languages' then
-        if args.syntax_type == 'textmate' then
-            args.list = M.list(textmate.highlight_languages())
-        elseif args.syntax_type == 'tree-sitter' then
-            local parsers = M.search(args.extensions_dir, 'parser')
+        list = table.concat(theme_infos, "\n\n")
+    elseif list_type == 'themes' then
+        list = M.list(textmate.highlight_themes())
+    elseif list_type == 'extensions_dirs' then
+        list = table.concat(extensions_dir, "\n")
+    elseif list_type == 'syntaxes' then
+        if syntax_type == 'textmate' then
+            list = M.list(textmate.highlight_languages())
+        elseif syntax_type == 'tree-sitter' then
+            local parsers = M.search(extensions_dir, 'parser')
             local langs = M.get_sorted_keys(parsers)
             local lines = {}
             for _, lang in ipairs(langs) do
                 table.insert(lines, lang .. ': ' .. parsers[lang])
             end
-            args.list = table.concat(lines, "\n\n")
+            list = table.concat(lines, "\n\n")
         end
     end
-    return args
+    return list
+end
+
+---change some values by command line arguments
+---@param args table parsed result
+---@return cfg[] cfgs parsed configs
+function M.args_to_cfgs(args)
+    local cfgs = {}
+    for i, file in ipairs(args.file) do
+        table.insert(cfgs, {
+            file,
+            text = nil,
+            syntax = args.syntax[i],
+            syntax_type = args.syntax_type,
+            theme = args.theme[i],
+            theme_type = args.theme_type,
+            extensions_dir = args.extensions_dir,
+            format = args.output_format,
+            output = args.output[i],
+            extra_opts = {
+                prefix = args.command_prefix[i],
+                math_escape = args.math_escape,
+            }
+        })
+    end
+    return cfgs
 end
 
 ---search parsers or queries
@@ -297,26 +284,66 @@ function M.search(extensions_dir, subdir)
     return parsers
 end
 
----render text
----@param text string
----@param theme_name string
----@param language_name string
----@param output string
----@param output_format string
----@param prefix string
----@param syntax_type string
----@param theme_type string
----@param extensions_dir string[]
----@param math_escape string
-function M.render(text, theme_name, language_name, output, output_format, prefix,
-                  syntax_type, theme_type, extensions_dir, math_escape)
-    local color_map = {}
-    if theme_type == 'textmate' then
-        if M.themes[theme_name] == nil then
-            M.themes[theme_name] = textmate.highlight_load_theme(theme_name)
+---core function: render a file
+---@param cfg cfg
+function M.render(cfg)
+    cfg.extensions_dir = cfg.extensions_dir or M.get_extensions_dir()
+    -- syntax_type/theme_type
+    cfg.syntax_type = cfg.syntax_type or 'tree-sitter'
+    cfg.theme_type = cfg.theme_type or 'textmate'
+    if cfg.theme_type == 'textmate' or cfg.syntax_type == 'textmate' then
+        M.load_extensions_dir(cfg.extensions_dir)
+    end
+    -- theme
+    cfg.theme = cfg.theme or 'auto'
+    if cfg.theme_type == 'textmate' and cfg.theme == 'auto' then
+        cfg.theme = textmate.highlight_themes()[1][1]
+    end
+    -- syntax
+    cfg.syntax = cfg.syntax or 'auto'
+    if cfg[1] then
+        local f = io.open(cfg[1])
+        if not f then
+            return
         end
-        textmate.highlight_set_theme(M.themes[theme_name])
-        if syntax_type ~= 'textmate' then
+        cfg.text = f:read('*a'):gsub("\n$", '')
+        f:close()
+        if cfg.syntax == 'auto' then
+            local ext = cfg[1]:match('(%.[^.]+)$')
+            for _, data in ipairs(textmate.highlight_languages()) do
+                if ext == data[3] then
+                    cfg.syntax = data[1]
+                    break
+                end
+            end
+        end
+    end
+    cfg.text = cfg.text or ''
+    -- format
+    cfg.format = cfg.format or 'tex'
+    -- output
+    if cfg.output == nil then
+        if tex and tex.print then
+            cfg.output = '.lux/%s.tex'
+            cfg.output = cfg.output:format(cfg[1] or cfg.syntax)
+        else
+            cfg.output = '-'
+        end
+    end
+    -- prefix
+    cfg.extra_opts = cfg.extra_opts or {}
+    if cfg.format:match 'tex' and cfg.extra_opts.prefix == nil then
+        local prefix = cfg.theme:gsub(" ", "")
+        cfg.extra_opts.prefix = "PY" .. prefix
+    end
+
+    local color_map = {}
+    if cfg.theme_type == 'textmate' then
+        if M.themes[cfg.theme] == nil then
+            M.themes[cfg.theme] = textmate.highlight_load_theme(cfg.theme)
+        end
+        textmate.highlight_set_theme(M.themes[cfg.theme])
+        if cfg.syntax_type ~= 'textmate' then
             color_map = M.get_color_map()
             local link = M.get_scope_link()
             color_map = M.link_color_map(color_map, link)
@@ -324,14 +351,14 @@ function M.render(text, theme_name, language_name, output, output_format, prefix
     end
 
     local captures = {}
-    if syntax_type == 'textmate' then
-        if M.languages[language_name] == nil then
-            M.languages[language_name] = textmate.highlight_load_language(language_name)
+    if cfg.syntax_type == 'textmate' then
+        if M.syntaxes[cfg.syntax] == nil then
+            M.syntaxes[cfg.syntax] = textmate.highlight_load_syntax(cfg.syntax)
         end
-        textmate.highlight_set_language(M.languages[language_name])
+        textmate.highlight_set_syntax(M.syntaxes[cfg.syntax])
 
         -- FIXME: https://github.com/icedman/nvim-textmate/issues/11
-        local results = textmate.highlight_line(text, M.themes[theme_name], M.languages[language_name], 0)
+        local results = textmate.highlight_line(cfg.text, M.themes[cfg.theme_type], M.syntaxes[cfg.syntax], 0)
         for _, result in ipairs(results) do
             local idx, len, r, g, b, scope = result[1] + 1, result[2], result[3], result[4], result[5], result
                 [6]
@@ -342,69 +369,50 @@ function M.render(text, theme_name, language_name, output, output_format, prefix
             end
             table.insert(captures, { start_index = idx, end_index = idx + len - 1, scope = scope })
         end
-    elseif syntax_type == 'tree-sitter' then
-        if M.languages[language_name] == nil then
-            M.languages[language_name] = M.get_language(language_name, extensions_dir)
+    elseif cfg.syntax_type == 'tree-sitter' then
+        if M.syntaxes[cfg.syntax] == nil then
+            M.syntaxes[cfg.syntax] = M.get_syntax(cfg.syntax, cfg.extensions_dir)
         end
-        local tree = M.languages[language_name].parser:parse_string(text)
+        local tree = M.syntaxes[cfg.syntax].parser:parse_string(cfg.text)
         local node = tree:root()
-        for capture, name in M.languages[language_name].query:capture(node) do
+        for capture, name in M.syntaxes[cfg.syntax].query:capture(node) do
             -- lua index start from 1
             table.insert(captures,
                 { start_index = capture:start_byte() + 1, end_index = capture:end_byte(), scope = name })
         end
         color_map = M.add_scope(color_map, captures)
         captures = M.filter_captures(captures, color_map)
-        captures = M.cut_captures(captures, #text)
+        captures = M.cut_captures(captures, #cfg.text)
     end
 
-    local args = {
-        hls = M.get_hls(text, captures),
-        color_map = color_map,
-        ipairs = ipairs,
-        table = table,
-        warna = warna,
-        escape = M.escape,
-        preamble = M.get_path('texcat/main.preamble.tex'),
-        tex = M.get_path('texcat/main.tex'),
-        prefix = prefix,
-        math_escape = math_escape,
-    }
-    args.scopes = M.get_sorted_keys(args.color_map)
+    local opts = cfg.extra_opts or {}
+    opts.hls = M.get_hls(cfg.text, captures)
+    opts.color_map = color_map
+    opts.ipairs = ipairs
+    opts.table = table
+    opts.warna = warna
+    opts.escape = M.escape
+    opts.preamble = M.get_path('texcat/main.preamble.tex')
+    opts.tex = M.get_path('texcat/main.tex')
+    opts.scopes = M.get_sorted_keys(opts.color_map)
     if tex and tex.print then
-        M.output(M.get_output('preamble.tex', args), '-')
+        M.output(M.get_output('preamble.tex', opts), '-')
     end
-    M.output(M.get_output(output_format, args), output)
+    local out = M.get_output(cfg.format, opts)
+    if cfg.output == '' then
+        return out
+    end
+    M.output(out, cfg.output)
+    return cfg.output
 end
 
 ---**entry for texcat**
 ---@param argv string[] command line arguments
----@return string[] output
 function M.main(argv)
-    local args = M.parse(argv)
-    if args.list then
-        print(args.list)
-        return {}
+    local cfgs = M.parse(argv)
+    for _, cfg in ipairs(cfgs) do
+        M.render(cfg)
     end
-    for i, file in ipairs(args.file) do
-        local f = io.open(file)
-        if f then
-            local text = f:read('*a'):gsub("\n$", '')
-            f:close()
-            M.render(text,
-                args.theme[i],
-                args.language[i],
-                args.output[i],
-                args.output_format,
-                args.command_prefix[i],
-                args.syntax_type,
-                args.theme_type,
-                args.extensions_dir,
-                args.math_escape
-            )
-        end
-    end
-    return args.output
 end
 
 ---convert theme information to color map
@@ -557,12 +565,12 @@ function M.require(name, extensions_dir)
     return parser
 end
 
----get tree-sitter language information
+---get tree-sitter syntax information
 ---@param name string
 ---@param extensions_dir string[]
----@return language language
----@alias language {parser: table, query: table}
-function M.get_language(name, extensions_dir)
+---@return syntax syntax
+---@alias syntax {parser: table, query: table}
+function M.get_syntax(name, extensions_dir)
     local parser = M.require(name, extensions_dir)
     local filename = M.search(extensions_dir, 'queries/' .. name .. '/highlights.scm')[1]
     local f = io.open(filename)
