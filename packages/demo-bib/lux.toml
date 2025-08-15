@@ -11,7 +11,7 @@ license = "GPL-3.0"
 
 [build_dependencies]
 lualatex = "0.3.11-1"
-citation-style-language = "0.8.0-1"
+citation-style-language = "0.8.2-1"
 beamer = "3.72-1"
 
 [test_dependencies]

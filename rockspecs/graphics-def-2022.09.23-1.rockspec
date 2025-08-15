@@ -21,8 +21,11 @@ description = {
   license = 'LPPL-1.3c'
 }
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '-ctan.zip',
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -32,15 +35,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  install = {
-    conf = {
-      ['../tex/latex/graphics-def/dvipdfmx.def'] = 'dvipdfmx.def',
-      ['../tex/latex/graphics-def/dvips.def'] = 'dvips.def',
-      ['../tex/latex/graphics-def/dvisvgm.def'] = 'dvisvgm.def',
-      ['../tex/latex/graphics-def/luatex.def'] = 'luatex.def',
-      ['../tex/latex/graphics-def/pdftex.def'] = 'pdftex.def',
-      ['../tex/latex/graphics-def/xetex.def'] = 'xetex.def',
-    }
-  }
+  type = 'l3build',
 }

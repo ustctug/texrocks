@@ -33,24 +33,8 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+
 build = {
-  patches = {
-    ["fix-kpsewhich.diff"] = [[
---- old/build.lua
-+++ new/build.lua
-@@ -36,7 +36,7 @@
- checkconfigs = {"build","config-lua"}
- 
- -- Find and run the build system
--kpse.set_program_name ("kpsewhich")
--if not release_date then
--  dofile(kpse.lookup("l3build.lua"))
--end
-+-- kpse.set_program_name ("kpsewhich")
-+-- if not release_date then
-+--   dofile(kpse.lookup("l3build.lua"))
-+-- end
-]],
-  },
   type = 'l3build',
 }

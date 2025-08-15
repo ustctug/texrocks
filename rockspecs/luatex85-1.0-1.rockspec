@@ -17,7 +17,7 @@ description = {
   license = 'LPPL-1.3'
 }
 
-build_dependencies = { 'luatex', 'latex-base' }
+build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
@@ -33,17 +33,17 @@ end
 build = {
   type = 'l3build',
   patches = {
-    ["fix-kpsewhich.diff"] = [[
+    ["fix-build.lua.diff"] = [[
 --- old/build.lua
 +++ new/build.lua
-@@ -31,5 +31,5 @@
- end
+@@ -32,4 +32,6 @@
  
  -- Find and run the build system
--kpse.set_program_name ("kpsewhich")
+ kpse.set_program_name ("kpsewhich")
 -dofile (kpse.lookup ("l3build.lua"))
-+-- kpse.set_program_name ("kpsewhich")
-+-- dofile (kpse.lookup ("l3build.lua"))
++if not release_date then
++  dofile(kpse.lookup("l3build.lua"))
++end
 ]],
   },
 }

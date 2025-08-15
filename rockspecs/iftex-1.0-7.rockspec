@@ -33,15 +33,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  install = {
-    conf = {
-      ['../tex/generic/iftex/ifetex.sty'] = 'ifetex.sty',
-      ['../tex/generic/iftex/ifluatex.sty'] = 'ifluatex.sty',
-      ['../tex/generic/iftex/ifpdf.sty'] = 'ifpdf.sty',
-      ['../tex/generic/iftex/iftex.sty'] = 'iftex.sty',
-      ['../tex/generic/iftex/ifvtex.sty'] = 'ifvtex.sty',
-      ['../tex/generic/iftex/ifxetex.sty'] = 'ifxetex.sty',
-    }
-  }
+  type = 'l3build',
 }

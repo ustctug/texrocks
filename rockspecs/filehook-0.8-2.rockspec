@@ -2,7 +2,6 @@ local git_ref = 'v0.8b'
 local _git_ref = git_ref:gsub('^v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
-local date = '2022-10-25'
 
 local repo_url = 'https://github.com/MartinScharrer/filehook'
 

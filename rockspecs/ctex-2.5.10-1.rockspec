@@ -17,9 +17,13 @@ description = {
   license = 'LPPL-1.3c'
 }
 
+-- build_dependencies = { 'luatex', 'latex-base' }
+
 dependencies = { 'chinese-jfm', 'l3kernel', 'fontspec', 'ctex' }
 
 source = {
+  -- url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  -- dir = 'ctex-kit-' .. git_ref .. '/' .. package,
   url = repo_url .. '/releases/download/' .. git_ref .. '/' .. git_ref .. '.zip',
   dir = '.',
 }
@@ -32,6 +36,7 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
+  -- type = 'l3build',
   type = 'command',
   -- https://github.com/CTeX-org/ctex-kit/issues/741
   build_command = [[unzip ctex.tds.zip || 7z x ctex.tds.zip]],

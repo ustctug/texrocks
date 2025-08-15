@@ -34,6 +34,8 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 dependencies = { 'ntheorem', 'rerunfilecheck', 'refcount', 'gettitlestring', 'minitoc', 'atveryend', 'kvoptions', 'iftex',
   'pdfescape', 'hycolor', 'etoolbox', 'stringenc', 'intcalc', 'bitset', 'atbegshi', 'kvsetkeys', 'kvdefinekeys' }
 

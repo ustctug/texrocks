@@ -35,11 +35,8 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 build = {
-  type = 'none',
-  install = {
-    conf = {
-      ['../tex/latex/pdfcolmk/pdfcolmk.sty'] = 'pdfcolmk.sty',
-    }
-  }
+  type = 'l3build',
 }
