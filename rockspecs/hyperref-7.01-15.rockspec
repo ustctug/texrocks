@@ -1,10 +1,13 @@
-local git_ref = '7.01'
-local modrev = git_ref
-local specrev = '15'
+local git_ref = 'release-7.01o'
+local _git_ref = git_ref:gsub('.*%-', '')
+local modrev = _git_ref:gsub('[^0-9.]', '')
+local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
 rockspec_format = '3.0'
 package = 'hyperref'
 version = modrev .. '-' .. specrev
+
+local repo_url = 'https://github.com/latex3/hyperref'
 
 description = {
   summary = 'Extensive support for hypertext in LaTeX',
@@ -15,13 +18,13 @@ The package is distributed with the backref and nameref packages, which make use
 
 The package depends on the author’s kvoptions, ltxcmds and refcount packages.]],
   labels = { 'tex', 'latex' },
-  homepage = 'https://github.com/latex3/hyperref',
+  homepage = repo_url,
   license = 'LPPL-1.3c'
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/hyperref.tds.zip",
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -34,8 +37,6 @@ end
 dependencies = { 'ntheorem', 'rerunfilecheck', 'refcount', 'gettitlestring', 'minitoc', 'atveryend', 'kvoptions', 'iftex',
   'pdfescape', 'hycolor', 'etoolbox', 'stringenc', 'intcalc', 'bitset', 'atbegshi', 'kvsetkeys', 'kvdefinekeys' }
 
--- https://github.com/latex3/hyperref/issues/392
 build = {
-  type = 'none',
-  copy_directories = { 'tex' },
+  type = 'l3build',
 }

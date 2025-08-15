@@ -13,12 +13,11 @@ license = 'GPL-3.0'
 [source]
 # url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 # dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
-url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/4e0b7380bff85d588db24b286eadd6778a09139f.zip"
+dir = "texrocks-4e0b7380bff85d588db24b286eadd6778a09139f/packages/$(PACKAGE)"
 
 [dependencies]
 luarocks = "3.12.2-1"
-luafilesystem = "1.8.0-1"
 l3build = "2024.10.16-1"
 
 [run]
@@ -27,12 +26,7 @@ command = "luarocks"
 [test]
 type = "command"
 command = "luarocks"
-flags = [ "build", "../../rockspecs/l3build-2024.10.16-1.rockspec" ]
+flags = [ "build", "../../rockspecs/hyperref-7.01-15.rockspec" ]
 
 [build]
 type = "builtin"
-
-[test_dependencies]
-texluap = "0.3.11-1"
-luatex = "0.3.11-1"
-latex-base = "2025.06.01-1"

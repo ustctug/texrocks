@@ -84,6 +84,8 @@ Some useful tools for development!
 - [texcat](topics/texcat.md.html): a new syntax highlight system to
   replace [minted](https://github.com/gpoore/minted) based on python's
   [pygments](https://pygments.org/)
+- [luarocks-build-l3build](topics/luarocks-build-l3build.md.html): Luarocks
+  build backend for l3build.
 
 TODO:
 
