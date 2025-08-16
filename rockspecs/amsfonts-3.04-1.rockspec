@@ -14,7 +14,7 @@ description = {
 The distribution also includes the canonical Type 1 versions of the Computer Modern family of fonts.
 
 Basic LaTeX support for the symbol fonts is provided by amsfonts.sty, with names of individual symbols defined in amssymb.sty. The Euler fonts are supported by separate packages; details can be found in the documentation.]],
-  labels = { 'tex', 'metafont' },
+  labels = { 'BBD Font', 'Maths Font', 'MF Font', 'Font Type1', 'Font', 'Font symbol maths' },
   homepage = 'http://www.ams.org/arc/resources/amsfonts-about.html',
   license = 'SIL'
 }
