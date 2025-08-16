@@ -46,7 +46,24 @@ build = {
        "File `luatexja.lua' not found"))
  }
  
-]]
+]],
+    ["fix-find_file.diff"] = [[
+--- old/luatexja.lua
++++ new/luatexja.lua
+@@ -5,10 +5,10 @@
+   function luatexja.input_path_clear() for i in ipairs(ipath) do ipath[i]=nil end end
+   function luatexja.input_path_add(s) ipath[#ipath+1]=s end
+   function luatexja.load_lua(fn)
+-    local found = kpse.find_file(fn, 'tex')
++    local found = kpse.find_file(fn, 'lua')
+     if not found then
+       for _,v in ipairs(ipath) do
+-        found = kpse.find_file(v .. fn, 'tex'); if found then break end
++        found = kpse.find_file(v .. fn, 'lua'); if found then break end
+       end
+     end
+     if not found then
+]],
   },
   build_command = [[
     luatex --interaction=nonstopmode *.ins

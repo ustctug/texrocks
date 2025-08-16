@@ -34,7 +34,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-dependencies = { "texrocks" }
+dependencies = { "texrocks", "kpathsea" }
 
 build = {
   type = 'builtin',
@@ -47,47 +47,10 @@ build = {
  
  local function gethome()
 -  set_program("latex")
-+  -- set_program("latex")
++  set_program("kpsewhich")
    local result = options["texmfhome"] or var_value("TEXMFHOME")
    if not result or result == "" or match(result, os_pathsep) then
      print("Ambiguous TEXMFHOME setting: please use the --texmfhome option")
-]],
-    ["fix-require.diff"] = [[
---- old/scripts/l3build/l3build.lua
-+++ new/scripts/l3build/l3build.lua
-@@ -43,10 +43,9 @@
- local open             = io.open
-
- -- l3build setup and functions
--kpse.set_program_name("kpsewhich")
--build_kpse_path = match(lookup("l3build.lua"),"(.*[/])")
-+-- kpse.set_program_name("kpsewhich")
- local function build_require(s)
--  require(lookup("l3build-"..s..".lua", { path = build_kpse_path } ) )
-+  require("l3build-"..s)
- end
-
- -- Minimal code to do basic checks
-]],
-    ["fix-get_script_name.diff"] = [[
---- old/scripts/l3build/l3build-aux.lua
-+++ new/scripts/l3build/l3build-aux.lua
-@@ -89,11 +89,11 @@
- ---`texlua l3build.lua` -> `/Library/TeX/texbin/l3build.lua` or `./l3build.lua`
- ---@return string
- local function get_script_name()
--  if match(arg[0], "l3build$") or match(arg[0], "l3build%.lua$") then
--    return lookup("l3build.lua")
--  else
-+  -- if match(arg[0], "l3build$") or match(arg[0], "l3build%.lua$") then
-+  --   return lookup("l3build.lua")
-+  -- else
-     return arg[0] -- Why no lookup here?
--  end
-+  -- end
- end
- 
- -- Performs the task named target given modules in a bundle.
 ]],
     ["fix-exe.diff"] = [[
 --- old/scripts/l3build/l3build-variables.lua
@@ -192,6 +155,8 @@ build = {
     ["l3build-upload"] = "scripts/l3build/l3build-upload.lua",
     ["l3build-variables"] = "scripts/l3build/l3build-variables.lua",
     ["l3build-zip"] = "scripts/l3build/l3build-zip.lua",
+    -- l3build lookup it
+    ["l3build"] = "scripts/l3build/l3build.lua",
   },
   install = {
     bin = {

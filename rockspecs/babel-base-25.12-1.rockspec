@@ -8,7 +8,7 @@ rockspec_format = '3.0'
 package = 'babel-base'
 version = modrev .. '-' .. specrev
 
-dependencies = { 'luatexbase' }
+dependencies = { 'luatexbase', 'fontspec' }
 
 description = {
   summary = 'Multilingual support for LaTeX, LuaLaTeX, XeLaTeX, and Plain TeX',
@@ -37,4 +37,21 @@ build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
 
 build = {
   type = 'l3build',
+  patches = {
+    ["fix-build.lua.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -7,8 +7,8 @@
+ module = "babel"
+ 
+ -- Minor modifications to file types
+-installfiles = {"*.def", "*.ldf", "*.sty", "*.tex"}
+-sourcefiles  = {"*.dtx", "*.ins"}
++installfiles = {"*.def", "*.ldf", "*.sty", "*.tex", "locale", '*.lua'}
++sourcefiles  = {"*.dtx", "*.ins", "locale", "*.lua"}
+ typesetfiles = {"babel.dtx"}
+ 
+ -- babel tests lots of third-party code
+]],
+  },
 }

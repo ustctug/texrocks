@@ -27,6 +27,8 @@ source = {
   dir = package .. '-' .. _git_ref,
 }
 
+build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+
 if modrev == 'scm' or modrev == 'dev' then
   source = {
     url = repo_url:gsub('https', 'git+https')

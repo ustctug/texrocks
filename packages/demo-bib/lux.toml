@@ -13,6 +13,7 @@ license = "GPL-3.0"
 lualatex = "0.3.11-1"
 citation-style-language = "0.8.2-1"
 beamer = "3.72-1"
+ctex = "2.5.10-1"
 
 [test_dependencies]
 lua-open = "0.3.6-1"
