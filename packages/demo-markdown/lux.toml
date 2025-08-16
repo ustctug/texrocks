@@ -1,5 +1,5 @@
 package = "demo-markdown"
-version = "0.3.11"
+version = "0.3.12"
 lua = ">=5.1"
 
 [description]
@@ -10,7 +10,7 @@ homepage = "https://texrocks.readthedocs.io/en/latest/topics/demo-markdown.md.ht
 license = "GPL-3.0"
 
 [build_dependencies]
-lualatex = "0.3.11-1"
+lualatex = "0.3.12-1"
 markdown2tex = "3.11.4-1"
 babel-base = "25.12-1"
 

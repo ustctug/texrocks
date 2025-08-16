@@ -1,5 +1,5 @@
 package = "kpathsea"
-version = "0.3.11"
+version = "0.3.12"
 lua = ">=5.1"
 
 [description]
@@ -26,12 +26,12 @@ flags = ['url.sty']
 wrap_bin_scripts = false
 
 [dependencies]
-texrocks = "0.3.11-1"
+texrocks = "0.3.12-1"
 argparse = "0.7.1-1"
 lua-semver = "1.2.2-1"
 
 [test_dependencies]
-lualatex = "0.3.11-1"
+lualatex = "0.3.12-1"
 toml2lua = "3.0.0-1"
 l3build = "2024.10.16-1"
 

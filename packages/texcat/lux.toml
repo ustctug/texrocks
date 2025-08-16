@@ -1,5 +1,5 @@
 package = "texcat"
-version = "0.3.11"
+version = "0.3.12"
 lua = ">=5.1"
 
 [description]
@@ -24,7 +24,7 @@ luafilesystem = "1.8.0-1"
 
 [test_dependencies]
 fancyvrb = "4.6-1"
-lualatex = "0.3.11-1"
+lualatex = "0.3.12-1"
 graphics-cfg = "0.0.1-1"
 vscode-extensions = "1.102.3-1"
 l3build = "2024.10.16-1"

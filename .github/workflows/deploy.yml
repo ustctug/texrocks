@@ -61,13 +61,13 @@ jobs:
           luarocks install lualatex
           luarocks install texcat
           luarocks install texdef
-          luarocks install markdown2tex
-          luarocks install citation-style-language
-          luarocks install ctex
-          luarocks install babel-base
-          luarocks install beamer
           luarocks install standalone
           luarocks install hologo
+          luarocks install citation-style-language
+          luarocks install beamer
+          luarocks install ctex
+          luarocks install markdown2tex
+          luarocks install babel-base
           luarocks install hypdoc
           luarocks install ydoc
           rm -f ./*.rock

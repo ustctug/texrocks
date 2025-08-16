@@ -1,5 +1,5 @@
 package = "luarocks-build-l3build"
-version = "0.0.1"
+version = "0.3.12"
 lua = ">=5.1"
 
 [description]
@@ -11,10 +11,8 @@ homepage = "https://texrocks.readthedocs.io/en/latest/topics/luarocks-build-l3bu
 license = 'GPL-3.0'
 
 [source]
-# url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
-# dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
-url = "https://github.com/ustctug/texrocks/archive/bb2f102137b4b7b8a5b64c3a9c22ebbe20b317d8.zip"
-dir = "texrocks-bb2f102137b4b7b8a5b64c3a9c22ebbe20b317d8/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 luarocks = "3.12.2-1"
@@ -38,5 +36,5 @@ flags = [
 type = "builtin"
 
 [test_dependencies]
-luatex = "0.3.11-1"
+luatex = "0.3.12-1"
 latex-base = "2025.06.01-1"
