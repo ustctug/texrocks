@@ -32,14 +32,4 @@ end
 
 build = {
   type = 'builtin',
-  modules = {
-    ['jfm-ja_JP'] = 'jfm-ja_JP.lua',
-    ['jfm-zh_CN'] = 'jfm-zh_CN.lua',
-    ['jfm-zh_TW'] = 'jfm-zh_TW.lua',
-  },
-  install = {
-    conf = {
-      -- ['../doc/latex/chinese-jfm/chinese-jfm.pdf'] = 'chinese-jfm.pdf',
-    }
-  }
 }

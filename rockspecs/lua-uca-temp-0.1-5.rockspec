@@ -9,7 +9,7 @@ local repo_url = "https://github.com/michal-h21/lua-uca"
 version = modrev .. '-' .. specrev
 source = {
   url = repo_url .. "/archive/" .. git_ref .. ".zip",
-  dir = 'lua-uca-' .. _git_ref
+  dir = 'lua-uca-' .. _git_ref .. '/src/lua-uca'
 }
 
 dependencies = {
@@ -25,12 +25,12 @@ description = {
 build = {
    type = "builtin",
    modules = {
-      ["lua-uca-chinese"] = "src/lua-uca/lua-uca-chinese.lua",
-      ["lua-uca-collator"] = "src/lua-uca/lua-uca-collator.lua",
-      ["lua-uca-ducet-jit"] = "src/lua-uca/lua-uca-ducet-jit.lua",
-      ["lua-uca-ducet"] = "src/lua-uca/lua-uca-ducet.lua",
-      ["lua-uca-languages"] = "src/lua-uca/lua-uca-languages.lua",
-      ["lua-uca.lua-uca-reordering-table"] = "src/lua-uca/lua-uca-reordering-table.lua",
-      ["lua-uca.lua-uca-tailoring"] = "src/lua-uca/lua-uca-tailoring.lua"
+      ["lua-uca-chinese"] = "lua-uca-chinese.lua",
+      ["lua-uca-collator"] = "lua-uca-collator.lua",
+      ["lua-uca-ducet-jit"] = "lua-uca-ducet-jit.lua",
+      ["lua-uca-ducet"] = "lua-uca-ducet.lua",
+      ["lua-uca-languages"] = "lua-uca-languages.lua",
+      ["lua-uca.lua-uca-reordering-table"] = "lua-uca-reordering-table.lua",
+      ["lua-uca.lua-uca-tailoring"] = "lua-uca-tailoring.lua"
    }
 }

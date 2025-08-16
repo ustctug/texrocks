@@ -23,8 +23,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',
-  dir = '.'
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = package .. '-' .. _git_ref,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -34,17 +34,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
-  modules = {
-     fontspec = 'tex/latex/fontspec/fontspec.lua'
-  },
-  copy_directories = { 'doc' },
-  install = {
-    conf = {
-      ['../tex/latex/fontspec/fontspec-luatex.sty'] = 'tex/latex/fontspec/fontspec-luatex.sty',
-      ['../tex/latex/fontspec/fontspec-xetex.sty'] = 'tex/latex/fontspec/fontspec-xetex.sty',
-      ['../tex/latex/fontspec/fontspec.cfg'] = 'tex/latex/fontspec/fontspec.cfg',
-      ['../tex/latex/fontspec/fontspec.sty'] = 'tex/latex/fontspec/fontspec.sty',
-    }
-  }
+  type = 'l3build',
 }

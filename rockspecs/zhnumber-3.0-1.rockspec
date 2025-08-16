@@ -17,11 +17,13 @@ description = {
   license = 'LPPL-1.3c'
 }
 
+build_dependencies = { 'luatex', 'latex-base', 'ctex-support' }
+
 dependencies = { 'l3packages', 'l3kernel' }
 
 source = {
-  url = repo_url .. '/releases/download/' .. git_ref .. '/' .. git_ref .. '.zip',
-  dir = '.',
+  url = repo_url .. '/archive/' .. git_ref .. '.zip',
+  dir = 'ctex-kit-' .. git_ref .. '/' .. package,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -32,8 +34,19 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
-  -- https://github.com/CTeX-org/ctex-kit/issues/741
-  build_command = [[unzip zhnumber.tds.zip || 7z x zhnumber.tds.zip]],
-  copy_directories = { 'tex' },
+  type = 'l3build',
+  patches = {
+    ["replace-xelatex.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -8,6 +8,7 @@
+ installfiles     = {"*.sty", "*.cfg", "*.ins"}
+ unpacksuppfiles  = {"zhnumber.id", "ctxdocstrip.tex", "ctex-zhconv.lua", "ctex-zhconv-index.lua"}
+ typesetsuppfiles = {"ctxdoc.cls"}
++dtxchecksum = { exe = 'luatex' }
+ 
+ tdslocations = {
+   "source/latex/zhnumber/*.ins",
+]],
+  }
 }

@@ -59,10 +59,10 @@ jobs:
           luarocks install luatex
           luarocks install luatexinfo
           luarocks install lualatex
-          luarocks install lualibs
           luarocks install texcat
           luarocks install texdef
           luarocks install markdown2tex
+          luarocks install citation-style-language
           luarocks install beamer
           luarocks install standalone
           luarocks install hologo

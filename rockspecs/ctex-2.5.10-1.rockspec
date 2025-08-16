@@ -19,7 +19,7 @@ description = {
 
 build_dependencies = { 'luatex', 'latex-base', 'ctex-support' }
 
-dependencies = { 'chinese-jfm', 'l3kernel', 'fontspec' }
+dependencies = { 'chinese-jfm', 'l3kernel', 'fontspec', 'zhnumber' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',

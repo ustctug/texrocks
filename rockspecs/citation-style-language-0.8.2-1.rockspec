@@ -41,7 +41,7 @@ build = {
       ['fix-other-text-files.diff'] = [[
 --- old/citeproc/citeproc-manager.lua
 +++ new/citeproc/citeproc-manager.lua
-@@ -38,7 +38,7 @@
+@@ -39,7 +39,7 @@
    if ftype then
      path = kpse.find_file(file_name, ftype)
    else
@@ -50,7 +50,7 @@ build = {
    end
  
    if not path then
-@@ -112,7 +112,7 @@
+@@ -113,7 +113,7 @@
  local function make_citeproc_sys(item_dict)
    local citeproc_sys = {
      retrieveLocale = function (lang)
@@ -63,15 +63,17 @@ build = {
       ['do-not-install-csl.diff'] = [[
 --- old/build.lua
 +++ new/build.lua
-@@ -29,7 +29,7 @@
-   "citeproc/*.lua",
-   "latex/*.sty",
-   "submodules/locales/csl-locales-*.xml",
--  "submodules/styles/*.csl",
-+  -- "submodules/styles/*.csl",
+@@ -20,8 +20,8 @@
+ installfiles = {
+   "**/*.lua",
+   "**/*.sty",
+-  "**/csl-locales-*.xml",
+-  "**/*.csl",
++  -- "**/csl-locales-*.xml",
++  -- "**/*.csl",
  }
- tagfiles = {
-   "CHANGELOG.md",
+ scriptfiles = {"**/*.lua"}
+ scriptmanfiles = {"citeproc-lua.1"}
 ]],
    },
 }
