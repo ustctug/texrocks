@@ -63,6 +63,8 @@ jobs:
           luarocks install texdef
           luarocks install markdown2tex
           luarocks install citation-style-language
+          luarocks install ctex
+          luarocks install babel-base
           luarocks install beamer
           luarocks install standalone
           luarocks install hologo
