@@ -16,7 +16,7 @@ description = {
   [[This package manages culturally-determined typographical (and other) rules for a wide range of languages. A document may select a single language to be supported, or it may select several, in which case the document may switch from one language to another in a variety of ways.
 
 Babel uses contributed configuration files that provide the detail of what has to be done for each language, as well as .ini files for about 300 languages from around the World, including many written in non-Latin and RTL scripts. Many of them work with pdfLaTeX, as well as with XeLaTeX and LuaLaTeX, out of the box. A few even work with plain formats.]],
-  labels = { 'tex', 'latex', 'plaintex', 'makeindex' },
+  labels = { 'Defer stuff' },
   homepage = 'https://latex3.github.io/babel/',
   license = 'LPPL-1.3'
 }

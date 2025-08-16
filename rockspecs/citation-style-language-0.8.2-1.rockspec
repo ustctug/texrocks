@@ -16,6 +16,7 @@ description = {
    summary = "Bibliography formatting with Citation Style Language",
    detailed =
    "The Citation Style Language (CSL) is an XML-based language that defines the formats of citations and bibliography. There are currently thousands of styles in CSL including the most widely used APA, Chicago, Vancouver, etc. The citation-style-language package is aimed to provide another reference formatting method for LaTeX that utilizes the CSL styles. It contains a citation processor implemented in pure Lua (citeproc-lua) which reads bibliographic metadata and performs sorting and formatting on both citations and bibliography according to the selected CSL style. A LaTeX package (citation-style-language.sty) is provided to communicate with the processor.",
+   labels = { 'Biblio', 'Use Lua', 'Experimental LaTeX3' },
    homepage = repo_url,
    license = "MIT"
 }

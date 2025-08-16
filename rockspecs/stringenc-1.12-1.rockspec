@@ -12,7 +12,7 @@ description = {
   summary = [[Converting a string between different encodings]],
   detailed =
   [[This package provides \StringEncodingConvert for converting a string between different encodings. Both LaTeX and plain-TeX are supported.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Encoding juggle' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

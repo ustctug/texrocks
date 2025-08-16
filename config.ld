@@ -85,7 +85,8 @@ Some useful tools for development!
   replace [minted](https://github.com/gpoore/minted) based on python's
   [pygments](https://pygments.org/)
 - [luarocks-build-l3build](topics/luarocks-build-l3build.md.html): Luarocks
-  build backend for l3build.
+  build backend for packing TeX packages. More TeX packages are needed:
+  CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100. Welcome to pack!
 
 TODO:
 
@@ -96,11 +97,9 @@ TODO:
 
 Know what is under the hood.
 
-- [How to pack a TeX package](topics/pack.md.html): More TeX packages are
-  needed: CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100.
-  Welcome to pack!
-- [How texrocks work](topics/principle.md.html): see its principle.
-- [Roadmap](topics/roadmap.md.html): which features texrocks have supported and
+- [Structure](topics/structure.md.html): What does it consist of?
+- [Principle](topics/principle.md.html): How does it work?
+- [Roadmap](topics/roadmap.md.html): which features TeXRocks have supported and
   will support?
 
 ## Others

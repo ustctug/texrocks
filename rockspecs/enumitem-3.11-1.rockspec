@@ -12,7 +12,7 @@ description = {
   summary = 'Control layout of itemize, enumerate, description',
   detailed =
   [[This package provides user control over the layout of the three basic list environments: enumerate, itemize and description. It supersedes both enumerate and mdwlist (providing well-structured replacements for all their functionality), and in addition provides functions to compute the layout of labels, and to 'clone' the standard environments, to create new environments with counters of their own.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'List' },
   homepage = 'http://www.texnia.com/enumitem.html',
   license = 'LPPL-1.3c'
 }

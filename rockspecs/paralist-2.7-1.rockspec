@@ -10,7 +10,7 @@ description = {
   summary = 'Execute Lua code in any TeX engine that exposes the shell',
   detailed =
   [[This is an expl3(-generic) package for plain TeX, LaTeX, and ConTeXt that allows you to execute Lua code in LuaTeX or any other TeX engine that exposes the shell.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'List', 'List enumumerate', 'Bullet List' },
   homepage = 'https://www.ctan.org/pkg/paralist',
   license = 'LPPL-1.3c'
 }

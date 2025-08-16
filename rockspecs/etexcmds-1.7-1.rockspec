@@ -16,7 +16,7 @@ description = {
   summary = 'Avoid name clashes with e-TeX commands',
   detailed =
   [[New primitive commands are introduced in e-TeX; sometimes the names collide with existing macros. This package solves the name clashes by adding a prefix to e-TeX’s commands. For example, ε-TeX’s \unexpanded is provided as \etex@unexpanded.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Macro support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

@@ -18,7 +18,7 @@ description = {
   Given that this package provides Lua modules, it is only useful in Lua(HB)TeX. Additionally, it expects an up-to-date version of the unicode-data package to be present.
 
   This package is intended for package authors only; no user-level functionality provided.]],
-  labels = { 'tex', 'latex', 'luatex' },
+  labels = { 'Unicode', 'LuaTeX' },
   homepage = repo_url,
   license = 'LPPL-1.3'
 }

@@ -12,7 +12,7 @@ description = {
   summary = 'Checksum based rerun checks on auxiliary files',
   detailed =
   [[The package provides additional rerun warnings if some auxiliary files have changed. It is based on MD5 checksum provided by pdfTeX, LuaTeX, XeTeX. ]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Compilation' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

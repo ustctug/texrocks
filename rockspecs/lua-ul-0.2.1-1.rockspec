@@ -14,7 +14,7 @@ description = {
   [[This package provides underlining, strikethough, and highlighting using features in LuaLaTeX which avoid the restrictions imposed by other methods. In particular, kerning is not affected, the underlined text can use arbitrary commands, hyphenation works etc.
 
 The package requires LuaTeX version >= 1.12.0.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'LuaTeX', 'Experimental LaTeX3', 'Underline' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

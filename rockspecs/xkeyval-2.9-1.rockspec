@@ -10,7 +10,7 @@ description = {
   summary = [[Extension of the keyval package]],
   detailed =
   [[This package is an extension of the keyval package and offers additional macros for setting keys and declaring and setting class or package options. The package allows the programmer to specify a prefix to the name of the macros it defines for keys, and to define families of key definitions; these all help use in documents where several packages define their own sets of keys.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Key-Val' },
   homepage = 'https://ctan.org/pkg/xkeyval',
   license = 'LPPL-1.3'
 }

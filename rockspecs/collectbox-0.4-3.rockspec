@@ -17,7 +17,7 @@ description = {
   The “arguments” are stored as if they had been saved by \savebox or by the lrbox environment. Grouping tokens \bgroup and \egroup may be used, which allows the user to have the beginning and end of a group in different macro invocations, or to place them in the begin and end code of an environment. Arguments may contain verbatim material or other special use of characters.
 
   The macros were designed for use within other macros.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Boxing' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

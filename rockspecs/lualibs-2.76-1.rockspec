@@ -14,7 +14,7 @@ description = {
   [[Lualibs is a collection of Lua modules useful for general programming.
 
 The bundle is based on lua modules shipped with ConTeXt, and made available in this bundle for use independent of ConTeXt.]],
-  labels = { 'tex', 'luatex' },
+  labels = { 'Lua supp', 'LuaTeX' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

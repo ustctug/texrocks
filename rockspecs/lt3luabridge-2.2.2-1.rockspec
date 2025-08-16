@@ -12,7 +12,7 @@ description = {
   summary = 'Execute Lua code in any TeX engine that exposes the shell',
   detailed =
   [[This is an expl3(-generic) package for plain TeX, LaTeX, and ConTeXt that allows you to execute Lua code in LuaTeX or any other TeX engine that exposes the shell.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Experimental LaTeX3', 'Exec foreign' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

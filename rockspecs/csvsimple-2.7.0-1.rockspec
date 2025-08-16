@@ -16,7 +16,7 @@ description = {
 Filtering and table generation are especially supported; however, this lightweight tool offers no support for data sorting or data base storage.
 
 The package depends on etoolbox, ifthen, pgfrcs, pgfkeys, and shellesc.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Data display', 'Data import', 'Experimental LaTeX3', 'CSV support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

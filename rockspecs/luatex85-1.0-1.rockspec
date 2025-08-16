@@ -12,7 +12,7 @@ description = {
   summary = [[pdfTeX aliases for LuaTeX]],
   detailed =
   [[The package provides emulation of pdfTeX primitives for LuaTeX v0.85+.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Lua supp' },
   homepage = repo_url,
   license = 'LPPL-1.3'
 }

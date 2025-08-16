@@ -12,7 +12,7 @@ description = {
   summary = [[Control float placement]],
   detailed =
   [[Defines a \FloatBarrier command, beyond which floats may not pass; useful, for example, to ensure all floats for a section appear before the next \section command.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Float', 'Layout' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

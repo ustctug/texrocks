@@ -17,7 +17,7 @@ description = {
   [[Fontspec is a package for XeLaTeX and LuaLaTeX. It provides an automatic and unified interface to feature-rich AAT and OpenType fonts through the NFSS in LaTeX running on XeTeX or LuaTeX engines.
 
   The package requires the l3kernel and xparse bundles from the LaTeX3 development team.]],
-  labels = { 'tex', 'latex', 'luatex' },
+  labels = { 'Font sel', 'XeTeX', 'LuaTeX' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

@@ -14,7 +14,7 @@ description = {
 For full support of a LaTeX installation, some Computer Modern font variants cmbsy(6-9), cmcsc(8,9), cmex(7-9) and cmmib(5-9) from the amsfonts distribution, are also necessary.
 
 The fonts are available as METAFONT source, and metric (tfm) files are also provided. Most of the fonts are also available in Adobe Type 1 format, in the amsfonts distribution.]],
-  labels = { 'tex', 'metafont', 'font' },
+  labels = { 'Font', 'MF Font', 'Font symbol' },
   homepage = 'https://ctan.org/pkg/latex-fonts',
   license = 'Knuth'
 }

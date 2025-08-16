@@ -18,7 +18,7 @@ description = {
   The depth of inclusion is made available, together with the “parent” (including file) and “parents” (all including files to the root of the tree).
 
   The package supersedes FiNK.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Document tool' },
   homepage = repo_url,
   license = 'LPPL-1.3'
 }

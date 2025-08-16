@@ -15,7 +15,7 @@ description = {
   [[The package, which works both for Plain TeX and for LaTeX, defines the \ifPDFTeX, \ifXeTeX, and \ifLuaTeX conditionals for testing which engine is being used for typesetting.
 
 The package also provides the \RequirePDFTeX, \RequireXeTeX, and \RequireLuaTeX commands which throw an error if pdfTeX, XeTeX or LuaTeX (respectively) is not the engine in use.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Environment query', 'Generic Macros' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

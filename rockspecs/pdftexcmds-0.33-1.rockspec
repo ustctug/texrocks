@@ -12,7 +12,7 @@ description = {
   summary = 'LuaTeX support for pdfTeX utility functions',
   detailed =
   [[LuaTeX provides most of the commands of pdfTeX 1.40. However, a number of utility functions are not available. This package tries to fill the gap and implements some of the missing primitives using Lua.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Generic Macros', 'Macro support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

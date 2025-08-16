@@ -18,7 +18,7 @@ This package was an experimental solution to the problem, and worked best with p
 For current releases of pdfTeX (later than version 1.40.0, released in 2007), this package is not needed, since “real” colour stacks are available. The present pdfcolmk is therefore just an empty stub that does nothing at all, just in case there are still documents that reference it.
 
 The documented source of the original package is still available at the github repository.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Obsolete', 'Colour' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

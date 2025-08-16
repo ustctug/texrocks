@@ -12,7 +12,7 @@ description = {
   summary = 'LaTeX3 programming conventions',
   detailed =
   [[The l3kernel bundle provides an implementation of the LaTeX3 programmers’ interface, as a set of packages that run under LaTeX2ε. The interface provides the foundation on which the LaTeX3 kernel and other future code are built: it is an API for TeX programmers. The packages are set up so that the LaTeX3 conventions can be used with regular LaTeX2ε packages.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Format', 'LaTeX3' },
   homepage = 'https://ctan.org/pkg/l3kernel',
   license = 'LPPL-1.3c'
 }

@@ -14,7 +14,7 @@ description = {
   summary = 'Core TeX and METAFONT sources from Knuth',
   detailed =
   [[A collection of core TeX and METAFONT macro files from DEK, apart from the plain format and base. Includes the MF logo font(s), webmac.tex, etc]],
-  labels = { 'tex', 'metafont' },
+  labels = { 'Collection' },
   homepage = repo_url,
   license = 'Knuth'
 }

@@ -20,6 +20,7 @@ CSL styles are either bound to one particular locale (e.g. the \u201cBritish Psy
 
 All CSL styles, both those with and without a fixed locale, rely on locale files for default localization data, which consists of translated terms commonly used in citations and bibliographies, date formats, and grammar rules. Storing localization data in separate files has several benefits: translations are easier to maintain, styles are more compact (although styles can still include their own localization data to override the defaults), and styles can be (mostly) language-agnostic.
 ]],
+   labels = { 'hacktoberfest', 'csl', 'citation-style-language' },
    homepage = 'https://citationstyles.org/',
    license = "CC-BY-SA-3.0"
 }

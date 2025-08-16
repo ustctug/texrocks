@@ -13,7 +13,7 @@ description = {
   summary = 'Insert pagebreak if not enough space',
   detailed =
   [[Provides commands to disable pagebreaking within a given vertical space. If there is not enough space between the command and the bottom of the page, a new page will be started.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Layout' },
   homepage = repo_url,
   license = 'LPPL-1.0'
 }

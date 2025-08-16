@@ -19,6 +19,7 @@ description = {
    summary = "Implementation of the Unicode Collation Algorithm for Lua",
    detailed = [[
       This package adds support for the Unicode collation algorithm for Lua 5.3. It is mainly intended for use with LuaTeX and working TeX distribution, but it can work also as a standalone Lua module. You will need to install a required Lua-uni-algos package by hand in that case.]],
+  labels = { 'Typesetting', 'LuaTeX' },
    homepage = repo_url,
    license = "MIT"
 }

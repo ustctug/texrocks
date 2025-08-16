@@ -14,7 +14,7 @@ description = {
   summary = 'Integer calculations on very large numbers',
   detailed =
   [[This package provides expandable arithmetic operations with big integers that can exceed TeX's number limits.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Arithmetic', 'Calculation' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

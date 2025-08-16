@@ -12,7 +12,7 @@ description = {
   summary = 'Model TeX format creation files',
   detailed =
   [[This bundle provides a collection of model .ini files for creating TeX formats. These files are commonly used to introduced distribution-dependent variations in formats. They are also used to allow existing format source files to be used with newer engines, for example to adapt the plain e-TeX source file to work with XeTeX and LuaTeX.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'LaTeX3' },
   homepage = 'https://github.com/latex3/tex-ini-files',
   license = 'CC0-1.0'
 }

@@ -12,7 +12,7 @@ description = {
   summary = [[Typeset Japanese with Lua(La)TeX]],
   detailed =
   [[The package offers support for typesetting Japanese documents with LuaTeX. Either of the Plain and LaTeX2ε formats may be used with the package.]],
-  labels = { 'tex', 'latex', 'luatex' },
+  labels = { 'LuaTeX', 'Japanese', 'Experimental LaTeX3', 'Class', 'Generic Macros' },
   homepage = repo_url,
   license = 'BSD'
 }

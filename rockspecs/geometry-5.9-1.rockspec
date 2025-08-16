@@ -16,7 +16,7 @@ description = {
   The package knows about all the standard paper sizes, so that the user need not know what the nominal ‘real’ dimensions of the paper are, just its standard name (such as a4, letter, etc.).
 
   An important feature is the package’s ability to communicate the paper size it’s set up to the output (whether via DVI \specials or via direct interaction with pdf(La)TeX).]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Geometry' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

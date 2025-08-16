@@ -12,7 +12,7 @@ description = {
   summary = [[Expandable arithmetic operations with integers]],
   detailed =
   [[This package provides expandable arithmetic operations with integers, using the e-TeX extension \numexpr if it is available.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Calculation', 'Arithmetic' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

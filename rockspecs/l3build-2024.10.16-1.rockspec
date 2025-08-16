@@ -18,7 +18,7 @@ description = {
     An automated process for creating CTAN releases.
 
 The package is essentially independent of other material released by the LaTeX3 team, and may be updated on a different schedule.]],
-  labels = { 'tex' },
+  labels = { 'Macro support', 'Package development', 'CTAN' },
   homepage = 'https://ctan.org/pkg/l3build',
   license = 'LPPL-1.3c'
 }

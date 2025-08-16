@@ -12,7 +12,7 @@ description = {
   summary = [[Clean up title references]],
   detailed =
   [[Cleans up the title string (removing \label commands) for packages (such as nameref) that typeset such strings.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Macro support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

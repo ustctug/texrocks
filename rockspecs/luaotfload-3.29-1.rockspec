@@ -16,7 +16,7 @@ description = {
   summary = 'OpenType ‘loader’ for Plain TeX and LaTeX',
   detailed =
   [[The package adopts the TrueType/OpenType Font loader code provided in ConTeXt, and adapts it to use in Plain TeX and LaTeX. It works under LuaLaTeX only.]],
-  labels = { 'tex', 'latex', 'luatex' },
+  labels = { 'Font use', 'LuaTeX' },
   homepage = repo_url,
   license = 'GPL-2.0'
 }

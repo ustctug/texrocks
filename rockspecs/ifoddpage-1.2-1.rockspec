@@ -12,7 +12,7 @@ description = {
   summary = 'Determine if the current page is odd or even',
   detailed =
   [[The package provides an \ifoddpage conditional to determine if the current page is odd or even. The macro \checkoddpage must be used direct before to check the page number using a label. Two compiler runs are therefore required to achieve correct results. In addition, the conditional \ifoddpageoronside is provided which is also true in oneside mode where all pages use the odd page layout.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Macro support', 'Typesetting' },
   homepage = repo_url,
   license = 'LPPL-1.3'
 }

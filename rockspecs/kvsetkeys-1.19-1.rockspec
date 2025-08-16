@@ -12,7 +12,7 @@ description = {
   summary = 'Key value parser with default handler support',
   detailed =
   [[This package provides \kvsetkeys, a variant of package keyval's \setkeys. It allows the user to specify a handler that deals with unknown options. Active commas and equal signs may be used (e.g. see babel's shorthands) and only one level of curly braces are removed from the values.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Key-Val' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

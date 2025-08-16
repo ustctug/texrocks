@@ -14,7 +14,7 @@ description = {
   summary = 'Aids for typesetting simple verse',
   detailed =
   [[This package implements color support based on LuaTeX' node attributes.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Verse' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

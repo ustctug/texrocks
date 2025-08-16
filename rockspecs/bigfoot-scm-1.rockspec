@@ -20,7 +20,7 @@ description = {
   Note that the majority of the bigfoot package's interface is identical to that of manyfoot; users should seek information from that package's documentation.
 
   The bigfoot bundle also provides the perpage and suffix packages.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Footnote' },
   homepage = repo_url,
   license = 'GPL-2.0'
 }

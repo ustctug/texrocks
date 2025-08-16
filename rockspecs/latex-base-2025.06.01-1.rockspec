@@ -16,7 +16,7 @@ description = {
   summary = 'Base sources of LaTeX',
   detailed =
   [[This bundle comprises the source of LaTeX itself, together with several packages which are considered ‘part of the kernel’. This bundle, together with the required packages, constitutes what every LaTeX distribution should contain.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Class', 'Format' },
   homepage = 'https://ctan.org/pkg/latex-base',
   license = 'LPPL-1.3c'
 }

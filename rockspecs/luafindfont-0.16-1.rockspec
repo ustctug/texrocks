@@ -10,7 +10,7 @@ description = {
   summary = 'Search fonts in the LuaTeX font database',
   detailed =
   [[This Lua script searches for fonts in the font database.]],
-  labels = { 'tex', 'luatex' },
+  labels = { 'Font sel' },
   homepage = 'https://ctan.org/pkg/luafindfont',
   license = 'LPPL-1.3c'
 }

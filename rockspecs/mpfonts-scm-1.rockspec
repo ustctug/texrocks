@@ -18,7 +18,7 @@ description = {
   However, these fonts, because they are PostScript Type 3 fonts, are not suitable for on-screen reading, and should probably only be used for printing.
 
   Note: do NOT add the map file to updmap!]],
-  labels = { 'tex', 'metafont', 'font' },
+  labels = { 'Monospaced Font', 'CM Font', 'Font symbol maths', 'Font serif', 'Sans Font', 'Proportional Font', 'Body Font', 'Maths Font', 'Font' },
   homepage = 'https://ctan.org/pkg/mpfonts',
   license = 'Knuth'
 }

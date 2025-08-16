@@ -14,7 +14,7 @@ description = {
   [[The package provides macros and environments to document LaTeX packages and classes. It is an (as yet unfinished) alternative to the ltxdoc class and the doc or xdoc packages. The aim is to provide a different layout and more modern styles (using the xcolor, hyperref packages, etc.)
 
   This is an alpha release, and should probably not (yet) be used with other packages, since the implementation might change. Nevertheless, the author uses it to document his own packages.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Class', 'Documentation support', 'Macro Demonstration' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

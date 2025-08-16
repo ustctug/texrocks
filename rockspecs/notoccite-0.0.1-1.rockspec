@@ -12,7 +12,7 @@ description = {
   summary = [[Prevent trouble from citations in table of contents, etc]],
   detailed =
   [[If you have \cite commands in \section-like commands, or in \caption, the citation will also appear in the table of contents, or list of whatever. If you are also using an unsrt-like bibliography style, these citations will come at the very start of the bibliography, which is confusing. This package suppresses the effect.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Headings', 'Cite support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

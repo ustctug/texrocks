@@ -14,7 +14,7 @@ description = {
   [[Fandol fonts designed for Chinese typesetting. The current version contains four styles: Song, Hei, Kai, Fang.
 
 All fonts are in OpenType format.]],
-  labels = { 'tex', 'metafont' },
+  labels = { 'CJK Font', 'Chinese', 'Font', 'OTF Font' },
   homepage = repo_url,
   license = 'GPL'
 }

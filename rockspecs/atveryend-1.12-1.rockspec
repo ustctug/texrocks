@@ -13,7 +13,7 @@ description = {
   summary = 'Hooks at the very end of a document',
   detailed =
   [[This LaTeX package provides some wrapper commands around LaTeX end document hooks.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Defer stuff' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

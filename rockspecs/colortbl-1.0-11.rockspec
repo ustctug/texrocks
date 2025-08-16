@@ -13,7 +13,7 @@ description = {
   summary = 'Add colour to LaTeX tables',
   detailed =
   [[The package allows rows and columns to be coloured, and even individual cells.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Colour', 'Table' },
   homepage = repo_url,
   license = 'LPPL-1.0'
 }

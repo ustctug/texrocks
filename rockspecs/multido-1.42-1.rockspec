@@ -12,7 +12,7 @@ description = {
   summary = [[A loop facility for Generic TeX]],
   detailed =
   [[The package provides the \multido command, which was originally designed for use with PSTricks. Fixed-point arithmetic is used when working on the loop variable, so that the package is equally applicable in graphics applications like PSTricks as it is with the more common integer loops.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Macro support' },
   homepage = repo_url,
   license = 'LPPL-1.0'
 }

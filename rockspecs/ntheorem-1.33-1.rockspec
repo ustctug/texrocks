@@ -13,7 +13,7 @@ description = {
 
     easier control of layout; proper placement of endmarks even when the environment ends with \end{enumerate} or \end{displaymath} (including support for amsmath displayed-equation environments); and
     support for making a list of theorems, analogous to \listoffigures.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Maths theorem' },
   homepage = 'http://user.informatik.uni-goettingen.de/~may/Ntheorem/',
   license = 'LPPL-1.0'
 }

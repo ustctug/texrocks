@@ -15,7 +15,7 @@ description = {
   [[This package provides a comprehensive implementation of unicode maths for XeLaTeX and LuaLaTeX. Unicode maths requires an OpenType mathematics font, of which there are now a number available via CTAN.
 
 While backwards compatibility is strived for, there are some differences between the legacy mathematical definitions in LaTeX and amsmath, and the Unicode mathematics definitions. Care should be taken when transitioning from a legacy workflow to a Unicode-based one.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Unicode', 'LuaTeX', 'XeTeX', 'Maths', 'Font use' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

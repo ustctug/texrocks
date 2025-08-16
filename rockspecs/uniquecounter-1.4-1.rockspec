@@ -14,7 +14,7 @@ description = {
   summary = 'Provides unlimited unique counter',
   detailed =
   [[This package provides a kind of counter that provides unique number values. Several counters can be created with different names. The numeric values are not limited.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Numbers' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

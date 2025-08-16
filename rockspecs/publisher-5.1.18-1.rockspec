@@ -17,7 +17,7 @@ description = {
 Its built-in layout description language allows you to create almost arbitrary layouts, while keeping the job as simple as possible.
 
 Think of it as "XSL-FO on steroids" or "server side InDesign".]],
-  labels = { 'tex', 'latex' },
+  labels = { 'tex', 'xml', 'typesetting', 'pdf-generation', 'speedata-publisher', 'xsl-fo', 'database-publishing' },
   homepage = repo_url,
   license = 'AGPL-3.0'
 }

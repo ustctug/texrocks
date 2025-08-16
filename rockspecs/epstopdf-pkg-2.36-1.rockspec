@@ -12,7 +12,7 @@ description = {
   summary = [[Call epstopdf "on the fly"]],
   detailed =
   [[The package adds support for EPS files in the graphicx package when running under pdfTeX. If an EPS graphic is detected, the package spawns a process to convert the EPS to PDF, using the script epstopdf. This of course requires that shell escape is enabled for the pdfTeX run.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Graphics EPS/PDF', 'Callback' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

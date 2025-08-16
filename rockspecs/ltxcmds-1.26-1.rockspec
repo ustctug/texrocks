@@ -16,7 +16,7 @@ description = {
   summary = 'Some LaTeX kernel commands for general use',
   detailed =
   [[This package exports some utility macros from the LaTeX kernel into a separate namespace and also makes them available for other formats such as plain TeX.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Macro support', 'Generic Macros' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

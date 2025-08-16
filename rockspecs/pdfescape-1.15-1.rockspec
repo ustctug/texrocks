@@ -12,7 +12,7 @@ description = {
   summary = [[Implements pdfTeX's escape features using TeX or e-TeX]],
   detailed =
   [[This package implements pdfTeX's escape features (\pdfescapehex, \pdfunescapehex, \pdfescapename, \pdfescapestring) using TeX or e-TeX.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Macro support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

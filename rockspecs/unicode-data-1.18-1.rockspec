@@ -12,7 +12,7 @@ description = {
   summary = 'Unicode case mapping and character class data for use by TeX',
   detailed =
   [[The Unicode Consortium provide a range of data files detailing the nature of code points in Unicode. These data files are machine-readable but large. Here, a set of loaders are provided to parse these files during a TeX run and set appropriate parameters in an automated fashion.]],
-  labels = { 'tex' },
+  labels = { 'LaTeX3', 'Unicode' },
   homepage = 'https://ctan.org/pkg/unicode-data',
   license = 'LPPL-1.3c'
 }

@@ -12,7 +12,7 @@ description = {
   summary = 'Color support based on LuaTeX\' node attributes',
   detailed =
   [[This package implements color support based on LuaTeX' node attributes.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Colour', 'LuaTeX' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

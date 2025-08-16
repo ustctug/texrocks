@@ -12,7 +12,7 @@ description = {
   summary = 'Documentation access for TeX Live',
   detailed =
   [[texdoc is a Lua script providing easy access to the documentation in TeX Live: PDF, DVI, plain text files, and more. Viewing and other configuration can be extensively customized. It is distributed with TeX Live; MiKTeX provides a program by the same name to do the same job, but its implementation is unrelated.]],
-  labels = { 'tex' },
+  labels = { 'View documentation' },
   homepage = 'https://tug.org/texdoc/',
   license = 'LPPL-1.3c'
 }

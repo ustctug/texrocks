@@ -17,7 +17,7 @@ description = {
 The package is distributed with the backref and nameref packages, which make use of the facilities of hyperref.
 
 The package depends on the author’s kvoptions, ltxcmds and refcount packages.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Form fillin', 'Adobe Distiller', 'e-TeX', 'PDF features', 'Hyper' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

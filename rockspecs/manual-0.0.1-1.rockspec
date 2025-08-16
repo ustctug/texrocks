@@ -10,7 +10,7 @@ description = {
   summary = 'Knuth\'s "manual" fonts',
   detailed =
   [[METAFONT (by Donald Knuth) and Adobe Type 1 (by Taco Hoekwater) versions of the font containing the odd symbols Knuth uses in his books. LaTeX support is available using the manfnt package]],
-  labels = { 'tex', 'metafont', 'font' },
+  labels = { 'Font', 'Font Type1', 'Font symbol', 'MF Font' },
   homepage = 'https://ctan.org/pkg/manual',
   license = 'Knuth'
 }

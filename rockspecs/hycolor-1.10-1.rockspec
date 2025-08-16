@@ -12,7 +12,7 @@ description = {
   summary = [[Implements colour for packages hyperref and bookmark]],
   detailed =
   [[This package provides the code for the color option that is used by packages hyperref and bookmark. It is not intended as package for the user.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Colour' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

@@ -14,7 +14,7 @@ description = {
   [[This bundle of macros files provides macro support (including font encoding macros) for the use of Cyrillic characters in fonts encoded under the T2* and X2 encodings. These encodings cover (between them) pretty much every language that is written in a Cyrillic alphabet.
 
 This directory is part of the LaTeX “required” distribution.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Cyrillic' },
   homepage = 'https://ctan.org/pkg/latex-cyrillic',
   license = 'LPPL-1.3c'
 }

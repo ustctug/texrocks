@@ -2,8 +2,6 @@ local git_ref = 'scm'
 local modrev = git_ref
 local specrev = '1'
 
-local repo_url = 'https://ctan.org/pkg/chngpage'
-
 rockspec_format = '3.0'
 package = 'chngpage'
 version = modrev .. '-' .. specrev
@@ -14,7 +12,7 @@ description = {
   summary = 'Change the page layout in the middle of a document',
   detailed =
   [[The package provides broadly similar functionality to changepage, with which it is distributed. It is, however, considered obsolete, and should not be used in new documents.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Geometry', 'Obsolete' },
   homepage = 'https://ctan.org/pkg/chngpage',
   license = 'LPPL-1.3c'
 }

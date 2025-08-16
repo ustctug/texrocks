@@ -13,7 +13,7 @@ description = {
   summary = [[Subversion variants of \Provides... macros]],
   detailed =
   [[The package introduces Subversion variants of the standard LaTeX macros \ProvidesPackage, \ProvidesClass and \ProvidesFile where the file name and date is extracted from Subversion Id keywords. The file name may also be given explicitly as an optional argument.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Document Management', 'Version control' },
   homepage = repo_url,
   license = 'LPPL-1.0'
 }

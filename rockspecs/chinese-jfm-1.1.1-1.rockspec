@@ -12,7 +12,7 @@ description = {
   summary = 'Luatexja-jfm files for Chinese typesetting',
   detailed =
   [[ChineseJFM is a series of luatexja-jfm files for better Chinese typesetting, providing quanjiao, banjiao, and kaiming three styles and other fancy features. It can be used for both horizontal and vertical writing mode in Simplified/Traditional Chinese or Japanese fonts.]],
-  labels = { 'tex', 'latex', 'luatex' },
+  labels = { 'Chinese', 'Generic Macros', 'LuaTeX' },
   homepage = repo_url,
   license = 'MIT'
 }

@@ -22,7 +22,7 @@ description = {
   The package is used in the main document and skips extra preambles in sub-files. The class may be used to simplify the preamble in sub-files. By default the preview package is used to display the typeset code without margins.
 
   The behaviour in standalone mode may adjusted using a configuration file standalone.cfg to redefine the standalone environment.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Subdocs', 'Class' },
   homepage = repo_url,
   license = 'LPPL-1.3'
 }

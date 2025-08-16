@@ -12,7 +12,7 @@ description = {
   [[This package loads url by default and defines possible URL breaks for all alphanumerical characters, as well as = / . : * - ~ ' "
 
 All arguments which are valid for url can be used and will be passed on to this package. For more information read the documentation of url itself.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Verbatim' },
   homepage = "https://ctan.org/pkg/xurl",
   license = 'LPPL-1.3'
 }

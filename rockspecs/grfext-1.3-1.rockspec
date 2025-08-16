@@ -12,7 +12,7 @@ description = {
   summary = [[Manipulate the graphics package's list of extensions]],
   detailed =
   [[This package provides macros for adding to, and reordering the list of graphics file extensions recognised by package graphics.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Graphics supp' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

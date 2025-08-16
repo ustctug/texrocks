@@ -20,7 +20,7 @@ description = {
 Commands \setcounterpageref and \addtocounterpageref do the corresponding thing with the page reference of the label.
 
 No .ins file is distributed; process the .dtx with plain TeX to create one.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Label and References' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

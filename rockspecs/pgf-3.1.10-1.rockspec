@@ -14,7 +14,7 @@ description = {
   [[PGF is a macro package for creating graphics. It is platform- and format-independent and works together with the most important TeX backend drivers, including pdfTeX and dvips. It comes with a user-friendly syntax layer called TikZ.
 
   Its usage is similar to pstricks and the standard picture environment. PGF works with plain (pdf-)TeX, (pdf-)LaTeX, and ConTeXt. Unlike pstricks, it can produce either PostScript or PDF output.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'PGF TikZ', 'Graphics', 'Graphics in TeX' },
   homepage = 'https://pgf-tikz.github.io/',
   license = 'LPPL-1.3c'
 }

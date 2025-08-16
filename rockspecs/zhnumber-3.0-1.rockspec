@@ -12,7 +12,7 @@ description = {
   summary = [[Typeset Chinese representations of numbers]],
   detailed =
   [[The package provides commands to typeset Chinese representations of numbers. The main difference between this package and CJKnumb is that the commands provided are expandable in the ‘proper’ way.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Numbers', 'Chinese' },
   homepage = 'http://www.ctex.org/',
   license = 'LPPL-1.3c'
 }

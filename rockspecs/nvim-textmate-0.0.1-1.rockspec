@@ -12,7 +12,7 @@ description = {
   summary = 'A textmate-based syntax highlighter for neovim - compatible with VScode',
   detailed =
   [[A textmate-based syntax highlighter to nvim, compatible with VScode themes and grammars]],
-  labels = { },
+  labels = {  },
   homepage = repo_url,
   license = 'GPL-2.0'
 }

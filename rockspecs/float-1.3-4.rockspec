@@ -2,8 +2,6 @@ local git_ref = '1.3d'
 local modrev = git_ref:gsub('[^0-9.]', '')
 local specrev = git_ref.format('%d', git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 
-local repo_url = 'https://ctan.org/pkg/float'
-
 rockspec_format = '3.0'
 package = 'float'
 version = modrev .. '-' .. specrev
@@ -14,8 +12,8 @@ description = {
   [[Improves the interface for defining floating objects such as figures and tables. Introduces the boxed float, the ruled float and the plaintop float. You can define your own floats and improve the behaviour of the old ones.
 
   The package also provides the H float modifier option of the obsolete here package. You can select this as automatic default with \floatplacement{figure}{H}.]],
-  labels = { 'tex', 'latex' },
-  homepage = repo_url,
+  labels = { 'Float' },
+  homepage = 'https://ctan.org/pkg/float',
   license = 'LPPL-1.0'
 }
 

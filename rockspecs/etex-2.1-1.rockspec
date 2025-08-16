@@ -2,8 +2,6 @@ local git_ref = 'v2.1'
 local modrev = git_ref:gsub('v', '')
 local specrev = '1'
 
-local repo_url = ''
-
 rockspec_format = '3.0'
 package = 'etex'
 version = modrev .. '-' .. specrev
@@ -16,7 +14,7 @@ description = {
 The pdftex engine and others directly incorporate the e-TeX extensions. The etex program in most distributions is an incarnation of pdftex running in DVI mode.
 
 The development source for e-TeX is the TeX Live source repository, although further extensions have taken place in the pdftex and other engine sources, keeping e-TeX stable.]],
-  labels = { 'tex' },
+  labels = { 'Engine' },
   homepage = 'https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/1997/SUPPORT/E-TEX/ETEX.HTML',
   license = 'Knuth'
 }
@@ -27,12 +25,6 @@ source = {
   url = 'https://erised.las.iastate.edu/tex-archive/obsolete/systems/e-tex/' .. git_ref .. '/etex_lib.zip',
   dir = 'texmf'
 }
-
-if modrev == 'scm' or modrev == 'dev' then
-  source = {
-    url = repo_url:gsub('https', 'git+https')
-  }
-end
 
 build = {
   type = 'none',

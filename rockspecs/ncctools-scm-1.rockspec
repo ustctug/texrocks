@@ -37,7 +37,7 @@ description = {
     control of the text area;
     centred page layouts; and
     un-numbered top-level section.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Collection' },
   homepage = repo_url,
   license = 'LPPL-1.0'
 }

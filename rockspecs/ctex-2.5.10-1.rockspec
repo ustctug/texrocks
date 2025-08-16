@@ -12,7 +12,7 @@ description = {
   summary = [[LaTeX classes and packages for Chinese typesetting]],
   detailed =
   [[ctex is a collection of macro packages and document classes for LaTeX Chinese typesetting.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Book publication', 'Class', 'Chinese' },
   homepage = 'http://www.ctex.org/',
   license = 'LPPL-1.3c'
 }

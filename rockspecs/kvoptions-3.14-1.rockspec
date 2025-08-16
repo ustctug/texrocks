@@ -12,7 +12,7 @@ description = {
   summary = 'Key value format for package options',
   detailed =
   [[This package offers support for package authors who want to use options in key-value format for their package options.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Key-Val' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

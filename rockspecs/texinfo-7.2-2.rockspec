@@ -18,7 +18,7 @@ description = {
   The Texinfo macros may be used to produce printable output using TeX; other programs in the distribution offer online interactive use (with hypertext linkages in some cases).
 
   The latest release of the texinfo.tex macros and texi2dvi script may be found in the texinfo-latest package, which are usually newer than the last full release.]],
-  labels = { 'tex', 'texinfo' },
+  labels = { 'Documentation support', 'Format' },
   homepage = 'https://www.gnu.org/software/texinfo/',
   license = 'GPL-3.0'
 }

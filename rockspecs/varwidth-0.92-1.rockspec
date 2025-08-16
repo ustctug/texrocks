@@ -12,7 +12,7 @@ description = {
   summary = [[A variable-width minipage]],
   detailed =
   [[The varwidth environment is superficially similar to minipage, but the specified width is just a maximum value — the box may get a narrower “natural” width.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Fit to size', 'Boxing' },
   homepage = repo_url,
   license = 'LPPL-1.0'
 }

@@ -12,7 +12,7 @@ description = {
   summary = 'an extended version of pdfTeX using Lua as an embedded scripting language',
   detailed =
   [[The LuaTeX project's main objective is to provide an open and configurable variant of TeX while at the same time offering downward compatibility]],
-  labels = { 'tex', 'lua' },
+  labels = { 'Engine' },
   homepage = 'https://www.luatex.org/',
   license = "GPL-2.0"
 }

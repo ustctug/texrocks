@@ -12,7 +12,7 @@ description = {
   summary = [[Handle bit-vector datatype]],
   detailed =
   [[This package defines and implements the data type bit set, a vector of bits. The size of the vector may grow dynamically. Individual bits can be manipulated.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Data manipulation' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

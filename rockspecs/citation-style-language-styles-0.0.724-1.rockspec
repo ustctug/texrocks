@@ -22,6 +22,7 @@ description = {
     Curated repositories of CSL styles and locale files
     Third party CSL processors, software libraries for rendering formatted citation and bibliographies from CSL styles, CSL locale files, and item metadata
 ]],
+   labels = { 'bibliography', 'citations', 'hacktoberfest', 'csl', 'citation-style-language', 'citation-styles' },
    homepage = 'https://citationstyles.org/',
    license = "CC-BY-SA-3.0"
 }

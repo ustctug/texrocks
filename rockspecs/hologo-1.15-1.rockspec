@@ -12,7 +12,7 @@ description = {
   summary = [[A collection of logos with bookmark support]],
   detailed =
   [[The package defines a single command \hologo, whose argument is the usual case-confused ASCII version of the logo. The command is bookmark-enabled, so that every logo becomes available in bookmarks without further work.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Logo', 'Generic Macros' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

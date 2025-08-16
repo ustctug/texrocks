@@ -14,7 +14,7 @@ description = {
   summary = 'Complete set of information/warning/error message macros',
   detailed =
   [[This package provides a complete set of macros for information, warning and error messages. Under LaTeX, the commands are wrappers for the corresponding LaTeX commands; under Plain TeX they are available as complete implementations.]],
-  labels = { 'tex', 'plaintex', 'latex' },
+  labels = { 'Messages' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

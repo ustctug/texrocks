@@ -14,7 +14,7 @@ description = {
   [[This bundle includes color.cfg and graphics.cfg files that set default "driver" options for the color and graphics packages.
 
   It contains support for defaulting the new LuaTeX option which was added to graphics and color in the 2016-02-01 release. The LuaTeX option is only used for LuaTeX versions from 0.87, older versions use the pdfTeX option as before.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Colour', 'Graphics' },
   homepage = repo_url,
   license = 'CC0-1.0'
 }

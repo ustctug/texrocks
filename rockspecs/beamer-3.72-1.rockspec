@@ -23,7 +23,7 @@ description = {
   The package now incorporates the functionality of the former translator package, which is used for customising the package for use in other language environments.
 
   Beamer depends on the following other packages: atbegshi, etoolbox, hyperref, ifpdf, pgf, and translator.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Class', 'Presentation' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

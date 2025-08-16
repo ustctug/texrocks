@@ -14,7 +14,7 @@ description = {
 This material forms one branch of what was originally the AMS-LaTeX distribution. The other branch, amsmath, is now maintained and distributed separately.
 
 The user documentation can be found in the package amscls-doc.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Class', 'Maths' },
   homepage = 'http://www.ams.org/tex/amslatex.html',
   license = 'LPPL-1.3c'
 }

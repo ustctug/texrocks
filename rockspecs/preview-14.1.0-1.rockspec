@@ -16,7 +16,7 @@ description = {
   summary = 'Extract bits of a LaTeX source for output',
   detailed =
   [[The package is a free-standing part of the preview-latex bundle. The package provides the support preview-latex needs, when it chooses the matter it will preview. The output may reasonably be expected to have other uses, as in html translators, etc.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Chunks' },
   homepage = 'https://www.gnu.org/software/auctex/preview-latex.html',
   license = 'GPL-3.0'
 }

@@ -16,7 +16,7 @@ description = {
   Supply the overwrite option to LaTeX’s built-in filecontents environment to mimic this package’s behavior:
 
   \begin{filecontents}[overwrite]{my-file}...\end{filecontents}]],
-  labels = { 'tex', 'latex' },
+  labels = { 'File management' },
   homepage = 'https://ctan.org/pkg/filecontents',
   license = 'LPPL-1.3c'
 }

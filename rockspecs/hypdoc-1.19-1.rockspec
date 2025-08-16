@@ -12,7 +12,7 @@ description = {
   summary = 'Hyper extensions for doc.sty',
   detailed =
   [[This package adds hypertext features to the package doc that is used in the documentation system of LaTeX2ε. Bookmarks are added and references are linked as far as possible.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Documentation support', 'Hyper' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

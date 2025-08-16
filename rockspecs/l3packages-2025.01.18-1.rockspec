@@ -19,7 +19,7 @@ The appropriate LaTeX kernel releases incorporating the ideas from the packages 
     xfp 2022-06-01
     xparse 2020-10-01
     xtemplate 2024-06-01]],
-  labels = { 'tex', 'latex' },
+  labels = { 'LaTeX3', 'Macro support' },
   homepage = 'https://www.latex-project.org/',
   license = 'LPPL-1.3c'
 }

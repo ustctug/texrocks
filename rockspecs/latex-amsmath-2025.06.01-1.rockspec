@@ -12,7 +12,7 @@ description = {
   summary = 'The LaTeX standard amsmath bundle',
   detailed =
   [[A collection of (variously) simple amsmath provided as part of the LaTeX required amsmath distribution, comprising the packages: afterpage, array, bm, calc, dcolumn, delarray, enumerate, fileerr, fontsmpl, ftnright, hhline, indentfirst, layout, longtable, multicol, rawfonts, shellesc, showkeys, somedefs, tabularx, theorem, trace, varioref, verbatim, xr, and xspace.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Maths' },
   homepage = 'http://www.ams.org/tex/amslatex.html',
   license = 'LPPL-1.3c'
 }

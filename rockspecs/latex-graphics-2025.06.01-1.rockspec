@@ -20,7 +20,7 @@ description = {
 in LaTeX documents.
 
 It comprises the packages color, graphics, graphicx, trig, epsfig, keyval, and lscape.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Collection', 'Graphics' },
   homepage = 'https://ctan.org/pkg/latex-graphics',
   license = 'LPPL-1.3c'
 }

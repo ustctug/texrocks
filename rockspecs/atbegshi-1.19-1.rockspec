@@ -12,7 +12,7 @@ description = {
   summary = [[Execute stuff at \shipout time]],
   detailed =
   [[This package is a modern reimplementation of package everyshi, providing various commands to be executed before a \shipout command. It makes use of e-TeX’s facilities if they are available. The package may be used either with LaTeX or with plain TeX.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Defer stuff' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

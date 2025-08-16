@@ -12,7 +12,7 @@ description = {
   [[The package enables the user to typeset programs (programming code) within LaTeX; the source code is read directly by TeX—no front-end processor is needed. Keywords, comments and strings can be typeset using different styles (default is bold for keywords, italic for comments and no special style for strings). Support for hyperref is provided.
 
   To use, \usepackage{listings}, identify the language of the object to typeset, using a construct like: \lstset{language=Python}, then use environment lstlisting for inline code. External files may be formatted using \lstinputlisting to process a given file in the form appropriate for the current language. Short (in-line) listings are also available, using either \lstinline|...| or |...| (after defining the | token with the \lstMakeShortInline command).]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Syntax highlight', 'Macro Demonstration', 'Verbatim', 'Listing' },
   homepage = 'https://ctan.org/pkg/listings',
   license = 'LPPL-1.3c'
 }

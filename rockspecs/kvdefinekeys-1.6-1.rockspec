@@ -12,7 +12,7 @@ description = {
   summary = 'Define keys for use in the kvsetkeys package',
   detailed =
   [[The package provides a macro \kv@define@key (analogous to keyval’s \define@key, to define keys for use by kvsetkeys.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Key-Val' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

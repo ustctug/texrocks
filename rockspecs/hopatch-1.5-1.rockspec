@@ -12,7 +12,7 @@ description = {
   summary = [[Load patches for packages]],
   detailed =
   [[Hopatch provides a command with which the user may register of patch code for a particular package. Hopatch will apply the patch immediately, if the relevant package has already been loaded; otherwise it will store the patch until the package appears.]],
-  labels = { 'tex', 'latex' },
+  labels = { 'Macro support' },
   homepage = repo_url,
   license = 'LPPL-1.3c'
 }

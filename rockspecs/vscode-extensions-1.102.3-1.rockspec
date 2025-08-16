@@ -12,7 +12,7 @@ description = {
   summary = "Visual Studio Code's builtin extensions for syntax highlight",
   detailed =
   [[See https://github.com/icedman/nvim-textmate/]],
-  labels = { 'vscode' },
+  labels = { 'electron', 'microsoft', 'editor', 'typescript', 'visual-studio-code' },
   homepage = repo_url,
   license = 'GPL-2.0'
 }
