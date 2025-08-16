@@ -5,11 +5,11 @@ local specrev = '1'
 local repo_url = 'https://github.com/CTeX-org/ctex-kit'
 
 rockspec_format = '3.0'
-package = 'ctex'
+package = 'ctex-support'
 version = modrev .. '-' .. specrev
 
 description = {
-  summary = [[LaTeX classes and packages for Chinese typesetting]],
+  summary = [[Tools to build ctex packages]],
   detailed =
   [[ctex is a collection of macro packages and document classes for LaTeX Chinese typesetting.]],
   labels = { 'tex', 'latex' },
@@ -17,13 +17,9 @@ description = {
   license = 'LPPL-1.3c'
 }
 
-build_dependencies = { 'luatex', 'latex-base', 'ctex-support' }
-
-dependencies = { 'chinese-jfm', 'l3kernel', 'fontspec' }
-
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = 'ctex-kit-' .. git_ref .. '/' .. package,
+  dir = 'ctex-kit-' .. git_ref .. '/support',
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -34,19 +30,15 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'l3build',
-  patches = {
-    ["replace-xelatex.diff"] = [[
---- old/build.lua
-+++ new/build.lua
-@@ -9,6 +9,7 @@
- unpacksuppfiles  = {"ctex.id", "ctxdocstrip.tex", "ctex-zhconv.lua", "ctex-zhconv-index.lua"}
- typesetsuppfiles = {"ctxdoc.cls"}
- gitverfiles      = {"ctex.dtx", "ctxdoc.cls"}
-+dtxchecksum = { exe = 'luatex' }
-
- tdslocations = {
-   "source/latex/ctex/*-make.lua",
-]],
+  type = 'none',
+  install = {
+    lua = {
+      dtxchecksum = 'dtxchecksum.lua',
+      ['ctex-zhconv'] = 'ctex-zhconv.lua',
+      ['ctex-zhconv-index'] = 'ctex-zhconv-index.lua',
+    },
+    conf = {
+      ['../tex/generic/ctex/ctxdocstrip.tex'] = 'ctxdocstrip.tex'
+    }
   }
 }

@@ -23,6 +23,8 @@ description = {
   license = 'LPPL-1.3'
 }
 
+build_dependencies = { 'luatex', 'latex-base' }
+
 dependencies = {
    "lua >= 5.1",
    "unicode-data"
@@ -40,17 +42,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
-  modules = {
-    ['lua-uni-algos'] = 'lua-uni-algos.lua',
-    ['lua-uni-case'] = 'lua-uni-case.lua',
-    ['lua-uni-graphemes'] = 'lua-uni-graphemes.lua',
-    ['lua-uni-normalize'] = 'lua-uni-normalize.lua',
-    ['lua-uni-parse'] = 'lua-uni-parse.lua',
-  },
-  install = {
-    conf = {
-      -- ['../doc/luatex/lua-uni-algos/lua-uni-algos.pdf'] = 'lua-uni-algos.pdf',
-    }
-  }
+  type = 'l3build',
 }

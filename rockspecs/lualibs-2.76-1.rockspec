@@ -31,54 +31,23 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'luatex', 'latex-base' }
--- build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
 
 build = {
-  -- type = 'l3build',
-  type = 'command',
-  build_command = [[
-    luatex --interaction=nonstopmode lualibs.dtx
-  ]],
-  install = {
-    lua = {
-        ["lualibs"] = "lualibs.lua",
-        ["lualibs-basic"] = "lualibs-basic.lua",
-        ["lualibs-extended"] = "lualibs-extended.lua",
-        ["lualibs-basic-merged"] = "lualibs-basic-merged.lua",
-        ["lualibs-boolean"] = "lualibs-boolean.lua",
-        ["lualibs-compat"] = "lualibs-compat.lua",
-        ["lualibs-dir"] = "lualibs-dir.lua",
-        ["lualibs-extended-merged"] = "lualibs-extended-merged.lua",
-        ["lualibs-file"] = "lualibs-file.lua",
-        ["lualibs-function"] = "lualibs-function.lua",
-        ["lualibs-io"] = "lualibs-io.lua",
-        ["lualibs-lpeg"] = "lualibs-lpeg.lua",
-        ["lualibs-lua"] = "lualibs-lua.lua",
-        ["lualibs-math"] = "lualibs-math.lua",
-        ["lualibs-md5"] = "lualibs-md5.lua",
-        ["lualibs-number"] = "lualibs-number.lua",
-        ["lualibs-os"] = "lualibs-os.lua",
-        ["lualibs-package"] = "lualibs-package.lua",
-        ["lualibs-set"] = "lualibs-set.lua",
-        ["lualibs-string"] = "lualibs-string.lua",
-        ["lualibs-table"] = "lualibs-table.lua",
-        ["lualibs-trac-inf"] = "lualibs-trac-inf.lua",
-        ["lualibs-unicode"] = "lualibs-unicode.lua",
-        ["lualibs-url"] = "lualibs-url.lua",
-        ["lualibs-util-deb"] = "lualibs-util-deb.lua",
-        ["lualibs-util-dim"] = "lualibs-util-dim.lua",
-        ["lualibs-util-fil"] = "lualibs-util-fil.lua",
-        ["lualibs-util-jsn"] = "lualibs-util-jsn.lua",
-        ["lualibs-util-lua"] = "lualibs-util-lua.lua",
-        ["lualibs-util-prs"] = "lualibs-util-prs.lua",
-        ["lualibs-util-sac"] = "lualibs-util-sac.lua",
-        ["lualibs-util-sta"] = "lualibs-util-sta.lua",
-        ["lualibs-util-sto"] = "lualibs-util-sto.lua",
-        ["lualibs-util-str"] = "lualibs-util-str.lua",
-        ["lualibs-util-tab"] = "lualibs-util-tab.lua",
-        ["lualibs-util-tpl"] = "lualibs-util-tpl.lua",
-        ["lualibs-util-zip"] = "lualibs-util-zip.lua",
-    }
-  }
+  type = 'l3build',
+  patches = {
+    ["remove-texmfhome.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -53,7 +53,7 @@
+ -- to make it easier to run the tests there and to have a complete
+ -- set there for users
+           
+-options["texmfhome"] = "../luaotfload/supporttexmf"           
++-- options["texmfhome"] = "../luaotfload/supporttexmf"           
+ ctanreadme= "CTANREADME.md"
+ -------------------
+ -- documentation
+]],
+  },
 }

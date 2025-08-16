@@ -2,7 +2,7 @@ local git_ref = 'v3.72'
 local modrev = git_ref:gsub('v', '')
 local specrev = '1'
 
-local repo_url = 'https://github.com/josephwright/beamer/'
+local repo_url = 'https://github.com/josephwright/beamer'
 
 rockspec_format = '3.0'
 package = 'beamer'
@@ -41,5 +41,5 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'doc', 'tex' },
+  copy_directories = { 'tex' },
 }

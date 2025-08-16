@@ -32,6 +32,7 @@ end
 
 build = {
   type = 'l3build',
+  -- https://github.com/josephwright/luatex85/pull/5
   patches = {
     ["fix-build.lua.diff"] = [[
 --- old/build.lua
