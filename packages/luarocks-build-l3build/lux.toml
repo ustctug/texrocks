@@ -13,8 +13,8 @@ license = 'GPL-3.0'
 [source]
 # url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 # dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
-url = "https://github.com/ustctug/texrocks/archive/863ee8eb143949332bf00d6982acd2f714b885b5.zip"
-dir = "texrocks-863ee8eb143949332bf00d6982acd2f714b885b5/packages/$(PACKAGE)"
+url = "https://github.com/ustctug/texrocks/archive/bb2f102137b4b7b8a5b64c3a9c22ebbe20b317d8.zip"
+dir = "texrocks-bb2f102137b4b7b8a5b64c3a9c22ebbe20b317d8/packages/$(PACKAGE)"
 
 [dependencies]
 luarocks = "3.12.2-1"
