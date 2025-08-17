@@ -29,7 +29,7 @@ end
 
 build = {
   type = 'command',
-  build_command = [[CFLAGS=-std=gnu99 build.sh --nolua53 --luahb --parallel]],
+  build_command = [[CFLAGS=-std=gnu99 ./build.sh --nolua53 --luahb --parallel]],
   install = {
     bin = {
       luahbtex = 'build/texk/web2c/luahbtex'
