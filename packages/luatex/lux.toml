@@ -43,3 +43,6 @@ build_command = "bin/luatex --ini --interaction=nonstopmode luatex.ini"
 
 [build.install.conf]
 '../web2c/luahbtex/luatex.fmt' = 'luatex.fmt'
+
+[build.install.bin]
+luatex = 'bin/luatex'

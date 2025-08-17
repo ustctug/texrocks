@@ -42,3 +42,6 @@ build_command = "bin/luatexinfo --ini --interaction=nonstopmode luatexinfo.ini"
 
 [build.install.conf]
 '../web2c/luahbtex/luatexinfo.fmt' = 'luatexinfo.fmt'
+
+[build.install.bin]
+luatexinfo = 'bin/luatexinfo'

@@ -37,3 +37,6 @@ build_command = "bin/initex --ini --interaction=nonstopmode initex.ini"
 
 [build.install.conf]
 '../web2c/luahbtex/initex.fmt' = 'initex.fmt'
+
+[build.install.bin]
+initex = 'bin/initex'
