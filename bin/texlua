@@ -1,19 +1,36 @@
 #!/usr/bin/env -S luahbtex --luaonly
----@diagnostic disable: undefined-field
--- luacheck: ignore 143
-if os.getenv "LUA_PATH" then
-    require 'texrocks'.main(arg)
+---@diagnostic disable: undefined-field, undefined-global
+-- luacheck: ignore 111 113 143
+if tex then
+    if os.getenv "LUA_PATH" then
+        require 'texrocks'.main(arg)
+    else
+        local cmd = {
+            "lx",
+            "--lua-version=" .. _VERSION:gsub(".* ", ""),
+            "lua",
+            "--lua=" .. arg[0],
+            "--no-loader",
+            "--",
+        }
+        for _, v in ipairs(arg) do
+            table.insert(cmd, v)
+        end
+        os.exec(cmd)
+    end
 else
+    -- --luaonly will make --lua invalid
+    -- so cannot use --lua XXX.lua
     local cmd = {
-        "lx",
-        "--lua-version=" .. _VERSION:gsub(".* ", ""),
-        "lua",
-        "--lua=" .. arg[0],
-        "--no-loader",
-        "--",
+        'luahbtex',
+        '--luaonly',
+        arg[0],
     }
     for _, v in ipairs(arg) do
         table.insert(cmd, v)
     end
-    os.exec(cmd)
+    for i, v in ipairs(cmd) do
+        cmd[i] = string.format('%q', v)
+    end
+    os.execute(table.concat(cmd, ' '))
 end

@@ -398,7 +398,7 @@ end
 function M.get_cmd(args)
     local cmd = {}
     for _, v in ipairs(args) do
-        v = v:gsub(" ", "\\ ")
+        v = string.format("%q", v)
         table.insert(cmd, v)
     end
     return table.concat(cmd, " ")
