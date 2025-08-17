@@ -133,7 +133,7 @@ function M.get_parser(progname)
     return parser
 end
 
----@alias str string | nil
+---@alias str string?
 ---@alias cfg
 ---| {
 ---  text: str,
@@ -141,10 +141,10 @@ end
 ---  syntax_type: str,
 ---  theme: str,
 ---  theme_type: str,
----  extensions_dir: string[] | nil,
+---  extensions_dir: string[]?,
 ---  format: str,
 ---  output: str,
----  extra_opts: table<string, any> | nil}
+---  extra_opts: table<string, any>?}
 
 ---load extensions directories
 ---@param extensions_dir string[]

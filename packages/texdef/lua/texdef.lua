@@ -100,7 +100,7 @@ end
 
 ---**first entry for texdef and latexdef**
 ---@param argv string[] command line arguments
----@return table | nil args parsed command line arguments
+---@return table? args parsed command line arguments
 function M.main(argv)
     print()
     local args = M.parse(argv)

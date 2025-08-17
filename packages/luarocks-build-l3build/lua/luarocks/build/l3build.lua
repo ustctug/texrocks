@@ -4,7 +4,7 @@ local path = require("luarocks.path")
 local dir = require("luarocks.dir")
 
 ---core function
----@return true | nil, nil | string
+---@return true?, string?
 function M.run(rockspec, no_install)
     local compile_temp_dir = fs.make_temp_dir("build-" .. rockspec.package .. "-" .. rockspec.version)
     if rockspec.build.variables == nil then

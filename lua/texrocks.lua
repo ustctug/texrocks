@@ -79,7 +79,7 @@ end
 
 ---get paths from `package.path`/`package.cpath`. see tests.
 ---@param path string paths concatenated by `;`
----@param suffix string | nil add `../${suffix}//` to paths when it is not nil
+---@param suffix string? add `../${suffix}//` to paths when it is not nil
 ---@return string[] paths
 function M.getpaths(path, suffix)
     local parts = {}
@@ -105,7 +105,7 @@ end
 
 ---concatenate `getpaths()`
 ---@param path string same as `getpaths()`
----@param suffix string | nil same as `getpaths()`
+---@param suffix string? same as `getpaths()`
 ---@return string path concatenated by `;`
 ---@see getpaths
 function M.getenv(path, suffix)
@@ -256,7 +256,7 @@ end
 ---refer `parse`
 ---@see parse
 ---@param args string[] command line arguments
----@param extra_offset integer | nil extra offset
+---@param extra_offset integer? extra offset
 ---@return string[] args parsed result
 function M.preparse(args, extra_offset)
     local offset = M.get_offset(args)
