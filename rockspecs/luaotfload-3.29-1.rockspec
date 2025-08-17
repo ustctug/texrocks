@@ -8,7 +8,7 @@ rockspec_format = '3.0'
 package = 'luaotfload'
 version = modrev .. '-' .. specrev
 
--- build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
 
 dependencies = { 'lualibs', 'lua-uni-algos' }
 

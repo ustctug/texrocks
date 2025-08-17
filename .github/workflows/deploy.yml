@@ -56,7 +56,6 @@ jobs:
             --server=https://ustctug.github.io/texrocks
           luarocks install ltreesitter \
             --server=https://ustctug.github.io/texrocks
-          luarocks install luatex
           luarocks install luatexinfo
           luarocks install lualatex
           luarocks install texcat
