@@ -32,9 +32,9 @@ else
     for i, v in ipairs(cmd) do
         cmd[i] = string.format('%q', v)
     end
-    local ret = 0
-    if os.execute(table.concat(cmd, ' ')) == nil then
-        ret = 1
+    local isok, reason, ret = os.execute(table.concat(cmd, ' '))
+    if ret == nil then
+        os.exit(isok)
     end
     os.exit(ret)
 end
