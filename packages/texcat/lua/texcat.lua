@@ -5,8 +5,6 @@
 -- luacheck: ignore 111 113
 local lfs = require 'lfs'
 local argparse = require 'argparse'
-local textmate = require 'textmate'
-local TS = require 'texcat.syntaxes.treesitter'
 local T = require 'texcat.themes'
 local TMTheme = require 'texcat.themes.tmtheme'.TMTheme
 local TMLanguage = require 'texcat.syntaxes.tmlanguage'.TMLanguage
@@ -69,10 +67,7 @@ function M.parse(argv)
     local parser = M.get_parser(argv[0])
     local args = parser:parse(argv)
     if #args.file == 0 then
-        if args.theme_type == 'textmate' or args.syntax_type == 'textmate' then
-            TMTheme { extensions_dir = args.extensions_dir }
-        end
-        print(M.get_list(args.list, args.theme, args.theme_type, args.extensions_dir))
+        print(M.get_list(args.list, args.theme_type, args.syntax_type, args.theme, args.extensions_dir))
         return {}
     end
     return M.args_to_cfgs(args)
@@ -80,54 +75,47 @@ end
 
 ---get list output
 ---@param list_type string list type
----@param theme string[] theme names
 ---@param theme_type string theme type
+---@param syntax_type string syntax type
 ---@param extensions_dir string[] extensions directory
-function M.get_list(list_type, theme, theme_type, extensions_dir)
+---@param theme_names string[] theme names
+function M.get_list(list_type, theme_type, syntax_type, theme_names, extensions_dir)
+    local class
+    local theme
+    if theme_type == 'textmate' then
+        class = TMTheme
+    end
+    theme = class { extensions_dir = extensions_dir }
+    local syntax
+    if syntax_type == 'textmate' then
+        class = Treesitter
+    elseif syntax_type == 'tree-sitter' then
+        class = TMLanguage
+    end
+    syntax = class { id = 0, extensions_dir = extensions_dir }
     local list
-    if list_type == 'links' then
-        local link = T.get_scope_link()
-        local scopes = R.get_sorted_keys(link)
-        local lines = {}
-        for _, scope in ipairs(scopes) do
-            table.insert(lines, scope .. ' -> ' .. link[scope])
-        end
-        list = table.concat(lines, "\n")
+    if list_type == 'extensions_dirs' then
+        list = table.concat(extensions_dir, "\n")
+    elseif list_type == 'themes' then
+        list = theme.list()
+    elseif list_type == 'syntaxes' then
+        list = syntax.list()
+    elseif list_type == 'links' then
+        list = T.list_links()
     elseif list_type == 'colors' then
         local theme_infos = {}
-        for _, theme_name in ipairs(theme) do
-            if theme_type == 'textmate' then
-                if M.themes[theme_name] == nil then
-                    M.themes[theme_name] = textmate.highlight_load_theme(theme_name)
+        for _, theme_name in ipairs(theme_names) do
+            theme = M.themes[theme_name]
+            if theme == nil then
+                if theme_type == 'textmate' then
+                    theme = TMTheme { extensions_dir = extensions_dir, name = theme_name }
+                    M.themes[theme_name] = theme
                 end
-                M.themes[theme_name] = textmate.highlight_load_theme(theme_name)
-                textmate.highlight_set_theme(M.themes[theme_name])
-                local color_map = M.get_color_map()
-                local scopes = R.get_sorted_keys(color_map)
-                local lines = { theme_name }
-                for _, scope in ipairs(scopes) do
-                    table.insert(lines, scope .. ': ' .. table.concat(color_map[scope], ', '))
-                end
-                table.insert(theme_infos, table.concat(lines, "\n"))
             end
+            table.insert(theme_infos, M.themes[theme_name].name)
+            table.insert(theme_infos, tostring(M.themes[theme_name]))
         end
         list = table.concat(theme_infos, "\n\n")
-    elseif list_type == 'themes' then
-        list = T.list(textmate.highlight_themes())
-    elseif list_type == 'extensions_dirs' then
-        list = table.concat(extensions_dir, "\n")
-    elseif list_type == 'syntaxes' then
-        if syntax_type == 'textmate' then
-            list = T.list(textmate.highlight_languages())
-        elseif syntax_type == 'tree-sitter' then
-            local parsers = TS.search(extensions_dir, 'parser')
-            local langs = R.get_sorted_keys(parsers)
-            local lines = {}
-            for _, lang in ipairs(langs) do
-                table.insert(lines, lang .. ': ' .. parsers[lang])
-            end
-            list = table.concat(lines, "\n\n")
-        end
     end
     return list
 end
@@ -160,26 +148,26 @@ end
 ---core function: render a file
 ---@param cfg cfg
 function M.render(cfg)
-    local class
+    -- syntax_type/theme_type
+    cfg.syntax_type = cfg.syntax_type or 'tree-sitter'
     cfg.theme_type = cfg.theme_type or 'textmate'
+
+    -- theme
+    local class
     if cfg.theme_type == 'textmate' then
         class = TMTheme
     end
     cfg.theme = cfg.theme or 'auto'
-    if cfg.theme == nil or M.themes[cfg.theme] == nil then
-        local t = class { name = cfg.theme, extensions_dir = cfg.extensions_dir }
-        cfg.theme = t.name
-        M.themes[cfg.theme] = t
+    -- no theme auto
+    local theme = M.themes[cfg.theme]
+    if theme == nil then
+        if cfg.theme == 'auto' then
+            cfg.theme = nil
+        end
+        theme = class { name = cfg.theme, extensions_dir = cfg.extensions_dir }
+        M.themes[theme.name] = theme
     end
 
-    -- syntax_type/theme_type
-    cfg.syntax_type = cfg.syntax_type or 'tree-sitter'
-    -- theme
-    if cfg.theme_type == 'textmate' and cfg.theme == 'auto' then
-        cfg.theme = nil
-    end
-    -- syntax
-    cfg.syntax = cfg.syntax or 'auto'
     if cfg[1] then
         local f = io.open(cfg[1])
         if not f then
@@ -187,42 +175,39 @@ function M.render(cfg)
         end
         cfg.text = f:read('*a'):gsub("\n$", '')
         f:close()
-        if cfg.syntax == 'auto' then
-            local ext = cfg[1]:match('(%.[^.]+)$')
-            for _, data in ipairs(textmate.highlight_languages()) do
-                if ext == data[3] then
-                    cfg.syntax = data[1]
-                    break
-                end
-            end
-        end
     end
     cfg.text = cfg.text or ''
-    -- format
-    cfg.format = cfg.format or 'tex'
-    -- output
-    if cfg.output == nil then
-        if tex and tex.print then
-            cfg.output = '.lux/%s.tex'
-            cfg.output = cfg.output:format(cfg[1] or cfg.syntax)
-        else
-            cfg.output = '-'
-        end
-    end
-    -- prefix
-    cfg.extra_opts = cfg.extra_opts or {}
 
-
+    -- syntax
     if cfg.syntax_type == 'textmate' then
         class = TMLanguage
     elseif cfg.syntax_type == 'tree-sitter' then
         class = Treesitter
     end
-    if M.syntaxes[cfg.syntax] == nil then
-        M.syntaxes[cfg.syntax] = class { name = cfg.syntax }
+    cfg.syntax = cfg.syntax or 'auto'
+    -- no syntax auto
+    local syntax = M.themes[cfg.syntax]
+    if syntax == nil then
+        if cfg.syntax == 'auto' then
+            cfg.syntax = class.detect(cfg[1])
+        end
+        syntax = class { name = cfg.syntax }
+        M.syntaxes[syntax.name] = syntax
     end
-    local renderer = Renderer { theme = M.themes[cfg.theme_type], syntax = M.syntaxes[cfg.syntax] }
 
+    -- output
+    if cfg.output == nil then
+        if tex and tex.print then
+            cfg.output = '.lux/%s.tex'
+            cfg.output = cfg.output:format(cfg[1] or syntax.name)
+        else
+            cfg.output = '-'
+        end
+    end
+    cfg.format = cfg.format or 'tex'
+    cfg.extra_opts = cfg.extra_opts or {}
+
+    local renderer = Renderer { theme = theme, syntax = syntax }
     if tex and tex.print then
         M.output(renderer:render(cfg.text, 'preamble.tex', cfg.extra_opts), '-')
     end
@@ -260,7 +245,7 @@ function M.output(out, filename)
             if lfs.mkdirp then
                 lfs.mkdirp(dir)
             else
-                lfs.mkdirp(dir)
+                lfs.mkdir(dir)
             end
         end
         local f = io.open(filename, 'w')

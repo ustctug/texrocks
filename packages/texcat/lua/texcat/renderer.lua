@@ -4,6 +4,7 @@ local template = require 'template'
 local warna = require 'warna'
 warna.options.level = 3
 
+local T = require 'texcat.themes'
 local Theme = require 'texcat.themes.tmtheme'.TMTheme
 local Syntax = require 'texcat.syntaxes.treesitter'.Treesitter
 local M = {
@@ -30,18 +31,6 @@ local M = {
     },
     Renderer = {}
 }
-
----sort dictionary's keys
----@param input table
----@return table names
-function M.get_sorted_keys(input)
-    local names = {}
-    for name, _ in pairs(input) do
-        table.insert(names, name)
-    end
-    table.sort(names)
-    return names
-end
 
 ---get path of template
 ---https://github.com/nvim-neorocks/lux/issues/922
@@ -184,7 +173,7 @@ function M.Renderer:get_opts(text, format, opts)
     opts.escape = M.escape
     opts.preamble = M.get_path('texcat/main.preamble.tex')
     opts.tex = M.get_path('texcat/main.tex')
-    opts.scopes = M.get_sorted_keys(opts.color_map)
+    opts.scopes = T.get_sorted_keys(opts.color_map)
     return opts
 end
 

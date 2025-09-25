@@ -44,4 +44,16 @@ function M.TMLanguage:capture(text, theme)
     return captures
 end
 
+---detect file type
+---@param filename string
+---@return string ft
+function M.TMLanguage.detect(filename)
+    local ext = filename:match('(%.[^.]+)$')
+    for _, data in ipairs(textmate.highlight_languages()) do
+        if ext == data[3] then
+            return data[1]
+        end
+    end
+end
+
 return M

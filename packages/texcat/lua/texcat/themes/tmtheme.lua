@@ -21,6 +21,7 @@ function M.TMTheme:new(tmtheme)
     tmtheme.name = tmtheme.name or textmate.highlight_themes()[1][1]
     tmtheme.id = tmtheme.id or textmate.highlight_load_theme(tmtheme.name)
     setmetatable(tmtheme, {
+        __tostring = M.TMTheme.list_colors,
         __index = self
     })
     return tmtheme
@@ -62,6 +63,19 @@ end
 ---@return string information
 function M.TMTheme.list()
     return T.list(textmate.highlight_themes())
+end
+
+---list all colors
+---@return string information
+function M.TMTheme:list_colors()
+    textmate.highlight_set_theme(self.id)
+    local color_map = self.get_color_map()
+    local scopes = T.get_sorted_keys(color_map)
+    local lines = {}
+    for _, scope in ipairs(scopes) do
+        table.insert(lines, scope .. ': ' .. table.concat(color_map[scope], ', '))
+    end
+    return table.concat(lines, "\n")
 end
 
 ---get full color map

@@ -78,4 +78,28 @@ function M.get_extensions_dir()
     return dirs
 end
 
+---sort dictionary's keys
+---@param input table
+---@return table names
+function M.get_sorted_keys(input)
+    local names = {}
+    for name, _ in pairs(input) do
+        table.insert(names, name)
+    end
+    table.sort(names)
+    return names
+end
+
+---list all links
+---@return string
+function M.list_links()
+    local link = M.get_scope_link()
+    local scopes = M.get_sorted_keys(link)
+    local lines = {}
+    for _, scope in ipairs(scopes) do
+        table.insert(lines, scope .. ' -> ' .. link[scope])
+    end
+    return table.concat(lines, "\n")
+end
+
 return M

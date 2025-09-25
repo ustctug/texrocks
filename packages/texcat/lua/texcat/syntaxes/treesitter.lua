@@ -182,4 +182,22 @@ function M.Treesitter:capture(text, theme)
     return captures
 end
 
+function M.Treesitter:list()
+    local parsers = M.search(self.extensions_dir, 'parser')
+    local langs = T.get_sorted_keys(parsers)
+    local lines = {}
+    for _, lang in ipairs(langs) do
+        table.insert(lines, lang .. ': ' .. parsers[lang])
+    end
+    return table.concat(lines, "\n\n")
+end
+
+---detect file type
+---TODO: /usr/share/nvim/runtime/lua/vim/filetype.lua
+---@param filename string
+---@return string ft
+function M.Treesitter.detect(filename)
+    return require 'texcat.syntaxes.tmlanguage'.TMLanguage.detect(filename)
+end
+
 return M
