@@ -167,7 +167,8 @@ function M.setenvs()
     os.setenv("TEXMF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
     -- create ./texmf.cnf to override lua/texrocks/texmf.cnf
     os.setenv("TEXMFCNF",
-        "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" .. debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks')
+        "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" ..
+        debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks/templates')
     os.setenv("TEXMFDBS", "")
 
     os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path))
@@ -354,7 +355,7 @@ function M.sync(short)
         print("fail to generate " .. fontmap_name)
         return
     end
-    local template = debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks/' .. M.fontmap_name
+    local template = debug.getinfo(1).source:match("@?(.*)/") .. '/texrocks/templates' .. M.fontmap_name
     local t = io.open(template)
     if t then
         f:write(t:read("*a"))

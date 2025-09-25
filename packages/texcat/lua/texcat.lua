@@ -713,7 +713,7 @@ end
 ---@param args table
 ---@return string text
 function M.get_output(format, args)
-    return template.render(M.get_path('texcat/main.' .. format), args):gsub("\n$", "")
+    return template.render(M.get_path('texcat/templates/main.' .. format), args):gsub("\n$", "")
 end
 
 return M

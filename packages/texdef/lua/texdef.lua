@@ -83,7 +83,7 @@ function M.postparse(args)
     args.fmt = tex.formatname .. '.fmt'
     args.list = args.list or 0
     args.find = args.find or 0
-    args.sub = M.get_path('texdef/sub.tex')
+    args.sub = M.get_path('texdef/templates/sub.tex')
     args.ipairs = ipairs
     return args
 end
@@ -104,7 +104,7 @@ end
 function M.main(argv)
     print()
     local args = M.parse(argv)
-    local code = template.render(M.get_path('texdef/main.tex'), args)
+    local code = template.render(M.get_path('texdef/templates/main.tex'), args)
     if args.dry_run then
         print(code)
         return
