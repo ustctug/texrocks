@@ -1,3 +1,6 @@
+---a class to wrap treesitter parsers and queries
+---@module texcat.syntaxes.treesitter
+---@copyright 2025
 local lfs = require 'lfs'
 local ltreesitter = require 'ltreesitter'
 local T = require 'texcat.themes'
@@ -72,24 +75,6 @@ function M.filter_query(code)
     return code
 end
 
----@param treesitter table?
----@return table treesitter
-function M.Treesitter:new(treesitter)
-    treesitter = treesitter or {}
-    treesitter.name = treesitter.name or 'lua'
-    treesitter.extensions_dir = treesitter.extensions_dir or T.get_extensions_dir()
-    treesitter.parser = treesitter.parser or M.require(treesitter.name, treesitter.extensions_dir)
-    treesitter.query = treesitter.query or M.get_syntax(treesitter.parser, treesitter.name, treesitter.extensions_dir)
-    setmetatable(treesitter, {
-        __index = self
-    })
-    return treesitter
-end
-
-setmetatable(M.Treesitter, {
-    __call = M.Treesitter.new
-})
-
 ---add child scopes to color map
 ---@param color_map color_map
 ---@param captures capture[]
@@ -114,7 +99,6 @@ end
 ---@param color_map color_map
 ---@return capture[] captures
 function M.filter_captures(captures, color_map)
-    ---@type capture[]
     local new_captures = {}
     for _, capture in ipairs(captures) do
         if color_map[capture.scope] then
@@ -141,7 +125,6 @@ function M.cut_captures(captures, len)
         end
     end
     ---@alias range {start_index: integer, end_index: integer, scope: string, len: integer}
-    ---@type range[]
     local ranges = {}
     for i = 1, #indices - 1 do
         table.insert(ranges, { start_index = indices[i], end_index = indices[i + 1] - 1, scope = 'source', len = len })
@@ -161,6 +144,26 @@ function M.cut_captures(captures, len)
 
     return ranges
 end
+
+---@type Treesitter
+
+---@param treesitter table?
+---@return table treesitter
+function M.Treesitter:new(treesitter)
+    treesitter = treesitter or {}
+    treesitter.name = treesitter.name or 'lua'
+    treesitter.extensions_dir = treesitter.extensions_dir or T.get_extensions_dir()
+    treesitter.parser = treesitter.parser or M.require(treesitter.name, treesitter.extensions_dir)
+    treesitter.query = treesitter.query or M.get_syntax(treesitter.parser, treesitter.name, treesitter.extensions_dir)
+    setmetatable(treesitter, {
+        __index = self
+    })
+    return treesitter
+end
+
+setmetatable(M.Treesitter, {
+    __call = M.Treesitter.new
+})
 
 ---capture text as captures according to theme
 ---@param text string

@@ -110,10 +110,12 @@ function M.get_list(list_type, theme_type, syntax_type, theme_names, extensions_
                 if theme_type == 'textmate' then
                     theme = TMTheme { extensions_dir = extensions_dir, name = theme_name }
                     M.themes[theme_name] = theme
+                else
+                    return ''
                 end
             end
-            table.insert(theme_infos, M.themes[theme_name].name)
-            table.insert(theme_infos, tostring(M.themes[theme_name]))
+            table.insert(theme_infos, theme.name)
+            table.insert(theme_infos, tostring(theme))
         end
         list = table.concat(theme_infos, "\n\n")
     end

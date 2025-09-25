@@ -1,3 +1,6 @@
+---a class to render
+---@module texcat.renderer
+---@copyright 2025
 ---@diagnostic disable: undefined-global
 -- luacheck: ignore 111 113
 local template = require 'template'
@@ -92,22 +95,6 @@ function M.get_hls(text, captures)
     return hls
 end
 
----@param renderer table?
----@return table renderer
-function M.Renderer:new(renderer)
-    renderer = renderer or {}
-    renderer.theme = renderer.theme or Theme()
-    renderer.syntax = renderer.syntax or Syntax()
-    setmetatable(renderer, {
-        __index = self
-    })
-    return renderer
-end
-
-setmetatable(M.Renderer, {
-    __call = M.Renderer.new
-})
-
 ---escape TeX, protect `\`, `{`, `}`
 ---@param text string
 ---@param prefix string
@@ -154,6 +141,24 @@ function M.escape(text, prefix, math_escape)
     end
     return table.concat(texts, '$')
 end
+
+---@type Renderer
+
+---@param renderer table?
+---@return table renderer
+function M.Renderer:new(renderer)
+    renderer = renderer or {}
+    renderer.theme = renderer.theme or Theme()
+    renderer.syntax = renderer.syntax or Syntax()
+    setmetatable(renderer, {
+        __index = self
+    })
+    return renderer
+end
+
+setmetatable(M.Renderer, {
+    __call = M.Renderer.new
+})
 
 ---get options
 ---@param text string

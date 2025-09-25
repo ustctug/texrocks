@@ -1,8 +1,13 @@
+---a class to wrap textmate language
+---@module texcat.syntaxes.tmlanguage
+---@copyright 2025
 local T = require 'texcat.themes'
 local textmate = require 'textmate'
 local M = {
     TMLanguage = {}
 }
+
+---@type TMLanguage
 
 ---@param tmlanguage table?
 ---@return table language

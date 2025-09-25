@@ -1,4 +1,6 @@
----Some generic utilities for themes
+---some generic utilities for themes
+---@module texcat.themes
+---@copyright 2025
 local lfs = require 'lfs'
 local M = {
     scope_link = {
@@ -26,9 +28,8 @@ end
 
 ---get scope link
 ---@return link link
+---@alias link table<string, string>
 function M.get_scope_link()
-    ---@alias hl_name string
-    ---@type table<hl_name, scope[]>
     local hl_scope_map = {}
     for _, scope_hl in ipairs(require 'nvim-textmate.colormap'.scope_hl_map) do
         local scope, hl = scope_hl[1], scope_hl[2]

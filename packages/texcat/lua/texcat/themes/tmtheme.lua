@@ -1,3 +1,6 @@
+---a class to wrap textmate theme
+---@module texcat.themes.tmtheme
+---@copyright 2025
 local textmate = require 'textmate'
 local T = require 'texcat.themes'
 local M = {
@@ -12,16 +15,19 @@ function M.load_extensions_dir(extensions_dir)
     end
 end
 
+---@type TMTheme
+
 ---@param tmtheme table?
 ---@return table theme
 function M.TMTheme:new(tmtheme)
     tmtheme = tmtheme or {}
     tmtheme.extensions_dir = tmtheme.extensions_dir or T.get_extensions_dir()
     M.load_extensions_dir(tmtheme.extensions_dir)
-    tmtheme.name = tmtheme.name or textmate.highlight_themes()[1][1]
+    local themes = textmate.highlight_themes() or {{''}}
+    tmtheme.name = tmtheme.name or themes[1][1]
     tmtheme.id = tmtheme.id or textmate.highlight_load_theme(tmtheme.name)
     setmetatable(tmtheme, {
-        __tostring = M.TMTheme.list_colors,
+        __tostring = self.list_colors,
         __index = self
     })
     return tmtheme
@@ -41,7 +47,6 @@ function M.TMTheme.get_color_map()
     for k, v in ipairs(theme) do
         theme[k] = math.floor(v)
     end
-    ---@type color_map
     local color_map = {}
     -- FIXME: https://github.com/icedman/nvim-textmate/issues/10
     -- color_map.source = { theme[1], theme[2], theme[3] }
