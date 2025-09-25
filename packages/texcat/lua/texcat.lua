@@ -392,8 +392,8 @@ function M.render(cfg)
     opts.table = table
     opts.warna = warna
     opts.escape = M.escape
-    opts.preamble = M.get_path('texcat/main.preamble.tex')
-    opts.tex = M.get_path('texcat/main.tex')
+    opts.preamble = M.get_path('texcat/templates/main.preamble.tex')
+    opts.tex = M.get_path('texcat/templates/main.tex')
     opts.scopes = M.get_sorted_keys(opts.color_map)
     if tex and tex.print then
         M.output(M.get_output('preamble.tex', opts), '-')
