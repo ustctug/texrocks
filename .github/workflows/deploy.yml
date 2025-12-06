@@ -27,10 +27,10 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-      - uses: leso-kn/gh-actions-lua@master
+      - uses: leafo/gh-actions-lua@v12
         with:
           luaVersion: "5.3"
-      - uses: hishamhm/gh-actions-luarocks@master
+      - uses: luarocks/gh-actions-luarocks@v6
       - name: Install Dependencies
         run: |
           gem install rake
