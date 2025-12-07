@@ -3,7 +3,10 @@
 ---@copyright 2025
 local lfs = require 'lfs'
 local ltreesitter = require 'ltreesitter'
+local filetype = require 'vim.filetype'
+
 local T = require 'texcat.themes'
+
 local M = {
     Treesitter = {}
 }
@@ -196,11 +199,10 @@ function M.Treesitter:list()
 end
 
 ---detect file type
----TODO: /usr/share/nvim/runtime/lua/vim/filetype.lua
 ---@param filename string
 ---@return string ft
 function M.Treesitter.detect(filename)
-    return require 'texcat.syntaxes.tmlanguage'.TMLanguage.detect(filename)
+    return filetype.match { filename = filename }
 end
 
 return M

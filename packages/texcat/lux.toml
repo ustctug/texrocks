@@ -15,6 +15,7 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
+vim = " >= 0.0.4"
 argparse = "0.7.1-1"
 lua-template = "1.0.0-1"
 warna = "0.3.5-2"
