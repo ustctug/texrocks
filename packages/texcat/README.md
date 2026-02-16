@@ -78,39 +78,39 @@ extra_servers = [
 ```sh
 $ texcat --help
 Usage: /home/wzy/Desktop/texrocks/packages/texcat/bin/texcat [-h]
-       [--completion {bash,zsh,fish}] [--output <output>]
-       [--syntax <syntax>] [--theme <theme>]
-       [--syntax-type {textmate,tree-sitter}]
-       [--theme-type {textmate}] [--extensions-dir <extensions_dir>]
-       [--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}]
-       [--list {themes,syntaxes,extensions_dirs,colors,links}]
-       [--command-prefix <command_prefix>]
-       [--math-escape <math_escape>] [<file>] ...
+[--completion {bash,zsh,fish}] [--output <output>]
+[--syntax <syntax>] [--theme <theme>]
+[--syntax-type {textmate,tree-sitter}]
+[--theme-type {textmate}] [--extensions-dir <extensions_dir>]
+[--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}]
+[--list {themes,syntaxes,extensions_dirs,colors,links}]
+[--command-prefix <command_prefix>]
+[--math-escape <math_escape>] [<file>] ...
 
 Arguments:
-   file                  file name
+file                  file name
 
 Options:
-   -h, --help            Show this help message and exit.
-   --completion {bash,zsh,fish}
-                         Output a shell completion script for the specified shell.
-   --output <output>     output file name, - means stdout
-   --syntax <syntax>     set syntax, auto means decided by extension
-   --theme <theme>       set theme, auto means first theme such as Abyss
-   --syntax-type {textmate,tree-sitter}
-                         syntax highlight type (default: tree-sitter)
-   --theme-type {textmate}
-                         color scheme type (default: textmate)
-   --extensions-dir <extensions_dir>
-                         directories for VSCode extensions and tree-sitter grammars/queries
-   --output-format {ansi,empty,latex,preamble.tex,test,tex,txt}
-                         output format (default: ansi)
-   --list {themes,syntaxes,extensions_dirs,colors,links}
-                         list all themes/syntaxes/... (default: themes)
-   --command-prefix <command_prefix>
-                         command prefix for TeX
-   --math-escape <math_escape>
-                         the scope to escape $math TeX code$ (default: comment)
+-h, --help            Show this help message and exit.
+--completion {bash,zsh,fish}
+Output a shell completion script for the specified shell.
+--output <output>     output file name, - means stdout
+--syntax <syntax>     set syntax, auto means decided by extension
+--theme <theme>       set theme, auto means first theme such as Abyss
+--syntax-type {textmate,tree-sitter}
+syntax highlight type (default: tree-sitter)
+--theme-type {textmate}
+color scheme type (default: textmate)
+--extensions-dir <extensions_dir>
+directories for VSCode extensions and tree-sitter grammars/queries
+--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}
+output format (default: ansi)
+--list {themes,syntaxes,extensions_dirs,colors,links}
+list all themes/syntaxes/... (default: themes)
+--command-prefix <command_prefix>
+command prefix for TeX
+--math-escape <math_escape>
+the scope to escape $math TeX code$ (default: comment)
 $ texcat lua/texcat.lua --output-format=latex --output=main.tex
 $ lualatex main.tex
 ```
