@@ -1,7 +1,7 @@
 ---some generic utilities for themes
 ---@module texcat.themes
 ---@copyright 2025
-local lfs = require 'lfs'
+local lfs = require 'texrocks.lfs'
 local M = {
     scope_link = {
         -- ignore punctuation, spell, _*
