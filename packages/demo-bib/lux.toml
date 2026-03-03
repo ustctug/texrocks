@@ -10,13 +10,13 @@ homepage = "https://texrocks.readthedocs.io/en/latest/topics/demo-bib.md.html"
 license = "GPL-3.0"
 
 [build_dependencies]
-lualatex = ">=0.3.12-1"
-citation-style-language = ">=0.8.2-1"
-beamer = ">=3.72-1"
-ctex = ">=2.5.10-1"
+lualatex = "0.3.12-1"
+citation-style-language = "0.8.2-1"
+beamer = "3.72-1"
+ctex = "2.5.10-1"
 
 [test_dependencies]
-lua-open = ">=0.3.6-1"
+lua-open = "0.3.6-1"
 
 [test]
 type = "command"

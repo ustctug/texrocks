@@ -15,15 +15,15 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-argparse = ">=0.7.1-1"
-lua-template = ">=1.0.0-1"
-currfile = ">=1.0-1"
-lualatex = ">=0.3.12-1"
-luatex = ">=0.3.12-1"
+argparse = "0.7.1-1"
+lua-template = "1.0.0-1"
+currfile = "1.0-1"
+lualatex = "0.3.12-1"
+luatex = "0.3.12-1"
 
 [test_dependencies]
-l3build = ">=2024.10.16-1"
-toml2lua = ">=3.0.0-1"
+l3build = "2024.10.16-1"
+toml2lua = "3.0.0-1"
 
 [run]
 type = "command"

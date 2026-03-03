@@ -15,8 +15,8 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-luarocks = ">=3.12.2-1"
-l3build = ">=2024.10.16-1"
+luarocks = "3.12.2-1"
+l3build = "2024.10.16-1"
 
 [run]
 command = "luarocks"
