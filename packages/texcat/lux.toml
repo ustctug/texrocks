@@ -23,12 +23,12 @@ ltreesitter = "0.1.0-1"
 nvim-textmate = "0.0.1-1"
 luafilesystem = "1.9.0-1"
 texrocks = "0.3.12-1"
+vscode-extensions = "1.102.3-1"
 
 [test_dependencies]
 fancyvrb = "4.6-1"
 lualatex = "0.3.12-1"
 graphics-cfg = "0.0.1-1"
-vscode-extensions = "1.102.3-1"
 l3build = "2024.10.16-1"
 toml2lua = "3.0.0-1"
 tree-sitter-lua = "0.0.36-1"
