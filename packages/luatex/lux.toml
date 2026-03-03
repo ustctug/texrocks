@@ -15,16 +15,16 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = "0.3.12-1"
+texrocks = ">=0.3.12"
 amsfonts = "3.04-1"
 
 [build_dependencies]
-texrocks = "0.3.12-1"
+texrocks = ">=0.3.12"
 amsfonts = "3.04-1"
 tex-ini-files = "2025.02.09-1"
-unicode-data = "1.18-1"
+unicode-data = ">=1.18"
 # etex depends on knuth-lib
-etex = "2.1-1"
+etex = ">=2.1"
 
 [run]
 command = "luatex"

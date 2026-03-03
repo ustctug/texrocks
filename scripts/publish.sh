@@ -10,6 +10,7 @@ for dir in ./*/; do
   fi
   cd "$dir"
   lx generate-rockspec
+  perl -pi -e's/>=/ >= /' ./*.rockspec
   luarocks upload --force ./*.rockspec
   cd ..
 done
