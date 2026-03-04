@@ -7,6 +7,7 @@ local M = {
     TMLanguage = {}
 }
 
+---@diagnostic disable-next-line: undefined-doc-name
 ---@type TMLanguage
 
 ---@param tmlanguage table?
@@ -14,7 +15,7 @@ local M = {
 function M.TMLanguage:new(tmlanguage)
     tmlanguage = tmlanguage or {}
     tmlanguage.name = tmlanguage.name or 'lua'
-    tmlanguage.id = tmlanguage.id or textmate.highlight_load_syntax(tmlanguage.name)
+    tmlanguage.id = tmlanguage.id or textmate.highlight_load_language(tmlanguage.name)
     setmetatable(tmlanguage, {
         __index = self
     })
@@ -27,7 +28,7 @@ setmetatable(M.TMLanguage, {
 
 ---list all languages
 ---@return string information
-function M.TMLanguage.list()
+function M.TMLanguage:list()
     return T.list(textmate.highlight_languages())
 end
 
@@ -39,7 +40,7 @@ end
 function M.TMLanguage:capture(text, theme)
     local captures = {}
     textmate.highlight_set_theme(theme.id)
-    textmate.highlight_set_syntax(self.id)
+    textmate.highlight_set_language(self.id)
     local results = textmate.highlight_line(text, theme.id, self.id, 0)
     for _, result in ipairs(results) do
         local idx, len, _, _, _, scope = result[1] + 1, result[2], result[3], result[4], result[5], result

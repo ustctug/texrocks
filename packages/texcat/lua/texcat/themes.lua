@@ -12,6 +12,11 @@ local M = {
         constant = 'type',
         operator = 'control',
         constructor = 'function',
+        ['punctuation.definition.comment'] = 'comment',
+        ['meta.function'] = 'function',
+        ['entity.name.function'] = 'function',
+        ['support.function'] = 'function',
+        ['punctuation.definition.parameters'] = 'control',
     }
 }
 

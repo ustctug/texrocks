@@ -3,6 +3,7 @@
 ---@copyright 2025
 ---@diagnostic disable: undefined-global
 -- luacheck: ignore 111 113
+local split = require 'vim.shared'.split
 local template = require 'template'
 local warna = require 'warna'
 warna.options.level = 3
@@ -57,26 +58,32 @@ end
 ---@param str string
 ---@return string[] tokens
 function M.split(str)
-    local tokens = {}
-    local token
-    for i = 1, #str do
-        local char = str:sub(i, i)
-        if char == "\n" then
-            if token then
-                table.insert(tokens, token)
-                token = nil
-            end
-            table.insert(tokens, "\n")
-        elseif token then
-            token = token .. char
-        else
-            token = char
-        end
+    local tokens = split(str, "\n")
+    for i = 1, #tokens - 1 do
+        tokens[i] = tokens[i] .. "\n"
     end
-    if token then
-        table.insert(tokens, token)
+    if tokens[#tokens] == "" then
+        tokens[#tokens] = nil
     end
     return tokens
+end
+
+---add child scopes to color map
+---@param color_map color_map
+---@param captures capture[]
+function M.add_scope(color_map, captures)
+    for _, capture in ipairs(captures) do
+        local scope = capture.scope
+        while color_map[scope] == nil do
+            -- get parent scope: punctuation.bracket -> punctuation
+            scope = scope:match('(.*)%.[^.]+$')
+            if scope == nil then
+                scope = 'source'
+            end
+        end
+        color_map[capture.scope] = color_map[scope]
+    end
+    return color_map
 end
 
 ---get highlights
@@ -142,6 +149,7 @@ function M.escape(text, prefix, math_escape)
     return table.concat(texts, '$')
 end
 
+---@diagnostic disable-next-line: undefined-doc-name
 ---@type Renderer
 
 ---@param renderer table?
@@ -170,14 +178,16 @@ function M.Renderer:get_opts(text, format, opts)
     if format:match 'tex' and opts.prefix == nil then
         opts.prefix = "PY" .. self.theme.name:gsub(" ", "")
     end
+    local captures = self.syntax:capture(text, self.theme)
     opts.color_map = opts.color_map or self.theme.get_full_color_map()
-    opts.hls = opts.hls or M.get_hls(text, self.syntax:capture(text, self.theme))
+    opts.color_map = M.add_scope(opts.color_map, captures)
+    opts.hls = opts.hls or M.get_hls(text, captures)
     opts.ipairs = ipairs
     opts.table = table
     opts.warna = warna
     opts.escape = M.escape
-    opts.preamble = M.get_path('texcat/main.preamble.tex')
-    opts.tex = M.get_path('texcat/main.tex')
+    opts.preamble = M.get_path('templates/main.preamble.tex')
+    opts.tex = M.get_path('templates/main.tex')
     opts.scopes = T.get_sorted_keys(opts.color_map)
     return opts
 end

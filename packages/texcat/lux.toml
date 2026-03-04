@@ -1,5 +1,5 @@
 package = "texcat"
-version = "0.3.12"
+version = "0.3.13"
 lua = ">=5.1"
 
 [description]
@@ -22,7 +22,7 @@ warna = ">=0.3.5"
 ltreesitter = ">=0.1.0"
 nvim-textmate = ">=0.0.1"
 luafilesystem = ">=1.9.0"
-texrocks = ">=0.3.12"
+texrocks = ">=0.3.13"
 vscode-extensions = ">=1.102.3"
 
 [test_dependencies]

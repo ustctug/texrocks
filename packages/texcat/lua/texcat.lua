@@ -3,12 +3,9 @@
 ---@copyright 2025
 ---@diagnostic disable: undefined-global
 -- luacheck: ignore 111 113
-local lfs = require 'lfs'
+local lfs = require 'texrocks.lfs'
 local argparse = require 'argparse'
 local T = require 'texcat.themes'
-local TMTheme = require 'texcat.themes.tmtheme'.TMTheme
-local TMLanguage = require 'texcat.syntaxes.tmlanguage'.TMLanguage
-local Treesitter = require 'texcat.syntaxes.treesitter'.Treesitter
 local R = require 'texcat.renderer'
 local Renderer = require 'texcat.renderer'.Renderer
 local M = {
@@ -81,25 +78,25 @@ end
 ---@param theme_names string[] theme names
 function M.get_list(list_type, theme_type, syntax_type, theme_names, extensions_dir)
     local class
-    local theme
-    if theme_type == 'textmate' then
-        class = TMTheme
-    end
-    theme = class { extensions_dir = extensions_dir }
     local syntax
     if syntax_type == 'textmate' then
-        class = Treesitter
+        class = require 'texcat.syntaxes.tmlanguage'.TMLanguage
     elseif syntax_type == 'tree-sitter' then
-        class = TMLanguage
+        class = require 'texcat.syntaxes.treesitter'.Treesitter
     end
     syntax = class { id = 0, extensions_dir = extensions_dir }
+    local theme
+    if theme_type == 'textmate' then
+        class = require 'texcat.themes.tmtheme'.TMTheme
+    end
+    theme = class { extensions_dir = extensions_dir }
     local list
     if list_type == 'extensions_dirs' then
         list = table.concat(extensions_dir, "\n")
     elseif list_type == 'themes' then
-        list = theme.list()
+        list = theme:list()
     elseif list_type == 'syntaxes' then
-        list = syntax.list()
+        list = syntax:list()
     elseif list_type == 'links' then
         list = T.list_links()
     elseif list_type == 'colors' then
@@ -108,7 +105,7 @@ function M.get_list(list_type, theme_type, syntax_type, theme_names, extensions_
             theme = M.themes[theme_name]
             if theme == nil then
                 if theme_type == 'textmate' then
-                    theme = TMTheme { extensions_dir = extensions_dir, name = theme_name }
+                    theme = class { extensions_dir = extensions_dir, name = theme_name }
                     M.themes[theme_name] = theme
                 else
                     return ''
@@ -157,7 +154,7 @@ function M.render(cfg)
     -- theme
     local class
     if cfg.theme_type == 'textmate' then
-        class = TMTheme
+        class = require 'texcat.themes.tmtheme'.TMTheme
     end
     cfg.theme = cfg.theme or 'auto'
     -- no theme auto
@@ -182,9 +179,9 @@ function M.render(cfg)
 
     -- syntax
     if cfg.syntax_type == 'textmate' then
-        class = TMLanguage
+        class = require 'texcat.syntaxes.tmlanguage'.TMLanguage
     elseif cfg.syntax_type == 'tree-sitter' then
-        class = Treesitter
+        class = require 'texcat.syntaxes.treesitter'.Treesitter
     end
     cfg.syntax = cfg.syntax or 'auto'
     -- no syntax auto
@@ -244,11 +241,7 @@ function M.output(out, filename)
     else
         local dir = filename:match('(.*)/[^/]+$')
         if dir then
-            if lfs.mkdirp then
-                lfs.mkdirp(dir)
-            else
-                lfs.mkdir(dir)
-            end
+            lfs.mkdirp(dir)
         end
         local f = io.open(filename, 'w')
         if f then

@@ -148,6 +148,7 @@ function M.cut_captures(captures, len)
     return ranges
 end
 
+---@diagnostic disable-next-line: undefined-doc-name
 ---@type Treesitter
 
 ---@param treesitter table?
@@ -176,10 +177,10 @@ function M.Treesitter:capture(text, theme)
     local tree = self.parser:parse_string(text)
     local node = tree:root()
     local captures = {}
-    for capture, name in self.query:capture(node) do
+    for capture, scope in self.query:capture(node) do
         -- lua index start from 1
         table.insert(captures,
-            { start_index = capture:start_byte() + 1, end_index = capture:end_byte(), scope = name })
+            { start_index = capture:start_byte() + 1, end_index = capture:end_byte(), scope = scope })
     end
     local color_map = theme.get_full_color_map()
     color_map = M.add_scope(color_map, captures)

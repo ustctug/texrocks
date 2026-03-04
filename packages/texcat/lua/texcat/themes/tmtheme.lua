@@ -15,6 +15,7 @@ function M.load_extensions_dir(extensions_dir)
     end
 end
 
+---@diagnostic disable-next-line: undefined-doc-name
 ---@type TMTheme
 
 ---@param tmtheme table?
@@ -66,7 +67,7 @@ end
 
 ---list all themes
 ---@return string information
-function M.TMTheme.list()
+function M.TMTheme:list()
     return T.list(textmate.highlight_themes())
 end
 
