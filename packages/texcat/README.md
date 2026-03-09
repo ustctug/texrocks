@@ -21,26 +21,26 @@ It supports color themes:
 ```sh
 $ hyperfine -Nw10 'texcat test.lua' 'texcat --syntax-type=textmate test.lua' 'pygmentize test.lua' 'bat test.lua'
 Benchmark 1: texcat test.lua
-  Time (mean ± σ):      56.8 ms ±   1.9 ms    [User: 49.8 ms, System: 6.3 ms]
-  Range (min … max):    54.4 ms …  64.2 ms    50 runs
+Time (mean ± σ):      56.8 ms ±   1.9 ms    [User: 49.8 ms, System: 6.3 ms]
+Range (min … max):    54.4 ms …  64.2 ms    50 runs
 
 Benchmark 2: texcat --syntax-type=textmate test.lua
-  Time (mean ± σ):      73.1 ms ±  11.2 ms    [User: 70.7 ms, System: 7.4 ms]
-  Range (min … max):    62.0 ms …  89.7 ms    47 runs
+Time (mean ± σ):      73.1 ms ±  11.2 ms    [User: 70.7 ms, System: 7.4 ms]
+Range (min … max):    62.0 ms …  89.7 ms    47 runs
 
 Benchmark 3: pygmentize test.lua
-  Time (mean ± σ):     154.4 ms ±  19.9 ms    [User: 140.0 ms, System: 12.8 ms]
-  Range (min … max):   137.4 ms … 217.3 ms    21 runs
+Time (mean ± σ):     154.4 ms ±  19.9 ms    [User: 140.0 ms, System: 12.8 ms]
+Range (min … max):   137.4 ms … 217.3 ms    21 runs
 
 Benchmark 4: bat test.lua
-  Time (mean ± σ):       8.0 ms ±   0.5 ms    [User: 7.4 ms, System: 4.2 ms]
-  Range (min … max):     7.0 ms …  10.0 ms    429 runs
+Time (mean ± σ):       8.0 ms ±   0.5 ms    [User: 7.4 ms, System: 4.2 ms]
+Range (min … max):     7.0 ms …  10.0 ms    429 runs
 
 Summary
-  bat test.lua ran
-    7.14 ± 0.50 times faster than texcat test.lua
-    9.18 ± 1.52 times faster than texcat --syntax-type=textmate test.lua
-   19.40 ± 2.77 times faster than pygmentize test.lua
+bat test.lua ran
+7.14 ± 0.50 times faster than texcat test.lua
+9.18 ± 1.52 times faster than texcat --syntax-type=textmate test.lua
+19.40 ± 2.77 times faster than pygmentize test.lua
 ```
 
 ### LaTeX output
@@ -49,21 +49,21 @@ Summary
 $ hyperfine -Nw10 'texcat --output-format=latex test.lua' 'texcat --output-format=latex --syntax-type=textmate test.lua' 'pygmentize -f latex -O full=True test.lua'
 
 Benchmark 1: texcat --output-format=latex test.lua
-  Time (mean ± σ):      56.3 ms ±   1.2 ms    [User: 49.6 ms, System: 6.1 ms]
-  Range (min … max):    54.9 ms …  60.9 ms    53 runs
+Time (mean ± σ):      56.3 ms ±   1.2 ms    [User: 49.6 ms, System: 6.1 ms]
+Range (min … max):    54.9 ms …  60.9 ms    53 runs
 
 Benchmark 2: texcat --output-format=latex --syntax-type=textmate test.lua
-  Time (mean ± σ):      63.8 ms ±   0.8 ms    [User: 61.5 ms, System: 7.0 ms]
-  Range (min … max):    62.5 ms …  66.5 ms    45 runs
+Time (mean ± σ):      63.8 ms ±   0.8 ms    [User: 61.5 ms, System: 7.0 ms]
+Range (min … max):    62.5 ms …  66.5 ms    45 runs
 
 Benchmark 3: pygmentize -f latex -O full=True test.lua
-  Time (mean ± σ):     110.7 ms ±   1.2 ms    [User: 99.2 ms, System: 10.7 ms]
-  Range (min … max):   109.1 ms … 114.3 ms    27 runs
+Time (mean ± σ):     110.7 ms ±   1.2 ms    [User: 99.2 ms, System: 10.7 ms]
+Range (min … max):   109.1 ms … 114.3 ms    27 runs
 
 Summary
-  texcat --output-format=latex test.lua ran
-    1.13 ± 0.03 times faster than texcat --output-format=latex --syntax-type=textmate test.lua
-    1.97 ± 0.05 times faster than pygmentize -f latex -O full=True test.lua
+texcat --output-format=latex test.lua ran
+1.13 ± 0.03 times faster than texcat --output-format=latex --syntax-type=textmate test.lua
+1.97 ± 0.05 times faster than pygmentize -f latex -O full=True test.lua
 ```
 
 ## Dependencies
@@ -130,39 +130,39 @@ extra_servers = [
 ```sh
 $ texcat --help
 Usage: /home/wzy/Desktop/texrocks/packages/texcat/bin/texcat [-h]
-       [--completion {bash,zsh,fish}] [--output <output>]
-       [--syntax <syntax>] [--theme <theme>]
-       [--syntax-type {textmate,tree-sitter}]
-       [--theme-type {textmate}] [--extensions-dir <extensions_dir>]
-       [--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}]
-       [--list {themes,syntaxes,extensions_dirs,colors,links}]
-       [--command-prefix <command_prefix>]
-       [--math-escape <math_escape>] [<file>] ...
+[--completion {bash,zsh,fish}] [--output <output>]
+[--syntax <syntax>] [--theme <theme>]
+[--syntax-type {textmate,tree-sitter}]
+[--theme-type {textmate}] [--extensions-dir <extensions_dir>]
+[--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}]
+[--list {themes,syntaxes,extensions_dirs,colors,links}]
+[--command-prefix <command_prefix>]
+[--math-escape <math_escape>] [<file>] ...
 
 Arguments:
-   file                  file name
+file                  file name
 
 Options:
-   -h, --help            Show this help message and exit.
-   --completion {bash,zsh,fish}
-                         Output a shell completion script for the specified shell.
-   --output <output>     output file name, - means stdout
-   --syntax <syntax>     set syntax, auto means decided by extension
-   --theme <theme>       set theme, auto means first theme such as Abyss
-   --syntax-type {textmate,tree-sitter}
-                         syntax highlight type (default: tree-sitter)
-   --theme-type {textmate}
-                         color scheme type (default: textmate)
-   --extensions-dir <extensions_dir>
-                         directories for VSCode extensions and tree-sitter grammars/queries
-   --output-format {ansi,empty,latex,preamble.tex,test,tex,txt}
-                         output format (default: ansi)
-   --list {themes,syntaxes,extensions_dirs,colors,links}
-                         list all themes/syntaxes/... (default: themes)
-   --command-prefix <command_prefix>
-                         command prefix for TeX
-   --math-escape <math_escape>
-                         the scope to escape $math TeX code$ (default: comment)
+-h, --help            Show this help message and exit.
+--completion {bash,zsh,fish}
+Output a shell completion script for the specified shell.
+--output <output>     output file name, - means stdout
+--syntax <syntax>     set syntax, auto means decided by extension
+--theme <theme>       set theme, auto means first theme such as Abyss
+--syntax-type {textmate,tree-sitter}
+syntax highlight type (default: tree-sitter)
+--theme-type {textmate}
+color scheme type (default: textmate)
+--extensions-dir <extensions_dir>
+directories for VSCode extensions and tree-sitter grammars/queries
+--output-format {ansi,empty,latex,preamble.tex,test,tex,txt}
+output format (default: ansi)
+--list {themes,syntaxes,extensions_dirs,colors,links}
+list all themes/syntaxes/... (default: themes)
+--command-prefix <command_prefix>
+command prefix for TeX
+--math-escape <math_escape>
+the scope to escape $math TeX code$ (default: comment)
 $ texcat lua/texcat.lua --output-format=latex --output=main.tex
 $ lualatex main.tex
 ```
