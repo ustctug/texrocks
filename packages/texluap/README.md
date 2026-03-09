@@ -11,17 +11,17 @@ Usage: tlua [-h] [-e STMT] [-l NAME] [-p] [-v] [-i] [<SCRIPT>] ...
 A Lua command prompt with pretty-printing and auto-completion.
 
 Arguments:
-   SCRIPT                A Lua script to be executed.  Any arguments
-                         specified after the script name, are passed to
-                         the script.
+SCRIPT                A Lua script to be executed.  Any arguments
+specified after the script name, are passed to
+the script.
 
 Options:
-   -h                    Show this help message and exit.
-   -e STMT               Execute string 'STMT'.
-   -l NAME               Require library 'NAME'.
-   -p                    Force plain, uncolored output.
-   -v                    Print version information.
-   -i                    Enter interactive mode.
+-h                    Show this help message and exit.
+-e STMT               Execute string 'STMT'.
+-l NAME               Require library 'NAME'.
+-p                    Force plain, uncolored output.
+-v                    Print version information.
+-i                    Enter interactive mode.
 ```
 
 It is similar to standard lua:
@@ -31,13 +31,13 @@ $ lua -h
 /usr/bin/lua: unrecognized option '-h'
 usage: /usr/bin/lua [options] [script [args]]
 Available options are:
-  -e stat  execute string 'stat'
-  -i       enter interactive mode after executing 'script'
-  -l name  require library 'name' into global 'name'
-  -v       show version information
-  -E       ignore environment variables
-  --       stop handling options
-  -        stop handling options and execute stdin
+-e stat  execute string 'stat'
+-i       enter interactive mode after executing 'script'
+-l name  require library 'name' into global 'name'
+-v       show version information
+-E       ignore environment variables
+--       stop handling options
+-        stop handling options and execute stdin
 ```
 
 The name of tlua comes from [nlua](https://github.com/mfussenegger/nlua).
