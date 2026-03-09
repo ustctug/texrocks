@@ -4,13 +4,13 @@
 
 with pkgs;
 mkShell {
-  name = "texrocks";
+  name = "epstopdf";
   buildInputs = [
     # how lx find lua
     pkg-config
     lux-cli
 
-    rename
+    ghostscript
 
     (lua5_3.withPackages (
       p: with p; [
