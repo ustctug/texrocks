@@ -8,7 +8,7 @@ A reimplementation of <https://github.com/MartinScharrer/texdef/>.
 $ lx add -b texdef
 $ texdef TeX
 This is LuaHBTeX, Version 1.23.3 (TeX Live 2026/dev)
- system commands enabled.
+system commands enabled.
 
 \TeX -> T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX
 $ lx remove -b texdef
