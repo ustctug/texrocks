@@ -23,6 +23,10 @@ jobs:
         with:
           token: ${{secrets.GH_TOKEN}}
           ref: gh-pages
+      - uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GH_TOKEN}}
+          path: texrocks
       - uses: actions/setup-go@v5
       - uses: ruby/setup-ruby@v1
         with:
@@ -40,9 +44,9 @@ jobs:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CGO_CFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
-        working-directory: /home/runner/work/texrocks/texrocks
         run: |
-          scripts/deploy.sh
+          texrocks/scripts/deploy.sh
+          rm -r texrocks
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: gh-pages

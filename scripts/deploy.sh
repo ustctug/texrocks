@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+set -e
+cd "$(dirname "$(dirname "$(readlink -f "$0")")")"
+
 luarocks config variables.ZIP rpzip
 # https://github.com/luarocks/luarocks/issues/1817
 echo local_by_default = true >>~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
