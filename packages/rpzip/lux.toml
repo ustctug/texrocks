@@ -16,6 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = ">=0.3.12"
+luafilesystem = ">=0.0.1"
 zipwriter = ">=0.0.1"
 lua-zlib = ">=0.0.1"
 # for Lua 5.1
