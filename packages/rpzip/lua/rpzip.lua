@@ -35,12 +35,12 @@ local M = {
 function M.is_executable(path)
     local attr = lfs.attributes(path) or {}
     local perms = attr.permissions or ""
-    if #perms < 10 then
+    if #perms < 9 then
         return false
     end
-    return perms:sub(4, 4) == "x" or
-        perms:sub(7, 7) == "x" or
-        perms:sub(10, 10) == "x"
+    return perms:sub(3, 3) == "x" or
+        perms:sub(6, 6) == "x" or
+        perms:sub(9, 9) == "x"
 end
 
 ---@param entry table?
