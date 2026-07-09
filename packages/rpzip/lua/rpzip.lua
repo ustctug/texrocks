@@ -142,13 +142,17 @@ end
 
 ---@param args string[]
 function M.main(args)
-    local filename = args[1]
+    local filename
     local entries = {}
-    for i, path in ipairs(args) do
-        if i > 1 and path:sub(1, 1) ~= "-" then
-            M.call(path, function(entry)
-                table.insert(entries, entry)
-            end)
+    for _, path in ipairs(args) do
+        if path:sub(1, 1) ~= "-" then
+            if filename == nil then
+                filename = path
+            else
+                M.call(path, function(entry)
+                    table.insert(entries, entry)
+                end)
+            end
         end
     end
     local err = M.zip_entries(filename, entries)
