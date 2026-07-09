@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-cd "$(dirname "$(dirname "$(readlink -f "$0")")")"
+WD="$(dirname "$(dirname "$(readlink -f "$0")")")"
 
 luarocks config variables.ZIP rpzip
 # https://github.com/luarocks/luarocks/issues/1817
@@ -32,5 +32,5 @@ luarocks list --porcelain |
 rename -f s/linux-x86_64/all/ texrocks-*.rock
 luarocks-admin make-manifest .
 zip manifest-5.3.zip manifest-5.3
-scripts/process-index.html.pl index.html
+"$WD/scripts/process-index.html.pl" index.html
 rm -f ./*.rockspec manifest{,-5.{1..5}}
