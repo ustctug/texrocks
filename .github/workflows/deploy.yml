@@ -36,8 +36,7 @@ jobs:
           gem install rake
           sudo apt-get -y update
           sudo apt-get -y install rename liblua5.3-dev
-          # https://github.com/drivendataorg/repro-zipfile/pull/23
-          pip install git+https://github.com/Freed-Wu/repro-zipfile@mode rpzip
+          luarocks install rpzip
       - env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CGO_CFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
