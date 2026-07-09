@@ -1,0 +1,34 @@
+package = "rpzip"
+version = "0.0.1"
+lua = ">=5.1"
+
+[description]
+summary = "Creating reproducible/deterministic ZIP archives"
+detailed = "Refer https://github.com/drivendataorg/repro-zipfile"
+maintainer = "Wu"
+labels = ["zip"]
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/rpzip.md.html"
+license = "GPL-3.0"
+
+[source]
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+
+[dependencies]
+texrocks = ">=0.3.12"
+zipwriter = ">=0.0.1"
+lua-zlib = ">=0.0.1"
+# for Lua 5.1
+# luabitop = ">=0.0.1"
+# struct = ">=0.0.1"
+
+[run]
+command = "rpzip"
+
+[test]
+type = "command"
+command = "rpzip"
+flags = ["-r", "lua.zip", "lua"]
+
+[build]
+type = "builtin"
