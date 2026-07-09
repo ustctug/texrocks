@@ -40,6 +40,7 @@ jobs:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CGO_CFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
+        working-directory: /home/runner/work/texrocks/texrocks
         run: |
           scripts/deploy.sh
       - uses: stefanzweifel/git-auto-commit-action@v5
