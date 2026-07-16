@@ -27,31 +27,31 @@ jobs:
     steps:
       - name: Install MSVC Compiler Toolchain
         uses: ilammy/msvc-dev-cmd@v1
-      - uses: xmake-io/github-action-setup-xmake@v1
       - uses: leafo/gh-actions-lua@v12
         with:
-          luaVersion: "5.1"
+          luaVersion: "5.3"
       - uses: luarocks/gh-actions-luarocks@v6
       - name: Install Dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install librime
+          brew install autoconf automake libtool
       - name: Install Dependencies
+        # CMake Error:
+        # Could NOT find Lua (missing: LUA_LIBRARIES LUA_INCLUDE_DIR)
         run: |
           luarocks config variables.ZIP rpzip
           luarocks install rpzip
           luarocks install luahbtex \
             --server=https://ustctug.github.io/texrocks
-          luarocks install nvim-textmate \
-            --server=https://ustctug.github.io/texrocks
+          # luarocks install nvim-textmate \
+          #   --server=https://ustctug.github.io/texrocks
           luarocks install ltreesitter \
             --server=https://ustctug.github.io/texrocks
-          luarocks install lua-template \
-            --server=https://ustctug.github.io/texrocks
+          luarocks install lua-template
           luarocks pack lua-zlib
           luarocks pack luafilesystem
           luarocks pack luahbtex
-          luarocks pack nvim-textmate
+          # luarocks pack nvim-textmate
           luarocks pack ltreesitter
           luarocks pack lua-template
       - uses: actions/upload-artifact@v4
