@@ -24,12 +24,11 @@ luarocks install markdown2tex
 luarocks install babel-base
 luarocks install hypdoc
 luarocks install ydoc
-rm -f ./*.rock
 luarocks list --porcelain |
   sed 's/\(\S\+\).*/luarocks pack \1 \&\& luarocks download --rockspec \1/' |
   sh
 # https://github.com/luarocks/luarocks/issues/1817
-rename -f s/linux-x86_64/all/ texrocks-*.rock
+rename -f s/linux-x86_64/all/ {texrocks,texdef}-*.rock
 luarocks-admin make-manifest .
 zip manifest-5.3.zip manifest-5.3
 "$WD/scripts/process-index.html.pl" index.html
