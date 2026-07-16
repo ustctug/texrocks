@@ -95,6 +95,7 @@ jobs:
           CGO_CFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
         run: |
+          rename -f s/all/macosx-aarch64/ luahbtex-*.rock
           texrocks/scripts/deploy.sh
           rm -r texrocks
       - uses: stefanzweifel/git-auto-commit-action@v5
