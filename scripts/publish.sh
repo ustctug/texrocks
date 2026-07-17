@@ -4,7 +4,7 @@ cd "$(dirname "$(dirname "$(readlink -f "$0")")")"
 cd packages
 
 dirs=("$1")
-if (( ${#dirs} == 0 )); then
+if ((${#dirs} == 0)); then
   dirs=(./*/)
 fi
 
@@ -19,4 +19,4 @@ for dir in "${dirs[@]}"; do
   luarocks upload --force ./*.rockspec
   cd ..
 done
-rm -f ./*/*.rock{,spec}
+exec scripts/upload.sh ./*/*.rock

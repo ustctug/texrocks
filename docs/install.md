@@ -49,49 +49,11 @@ nix-env -iA nixos.lux-cli
 nix-env -iA nur.repos.Freed-Wu.luahbtex
 ```
 
-**Remember to check the version** of `lux-cli`!
-
-```sh
-lx --version
-```
-
 ## Configure
 
 `~/.config/lux/config.toml`:
 
 ```toml
-extra_servers = [
-  # Add our server to install compiled packages without compiling by yourself.
-  "https://ustctug.github.io/texrocks/",
-]
 # luahbtex uses lua 5.3.
 lua_version = "5.3"
 ```
-
-For some regions like China, access github is slow. You can download recent
-[github action](https://github.com/ustctug/texrocks/actions/)
-`pages build and deployment`'s artifact `github-pages`. Then extract it:
-
-```sh
-unzip github-pages.zip
-tar vxaf artifact.tar
-# you can delete them
-rm artifact.tar github-pages.zip
-```
-
-start a server:
-
-```sh
-python -m http.server
-```
-
-Open <http://127.0.0.1:8000> to check it. Then edit your
-`~/.config/lux/config.toml`:
-
-```toml
-extra_servers = [
-  "http://127.0.0.1:8000",
-]
-```
-
-It will be fast beyond your imagination.
