@@ -30,6 +30,7 @@ luarocks list --porcelain |
 # https://github.com/luarocks/luarocks/issues/1817
 rename -f s/linux-x86_64/all/ {texrocks,texdef}-*.rock
 rename -f s/all/linux-x86_64/ luahbtex-*.rock
+"$WD/scripts/upload.sh" ./*.rockspec
 luarocks-admin make-manifest .
 zip manifest-5.3.zip manifest-5.3
 "$WD/scripts/process-index.html.pl" index.html

@@ -94,6 +94,7 @@ jobs:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CGO_CFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
+          LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
         run: |
           rename -f s/all/macosx-aarch64/ luahbtex-*.rock
           texrocks/scripts/deploy.sh
