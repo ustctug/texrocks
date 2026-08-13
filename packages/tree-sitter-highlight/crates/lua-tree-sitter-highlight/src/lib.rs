@@ -79,13 +79,13 @@ fn search_parsers(lua: &Lua, dirs: Vec<String>) -> Result<Table> {
         let queries_root = PathBuf::from(dir).join("queries");
         for (lang, entry) in info.iter_mut() {
             let lang_queries = queries_root.join(lang);
-            if let OK(scm) = read_scm(&lang_queries.join("highlights.scm")) {
+            if let Ok(scm) = read_scm(&lang_queries.join("highlights.scm")) {
                 entry.highlights = scm
             }
-            if let OK(scm) = read_scm(&lang_queries.join("injections.scm")) {
+            if let Ok(scm) = read_scm(&lang_queries.join("injections.scm")) {
                 entry.injections = scm
             }
-            if let OK(scm) = read_scm(&lang_queries.join("locals.scm")) {
+            if let Ok(scm) = read_scm(&lang_queries.join("locals.scm")) {
                 entry.locals = scm
             }
         }
