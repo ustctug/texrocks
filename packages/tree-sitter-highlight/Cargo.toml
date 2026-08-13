@@ -28,7 +28,7 @@ tree-sitter-loader = "0.26.12"
 
 ansi_colours = "1.2.3"
 anstyle = "1.0.14"
-mlua = { version = "0.10", features = ["module"] }
+mlua = { version = "0.11", features = ["module"] }
 regex = "1.12.3"
 serde_json = { version = "1.0.150", features = ["preserve_order"] }
 streaming-iterator = "0.1.9"
