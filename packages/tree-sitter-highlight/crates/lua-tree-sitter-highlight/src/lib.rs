@@ -2,18 +2,21 @@
 //!
 //! Exposes two Lua functions:
 //!
-//! * `search_parsers({"/a/path", "/b/path"})` — scans each directory for `parser/*.so` and
-//!   `queries/*/`, returning a `{ lang = { so, queries_dir } }` table suitable for `highlight`'s
-//!   `parsers` argument.
+//! * `search_parsers({"/a/path", "/b/path"})` — scans each directory for `parser/<lang>.so` and
+//!   `queries/<lang>/`, returning a `{ lang = { parser, highlights, injections, locals } }` table
+//!   suitable for `highlight`'s `parsers` argument. `parser` is the full path to the `.so`;
+//!   `highlights`/`injections`/`locals` are the full text of the matching `queries/<lang>/*.scm`
+//!   files (empty when a file is absent).
 //! * `highlight { source, language, parsers, theme, format, layout, style, prefix, math_escape }`
-//!   — performs syntax highlighting and returns the rendered document as a string.
+//!   — performs syntax highlighting and returns the rendered document as a string. Its `parsers`
+//!   argument uses the same `{ lang = { parser, highlights, injections, locals } }` shape.
 //!
 //! See `render.rs` for the copied-from-`cli` rendering helpers and the
 //! `attribute_callback` -> precomputed attribute-table design, and `loader.rs` for how the
 //! `parsers` table becomes a registry of [`tree_sitter_highlight::HighlightConfiguration`]s.
 
 use std::collections::{HashMap, HashSet};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use anstyle::Style as AnstyleStyle;
 use mlua::{Error, Lua, Result, Table, Value};
@@ -26,41 +29,89 @@ use tree_sitter_highlight::{
 pub mod loader;
 pub mod render;
 
-use loader::{Error as LoaderError, build_configs, resolve_math_escape};
+use loader::{Error as LoaderError, ParserInfo, build_configs, resolve_math_escape};
 use render::{
     Layout, OutputFormat, RenderTheme, StylingMode, build_attribute_strings, parse_theme,
     render_highlighted, write_html, write_tex_document, write_tex_linenumbers, write_tex_preamble,
 };
 
 /// Scan each directory for `parser/<lang>.so` and `queries/<lang>/`, returning a
-/// `{ lang = { so, queries_dir } }` table.
-fn search_parsers(dirs: Vec<String>) -> Result<HashMap<String, Vec<String>>> {
-    let mut result: HashMap<String, Vec<String>> = HashMap::new();
-    for dir in dirs {
-        let parser_dir = PathBuf::from(&dir).join("parser");
+/// `{ lang = { parser, highlights, injections, locals } }` Lua table.
+///
+/// Two passes are made over the supplied directories:
+///
+/// 1. For each `parser/<lang>.so` found, the `lang` key is created and its `parser` field set to
+///    the `.so`'s full path.
+/// 2. For each `lang` in the result, the three `queries/<lang>/{highlights,injections,locals}.scm`
+///    files are read (if present) and their full contents stored; missing files yield empty
+///    strings.
+fn search_parsers(lua: &Lua, dirs: Vec<String>) -> Result<Table> {
+    let mut info: HashMap<String, ParserInfo> = HashMap::new();
+
+    // Pass 1: discover parser .so files and register their full paths.
+    for dir in &dirs {
+        let parser_dir = PathBuf::from(dir).join("parser");
         if !parser_dir.is_dir() {
             continue;
         }
-        let queries_root = PathBuf::from(&dir).join("queries");
-        let Ok(entries) = std::fs::read_dir(&parser_dir) else {
-            continue;
+        let entries = match std::fs::read_dir(&parser_dir) {
+            Ok(e) => e,
+            Err(_) => continue,
         };
         for entry in entries.flatten() {
-            let file_name = entry.file_name();
-            let name = file_name.to_string_lossy();
+            let name = entry.file_name().to_string_lossy().into_owned();
             if let Some(lang) = name.strip_suffix(".so") {
-                let queries_dir = queries_root.join(lang);
-                result.insert(
+                info.insert(
                     lang.to_string(),
-                    vec![
-                        entry.path().to_string_lossy().to_string(),
-                        queries_dir.to_string_lossy().to_string(),
-                    ],
+                    ParserInfo {
+                        parser: entry.path().to_string_lossy().into_owned(),
+                        highlights: String::new(),
+                        injections: String::new(),
+                        locals: String::new(),
+                    },
                 );
             }
         }
     }
-    Ok(result)
+
+    // Pass 2: read the matching query files for each discovered language.
+    for dir in &dirs {
+        let queries_root = PathBuf::from(dir).join("queries");
+        for (lang, entry) in info.iter_mut() {
+            let lang_queries = queries_root.join(lang);
+            entry.highlights = read_scm(&lang_queries.join("highlights.scm"))?;
+            entry.injections = read_scm(&lang_queries.join("injections.scm"))?;
+            entry.locals = read_scm(&lang_queries.join("locals.scm"))?;
+        }
+    }
+
+    Ok(parser_info_to_table(lua, &info)?)
+}
+
+/// Read a `*.scm` query file to a string. A missing file is treated as an empty query (so a
+/// language that ships only `highlights.scm`, for example, still works). Read failures surface as a
+/// runtime error.
+fn read_scm(path: &Path) -> Result<String> {
+    if !path.exists() {
+        return Ok(String::new());
+    }
+    std::fs::read_to_string(path)
+        .map_err(|e| Error::RuntimeError(format!("failed to read query file {path:?}: {e}")))
+}
+
+/// Convert the `{ lang = ParserInfo }` registry into the Lua table
+/// `{ lang = { parser, highlights, injections, locals } }`.
+fn parser_info_to_table(lua: &Lua, info: &HashMap<String, ParserInfo>) -> Result<Table> {
+    let out = lua.create_table_with_capacity(0, info.len())?;
+    for (lang, p) in info {
+        let entry = lua.create_table_with_capacity(0, 4)?;
+        entry.set("parser", p.parser.clone())?;
+        entry.set("highlights", p.highlights.clone())?;
+        entry.set("injections", p.injections.clone())?;
+        entry.set("locals", p.locals.clone())?;
+        out.set(lang.clone(), entry)?;
+    }
+    Ok(out)
 }
 
 /// Parse the `format`/`layout`/`style` string arguments into the internal enums.
@@ -120,7 +171,7 @@ fn load_default_theme() -> Result<RenderTheme> {
 fn run_highlight(
     source: &[u8],
     language: &str,
-    parsers: &HashMap<String, (PathBuf, PathBuf)>,
+    parsers: &HashMap<String, ParserInfo>,
     theme: &RenderTheme,
     format: OutputFormat,
     layout: Layout,
@@ -213,18 +264,28 @@ fn lua_highlight(args: Table) -> Result<String> {
     };
     let language: String = args.get("language")?;
 
-    // `parsers`: `{ lang = { "/path/of/lang.so", "/path/of/queries/lang" } }`.
+    // `parsers`: `{ lang = { parser, highlights, injections, locals } }`.
     let parsers_tbl: Table = args.get("parsers")?;
-    let mut parsers: HashMap<String, (PathBuf, PathBuf)> = HashMap::new();
+    let mut parsers: HashMap<String, ParserInfo> = HashMap::new();
     for pair in parsers_tbl.pairs::<String, Value>() {
         let (lang, val) = pair?;
         if let Value::Table(pair_tbl) = val {
-            let so: String = pair_tbl.get(1)?;
-            let queries: String = pair_tbl.get(2)?;
-            parsers.insert(lang, (PathBuf::from(so), PathBuf::from(queries)));
+            let parser: String = pair_tbl.get("parser")?;
+            let highlights: String = pair_tbl.get("highlights").unwrap_or_default();
+            let injections: String = pair_tbl.get("injections").unwrap_or_default();
+            let locals: String = pair_tbl.get("locals").unwrap_or_default();
+            parsers.insert(
+                lang,
+                ParserInfo {
+                    parser,
+                    highlights,
+                    injections,
+                    locals,
+                },
+            );
         } else {
             return Err(Error::RuntimeError(format!(
-                "parsers['{lang}'] must be a table {{ so, queries_dir }}"
+                "parsers['{lang}'] must be a table {{ parser, highlights, injections, locals }}"
             )));
         }
     }
@@ -355,7 +416,7 @@ fn tree_sitter_highlight(lua: &Lua) -> Result<Table> {
     )?;
     exports.set(
         "search_parsers",
-        lua.create_function(|_: &Lua, dirs: Vec<String>| search_parsers(dirs))?,
+        lua.create_function(|lua: &Lua, dirs: Vec<String>| search_parsers(lua, dirs))?,
     )?;
     Ok(exports)
 }
