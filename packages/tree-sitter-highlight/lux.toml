@@ -1,0 +1,20 @@
+package = "tree-sitter-highlight"
+version = "0.0.1"
+lua = ">=5.1"
+
+[description]
+summary = "lua binding for tree-sitter-highlight"
+maintainer = "Wu"
+labels = ["highlight"]
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/tree-sitter-highlight.md.html"
+license = "GPL-3.0-only"
+
+[source]
+url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
+dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
+
+[build]
+type = "build-mlua"
+
+[build.modules]
+tree-sitter-highlight = "tree-sitter-highlight"

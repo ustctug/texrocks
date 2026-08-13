@@ -1,5 +1,5 @@
 ---
-exclude: lux\.lock$|/texmf\.cnf$
+exclude: lux\.lock$|/texmf\.cnf$|/crates/highlight/
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -30,7 +30,7 @@ repos:
       - id: remove-crlf
         exclude: \.rockspec$
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.2
+    rev: v2.4.3
     hooks:
       - id: codespell
         additional_dependencies:
@@ -42,7 +42,7 @@ repos:
         args:
           - --msg-filename
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.6.1
+    rev: 3.8.0
     hooks:
       - id: editorconfig-checker
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
@@ -72,7 +72,7 @@ repos:
           - mdformat-config
           - mdformat-web
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.22.1
+    rev: v0.23.2
     hooks:
       - id: markdownlint-cli2
         additional_dependencies:
@@ -82,7 +82,7 @@ repos:
     hooks:
       - id: luacheck
   - repo: https://github.com/NixOS/nixfmt
-    rev: v1.3.1
+    rev: v1.4.0
     hooks:
       - id: nixfmt
 

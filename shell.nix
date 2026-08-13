@@ -6,7 +6,7 @@ let
   nur =
     import
       (fetchTarball {
-        url = "https://github.com/nix-community/NUR/archive/2a187cd9c92887f2af5833696b510288844eb49b.tar.gz";
+        url = "https://github.com/nix-community/NUR/archive/c4c8c2c84de63e1abb84953d4ac4f550f4069347.tar.gz";
       })
       {
         inherit pkgs;
