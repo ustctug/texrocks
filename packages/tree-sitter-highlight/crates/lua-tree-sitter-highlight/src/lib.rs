@@ -79,9 +79,15 @@ fn search_parsers(lua: &Lua, dirs: Vec<String>) -> Result<Table> {
         let queries_root = PathBuf::from(dir).join("queries");
         for (lang, entry) in info.iter_mut() {
             let lang_queries = queries_root.join(lang);
-            entry.highlights = read_scm(&lang_queries.join("highlights.scm"))?;
-            entry.injections = read_scm(&lang_queries.join("injections.scm"))?;
-            entry.locals = read_scm(&lang_queries.join("locals.scm"))?;
+            if let OK(scm) = read_scm(&lang_queries.join("highlights.scm")) {
+                entry.highlights = scm
+            }
+            if let OK(scm) = read_scm(&lang_queries.join("injections.scm")) {
+                entry.injections = scm
+            }
+            if let OK(scm) = read_scm(&lang_queries.join("locals.scm")) {
+                entry.locals = scm
+            }
         }
     }
 
@@ -93,7 +99,7 @@ fn search_parsers(lua: &Lua, dirs: Vec<String>) -> Result<Table> {
 /// runtime error.
 fn read_scm(path: &Path) -> Result<String> {
     if !path.exists() {
-        return Ok(String::new());
+        return Error::RuntimeError(format!("query file {path:?} does not exist")).into();
     }
     std::fs::read_to_string(path)
         .map_err(|e| Error::RuntimeError(format!("failed to read query file {path:?}: {e}")))
