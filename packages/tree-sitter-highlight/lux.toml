@@ -14,7 +14,7 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [build]
-type = "build-mlua"
+type = "rust-mlua"
 
 [build.modules]
-tree-sitter-highlight = "tree-sitter-highlight"
+tree_sitter_highlight = "tree_sitter_highlight"

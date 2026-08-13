@@ -21,18 +21,18 @@ categories = ["parsing", "text-editors"]
 # `crates/highlight` keeps the local Renderer/TeX changes that do not exist
 # upstream, and depends on the crates.io core `tree-sitter` lib.
 [workspace.dependencies]
-tree-sitter           = "0.26.12"
+tree-sitter = "0.26.12"
+tree-sitter-config = "0.26.12"
 tree-sitter-highlight = { path = "crates/highlight" }
-tree-sitter-loader    = "0.26.12"
-tree-sitter-config    = "0.26.12"
+tree-sitter-loader = "0.26.12"
 
 ansi_colours = "1.2.3"
-anstyle       = "1.0.14"
-regex         = "1.12.3"
-serde_json    = { version = "1.0.150", features = ["preserve_order"] }
+anstyle = "1.0.14"
+mlua = { version = "0.10", features = ["module"] }
+regex = "1.12.3"
+serde_json = { version = "1.0.150", features = ["preserve_order"] }
 streaming-iterator = "0.1.9"
-thiserror     = "2.0.18"
-mlua          = { version = "0.10", features = ["lua51", "module"] }
+thiserror = "2.0.18"
 
 [workspace.lints.clippy]
 cargo = { level = "warn", priority = -1 }
