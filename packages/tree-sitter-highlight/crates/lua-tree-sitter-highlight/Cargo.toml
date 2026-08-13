@@ -21,7 +21,6 @@ tree-sitter-highlight.workspace = true
 tree-sitter-loader.workspace = true
 
 [features]
-default = ["mlua/lua51"]
 lua51 = ["mlua/lua51"]
 lua52 = ["mlua/lua52"]
 lua53 = ["mlua/lua53"]
