@@ -99,7 +99,7 @@ fn search_parsers(lua: &Lua, dirs: Vec<String>) -> Result<Table> {
 /// runtime error.
 fn read_scm(path: &Path) -> Result<String> {
     if !path.exists() {
-        return Error::RuntimeError(format!("query file {path:?} does not exist")).into();
+        return Err(Error::RuntimeError(format!("query file {path:?} does not exist")));
     }
     std::fs::read_to_string(path)
         .map_err(|e| Error::RuntimeError(format!("failed to read query file {path:?}: {e}")))
