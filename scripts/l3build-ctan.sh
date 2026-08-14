@@ -2,7 +2,6 @@
 set -e
 cd "$(dirname "$(dirname "$(readlink -f "$0")")")"
 
-l3build ctan
 cd packages
 for dir in ./*/; do
   if [[ ! -e "$dir/build.lua" ]]; then
