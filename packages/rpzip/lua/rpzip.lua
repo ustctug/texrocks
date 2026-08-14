@@ -1,17 +1,10 @@
 ---https://github.com/drivendataorg/repro-zipfile/pull/23
+---@module rpzip
+---@copyright 2025
 local lfs = require("texrocks.lfs")
 local ZipWriter = require "ZipWriter"
 
 local M = {
-    -- Unix permission
-    file_modes = {
-        -- normal file
-        [0] = tonumber("644", 8),
-        -- executable file
-        tonumber("755", 8),
-        -- directory
-        tonumber("755", 8) + tonumber("40000", 8)
-    },
     Entry = {
         filename   = ".",
         chunk_size = 1024,

@@ -61,7 +61,7 @@ repos:
     rev: 1.0.0
     hooks:
       - id: mdformat
-        exclude: /texlua\.md$
+        exclude: /(texcat/README|texlua)\.md$
         additional_dependencies:
           - mdformat-pyproject
           - mdformat-gfm

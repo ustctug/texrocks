@@ -26,6 +26,6 @@ fi
 
 rm -rf _readthedocs/{markdown,lua}
 install -d _readthedocs/{markdown,lua}
-rename -l 's|packages/([^/]+)/README\.md|_readthedocs/markdown/\1.md|' packages/*/README.md
+rename -l 's|[^/]+/([^/]+)/README\.md|_readthedocs/markdown/\1.md|' {packages,spec}/*/README.md
 cp -r packages/*/lua/* _readthedocs/lua
 ldoc .
