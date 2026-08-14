@@ -231,7 +231,7 @@ end
 ---@return table
 function M.settings_to_theme(settings)
     local theme = { color = settings.foreground }
-    for v in (settings.foreStyle or ''):gmatch('%S+') do
+    for v in (settings.fontStyle or ''):gmatch('%S+') do
         theme[v] = true
     end
     return theme

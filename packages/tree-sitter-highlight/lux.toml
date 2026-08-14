@@ -1,5 +1,5 @@
 package = "tree-sitter-highlight"
-version = "0.0.1"
+version = "0.0.3"
 lua = ">=5.1"
 
 [description]

@@ -229,6 +229,17 @@ fn style_rgb(style: anstyle::Style) -> Option<(u8, u8, u8)> {
     }
 }
 
+/// Resolve whether an `anstyle::Style` requests italic, bold, and/or underline.
+/// Returns `(italic, bold, underline)`.
+fn style_flags(style: anstyle::Style) -> (bool, bool, bool) {
+    let effects = style.get_effects();
+    (
+        effects.contains(Effects::ITALIC),
+        effects.contains(Effects::BOLD),
+        effects.contains(Effects::UNDERLINE),
+    )
+}
+
 /// Build the per-scope *opening attribute* byte strings for the renderer's shared event loop.
 ///
 /// Mirrors the closures in `cli`'s `highlight()` (HTML at `cli/highlight.rs:624-645`, LaTeX at
@@ -273,11 +284,21 @@ pub fn build_attribute_strings(
                 let style = theme.styles.get(i).map(|s| s.ansi).unwrap_or_default();
                 match styling {
                     StylingMode::Inline => {
+                        // Open a single group; within it emit font switches
+                        // (`\bf`/`\it`) and a color command (no extra group of
+                        // its own). The renderer closes the group with a single
+                        // `}`, keeping the brace balance automatic.
+                        bytes.push(b'{');
+                        let (italic, bold, _underline) = style_flags(style);
+                        if bold {
+                            bytes.extend(b"\\bf");
+                        }
+                        if italic {
+                            bytes.extend(b"\\it");
+                        }
                         if let Some((r, g, b)) = style_rgb(style) {
                             let (r, g, b) = (r as f64 / 255.0, g as f64 / 255.0, b as f64 / 255.0);
-                            write!(bytes, "\\textcolor[rgb]{{{r:.4},{g:.4},{b:.4}}}{{").unwrap();
-                        } else {
-                            push_ts_scope(&mut bytes, prefix, name);
+                            write!(bytes, "\\color[rgb]{{{r:.4},{g:.4},{b:.4}}}").unwrap();
                         }
                     }
                     StylingMode::Classes | StylingMode::Minimal => {
@@ -358,20 +379,42 @@ pub fn write_tex_preamble<W: IoWrite>(
         )
         .as_bytes(),
     );
-    if style == StylingMode::Classes {
+    if style != StylingMode::Inline {
         for (name, style) in theme.highlight_names.iter().zip(&theme.styles) {
-            if let Some((r, g, b)) = style_rgb(style.ansi) {
-                let (r, g, b) = (r as f64 / 255.0, g as f64 / 255.0, b as f64 / 255.0);
-                let _ = w.write_all(
-                    format!(
-                        "\\@namedef{{{prefix}@tok@{name}}}{{\\def\\{prefix}@tc##1{{\\textcolor[rgb]{{{r:.4},{g:.4},{b:.4}}}{{##1}}}}}}\n",
+            let rgb = style_rgb(style.ansi);
+            let (italic, bold, underline) = style_flags(style.ansi);
+            // Emit a named color/style definition whenever the scope carries a
+            // color or any of the supported font styles (italic/bold/underline).
+            if rgb.is_some() || italic || bold || underline {
+                let mut def = String::new();
+                // Style switches are emitted before `\def\TS@tc` so they take
+                // effect when `@do` applies the token (see the `\TS@do` macro).
+                if italic {
+                    def.push_str(&format!("\\let\\{prefix}@it=\\textit"));
+                }
+                if bold {
+                    def.push_str(&format!("\\let\\{prefix}@bf=\\textbf"));
+                }
+                if underline {
+                    def.push_str(&format!("\\let\\{prefix}@ul=\\underline"));
+                }
+                if let Some((r, g, b)) = rgb {
+                    let (r, g, b) = (r as f64 / 255.0, g as f64 / 255.0, b as f64 / 255.0);
+                    def.push_str(&format!(
+                        "\\def\\{prefix}@tc##1{{\\textcolor[rgb]{{{r:.4},{g:.4},{b:.4}}}{{##1}}}}",
                         prefix = prefix,
-                        name = name,
                         r = r,
                         g = g,
                         b = b
-                    )
-                    .as_bytes(),
+                    ));
+                } else {
+                    // No color: reset the text-color slot to a no-op so only the
+                    // style switches (if any) apply.
+                    def.push_str(&format!("\\let\\{prefix}@tc=\\relax"));
+                }
+                let _ = w.write_all(
+                    format!("\\@namedef{{{prefix}@tok@{name}}}{{{def}}}\n", prefix = prefix, name = name, def = def)
+                        .as_bytes(),
                 );
             }
         }
@@ -528,3 +571,148 @@ pub fn parse_theme(value: &Value) -> RenderTheme {
 
 /// Re-export of the renderer types so callers need only `crate::render`.
 pub use tree_sitter_highlight::HtmlRenderer;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::{json, Map, Value};
+
+    /// Build a one-scope theme (color optional) with the given flags, returning the inner `anstyle::Style`.
+    fn style_with(
+        name: &str,
+        color: Option<&str>,
+        bold: bool,
+        italic: bool,
+        underline: bool,
+    ) -> anstyle::Style {
+        let mut json = Map::new();
+        if let Some(c) = color {
+            json.insert("color".into(), Value::String(c.to_string()));
+        }
+        if bold {
+            json.insert("bold".into(), Value::Bool(true));
+        }
+        if italic {
+            json.insert("italic".into(), Value::Bool(true));
+        }
+        if underline {
+            json.insert("underline".into(), Value::Bool(true));
+        }
+        let theme = parse_theme(&json!({ name: Value::Object(json) }));
+        theme.styles[0].ansi
+    }
+
+    #[test]
+    fn test_latex_classes_style_switches() {
+        // keyword: color + italic; parameter: color + underline;
+        // constant: color + bold; comment: italic only (no color).
+        let theme = RenderTheme {
+            highlight_names: vec![
+                "keyword".into(),
+                "variable.parameter".into(),
+                "constant.builtin".into(),
+                "comment".into(),
+            ],
+            styles: vec![
+                RenderStyle { ansi: style_with("keyword", Some("#3d7a7a"), false, true, false), css: None },
+                RenderStyle { ansi: style_with("variable.parameter", Some("#fcfcfc"), false, false, true), css: None },
+                RenderStyle { ansi: style_with("constant.builtin", Some("#5f00af"), true, false, false), css: None },
+                RenderStyle { ansi: style_with("comment", None, false, true, false), css: None },
+            ],
+        };
+        let mut buf: Vec<u8> = Vec::new();
+        write_tex_preamble(&mut buf, "TS", &theme, StylingMode::Classes);
+        let out = String::from_utf8(buf).unwrap();
+
+        assert!(
+            out.contains("\\@namedef{TS@tok@keyword}{\\let\\TS@it=\\textit\\def\\TS@tc##1{\\textcolor[rgb]{0.2392,0.4784,0.4784}{##1}}}"),
+            "keyword namedef missing italic switch:\n{out}"
+        );
+        assert!(
+            out.contains("\\@namedef{TS@tok@variable.parameter}{\\let\\TS@ul=\\underline\\def\\TS@tc##1{\\textcolor[rgb]{0.9882,0.9882,0.9882}{##1}}}"),
+            "parameter namedef missing underline switch:\n{out}"
+        );
+        assert!(
+            out.contains("\\@namedef{TS@tok@constant.builtin}{\\let\\TS@bf=\\textbf\\def\\TS@tc##1{\\textcolor[rgb]{0.3725,0.0000,0.6863}{##1}}}"),
+            "constant namedef missing bold switch:\n{out}"
+        );
+        assert!(
+            out.contains("\\@namedef{TS@tok@comment}{\\let\\TS@it=\\textit\\let\\TS@tc=\\relax}"),
+            "comment namedef (no color) wrong:\n{out}"
+        );
+    }
+
+    /// Count the net opening braces (`{` minus `}`) in a byte string, ignoring
+    /// those escaped as `\{`/`\}`.
+    fn net_braces(s: &[u8]) -> i32 {
+        let mut net = 0i32;
+        let mut i = 0;
+        while i < s.len() {
+            if s[i] == b'\\' && i + 1 < s.len() {
+                i += 2; // skip an escaped char
+                continue;
+            }
+            match s[i] {
+                b'{' => net += 1,
+                b'}' => net -= 1,
+                _ => {}
+            }
+            i += 1;
+        }
+        net
+    }
+
+    #[test]
+    fn test_latex_inline_style_switches() {
+        // Replicate the Inline branch of `build_attribute_strings` for a bold+italic+color scope.
+        // `build_attribute_strings` emits only the *opening* markup; the renderer's
+        // `end_highlight` appends the single closing `}`, so the opening string must
+        // carry exactly one net-unbalanced `{`.
+        let style = style_with("kw", Some("#3d7a7a"), true, true, false);
+        let (italic, bold, _underline) = style_flags(style);
+
+        let mut bytes: Vec<u8> = Vec::new();
+        bytes.push(b'{');
+        if bold {
+            bytes.extend(b"\\bf");
+        }
+        if italic {
+            bytes.extend(b"\\it");
+        }
+        if let Some((r, g, b)) = style_rgb(style) {
+            let (r, g, b) = (r as f64 / 255.0, g as f64 / 255.0, b as f64 / 255.0);
+            write!(bytes, "\\color[rgb]{{{r:.4},{g:.4},{b:.4}}}").unwrap();
+        }
+
+        let out = String::from_utf8(bytes.clone()).unwrap();
+        assert!(out.contains("\\bf"));
+        assert!(out.contains("\\it"));
+        assert!(out.contains("\\color[rgb]{0.2392,0.4784,0.4784}"));
+        assert_eq!(net_braces(&bytes), 1, "opening markup must have one net `{{` (renderer supplies the closing `}}`): {out}");
+    }
+
+    #[test]
+    fn test_latex_inline_no_style_opens_single_group() {
+        let style = style_with("plain", Some("#abcdef"), false, false, false);
+        let (italic, bold, _underline) = style_flags(style);
+
+        let mut bytes: Vec<u8> = Vec::new();
+        bytes.push(b'{');
+        if bold {
+            bytes.extend(b"\\bf");
+        }
+        if italic {
+            bytes.extend(b"\\it");
+        }
+        if let Some((r, g, b)) = style_rgb(style) {
+            let (r, g, b) = (r as f64 / 255.0, g as f64 / 255.0, b as f64 / 255.0);
+            write!(bytes, "\\color[rgb]{{{r:.4},{g:.4},{b:.4}}}").unwrap();
+        }
+
+        let out = String::from_utf8(bytes.clone()).unwrap();
+        assert!(!out.contains("\\bf"));
+        assert!(!out.contains("\\it"));
+        assert!(out.contains("\\color[rgb]{0.6706,0.8039,0.9373}"));
+        assert_eq!(net_braces(&bytes), 1, "opening markup must have one net `{{`: {out}");
+    }
+}
