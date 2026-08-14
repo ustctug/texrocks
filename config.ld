@@ -4,6 +4,7 @@
 project = "texrocks"
 title = "TeXRocks, a minimal (La)TeX distribution"
 format = "markdown"
+pretty = 'lxsh'
 dir = "_readthedocs/html"
 template = "assets/html"
 readme = {

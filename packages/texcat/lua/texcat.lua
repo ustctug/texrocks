@@ -316,7 +316,7 @@ end
 ---@return string
 function M.render(args)
     args.injections = args.injections or {}
-    args.meth_escape = args.math_escape or {}
+    args.math_escape = args.math_escape or {}
     local file = args.file or 'empty'
     local paths = M.get_paths(false)
     local parsers = search_parsers(paths)
@@ -363,6 +363,27 @@ function M.render(args)
         f:close()
     end
     return filename
+end
+
+---@param language string
+---@param source string
+---@param args table
+---@return string
+function M.render_source(language, source, args)
+    args.injections = args.injections or {}
+    args.math_escape = args.math_escape or {}
+    args.layout = args.layout or 'fragment'
+    args.style = args.style or 'inline'
+    args.source = source
+    args.language = ft_parser_map[language] or language
+    args.format = args.formatter
+    local paths = texcat.get_paths(args.external)
+    local parsers = search_parsers(paths)
+    texcat.fix_parsers_(parsers)
+    local themes = texcat.get_themes(paths)
+    args.theme = texcat.get_theme(themes, args.theme_name or 'monokai')
+    args.parsers = M.get_parsers(parsers, args.language, args.injections)
+    return M.highlight(args)
 end
 
 return M
