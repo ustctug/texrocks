@@ -1,12 +1,15 @@
-# tlua
+# texlua
 
-Tlua uses luatex as Lua interpreter and provides a REPL for debug.
+texlua uses luatex as Lua interpreter and provides a REPL for debug.
+
+Install [prompt-style](https://luarocks.org/modules/freed-wu/prompt-style) to
+enable it.
 
 ## Lua interpreter
 
 ```sh
-$ tlua -h
-Usage: tlua [-h] [-e STMT] [-l NAME] [-p] [-v] [-i] [<SCRIPT>] ...
+$ texlua -h
+Usage: texlua [-h] [-e STMT] [-l NAME] [-p] [-v] [-i] [<SCRIPT>] ...
 
 A Lua command prompt with pretty-printing and auto-completion.
 
@@ -24,7 +27,7 @@ Options:
    -i                    Enter interactive mode.
 ```
 
-It is similar to standard lua:
+It is similar to standard lua or [nlua](https://github.com/mfussenegger/nlua):
 
 ```sh
 $ lua -h
@@ -40,14 +43,10 @@ Available options are:
   -        stop handling options and execute stdin
 ```
 
-The name of tlua comes from [nlua](https://github.com/mfussenegger/nlua).
-However, it has been occcupied, So it has an alias of texluap, means prompt for
-texlua. Because it support another prompt mode:
-
 ## Lua prompt
 
 ```sh
-$ tlua
+$ texlua
 > status.banner
 _[1] = "This is LuaHBTeX, Version 1.23.3 (TeX Live 2026/dev)"
 >
@@ -59,8 +58,8 @@ on [luaprompt](https://github.com/dpapavas/luaprompt).
 ```sh
 local prompt = require'prompt'
 if kpse then
-    -- for tlua
-    kpse.set_program_name'tlua'
+    -- for texlua
+    kpse.set_program_name'texlua'
     prompt.history = kpse.expand_path'~' .. '/.lua_history'
     prompt.prompts = { "> ", "    " }
 elseif vim then

@@ -262,8 +262,19 @@ end
 function M.preparse(args, extra_offset)
     local offset = M.get_offset(args)
     if offset == nil then
-        error("haven't support")
-        os.exit(1)
+        local utils, err = pcall(require, 'prompt.utils')
+        if utils then
+            require 'prompt.utils'.main(arg, nil, function(args_)
+                if args_.v then
+                    print(require 'status'.banner)
+                    os.exit(0)
+                end
+                return args_
+            end)
+        else
+            print(err)
+            os.exit(1)
+        end
     end
 
     return M.shift(args, offset + (extra_offset or 0))
