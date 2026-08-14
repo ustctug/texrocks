@@ -1,4 +1,0 @@
-# SYNTAX TEST "?.sublime-syntax"
-<l:for names="_, hl" in="ipairs(hls)">$[n]{hl.text}
-# <- ${hl.scope} # rgb(${table.concat(color_map[hl.scope], ', ')}):
-</l:for>

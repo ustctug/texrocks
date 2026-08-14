@@ -1,31 +1,34 @@
 \documentclass{article}
-\usepackage{fancyvrb}
-\usepackage{color}
-\usepackage{amsfonts}
+\usepackage{fancyvrb,color,amsfonts}
+\pagestyle{empty}
 \directlua{
   local texcat = require'texcat'
-  token.set_macro('mylua', texcat.render{'test.lua', extra_opts = {math_escape = 'comment'}})
-  token.set_macro('mytex', texcat.render{'test.tex', theme = 'Monokai'})
+  local test_tex = texcat.render{
+    file = 'test.tex',
+    theme = 'monokai',
+    injections = {'comment'}, % TODO(user): foo, FIXME(user): bar
+    math_escape = {'comment'}, % $\TSmonokaiZdl$i\in\mathbb{Z}$\TSmonokaiZdl$ will be $i\in\mathbb{Z}$
+  }; token.set_macro('mysource', test_tex)
+  local f = io.open(test_tex); assert(f)
+  local source = ''
+  for _ = 1, 4 do
+    source = source .. f:read() .. string.char(10)
+  end; f:close()
+  token.set_macro('myoutput', texcat.render{
+    source = source .. string.char(37) .. ' ...',
+    language = 'latex',
+    theme = 'solarized-dark',
+  })
 }
 \begin{document}
-
-\TeX{}Cat is a rewrite of pygments. For a test file:
-
-\VerbatimInput[
-  numbers=left,
-  commandchars=\\\{\},
-  frame=single,
-  label=test.lua,
-  codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax},
-]{\mylua}
-
-We can display it in \LaTeX{} document:
-
+\TeX{}Cat is a rewrite of pygments for \LaTeX{}. The following code:
 \VerbatimInput[
   numbers=left,
   commandchars=\\\{\},
   frame=lines,
-  label=test.tex,
-]{\mytex}
-
+  label=source code needed to be syntax highlighted,
+  codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}, % math escape
+]{\mysource}
+will be converted to:
+\VerbatimInput[commandchars=\\\{\} ]{\myoutput}
 \end{document}

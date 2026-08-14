@@ -1,2 +1,0 @@
-<l:for names="_, hl" in="ipairs(hls)"><l:if cond="hl.text == '\n'">
-<l:else/>\$[u]{prefix}{$[n]{hl.scope:gsub('%-', '_')}}{$[n]{escape(hl.text, prefix, hl.scope:match(math_escape or '^$'))}}</l:if></l:for>

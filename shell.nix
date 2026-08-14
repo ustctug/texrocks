@@ -28,7 +28,10 @@ mkShell {
     nur.repos.Freed-Wu.luahbtex
 
     rename
+    # prompt-style
     readline
+    # luaposix
+    libxcrypt
 
     (lua5_3.withPackages (
       p: with p; [
