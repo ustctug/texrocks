@@ -137,6 +137,10 @@ function M.get_parsers(parsers, language, injections)
     return _parsers
 end
 
+function M.os_getenv(varname)
+    return require "os".getenv(varname)
+end
+
 ---@param external boolean?
 ---@return string[]
 function M.get_paths(external)
@@ -155,7 +159,7 @@ function M.get_paths(external)
         -- luarocks
         local func = loadfile(fs.joinpath(config_dir, 'default-lua-version.lua'))
         local version = func and func() or '5.1'
-        local luarocks_config = { require = require }
+        local luarocks_config = { os_getenv = M.os_getenv, home = M.os_getenv("HOME") or '.' }
         func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
         if func then
             func()
