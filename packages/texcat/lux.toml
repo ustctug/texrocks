@@ -30,7 +30,7 @@ lualatex = ">=0.3.13"
 graphics-cfg = ">=0.0.1"
 tree-sitter-latex = "0.0.42-1"
 tree-sitter-comment = "0.0.33-1"
-ldoc = ">=1.5.0"
+ldoc-temp = ">=1.5.0"
 
 [run]
 type = "command"
