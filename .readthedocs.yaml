@@ -16,6 +16,7 @@ build:
     - echo "\n"'rocks_servers = { "https://lumen-oss.github.io/rocks-binaries",
       "https://luarocks.org" }' >>
       ~/.asdf/installs/lua/5.1/luarocks/etc/luarocks/config-5.1.lua
+    - cat ~/.asdf/installs/lua/5.1/luarocks/etc/luarocks/config-5.1.lua
     - luarocks install ldoc-temp
     - luarocks install texcat
     - luarocks install tree-sitter-comment
