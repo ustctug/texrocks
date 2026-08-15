@@ -177,6 +177,7 @@ function M.get_paths(external)
         local version = func and func() or '5.1'
         local luarocks_config = { os_getenv = M.os_getenv, home = M.os_getenv("HOME") or '.' }
         func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
+        print(func)
         if func then
             func()
             for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
@@ -189,6 +190,7 @@ function M.get_paths(external)
             if p then
                 local text = p:read '*a'
                 p:close()
+                print(text)
                 dir = (cjson.decode(text).variables or {}).ROCKS_TREE
             end
             if dir then
