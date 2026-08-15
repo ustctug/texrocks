@@ -1,16 +1,18 @@
-//! Building [`HighlightConfiguration`]s from the user-supplied `parsers` table.
+//! Building languages from `parser/<lang>.so` files for the Lua binding.
 //!
-//! Each entry `{ lang = { "/path/of/lang.so", "/path/of/queries/lang" } }` is turned into a
-//! [`HighlightConfiguration`] by loading the `.so` (symbol `tree_sitter_<lang>`) and reading the
-//! three `*.scm` query files. Every configuration is `configure`-d with the *same* `theme_names`
-//! so that the `Highlight` index space is identical across the host language and any injected
-//! languages — this is what lets a single attribute table serve all layers (see `render.rs`).
+//! Each entry `{ lang = "/path/of/lang.so" }` (discovered by `search_parsers`) is turned into a
+//! [`highlight_core::ParserInfo`] by loading the `.so` (symbol `tree_sitter_<lang>`). The query
+//! texts are read by `search_parsers` from `queries/<lang>/{highlights,injections,locals}.scm`.
+//!
+//! The actual [`HighlightConfiguration`] construction lives in `highlight_core::build_configs`
+//! (it only needs an already-loaded [`tree_sitter::Language`]); this module is responsible for
+//! the Lua-specific step of obtaining that `Language` from a `.so` file.
 
-use std::collections::{HashMap, HashSet};
-use std::path::Path;
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 
+use mlua::Error as LuaError;
 use thiserror::Error;
-use tree_sitter_highlight::HighlightConfiguration;
 use tree_sitter_loader::Loader;
 
 /// A single language's parser and its query contents, as discovered by `search_parsers` or
@@ -30,46 +32,91 @@ pub struct ParserInfo {
 pub enum Error {
     #[error("failed to load parser for language '{0}': {1}")]
     LoadLanguage(String, String),
-    #[error("failed to build highlight configuration for '{0}': {1}")]
-    Query(String, String),
 }
 
-/// Build a language-name → configuration registry from the `parsers` table.
+/// Convert a path-based [`ParserInfo`] (`.so` path + query texts) into a [`highlight_core`]
+/// [`CoreParserInfo`](highlight_core::CoreParserInfo) by dynamic-linking the `.so` and extracting
+/// its `tree_sitter_<lang>` symbol into a [`tree_sitter::Language`].
+pub fn load_language(
+    info: &ParserInfo,
+    lang: &str,
+) -> Result<highlight_core::CoreParserInfo, Error> {
+    let language = Loader::load_language(Path::new(&info.parser), &format!("tree_sitter_{lang}"))
+        .map_err(|e| Error::LoadLanguage(lang.to_string(), e.to_string()))?;
+    Ok(highlight_core::CoreParserInfo {
+        language,
+        highlights: info.highlights.clone(),
+        injections: info.injections.clone(),
+        locals: info.locals.clone(),
+    })
+}
+
+/// Scan each directory for `parser/<lang>.so` and `queries/<lang>/`, returning a
+/// `{ lang = { parser, highlights, injections, locals } }` registry.
 ///
-/// `theme_names` is the list of highlight scope names from the theme; every configuration is
-/// `configure`-d against it so the `Highlight` indices line up across all languages. The query
-/// files have already been read by the caller (see [`ParserInfo`]), so this function performs no
-/// I/O of its own.
-pub fn build_configs(
-    parsers: &HashMap<String, ParserInfo>,
-    theme_names: &[String],
-) -> Result<HashMap<String, HighlightConfiguration>, Error> {
-    let mut configs = HashMap::with_capacity(parsers.len());
-    for (lang, info) in parsers {
-        let so = Path::new(&info.parser);
-        let language = Loader::load_language(so, &format!("tree_sitter_{lang}"))
-            .map_err(|e| Error::LoadLanguage(lang.clone(), e.to_string()))?;
-        let mut config = HighlightConfiguration::new(
-            language,
-            lang,
-            &info.highlights,
-            &info.injections,
-            &info.locals,
-        )
-        .map_err(|e| Error::Query(lang.clone(), e.to_string()))?;
-        config.configure(theme_names);
-        configs.insert(lang.clone(), config);
+/// Two passes are made over the supplied directories:
+///
+/// 1. For each `parser/<lang>.so` found, the `lang` key is created and its `parser` field set to
+///    the `.so`'s full path.
+/// 2. For each `lang` in the result, the three `queries/<lang>/{highlights,injections,locals}.scm`
+///    files are read (if present) and their full contents stored; missing files yield empty
+///    strings.
+pub fn search_parsers(dirs: &[String]) -> Result<HashMap<String, ParserInfo>, LuaError> {
+    let mut info: HashMap<String, ParserInfo> = HashMap::new();
+
+    // Pass 1: discover parser .so files and register their full paths.
+    for dir in dirs {
+        let parser_dir = PathBuf::from(dir).join("parser");
+        if !parser_dir.is_dir() {
+            continue;
+        }
+        let entries = match std::fs::read_dir(&parser_dir) {
+            Ok(e) => e,
+            Err(_) => continue,
+        };
+        for entry in entries.flatten() {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            if let Some(lang) = name.strip_suffix(".so") {
+                info.insert(
+                    lang.to_string(),
+                    ParserInfo {
+                        parser: entry.path().to_string_lossy().into_owned(),
+                        highlights: String::new(),
+                        injections: String::new(),
+                        locals: String::new(),
+                    },
+                );
+            }
+        }
     }
-    Ok(configs)
+
+    // Pass 2: read the matching query files for each discovered language.
+    for dir in dirs {
+        let queries_root = PathBuf::from(dir).join("queries");
+        for (lang, entry) in info.iter_mut() {
+            let lang_queries = queries_root.join(lang);
+            if let Ok(scm) = read_scm(&lang_queries.join("highlights.scm")) {
+                entry.highlights = scm
+            }
+            if let Ok(scm) = read_scm(&lang_queries.join("injections.scm")) {
+                entry.injections = scm
+            }
+            if let Ok(scm) = read_scm(&lang_queries.join("locals.scm")) {
+                entry.locals = scm
+            }
+        }
+    }
+
+    Ok(info)
 }
 
-/// Resolve a list of highlight-scope names (e.g. `{"comment", "string"}`) into the numeric indices
-/// used by [`tree_sitter_highlight::TexRenderer`]'s math-escape set, using a configuration's
-/// `names()` as the index space.
-pub fn resolve_math_escape(names: &[&str], scopes: &[String]) -> HashSet<usize> {
-    scopes
-        .iter()
-        .enumerate()
-        .filter_map(|(i, scope)| names.contains(&scope.as_str()).then_some(i))
-        .collect()
+/// Read a `*.scm` query file to a string. A missing file is treated as an empty query (so a
+/// language that ships only `highlights.scm`, for example, still works). Read failures surface as a
+/// runtime error.
+pub fn read_scm(path: &Path) -> Result<String, LuaError> {
+    if !path.exists() {
+        return Err(LuaError::RuntimeError(format!("query file {path:?} does not exist")));
+    }
+    std::fs::read_to_string(path)
+        .map_err(|e| LuaError::RuntimeError(format!("failed to read query file {path:?}: {e}")))
 }

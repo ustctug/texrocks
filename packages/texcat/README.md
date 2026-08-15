@@ -9,23 +9,28 @@
 ### Terminal output
 
 ```sh
-$ hyperfine -Nw10 'texcat lux.toml' 'pygmentize lux.toml' 'bat lux.toml'
+$ hyperfine -Nw10 'texcat lux.toml' 'tree-sitter highlight lux.toml' 'pygmentize lux.toml' 'bat lux.toml'
 Benchmark 1: texcat lux.toml
-  Time (mean ± σ):      2.156 s ±  0.059 s    [User: 1.470 s, System: 0.676 s]
-  Range (min … max):    2.108 s …  2.289 s    10 runs
+  Time (mean ± σ):      2.259 s ±  0.152 s    [User: 1.573 s, System: 0.670 s]
+  Range (min … max):    2.145 s …  2.649 s    10 runs
 
-Benchmark 2: pygmentize lux.toml
-  Time (mean ± σ):     458.1 ms ±  58.2 ms    [User: 409.2 ms, System: 39.6 ms]
-  Range (min … max):   372.8 ms … 535.9 ms    10 runs
+Benchmark 2: tree-sitter highlight lux.toml
+  Time (mean ± σ):       7.5 ms ±   0.9 ms    [User: 3.1 ms, System: 3.7 ms]
+  Range (min … max):     5.9 ms …  12.0 ms    410 runs
 
-Benchmark 3: bat lux.toml
-  Time (mean ± σ):      18.7 ms ±   4.0 ms    [User: 14.8 ms, System: 8.1 ms]
-  Range (min … max):    12.9 ms …  36.2 ms    158 runs
+Benchmark 3: pygmentize lux.toml
+  Time (mean ± σ):     377.9 ms ±  25.1 ms    [User: 334.1 ms, System: 36.7 ms]
+  Range (min … max):   338.0 ms … 412.2 ms    10 runs
+
+Benchmark 4: bat lux.toml
+  Time (mean ± σ):      15.0 ms ±   1.2 ms    [User: 12.0 ms, System: 6.9 ms]
+  Range (min … max):    13.3 ms …  18.6 ms    205 runs
 
 Summary
-  bat lux.toml ran
-   24.45 ± 6.03 times faster than pygmentize lux.toml
-  115.05 ± 24.51 times faster than texcat lux.toml
+  tree-sitter highlight lux.toml ran
+    2.00 ± 0.28 times faster than bat lux.toml
+   50.43 ± 6.78 times faster than pygmentize lux.toml
+  301.45 ± 40.65 times faster than texcat lux.toml
 ```
 
 ### LaTeX output

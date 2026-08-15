@@ -1,7 +1,7 @@
 //! Rendering helpers copied (and lightly adapted) from `tree-sitter/crates/cli/src/highlight.rs`.
 //!
 //! These functions are intentionally duplicated rather than imported from the `cli` crate so that
-//! this binding crate does not depend on `cli`. They operate on this crate's own [`RenderTheme`]
+//! this core crate does not depend on `cli`. They operate on this crate's own [`RenderTheme`]
 //! type instead of `cli`'s `Theme`/`Style`.
 
 use std::io::Write as IoWrite;

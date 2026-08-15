@@ -1,0 +1,29 @@
+[project]
+name = "tree-sitter-highlight"
+version = "0.0.1"
+description = "python binding for tree-sitter-highlight"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "GPL-3.0-only"
+authors = [{ name = "Wu, Zhenyu", email = "wuzhenyu@ustc.edu" }]
+dependencies = []
+
+[project.urls]
+homepage = "https://texrocks.readthedocs.io/en/latest/topics/tree-sitter-highlight.md.html"
+
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[tool.maturin]
+manifest-path = "crates/py-tree-sitter-highlight/Cargo.toml"
+module-name = "tree_sitter_highlight"
+features = ["pyo3/abi3-py38", "pyo3/extension-module"]
+
+[tool.uv]
+cache-keys = [
+  { file = "pyproject.toml" },
+  { file = "crates/**/*.rs" },
+  { file = "Cargo.toml" },
+  { file = "Cargo.lock" }
+]

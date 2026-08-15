@@ -11,29 +11,22 @@
 //!   — performs syntax highlighting and returns the rendered document as a string. Its `parsers`
 //!   argument uses the same `{ lang = { parser, highlights, injections, locals } }` shape.
 //!
-//! See `render.rs` for the copied-from-`cli` rendering helpers and the
-//! `attribute_callback` -> precomputed attribute-table design, and `loader.rs` for how the
-//! `parsers` table becomes a registry of [`tree_sitter_highlight::HighlightConfiguration`]s.
+//! The language registry and rendering live in `highlight_core`; this crate only provides the
+//! Lua object interop (reading the `parsers` table, dynamic-linking each `parser/*.so`) and the
+//! `search_parsers` filesystem scan.
 
 use std::collections::{HashMap, HashSet};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-use anstyle::Style as AnstyleStyle;
 use mlua::{Error, Lua, Result, Table, Value};
 use serde_json::Value as JsonValue;
-use tree_sitter_config::Config as TsConfig;
-use tree_sitter_highlight::{
-    Error as TsError, Highlighter, Renderer, TerminalRenderer, TexRenderer,
-};
+
+use highlight_core::render::{RenderTheme, parse_theme};
+use highlight_core::{resolve_math_escape, run_highlight, CoreParserInfo};
 
 pub mod loader;
-pub mod render;
 
-use loader::{Error as LoaderError, ParserInfo, build_configs, resolve_math_escape};
-use render::{
-    Layout, OutputFormat, RenderTheme, StylingMode, build_attribute_strings, parse_theme,
-    render_highlighted, write_html, write_tex_document, write_tex_linenumbers, write_tex_preamble,
-};
+use loader::{search_parsers as _search_parsers, ParserInfo};
 
 /// Scan each directory for `parser/<lang>.so` and `queries/<lang>/`, returning a
 /// `{ lang = { parser, highlights, injections, locals } }` Lua table.
@@ -46,63 +39,18 @@ use render::{
 ///    files are read (if present) and their full contents stored; missing files yield empty
 ///    strings.
 fn search_parsers(lua: &Lua, dirs: Vec<String>) -> Result<Table> {
-    let mut info: HashMap<String, ParserInfo> = HashMap::new();
-
-    // Pass 1: discover parser .so files and register their full paths.
-    for dir in &dirs {
-        let parser_dir = PathBuf::from(dir).join("parser");
-        if !parser_dir.is_dir() {
-            continue;
-        }
-        let entries = match std::fs::read_dir(&parser_dir) {
-            Ok(e) => e,
-            Err(_) => continue,
-        };
-        for entry in entries.flatten() {
-            let name = entry.file_name().to_string_lossy().into_owned();
-            if let Some(lang) = name.strip_suffix(".so") {
-                info.insert(
-                    lang.to_string(),
-                    ParserInfo {
-                        parser: entry.path().to_string_lossy().into_owned(),
-                        highlights: String::new(),
-                        injections: String::new(),
-                        locals: String::new(),
-                    },
-                );
-            }
-        }
-    }
-
-    // Pass 2: read the matching query files for each discovered language.
-    for dir in &dirs {
-        let queries_root = PathBuf::from(dir).join("queries");
-        for (lang, entry) in info.iter_mut() {
-            let lang_queries = queries_root.join(lang);
-            if let Ok(scm) = read_scm(&lang_queries.join("highlights.scm")) {
-                entry.highlights = scm
-            }
-            if let Ok(scm) = read_scm(&lang_queries.join("injections.scm")) {
-                entry.injections = scm
-            }
-            if let Ok(scm) = read_scm(&lang_queries.join("locals.scm")) {
-                entry.locals = scm
-            }
-        }
-    }
-
+    let info = _search_parsers(&dirs)?;
     Ok(parser_info_to_table(lua, &info)?)
 }
 
 /// Read a `*.scm` query file to a string. A missing file is treated as an empty query (so a
 /// language that ships only `highlights.scm`, for example, still works). Read failures surface as a
 /// runtime error.
-fn read_scm(path: &Path) -> Result<String> {
+pub fn read_scm(path: &Path) -> Result<String> {
     if !path.exists() {
         return Err(Error::RuntimeError(format!("query file {path:?} does not exist")));
     }
-    std::fs::read_to_string(path)
-        .map_err(|e| Error::RuntimeError(format!("failed to read query file {path:?}: {e}")))
+    std::fs::read_to_string(path).map_err(|e| Error::RuntimeError(format!("failed to read query file {path:?}: {e}")))
 }
 
 /// Convert the `{ lang = ParserInfo }` registry into the Lua table
@@ -118,129 +66,6 @@ fn parser_info_to_table(lua: &Lua, info: &HashMap<String, ParserInfo>) -> Result
         out.set(lang.clone(), entry)?;
     }
     Ok(out)
-}
-
-/// Parse the `format`/`layout`/`style` string arguments into the internal enums.
-fn parse_format(s: &str) -> Result<OutputFormat> {
-    match s {
-        "html" => Ok(OutputFormat::Html),
-        "latex" => Ok(OutputFormat::Latex),
-        "terminal" => Ok(OutputFormat::Terminal),
-        other => Err(Error::RuntimeError(format!(
-            "unknown format '{other}' (expected html|latex|terminal)"
-        ))),
-    }
-}
-
-fn parse_layout(s: &str) -> Result<Layout> {
-    match s {
-        "document" => Ok(Layout::Document),
-        "line-numbers" => Ok(Layout::LineNumbers),
-        "fragment" => Ok(Layout::Fragment),
-        other => Err(Error::RuntimeError(format!(
-            "unknown layout '{other}' (expected document|line-numbers|fragment)"
-        ))),
-    }
-}
-
-fn parse_style(s: &str) -> Result<StylingMode> {
-    match s {
-        "classes" => Ok(StylingMode::Classes),
-        "inline" => Ok(StylingMode::Inline),
-        "minimal" => Ok(StylingMode::Minimal),
-        other => Err(Error::RuntimeError(format!(
-            "unknown style '{other}' (expected classes|inline|minimal)"
-        ))),
-    }
-}
-
-/// Load the `theme` object from tree-sitter's `config.json` (the same file the CLI reads, resolved
-/// via `tree_sitter_config::Config::load`, which uses `etcetera` to find `$XDG_CONFIG_HOME/
-/// tree-sitter/config.json`, `%APPDATA%/tree-sitter/config.json`, `$HOME/.tree-sitter/
-/// config.json`, etc.). Used as the fallback when the Lua caller does not supply its own theme.
-fn load_default_theme() -> Result<RenderTheme> {
-    let config = TsConfig::load(None)
-        .map_err(|e| Error::RuntimeError(format!("failed to load tree-sitter config: {e}")))?;
-    // `config.config` is the parsed `config.json` as a `serde_json::Value`; the `theme` key holds
-    // the highlight theme object (name -> {color, bold, ...}), identical in shape to the Lua
-    // `theme` table.
-    match config.config.get("theme") {
-        Some(theme_value) => Ok(parse_theme(theme_value)),
-        None => Ok(RenderTheme::default()),
-    }
-}
-
-/// The core highlight driver. Shared by the Lua entry point and (eventually) tests.
-///
-/// `format`/`layout`/`style`/`prefix`/`math_escape` are taken as resolved enums/strings.
-/// `math_escape` is ignored for `Terminal`/`Html`; `layout`/`style` are ignored for `Terminal`.
-fn run_highlight(
-    source: &[u8],
-    language: &str,
-    parsers: &HashMap<String, ParserInfo>,
-    theme: &RenderTheme,
-    format: OutputFormat,
-    layout: Layout,
-    style: StylingMode,
-    prefix: &str,
-    math_escape: &HashSet<usize>,
-) -> std::result::Result<String, String> {
-    let configs =
-        build_configs(parsers, &theme.highlight_names).map_err(|e: LoaderError| e.to_string())?;
-    let top = configs
-        .get(language)
-        .ok_or_else(|| format!("language '{language}' not found in `parsers`"))?;
-
-    let mut highlighter = Highlighter::new();
-    // `configs` and `highlighter` share this scope; the injection callback borrows `configs`
-    // and returns `&HighlightConfiguration`, which is valid for the lifetime of `events`.
-    let events = highlighter
-        .highlight(top, source, None, None, |name: &str| configs.get(name))
-        .map_err(|e: TsError| e.to_string())?;
-
-    match format {
-        OutputFormat::Terminal => {
-            let styles: Vec<anstyle::Style> = theme.styles.iter().map(|s| s.ansi).collect();
-            let default = AnstyleStyle::new();
-            let mut renderer = TerminalRenderer::new(&styles, default);
-            render_highlighted(&mut renderer, events, source, &[]).map_err(|e| e.to_string())?;
-            Ok(String::from_utf8_lossy(renderer.content()).into_owned())
-        }
-        OutputFormat::Html => {
-            let mut renderer = render::HtmlRenderer::new();
-            let attrs = build_attribute_strings(theme, style, format, prefix);
-            render_highlighted(&mut renderer, events, source, &attrs).map_err(|e| e.to_string())?;
-            let body: Vec<String> = renderer.lines().map(|s| s.to_string()).collect();
-            let mut out = Vec::new();
-            write_html(&mut out, theme, layout, style, &body);
-            Ok(String::from_utf8_lossy(&out).into_owned())
-        }
-        OutputFormat::Latex => {
-            let mut renderer = TexRenderer::new(prefix.to_string(), math_escape.clone());
-            let attrs = build_attribute_strings(theme, style, format, prefix);
-            render_highlighted(&mut renderer, events, source, &attrs).map_err(|e| e.to_string())?;
-            let body = String::from_utf8_lossy(renderer.content()).into_owned();
-            let mut out = Vec::new();
-            // TODO: add a new option to output CSS and preamble.tex for tree-sitter-highlight
-            if style == StylingMode::Minimal {
-                write_tex_preamble(&mut out, prefix, theme, StylingMode::Classes);
-                Ok(String::from_utf8_lossy(&out).into_owned())
-            } else {
-                match layout {
-                    Layout::Fragment => {}
-                    Layout::LineNumbers => {
-                        write_tex_linenumbers(&mut out, prefix, theme, style, &body)
-                    }
-                    _ => write_tex_document(&mut out, prefix, theme, style, &body),
-                }
-                if layout == Layout::Fragment {
-                    Ok(body)
-                } else {
-                    Ok(String::from_utf8_lossy(&out).into_owned())
-                }
-            }
-        }
-    }
 }
 
 /// Lua entry point: `highlight { ... }`.
@@ -272,7 +97,7 @@ fn lua_highlight(args: Table) -> Result<String> {
 
     // `parsers`: `{ lang = { parser, highlights, injections, locals } }`.
     let parsers_tbl: Table = args.get("parsers")?;
-    let mut parsers: HashMap<String, ParserInfo> = HashMap::new();
+    let mut raw_parsers: HashMap<String, ParserInfo> = HashMap::new();
     for pair in parsers_tbl.pairs::<String, Value>() {
         let (lang, val) = pair?;
         if let Value::Table(pair_tbl) = val {
@@ -280,7 +105,7 @@ fn lua_highlight(args: Table) -> Result<String> {
             let highlights: String = pair_tbl.get("highlights").unwrap_or_default();
             let injections: String = pair_tbl.get("injections").unwrap_or_default();
             let locals: String = pair_tbl.get("locals").unwrap_or_default();
-            parsers.insert(
+            raw_parsers.insert(
                 lang,
                 ParserInfo {
                     parser,
@@ -295,10 +120,18 @@ fn lua_highlight(args: Table) -> Result<String> {
             )));
         }
     }
-    if parsers.is_empty() {
+    if raw_parsers.is_empty() {
         return Err(Error::RuntimeError(
             "`parsers` is empty; nothing to highlight with".to_string(),
         ));
+    }
+
+    // Dynamic-link each `parser/*.so` into a `tree_sitter::Language`, then build the core registry.
+    let mut parsers: HashMap<String, CoreParserInfo> = HashMap::with_capacity(raw_parsers.len());
+    for (lang, info) in &raw_parsers {
+        let core = loader::load_language(info, lang)
+            .map_err(|e: loader::Error| Error::RuntimeError(e.to_string()))?;
+        parsers.insert(lang.clone(), core);
     }
 
     // `theme`: a `name -> {color, bold, ...}` JSON object (mirrors cli's theme JSON). An explicit,
@@ -309,26 +142,27 @@ fn lua_highlight(args: Table) -> Result<String> {
             let json: JsonValue = lua_table_to_json(t)?;
             parse_theme(&json)
         }
-        _ => load_default_theme()?,
+        _ => highlight_core::load_default_theme()
+            .map_err(|e| Error::RuntimeError(e))?,
     };
 
     let format = {
         let raw: String = args
             .get::<String>("format")
             .unwrap_or_else(|_| "terminal".into());
-        parse_format(&raw)?
+        highlight_core::parse_format(&raw).map_err(Error::RuntimeError)?
     };
     let layout = {
         let raw: String = args
             .get::<String>("layout")
             .unwrap_or_else(|_| "document".into());
-        parse_layout(&raw)?
+        highlight_core::parse_layout(&raw).map_err(Error::RuntimeError)?
     };
     let style = {
         let raw: String = args
             .get::<String>("style")
             .unwrap_or_else(|_| "classes".into());
-        parse_style(&raw)?
+        highlight_core::parse_style(&raw).map_err(Error::RuntimeError)?
     };
     let prefix: String = args.get::<String>("prefix").unwrap_or_else(|_| "TS".into());
 

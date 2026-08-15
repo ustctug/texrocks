@@ -2,7 +2,9 @@
 resolver = "2"
 members = [
   "crates/highlight",
+  "crates/highlight-core",
   "crates/lua-tree-sitter-highlight",
+  "crates/py-tree-sitter-highlight",
 ]
 
 [workspace.package]

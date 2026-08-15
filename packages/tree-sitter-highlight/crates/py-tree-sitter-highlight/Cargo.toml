@@ -1,0 +1,17 @@
+[package]
+name = "py-tree-sitter-highlight"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lib]
+name = "tree_sitter_highlight"
+crate-type = ["cdylib"]
+path = "src/lib.rs"
+
+[dependencies]
+highlight-core = { path = "../highlight-core" }
+pyo3 = { version = "0.24", features = ["abi3-py38", "extension-module"] }
+serde_json.workspace = true
+tree-sitter.workspace = true
