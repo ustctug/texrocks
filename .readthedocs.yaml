@@ -7,16 +7,16 @@ build:
   tools:
     python: "3"
   commands:
-    - asdf plugin add lua
     - asdf plugin add rust
-    - asdf install lua 5.1
     - asdf install rust latest
     - asdf global rust latest
+    - asdf plugin add lua
+    - asdf install lua 5.1
     - asdf global lua 5.1
-    - luarocks config rocks_servers.1 https://lumen-oss.github.io/rocks-binaries
+    - luarocks config --scope=user rocks_servers.1 \
+      https://lumen-oss.github.io/rocks-binaries
     - luarocks install ldoc-temp
     - luarocks install texcat
-    - luarocks install tree-sitter-cli
     - luarocks install tree-sitter-comment
     - luarocks install tree-sitter-bash
     - luarocks install tree-sitter-latex
