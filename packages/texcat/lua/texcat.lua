@@ -153,14 +153,21 @@ function M.get_paths(external)
             table.insert(paths, fs.joinpath(prefix, 'share/nvim/runtime'))
         end
         -- luarocks
-        local version = loadfile(fs.joinpath(config_dir, 'default-lua-version.lua'))() or '5.1'
+        local func = loadfile(fs.joinpath(config_dir, 'default-lua-version.lua'))
+        local version = func and func() or '5.1'
         local luarocks_config = { require = require }
-        loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)()
+        func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
+        if func then
+            func()
+        end
         local root = ((luarocks_config.rocks_trees or {})[1] or {}).root or
             fs.joinpath(os.getenv('HOME') or '/', '.luarocks')
         local manifest = {}
         local dir = fs.joinpath(root, "lib", "luarocks", "rocks-" .. version)
-        loadfile(fs.joinpath(dir, "manifest"), "t", manifest)()
+        func = loadfile(fs.joinpath(dir, "manifest"), "t", manifest)
+        if func then
+            func()
+        end
         for name, rocks in pairs(manifest.dependencies or {}) do
             for rev, _ in pairs(rocks) do
                 local path = table.concat({ dir, name, rev }, '/')
