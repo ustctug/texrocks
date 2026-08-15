@@ -13,10 +13,10 @@ build:
     - asdf install rust latest
     - asdf global rust latest
     - asdf global lua 5.1
-    # full path can declare lua version
     - luarocks config rocks_servers.1 https://lumen-oss.github.io/rocks-binaries
     - luarocks install ldoc-temp
     - luarocks install texcat
+    - luarocks install tree-sitter-cli
     - luarocks install tree-sitter-comment
     - luarocks install tree-sitter-bash
     - luarocks install tree-sitter-latex
