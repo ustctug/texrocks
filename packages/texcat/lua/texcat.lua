@@ -141,17 +141,20 @@ function M.os_getenv(varname)
     return require "os".getenv(varname)
 end
 
+---support `no_manifest = true`
 ---@param paths string[]
 ---@param dir string
 function M.insert_paths(paths, dir)
-    local manifest = {}
-    func = loadfile(fs.joinpath(dir, "manifest"), "t", manifest)
-    if func then
-        func()
-        for name, rocks in pairs(manifest.dependencies or {}) do
-            for rev, _ in pairs(rocks) do
-                local path = table.concat({ dir, name, rev }, '/')
-                table.insert(paths, path)
+    for name in fs.dir(dir) do
+        if name:sub(1, 1) ~= '.' then
+            name = fs.joinpath(dir, name)
+            if fn.isdirectory(name) == 1 then
+                for path in fs.dir(name) do
+                    if path:sub(1, 1) ~= '.' then
+                        path = fs.joinpath(name, path)
+                        table.insert(paths, path)
+                    end
+                end
             end
         end
     end
@@ -177,7 +180,6 @@ function M.get_paths(external)
         local version = func and func() or '5.1'
         local luarocks_config = { os_getenv = M.os_getenv, home = M.os_getenv("HOME") or '.' }
         func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
-        print(func)
         if func then
             func()
             for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
@@ -190,7 +192,6 @@ function M.get_paths(external)
             if p then
                 local text = p:read '*a'
                 p:close()
-                print(text)
                 dir = (cjson.decode(text).variables or {}).ROCKS_TREE
             end
             if dir then

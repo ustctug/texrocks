@@ -9,6 +9,7 @@ local M = {
     highlighters = {},
     parsers = {},
     paths = texcat.get_paths(true),
+    _highlighters = {},
 }
 M.theme = texcat.get_theme(texcat.get_themes(M.paths), 'solarized-light')
 M.all_parsers = search_parsers(M.paths)
@@ -18,8 +19,11 @@ texcat.fix_parsers_(M.all_parsers)
 ---@param language string
 function M.get_highlighter(_, language)
     language = ft_parser_map[language] or language
+    if M._highlighters[language] then
+        return M._highlighters[language]
+    end
     M.parsers[language] = texcat.get_parsers(M.all_parsers, language, {})
-    local highlighter = function(source, args)
+    M._highlighters[language] = function(source, args)
         args.format = args.formatter
         args.source = source
         args.language = language
@@ -34,8 +38,7 @@ function M.get_highlighter(_, language)
         end
         return texcat.render(args)
     end
-    M.highlighters[language] = highlighter
-    return highlighter
+    return M._highlighters[language]
 end
 
 setmetatable(M.highlighters, { __index = M.get_highlighter })
