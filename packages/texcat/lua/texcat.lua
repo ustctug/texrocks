@@ -141,6 +141,22 @@ function M.os_getenv(varname)
     return require "os".getenv(varname)
 end
 
+---@param paths string[]
+---@param dir string
+function M.insert_paths(paths, dir)
+    local manifest = {}
+    func = loadfile(fs.joinpath(dir, "manifest"), "t", manifest)
+    if func then
+        func()
+        for name, rocks in pairs(manifest.dependencies or {}) do
+            for rev, _ in pairs(rocks) do
+                local path = table.concat({ dir, name, rev }, '/')
+                table.insert(paths, path)
+            end
+        end
+    end
+end
+
 ---@param external boolean?
 ---@return string[]
 function M.get_paths(external)
@@ -163,19 +179,20 @@ function M.get_paths(external)
         func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
         if func then
             func()
-        end
-        for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
-            local manifest = {}
-            local dir = fs.joinpath(tree.root, "lib", "luarocks", "rocks-" .. version)
-            func = loadfile(fs.joinpath(dir, "manifest"), "t", manifest)
-            if func then
-                func()
+            for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
+                local dir = fs.joinpath(tree.root, "lib", "luarocks", "rocks-" .. version)
+                M.insert_paths(paths, dir)
             end
-            for name, rocks in pairs(manifest.dependencies or {}) do
-                for rev, _ in pairs(rocks) do
-                    local path = table.concat({ dir, name, rev }, '/')
-                    table.insert(paths, path)
-                end
+        else
+            local p = io.popen('luarocks config --json')
+            local dir
+            if p then
+                local text = p:read '*a'
+                p:close()
+                dir = (cjson.decode(text).variables or {}).ROCKS_TREE
+            end
+            if dir then
+                M.insert_paths(paths, dir)
             end
         end
     end
