@@ -22,14 +22,8 @@ build:
       EOF
     - luarocks install ldoc-temp
     - luarocks install texcat
-    - |
-      bash <<'EOF'
-      lua -e 'print(pcall(require,"ldoc.prettify"))'
-      EOF
-    - |
-      bash <<'EOF'
-      lua -e 'print(pcall(require,"lxsh"))'
-      EOF
+    - lua -e "print(pcall(require,\"ldoc.prettify\"))"
+    - lua -e "print(pcall(require,\"lxsh\"))"
     - luarocks install tree-sitter-comment
     - luarocks install tree-sitter-bash
     - luarocks install tree-sitter-latex
