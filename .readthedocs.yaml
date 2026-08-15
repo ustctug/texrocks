@@ -13,8 +13,8 @@ build:
     - asdf plugin add lua
     - asdf install lua 5.1
     - asdf global lua 5.1
-    - echo 'rocks_servers = { "https://lumen-oss.github.io/rocks-binaries", \
-      "https://luarocks.org" }' >> \
+    - echo "\n"'rocks_servers = { "https://lumen-oss.github.io/rocks-binaries",
+      "https://luarocks.org" }' >>
       ~/.asdf/installs/lua/5.1/luarocks/etc/luarocks/config-5.1.lua
     - luarocks install ldoc-temp
     - luarocks install texcat
