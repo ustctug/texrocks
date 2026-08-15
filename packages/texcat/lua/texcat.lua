@@ -160,18 +160,18 @@ function M.get_paths(external)
         if func then
             func()
         end
-        local root = ((luarocks_config.rocks_trees or {})[1] or {}).root or
-            fs.joinpath(os.getenv('HOME') or '/', '.luarocks')
-        local manifest = {}
-        local dir = fs.joinpath(root, "lib", "luarocks", "rocks-" .. version)
-        func = loadfile(fs.joinpath(dir, "manifest"), "t", manifest)
-        if func then
-            func()
-        end
-        for name, rocks in pairs(manifest.dependencies or {}) do
-            for rev, _ in pairs(rocks) do
-                local path = table.concat({ dir, name, rev }, '/')
-                table.insert(paths, path)
+        for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
+            local manifest = {}
+            local dir = fs.joinpath(tree.root, "lib", "luarocks", "rocks-" .. version)
+            func = loadfile(fs.joinpath(dir, "manifest"), "t", manifest)
+            if func then
+                func()
+            end
+            for name, rocks in pairs(manifest.dependencies or {}) do
+                for rev, _ in pairs(rocks) do
+                    local path = table.concat({ dir, name, rev }, '/')
+                    table.insert(paths, path)
+                end
             end
         end
     end
