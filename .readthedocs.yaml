@@ -22,7 +22,6 @@ build:
       EOF
     - luarocks install ldoc-temp
     - luarocks install texcat
-    - lua -e "print(pcall(require,\"lxsh\"))"
     - luarocks install tree-sitter-comment
     - luarocks install tree-sitter-bash
     - luarocks install tree-sitter-latex
