@@ -24,11 +24,11 @@ build:
     - luarocks install texcat
     - |
       bash <<EOF
-      lua -e "print(pcall(require,'ldoc.prettify'))"
+      lua -e 'print(pcall(require,"ldoc.prettify"))'
       EOF
     - |
       bash <<EOF
-      lua -e "print(pcall(require,'lxsh'))"
+      lua -e 'print(pcall(require,"lxsh"))'
       EOF
     - luarocks install tree-sitter-comment
     - luarocks install tree-sitter-bash
