@@ -20,9 +20,9 @@ build:
         "https://luarocks.org",
       }
       EOF
-    - cat ~/.asdf/installs/lua/5.1/luarocks/etc/luarocks/config-5.1.lua
     - luarocks install ldoc-temp
     - luarocks install texcat
+    - ls -l ~/.asdf/installs/lua/5.1/luarocks/share/lua/5.1
     - luarocks install tree-sitter-comment
     - luarocks install tree-sitter-bash
     - luarocks install tree-sitter-latex
