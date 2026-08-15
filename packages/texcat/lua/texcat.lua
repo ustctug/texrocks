@@ -112,6 +112,9 @@ end
 ---@param injections string[]
 ---@return table
 function M.get_parsers(parsers, language, injections)
+    if parsers[language] == nil then
+        return {}
+    end
     local _parsers = {}
     _parsers[language] = parsers[language]
     local _injections = { [language] = true }
@@ -134,12 +137,22 @@ function M.get_parsers(parsers, language, injections)
     return _parsers
 end
 
----@param luarocks boolean?
+---@param external boolean?
 ---@return string[]
-function M.get_paths(luarocks)
+function M.get_paths(external)
     local paths = {}
-    -- luarocks
-    if luarocks or luarocks == nil then
+    if external then
+        if fn.isdirectory('/run/current-system/sw') == 1 then
+            table.insert(paths, '/run/current-system/sw/lib/nvim')
+            table.insert(paths, '/run/current-system/sw/share/nvim/runtime')
+        else
+            table.insert(paths, '/usr/lib/nvim')
+            table.insert(paths, '/usr/share/nvim/runtime')
+            local prefix = os.getenv 'PREFIX' or '/usr/local'
+            table.insert(paths, fs.joinpath(prefix, 'lib/nvim'))
+            table.insert(paths, fs.joinpath(prefix, 'share/nvim/runtime'))
+        end
+        -- luarocks
         local version = loadfile(fs.joinpath(config_dir, 'default-lua-version.lua'))() or '5.1'
         local luarocks_config = { require = require }
         loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)()
@@ -204,7 +217,7 @@ function M.get_theme(themes, name)
     end
     local content = f:read('*a')
     f:close()
-    content = content:gsub('//[^\n]*\n', '')
+    content = content:gsub('//[^\n]*\n', ''):gsub(',%s*]', ']')
     local theme = {}
     for _, datum in ipairs(cjson.decode(content).tokenColors or {}) do
         local settings = datum.settings or {}
@@ -255,7 +268,7 @@ end
 ---@return string
 function M.highlight(args)
     if args.parsers[args.language] == nil then
-        io.stderr:write("No parser found for language: " .. language .. "\n")
+        io.stderr:write("No parser found for language: " .. args.language .. "\n")
         if args.style == 'minimal' then
             return ''
         end
@@ -270,7 +283,7 @@ end
 ---**entry for texcat**
 ---@param argv string[] command line arguments
 function M.main(argv)
-    local paths = M.get_paths()
+    local paths = M.get_paths(true)
     local parsers = search_parsers(paths)
     local themes = M.get_themes(paths)
     local parser = M.get_parser(argv[0], parsers, themes)
@@ -315,75 +328,80 @@ end
 ---@param args table
 ---@return string
 function M.render(args)
-    args.injections = args.injections or {}
-    args.math_escape = args.math_escape or {}
-    local file = args.file or 'empty'
-    local paths = M.get_paths(false)
-    local parsers = search_parsers(paths)
-    local language = args.language or M.get_language(file)
-    local _parsers = M.get_parsers(parsers, language, args.injections)
-    M.fix_parsers_(_parsers)
+    local language = args.language or M.get_language(args.file or '')
 
-    local themes = M.get_themes(paths)
-    local theme = M.get_theme(themes, args.theme)
+    local paths = {}
+    local parsers = args.parsers
+    if parsers == nil then
+        paths = M.get_paths(args.external)
+        parsers = search_parsers(paths)
+        parsers = M.get_parsers(parsers, language, args.injections or {})
+        M.fix_parsers_(parsers)
+    end
+
+    local theme = args.color_theme
+    if theme == nil then
+        if #paths == 0 then
+            paths = M.get_paths(args.external)
+        end
+        local themes = M.get_themes(paths)
+        theme = M.get_theme(themes, args.theme)
+    end
+
     local prefix = args.prefix or ('TS' .. (args.theme or '')):gsub('[^a-zA-Z]', '')
+    local math_escape = args.math_escape or {}
 
-    if tex and tex.print and args.style ~= 'minimal' then
+    if tex and tex.print and args.style == nil then
         local out = M.highlight {
-            file = file,
+            file = args.file,
             source = args.source,
             language = language,
             theme = theme,
-            parsers = _parsers,
+            parsers = parsers,
             format = 'latex',
             style = 'minimal',
             prefix = prefix,
-            math_escape = args.math_escape,
+            math_escape = math_escape,
         }
         out = out:gsub("^%s+", ""):gsub("\n", "")
         tex.print(out)
     end
-    local filename = args.filename or fs.joinpath('.lux', file .. '.tex')
-    fn.mkdir(fs.dirname(filename), 'p')
-    local f = io.open(filename, 'w')
-    if f then
-        local out = M.highlight {
-            file = file,
-            source = args.source,
-            language = language,
-            theme = theme,
-            parsers = _parsers,
-            format = 'latex',
-            layout = 'fragment',
-            style = 'classes',
-            prefix = prefix,
-            math_escape = args.math_escape,
-        }
-        f:write(out)
-        f:close()
-    end
-    return filename
-end
 
----@param language string
----@param source string
----@param args table
----@return string
-function M.render_source(language, source, args)
-    args.injections = args.injections or {}
-    args.math_escape = args.math_escape or {}
-    args.layout = args.layout or 'fragment'
-    args.style = args.style or 'inline'
-    args.source = source
-    args.language = ft_parser_map[language] or language
-    args.format = args.formatter
-    local paths = texcat.get_paths(args.external)
-    local parsers = search_parsers(paths)
-    texcat.fix_parsers_(parsers)
-    local themes = texcat.get_themes(paths)
-    args.theme = texcat.get_theme(themes, args.theme_name or 'monokai')
-    args.parsers = M.get_parsers(parsers, args.language, args.injections)
-    return M.highlight(args)
+    local format = args.format
+    local style = args.style
+    if tex and tex.print then
+        format = format or 'latex'
+        style = style or 'classes'
+    else
+        format = format or 'html'
+        style = style or 'inline'
+    end
+    local out = M.highlight {
+        file = args.file,
+        source = args.source,
+        language = language,
+        theme = theme,
+        parsers = parsers,
+        format = format,
+        layout = args.layout or 'fragment',
+        style = style,
+        prefix = prefix,
+        math_escape = math_escape,
+    }
+    if tex and tex.print then
+        local filename = args.filename or fs.joinpath('.lux', (args.file or '') .. '.tex')
+        fn.mkdir(fs.dirname(filename), 'p')
+        local f = io.open(filename, 'w')
+        if f then
+            f:write(out)
+            f:close()
+        end
+        return filename
+    end
+    if format == 'html' then
+        out = out:match("<code>(.-)</code>") or out
+    end
+    return out
 end
 
 return M
