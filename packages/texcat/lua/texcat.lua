@@ -180,6 +180,10 @@ function M.get_paths(external)
         local version = func and func() or '5.1'
         local luarocks_config = { os_getenv = M.os_getenv, home = M.os_getenv("HOME") or '.' }
         func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
+        ---@diagnostic disable-next-line: deprecated
+        if setfenv then
+            setfenv(f, luarocks_config)
+        end
         if func then
             func()
             for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
