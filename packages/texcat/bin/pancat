@@ -1,0 +1,22 @@
+#!/usr/bin/env -S pandoc --lua-filter
+---TODO: support more formats
+local pandoc = require 'pandoc'
+local texcat = require 'texcat'
+local M = {}
+
+---add lang
+---@param elem table
+---@return table | table[]?
+function M.CodeBlock(elem)
+  local out = texcat.render {
+    external = true,
+    source = elem.text,
+    language = elem.classes[1],
+    format = FORMAT,
+    theme = 'monokai',
+    style = FORMAT == "html" and "inline" or "classes"
+  }
+  return pandoc.RawBlock(FORMAT, out)
+end
+
+return M

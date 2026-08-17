@@ -437,7 +437,7 @@ function M.render(args)
         end
         return filename
     end
-    if format == 'html' then
+    if format == 'html' and args.style == nil then
         out = out:match("<code>(.-)</code>") or out
     end
     return out
