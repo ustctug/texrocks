@@ -144,7 +144,10 @@ end
 ---support `no_manifest = true`
 ---@param paths string[]
 ---@param dir string
-function M.insert_paths(paths, dir)
+function M.insert_paths_(paths, dir)
+    if fn.isdirectory(dir) == 0 then
+        return
+    end
     for name in fs.dir(dir) do
         if name:sub(1, 1) ~= '.' then
             name = fs.joinpath(dir, name)
@@ -188,7 +191,7 @@ function M.get_paths(external)
             func()
             for _, tree in ipairs(luarocks_config.rocks_trees or {}) do
                 local dir = fs.joinpath(tree.root, "lib", "luarocks", "rocks-" .. version)
-                M.insert_paths(paths, dir)
+                M.insert_paths_(paths, dir)
             end
         else
             local p = io.popen('luarocks config --json')
@@ -199,7 +202,7 @@ function M.get_paths(external)
                 dir = (cjson.decode(text).variables or {}).ROCKS_TREE
             end
             if dir then
-                M.insert_paths(paths, dir)
+                M.insert_paths_(paths, dir)
             end
         end
     end
