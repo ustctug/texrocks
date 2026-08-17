@@ -185,7 +185,8 @@ function M.get_paths(external)
         func = loadfile(fs.joinpath(config_dir, "config-" .. version .. ".lua"), "t", luarocks_config)
         ---@diagnostic disable-next-line: deprecated
         if setfenv then
-            setfenv(f, luarocks_config)
+            ---@diagnostic disable-next-line: deprecated
+            setfenv(func, luarocks_config)
         end
         if func then
             func()
