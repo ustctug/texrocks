@@ -39,5 +39,7 @@ mkShell {
         ldoc
       ]
     ))
+
+    pandoc
   ];
 }

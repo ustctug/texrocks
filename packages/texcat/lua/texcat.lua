@@ -14,6 +14,7 @@ local highlight = require "tree_sitter_highlight".highlight
 local search_parsers = require "tree_sitter_highlight".search_parsers
 local ft_parser_map = require "rocks_treesitter.ft_parser_map"
 local M = {
+    pandoc = {},
     scopes = {
         module = 'storage',
         constructor = 'support.class',
@@ -319,9 +320,13 @@ function M.highlight(args)
     return highlight(args)
 end
 
----**entry for texcat**
+---**entry for texcat**, always enable external parser searching
 ---@param argv string[] command line arguments
+---@return table?
 function M.main(argv)
+    if FORMAT then
+        return M.pandoc
+    end
     local paths = M.get_paths(true)
     local parsers = search_parsers(paths)
     local themes = M.get_themes(paths)
@@ -363,7 +368,7 @@ function M.main(argv)
     end
 end
 
----output a file
+---API for lualatex/pandoc/ldoc
 ---@param args table
 ---@return string
 function M.render(args)
@@ -390,6 +395,7 @@ function M.render(args)
     local prefix = args.prefix or ('TS' .. (args.theme or '')):gsub('[^a-zA-Z]', '')
     local math_escape = args.math_escape or {}
 
+    -- lualatex can pass style = minimal to skip it
     if tex and tex.print and args.style == nil then
         local out = M.highlight {
             file = args.file,
@@ -427,6 +433,7 @@ function M.render(args)
         prefix = prefix,
         math_escape = math_escape,
     }
+    -- lualatex
     if tex and tex.print then
         local filename = args.filename or fs.joinpath('.lux', (args.file or '') .. '.tex')
         fn.mkdir(fs.dirname(filename), 'p')
@@ -437,10 +444,36 @@ function M.render(args)
         end
         return filename
     end
-    if format == 'html' and args.style == nil then
+    -- ldoc
+    if format == 'html' then
         out = out:match("<code>(.-)</code>") or out
+        -- pandoc
+    elseif format == 'latex' then
+        out = ([[
+\begin{Verbatim}[numbers=left,commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+%s
+\end{Verbatim}
+]]):format(out)
     end
     return out
+end
+
+---add lang
+---@param elem table
+---@return table | table[]?
+function M.pandoc.CodeBlock(elem)
+    local pandoc = require 'pandoc'
+    local format = FORMAT == "html" and "html" or "latex"
+    local language = elem.classes[1]
+    language = ft_parser_map[language] or language
+    local out = texcat.render {
+        external = true,
+        source = elem.text,
+        language = language,
+        format = format,
+        theme = 'monokai',
+    }
+    return pandoc.RawBlock(FORMAT, out)
 end
 
 return M
