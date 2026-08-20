@@ -2,7 +2,7 @@
 
 ![screenshot](https://github.com/user-attachments/assets/5d608baf-5b48-4d0b-b371-7eb0cc36008b)
 
-[Bench](https://github.com/sphinx-contrib/tree-sitter-highlight/#bench).
+[Bench](https://tree-sitter-highlight.readthedocs.io/en/latest/resources/bench.html).
 
 ## Dependencies
 
