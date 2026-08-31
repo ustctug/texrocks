@@ -12,12 +12,12 @@ If you use texrocks, you can install parsers by yourself.
 lx add -b tree-sitter-XXX
 ```
 
-Add <https://nvim-neorocks.github.io/rocks-binaries/> to
+Add <https://lux.lumen-labs.org/lux-treesitter-binaries/> to
 `~/.config/lux/config.toml` to save compile time.
 
 ```toml
 extra_servers = [
-  "https://nvim-neorocks.github.io/rocks-binaries/",
+  "https://lux.lumen-labs.org/lux-treesitter-binaries/",
 ]
 ```
 

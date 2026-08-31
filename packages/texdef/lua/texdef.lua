@@ -89,7 +89,7 @@ function M.postparse(args)
 end
 
 ---get path of template
----https://github.com/nvim-neorocks/lux/issues/922
+---https://github.com/lumen-oss/lux/issues/922
 ---@param filename string template name
 ---@return string file template path
 function M.get_path(filename)

@@ -13,6 +13,6 @@
 
 ## Credit
 
-- [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim): a neovim package
+- [rocks.nvim](https://github.com/lumen-oss/rocks.nvim): a neovim package
   manager powered by luarocks
 - [apltex](https://github.com/RadioNoiseE/apltex): inspiration origin

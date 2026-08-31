@@ -19,13 +19,13 @@ However, you can install it standalone.
 
 Without any package managers: you can download compiled programs from Internet.
 This is an example for GNU/Linux. For other OSes, search
-[download link](https://github.com/nvim-neorocks/lux/releases/).
+[download link](https://github.com/lumen-oss/lux/releases/).
 
 ```sh
 curl -O https://download.speedata.de/files/extra/luatex_115-win-mac-linux.zip
 unzip luatex_115-win-mac-linux.zip
 install -D luatex/linux/sdluatex /usr/local/bin/luahbtex
-curl -O https://github.com/nvim-neorocks/lux/releases/download/v0.15.1/lx_0.15.1_x86_64.AppImage
+curl -O https://github.com/lumen-oss/lux/releases/download/v0.15.1/lx_0.15.1_x86_64.AppImage
 install -D lx_0.15.1_x86_64.AppImage /usr/local/bin/lx
 ```
 
