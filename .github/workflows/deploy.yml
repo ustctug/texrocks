@@ -78,11 +78,11 @@ jobs:
         with:
           pattern: artifact-*
           merge-multiple: true
-      - env:
+      - uses: ustctug/texrocks@0.3.15
+        env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
           LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
-        uses: ustctug/texrocks@0.3.15
         with:
           target: >
             rpzip

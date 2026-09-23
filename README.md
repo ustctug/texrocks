@@ -39,24 +39,38 @@ A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 1. Create a project
 
 ```sh
-# answer some questions of lx
-lx new my-thesis
-cd my-thesis
-
+$ lx new my-thesis
+> Package name: my-thesis
+> Description: My thesis
+> License: GPL-3.0
+> Labels: thesis
+> Maintainer: A TeX user
+> What is the lowest Lua version you support? 5.1
+All done!
+$ cd my-thesis
+$ cat lux.toml
 ```
-
-A `lux.toml` will be created:
 
 ```toml
 package = "my-thesis"
 version = "0.1.0"
-lua = "==5.3"
+lua = ">=5.1"
 
 [description]
 summary = "My thesis"
 maintainer = "A TeX user"
 labels = ["thesis"]
 license = "GPL-3.0"
+
+[dependencies]
+# Add your dependencies here
+# `busted = ">=2.0"`
+
+[run]
+args = ["src/main.lua"]
+
+[build]
+type = "builtin"
 ```
 
 2. Add some dependencies
