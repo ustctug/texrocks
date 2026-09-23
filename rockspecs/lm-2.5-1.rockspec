@@ -1,5 +1,5 @@
 local git_ref = '2.005'
-local modrev = git_ref
+local modrev = git_ref:gsub('0+(%d)', '%1')
 local specrev = '1'
 
 rockspec_format = '3.0'

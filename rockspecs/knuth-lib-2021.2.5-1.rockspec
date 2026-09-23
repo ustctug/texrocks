@@ -1,5 +1,5 @@
 local git_ref = '2021-02-05'
-local modrev = git_ref:gsub("-", ".")
+local modrev = git_ref:gsub('-0', '-'):gsub('-', '.')
 local specrev = '1'
 
 local repo_url = 'https://ctan.org/pkg/knuth-lib'

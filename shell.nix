@@ -37,6 +37,8 @@ mkShell {
       p: with p; [
         busted
         ldoc
+
+        luarocks
       ]
     ))
 
