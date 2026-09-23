@@ -1,5 +1,5 @@
-local git_ref = '2025-01-18'
-local modrev = git_ref:gsub('-', '.')
+local git_ref = '2026-08-10'
+local modrev = git_ref:gsub('-0', '-'):gsub('-', '.')
 local specrev = '1'
 
 local repo_url = 'https://github.com/latex3/latex3'

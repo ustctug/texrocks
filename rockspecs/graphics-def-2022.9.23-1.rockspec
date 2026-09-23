@@ -1,5 +1,5 @@
 local git_ref = '2022-09-23'
-local modrev = git_ref:gsub('-', '.')
+local modrev = git_ref:gsub('-0', '-'):gsub('-', '.')
 local specrev = '1'
 
 local repo_url = 'https://github.com/latex3/graphics-def'

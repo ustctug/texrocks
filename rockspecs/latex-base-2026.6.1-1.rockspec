@@ -1,6 +1,6 @@
-local git_ref = 'release-2025-06-01-PL1'
-local modrev = git_ref:gsub("^release%-", ""):gsub("%-PL.*", ""):gsub('%-', '.')
-local specrev = git_ref:gsub(".*%-PL", "")
+local git_ref = 'release-2026-06-01'
+local modrev = git_ref:gsub("^release%-", ""):gsub('-0', '-'):gsub('%-', '.')
+local specrev = "1"
 
 local repo_url = 'https://github.com/latex3/latex2e'
 
@@ -10,7 +10,7 @@ version = modrev .. '-' .. specrev
 
 -- luaotfload depends on lublibs which depends on lualatex to build
 -- 'lm', 'luaotfload'
-dependencies = { 'l3kernel', 'l3backend', 'knuth-lib', 'latex-url', 'etex' }
+dependencies = { 'l3kernel', 'knuth-lib', 'latex-url', 'etex' }
 
 description = {
   summary = 'Base sources of LaTeX',

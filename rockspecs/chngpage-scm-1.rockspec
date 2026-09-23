@@ -6,7 +6,7 @@ rockspec_format = '3.0'
 package = 'chngpage'
 version = modrev .. '-' .. specrev
 
-dependencies = { 'l3kernel', 'l3backend', 'knuth-lib' }
+dependencies = { 'l3kernel', 'knuth-lib' }
 
 description = {
   summary = 'Change the page layout in the middle of a document',
