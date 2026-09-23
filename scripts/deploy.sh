@@ -16,7 +16,7 @@ for f in texrocks-*.rock texdef-*.rock; do
   fi
 done
 
-"$WD/scripts/upload.sh" ./*.rockspec
+"$WD/scripts/upload.sh" ./*.rock
 luarocks-admin make-manifest .
 zip "manifest-$LUA_VERSION.zip" "manifest-$LUA_VERSION"
 "$WD/scripts/process-index.html.pl" index.html
