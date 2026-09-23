@@ -1,0 +1,108 @@
+---
+"on":
+  push:
+    paths-ignore:
+      - "**.md"
+      - doc/*
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - doc/*
+  workflow_dispatch:
+
+# Prevent concurrent auto-commits
+concurrency:
+  group: auto-commit-linux-x86_64
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on:
+          - macos-latest
+          # - windows-latest
+    runs-on: ${{matrix.runs-on}}
+    steps:
+      - name: Install MSVC Compiler Toolchain
+        uses: ilammy/msvc-dev-cmd@v1
+      - uses: leafo/gh-actions-lua@v12
+        with:
+          luaVersion: "5.3"
+      - uses: luarocks/gh-actions-luarocks@v6
+      - name: Install Dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install autoconf automake libtool
+      - name: Install Dependencies
+        # CMake Error:
+        # Could NOT find Lua (missing: LUA_LIBRARIES LUA_INCLUDE_DIR)
+        run: |
+          luarocks config variables.ZIP rpzip
+          luarocks install rpzip
+          luarocks install luahbtex
+          luarocks install lua-template
+          luarocks pack lua-zlib
+          luarocks pack luafilesystem
+          luarocks pack luahbtex
+          luarocks pack lua-template
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{matrix.runs-on}}
+          path: |
+            *.rock
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GH_TOKEN}}
+          ref: gh-pages
+      - uses: leafo/gh-actions-lua@v12
+        with:
+          luaVersion: "5.3"
+      - uses: luarocks/gh-actions-luarocks@v6
+      - name: Install Dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install liblua5.3-dev rename
+          rm -f ./*.rock
+          # https://github.com/luarocks/luarocks/issues/1817
+          echo local_by_default = true >>\
+          ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
+          luarocks config variables.ZIP rpzip
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: artifact-*
+          merge-multiple: true
+      - env:
+          TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
+          CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
+          LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
+        uses: ustctug/texrocks@0.3.15
+        with:
+          target: >
+            rpzip
+            luahbtex
+            luatexinfo
+            lualatex
+            texdef
+            standalone
+            hologo
+            citation-style-language
+            beamer
+            ctex
+            markdown2tex
+            babel-base
+            hypdoc
+            ydoc
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: gh-pages
+          commit_message: 'chore: update build artifacts'
+          file_pattern: index.html manifest* *.rock
+          commit_options: --amend --no-edit
+          push_options: --force

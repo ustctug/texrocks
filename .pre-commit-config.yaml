@@ -53,6 +53,8 @@ repos:
     rev: v1.7.12
     hooks:
       - id: actionlint
+        # https://github.com/rhysd/actionlint/issues/46
+        exclude: ^\.github/workflows/.*/
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.38.0
     hooks:
