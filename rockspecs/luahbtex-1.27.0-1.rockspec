@@ -1,4 +1,4 @@
-local git_ref = '1.24.0'
+local git_ref = '1.27.0'
 local modrev = git_ref
 local specrev = '1'
 
@@ -33,6 +33,10 @@ build = {
   install = {
     bin = {
       luahbtex = 'build/texk/web2c/luahbtex'
+    },
+    -- https://github.com/luarocks/luarocks/issues/1817
+    lib = {
+      ["texmf.cnf"] = 'source/texk/kpathsea/texmf.cnf'
     },
     conf = {
       ['../web2c/texmf.cnf'] = 'source/texk/kpathsea/texmf.cnf'
