@@ -1,5 +1,5 @@
 package = "luarocks-build-l3build"
-version = "0.3.12"
+version = "0.3.13"
 lua = ">=5.1"
 
 [description]
@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 luarocks = ">=3.12.2"
-l3build = "2024.10.16-1"
+l3build = ">=2024.10.16"
 
 [run]
 command = "luarocks"
@@ -36,5 +36,5 @@ flags = [
 type = "builtin"
 
 [test_dependencies]
-luatex = "0.3.12-1"
-latex-base = "2025.06.01-1"
+luatex = ">=0.3.12"
+latex-base = ">=2026.6.1"

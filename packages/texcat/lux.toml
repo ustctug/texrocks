@@ -28,8 +28,8 @@ luaposix = ">=36.3"
 fancyvrb = ">=4.6"
 lualatex = ">=0.3.13"
 graphics-cfg = ">=0.0.1"
-tree-sitter-latex = "0.0.42-1"
-tree-sitter-comment = "0.0.33-1"
+tree-sitter-latex = ">=0.0.42"
+tree-sitter-comment = ">=0.0.33"
 ldoc-temp = ">=1.5.0"
 
 [run]

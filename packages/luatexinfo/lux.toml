@@ -1,5 +1,5 @@
 package = "luatexinfo"
-version = "0.3.12"
+version = "0.3.13"
 lua = ">=5.1"
 
 [description]
@@ -16,14 +16,14 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [build_dependencies]
 texrocks = ">=0.3.12"
-amsfonts = "3.04-1"
-tex-ini-files = "2025.02.09-1"
-knuth-lib = "2021.02.05-1"
+amsfonts = ">=3.4"
+tex-ini-files = ">=2026.3.7"
+knuth-lib = ">=2021.2.5"
 texinfo = ">=7.2"
 
 [dependencies]
 texrocks = ">=0.3.12"
-amsfonts = "3.04-1"
+amsfonts = ">=3.4"
 
 [run]
 command = "luatexinfo"

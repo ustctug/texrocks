@@ -22,7 +22,7 @@ lualatex = ">=0.3.12"
 luatex = ">=0.3.12"
 
 [test_dependencies]
-l3build = "2024.10.16-1"
+l3build = ">=2024.10.16"
 toml2lua = ">=3.0.0"
 
 [run]

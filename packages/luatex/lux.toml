@@ -1,5 +1,5 @@
 package = "luatex"
-version = "0.3.12"
+version = "0.3.13"
 lua = ">=5.1"
 
 [description]
@@ -16,12 +16,12 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 texrocks = ">=0.3.12"
-amsfonts = "3.04-1"
+amsfonts = ">=3.4"
 
 [build_dependencies]
 texrocks = ">=0.3.12"
-amsfonts = "3.04-1"
-tex-ini-files = "2025.02.09-1"
+amsfonts = ">=3.4"
+tex-ini-files = ">=2026.3.7"
 unicode-data = ">=1.18"
 # etex depends on knuth-lib
 etex = ">=2.1"

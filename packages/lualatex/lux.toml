@@ -1,5 +1,5 @@
 package = "lualatex"
-version = "0.3.13"
+version = "0.3.14"
 lua = ">=5.1"
 
 [description]
@@ -8,7 +8,7 @@ maintainer = "Wu"
 labels = ["texmf"]
 detailed = "See https://github.com/ustctug/texrocks"
 homepage = "https://www.lualatex.org/"
-license = 'GPL-3.0'
+license = "GPL-3.0"
 
 [source]
 url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
@@ -17,20 +17,23 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 # refer https://ctan.org/pkg/required
 [dependencies]
 texrocks = ">=0.3.12"
-amsfonts = "3.04-1"
+amsfonts = ">=3.4"
 # tex-ini-files provide lualatexquotejobname.lua
-tex-ini-files = "2025.02.09-1"
+tex-ini-files = ">=2026.3.7"
 # latex-base depends on l3backend depends on unicode-data
-latex-base = "2025.06.01-1"
+latex-base = ">=2026.6.1"
 luaotfload = ">=3.29"
-lm = "2.005-1"
+lm = ">=2.5"
+# lua-uni-algos 0.5 provide lua-uni-data.lua for expl3.sty of l3kernel 2026.8.10
+lua-uni-algos = ">=0.5"
 
 [build_dependencies]
 texrocks = ">=0.3.12"
-amsfonts = "3.04-1"
-tex-ini-files = "2025.02.09-1"
-latex-base = "2025.06.01-1"
+amsfonts = ">=3.4"
+tex-ini-files = ">=2026.3.7"
+latex-base = ">=2026.6.1"
 latex-fonts = ">=0.0.1"
+lua-uni-algos = ">=0.5"
 
 [run]
 command = "lualatex"
@@ -48,7 +51,7 @@ type = "command"
 build_command = "bin/lualatex --ini --interaction=nonstopmode lualatex.ini"
 
 [build.install.conf]
-'../web2c/luahbtex/lualatex.fmt' = 'lualatex.fmt'
+"../web2c/luahbtex/lualatex.fmt" = "lualatex.fmt"
 
 [build.install.bin]
-lualatex = 'bin/lualatex'
+lualatex = "bin/lualatex"

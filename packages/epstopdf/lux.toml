@@ -1,5 +1,5 @@
 package = "epstopdf"
-version = "0.3.12"
+version = "0.3.13"
 lua = ">=5.1"
 
 [description]
@@ -33,5 +33,5 @@ wrap_bin_scripts = false
 type = "builtin"
 
 [test_dependencies]
-l3build = "2024.10.16-1"
-toml2lua = "3.0.0-1"
+l3build = ">=2024.10.16"
+toml2lua = ">=3.0.0"
