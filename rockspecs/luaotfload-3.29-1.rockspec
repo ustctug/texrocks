@@ -10,7 +10,7 @@ version = modrev .. '-' .. specrev
 
 build_dependencies = { 'luatex', 'latex-base' }
 
-dependencies = { 'lualibs', 'lua-uni-algos' }
+dependencies = { 'lualibs', 'lua-uni-algos', 'alt-getopt' }
 
 description = {
   summary = 'OpenType ‘loader’ for Plain TeX and LaTeX',

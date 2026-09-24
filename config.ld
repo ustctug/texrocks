@@ -108,4 +108,9 @@ Know what is under the hood.
 - [rocks](https://ustctug.github.io/texrocks/): some packages cost many time to build. We provide compiled packages for them!
 - [repository](https://github.com/ustctug/texrocks): git repository, also include this website.
 - [CTAN](https://ctan.org/pkg/texrocks): CTAN homepage
+
+## Related Projects
+
+- [mmtex](https://github.com/vlasakm/mmtex)
+- [apltex](https://github.com/RadioNoiseE/apltex)
 ]]
