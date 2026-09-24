@@ -22,8 +22,7 @@ description = {
 -- so pin versions:
 -- 1. luahbtex -> texrocks
 -- 2. texrocks -> luatex/lualatex/luatexinfo/initex
--- kpsewhich --formats=ris/blxml needs kpathsea 6.4.0
-dependencies = { "luahbtex == 1.27.0", "argparse" }
+dependencies = { "luahbtex == 1.27.0", "argparse", "prompt-style" }
 
 test_dependencies = $test_dependencies
 

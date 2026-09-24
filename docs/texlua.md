@@ -2,9 +2,6 @@
 
 texlua uses luatex as Lua interpreter and provides a REPL for debug.
 
-Install [prompt-style](https://luarocks.org/modules/freed-wu/prompt-style) to
-enable it.
-
 ## Lua interpreter
 
 ```sh
