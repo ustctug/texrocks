@@ -3,8 +3,29 @@
 ---@copyright 2026
 local kpse = require 'kpse'
 local argparse = require 'argparse'
+local cjson = require 'cjson'
 local texrocks = require 'texrocks'
-local M = {}
+
+---@param name string
+---@return table
+local function decode(name)
+    local root = debug.getinfo(1).source:match("@?(.*).lua$")
+    local f = io.open(root .. "/" .. name .. ".json")
+    local content = "{}"
+    if f then
+        content = f:read("*a")
+        f:close()
+    end
+    return cjson.decode(content)
+end
+
+local M = {
+    aliases = decode("aliases"),
+    formats = decode("formats"),
+}
+-- kpse 6.4.0
+M.formats.ris = nil
+M.formats.bltxml = nil
 
 ---get parser
 ---@param progname string program name
@@ -48,38 +69,23 @@ function M.get_parser(progname)
     return parser
 end
 
----use correct system tool to open PDF
----@param file string PDF file path
----@return string[] args command line arguments
----@diagnostic disable: undefined-field
--- luacheck: ignore 143
-function M.get_cmd_args(file)
-    if os.name == 'macosx' then
-        return { "open", file }
-    elseif os.name == 'windows' or os.name == 'cygwin' then
-        return { "start", file }
-    elseif os.getenv "PREFIX" then
-        return { "termux-open", file }
-    elseif file:gsub(".*%.", "") == "pdf" and os.getenv "DISPLAY" == nil then
-        return { "pdftotext", file, "-" }
-    else
-        return { "xdg-open", file }
-    end
-end
-
 ---**entry for kpsewhich**
 ---@param argv string[] command line arguments
 function M.main(argv)
     local parser = M.get_parser(argv[0])
     local args = parser:parse(argv)
     local verbosity = args.debug - args.silent
+
     if args.version then
         print(kpse.version())
         return
-    elseif args.help_formats then
+    end
+
+    if args.help_formats then
         if verbosity > 0 then
             kpse.set_program_name(args.progname)
         end
+
         local names = {}
         for name, _ in pairs(M.formats) do
             table.insert(names, name)
@@ -105,43 +111,22 @@ function M.main(argv)
         end
         return
     end
+
     kpse.set_program_name(args.progname)
-    for _, v in ipairs(args.expand_braces or {}) do
-        local result = kpse.expand_braces(v)
-        if verbosity > 0 then
-            result = v .. ' -> ' .. result
+    for _, method in ipairs { "expand_braces", "expand_path", "expand_var", "var_value", "show_path" } do
+        for _, v in ipairs(args[method] or {}) do
+            local result = kpse[method](v)
+            if verbosity > 0 then
+                local eq = " -> "
+                if method == "var_value" then
+                    eq = "="
+                end
+                result = v .. eq .. result
+            end
+            print(result)
         end
-        print(result)
     end
-    for _, v in ipairs(args.expand_path or {}) do
-        local result = kpse.expand_path(v)
-        if verbosity > 0 then
-            result = v .. ' -> ' .. result
-        end
-        print(result)
-    end
-    for _, v in ipairs(args.expand_var or {}) do
-        local result = kpse.expand_var(v)
-        if verbosity > 0 then
-            result = v .. ' -> ' .. result
-        end
-        print(result)
-    end
-    for _, v in ipairs(args.var_value or {}) do
-        local result = kpse.var_value(v)
-        if verbosity > 0 then
-            result = v .. ' -> ' .. result
-        end
-        print(result)
-    end
-    for _, v in ipairs(args.show_path or {}) do
-        v = M.aliases[v] or v
-        local result = kpse.show_path(v)
-        if verbosity > 0 then
-            result = v .. ' -> ' .. result
-        end
-        print(result)
-    end
+
     local format = args.format
     if args.open then
         format = 'TeX system documentation'
@@ -174,248 +159,23 @@ function M.main(argv)
     end
 end
 
-M.aliases = {
-    bitmapfont = 'bitmap font',
-    mpsupport = 'MetaPost support',
-    source = 'TeX system sources',
-    doc = 'TeX system documentation',
-    trofffont = 'Troff fonts',
-    dvipsconfig = 'dvips config',
-    web2c = 'web2c files',
-    othertext = 'other text files',
-    otherbin = 'other binary files',
-    miscfont = 'misc fonts',
-    cmap = 'cmap files',
-    pdftexconfig = 'pdftex config',
-}
-
-M.formats = {
-    gf = {
-        patterns = { '*.gf' },
-        vars = { 'GFFONTS', 'GLYPHFONTS', 'TEXFONTS' }
-    },
-    pk = {
-        patterns = { '*.pk' },
-        vars = { 'PKFONTS', 'TEXPKS', 'GLYPHFONTS', 'TEXFONTS' }
-    },
-    ['bitmap font'] = {
-        vars = { 'GLYPHFONTS', 'TEXFONTS' }
-    },
-    tfm = {
-        patterns = { '*.tfm' },
-        vars = { 'TFMFONTS', 'TEXFONTS' }
-    },
-    afm = {
-        patterns = { '*.afm' },
-        vars = { 'AFMFONTS', 'TEXFONTS' }
-    },
-    base = {
-        patterns = { '*.base' },
-        vars = { 'MFBASES', 'TEXMFINI' }
-    },
-    bib = {
-        patterns = { '*.bib' },
-        vars = { 'BIBINPUTS', 'TEXBIB' }
-    },
-    bst = {
-        patterns = { '*.bst' },
-        vars = { 'BSTINPUTS' }
-    },
-    cnf = {
-        source = 'paths.h',
-        patterns = { '*.cnf' },
-        vars = { 'TEXMFCNF' }
-    },
-    ['ls-R'] = {
-        patterns = { 'ls-R', 'ls-r' },
-        vars = { 'TEXMFDBS' }
-    },
-    fmt = {
-        patterns = { '*.fmt' },
-        vars = { 'TEXFORMATS', 'TEXMFINI' }
-    },
-    map = {
-        patterns = { '*.map' },
-        vars = { 'TEXFONTMAPS', 'TEXFONTS' }
-    },
-    mem = {
-        patterns = { '*.mem' },
-        vars = { 'MPMEMS', 'TEXMFINI' }
-    },
-    mf = {
-        patterns = { '*.mf' },
-        vars = { 'MFINPUTS' }
-    },
-    mfpool = {
-        patterns = { '*.pool' },
-        vars = { 'MFPOOL', 'TEXMFINI' }
-    },
-    mft = {
-        patterns = { '*.mft' },
-        vars = { 'MFTINPUTS' }
-    },
-    mp = {
-        patterns = { '*.mp' },
-        vars = { 'MPINPUTS' }
-    },
-    mppool = {
-        patterns = { '*.pool' },
-        vars = { 'MPPOOL', 'TEXMFINI' }
-    },
-    ['MetaPost support'] = {
-        vars = { 'MPSUPPORT' }
-    },
-    ocp = {
-        patterns = { '*.ocp' },
-        vars = { 'OCPINPUTS' }
-    },
-    ofm = {
-        patterns = { '*.ofm' },
-        vars = { 'OFMFONTS', 'TEXFONTS' }
-    },
-    opl = {
-        patterns = { '*.opl', '*.pl' },
-        vars = { 'OPLFONTS', 'TEXFONTS' }
-    },
-    otp = {
-        patterns = { '*.otp' },
-        vars = { 'OTPINPUTS' }
-    },
-    ovf = {
-        patterns = { '*.ovf', '*.vf' },
-        vars = { 'OVFFONTS', 'TEXFONTS' }
-    },
-    ovp = {
-        patterns = { '*.ovp', '*.vpl' },
-        vars = { 'OVPFONTS', 'TEXFONTS' }
-    },
-    ['graphic/figure'] = {
-        patterns = { '*.eps', '*.epsi' },
-        vars = { 'TEXPICTS', 'TEXINPUTS' }
-    },
-    tex = {
-        patterns = { '*.tex', '*.sty', '*.cls', '*.fd', '*.aux', '.bbl', '.def', '.clo', '.ldf' },
-        vars = { 'TEXINPUTS' }
-    },
-    ['TeX system documentation'] = {
-        vars = { 'TEXDOCS' }
-    },
-    texpool = {
-        patterns = { '*.pool' },
-        vars = { 'TEXPOOL', 'TEXMFINI' }
-    },
-    ['TeX system sources'] = {
-        patterns = { '*.dtx', '*.ins' },
-        vars = { 'TEXSOURCES' }
-    },
-    ['PostScript header'] = {
-        patterns = { '*.pro' },
-        vars = { 'TEXPSHEADERS', 'PSHEADERS' }
-    },
-    ['Troff fonts'] = {
-        vars = { 'TRFONTS' }
-    },
-    ['type1 fonts'] = {
-        patterns = { '*.pfa', '*.pfb' },
-        vars = { 'T1FONTS', 'T1INPUTS', 'TEXFONTS', 'TEXPSHEADERS', 'PSHEADERS' }
-    },
-    vf = {
-        patterns = { '*.vf' },
-        vars = { 'VFFONTS', 'TEXFONTS' }
-    },
-    ['dvips config'] = {
-        vars = { 'TEXCONFIG' }
-    },
-    ist = {
-        patterns = { '*.ist' },
-        vars = { 'TEXINDEXSTYLE', 'INDEXSTYLE' }
-    },
-    ['truetype fonts'] = {
-        patterns = { '*.ttf ', '*.ttc ', '*.TTF ', '*.TTC ', '*.dfont' },
-        vars = { 'TTFONTS', 'TEXFONTS' }
-    },
-    ['type42 fonts'] = {
-        patterns = { '*.t42 ', '*.T42 ' },
-        vars = { 'T42FONTS', 'TEXFONTS' }
-    },
-    ['web2c files'] = {
-        vars = { 'WEB2C' }
-    },
-    ['other text files'] = {
-        vars = { '${PROGNAME}INPUTS' }
-    },
-    ['other binary files'] = {
-        vars = { '${PROGNAME}INPUTS' }
-    },
-    ['misc fonts'] = {
-        vars = { 'MISCFONTS', 'TEXFONTS' }
-    },
-    web = {
-        patterns = { '*.web', '*.ch' },
-        vars = { 'WEBINPUTS' }
-    },
-    cweb = {
-        patterns = { '*.w', '*.web', '*.ch' },
-        vars = { 'CWEBINPUTS' }
-    },
-    ['enc files'] = {
-        patterns = { '*.enc' },
-        vars = { 'ENCFONTS', 'TEXFONTS' }
-    },
-    ['cmap files'] = {
-        vars = { 'CMAPFONTS', 'TEXFONTS' }
-    },
-    ['subfont definition files'] = {
-        patterns = { '*.sfd' },
-        vars = { 'SFDFONTS', 'TEXFONTS' }
-    },
-    ['opentype fonts'] = {
-        patterns = { '*.otf', '*.OTF' },
-        vars = { 'OPENTYPEFONTS', 'TEXFONTS' }
-    },
-    ['pdftex config'] = {
-        vars = { 'PDFTEXCONFIG' }
-    },
-    ['lig files'] = {
-        patterns = { '*.lig' },
-        vars = { 'LIGFONTS', 'TEXFONTS' }
-    },
-    texmfscripts = {
-        vars = { 'TEXMFSCRIPTS' }
-    },
-    lua = {
-        patterns = { '*.lua', '*.luatex', '*.luc', '*.luctex', '*.texlua', '*.texluc', '*.tlu' },
-        vars = { 'LUAINPUTS' }
-    },
-    ['font feature files'] = {
-        patterns = { '*.fea' },
-        vars = { 'FONTFEATURES' }
-    },
-    ['cid maps'] = {
-        patterns = { '*.cid', '*.cidmap' },
-        vars = { 'FONTCIDMAPS' }
-    },
-    mlbib = {
-        patterns = { '*.mlbib', '*.bib' },
-        vars = { 'MLBIBINPUTS', 'BIBINPUTS', 'TEXBIB' }
-    },
-    mlbst = {
-        patterns = { '*.mlbst', '*.bst' },
-        vars = { 'MLBSTINPUTS', 'BSTINPUTS' }
-    },
-    clua = {
-        patterns = { '*.dll', '*.so' },
-        vars = { 'CLUAINPUTS' }
-    },
-    -- kpse 6.4.0
-    -- ris = {
-    --     patterns = { '*.ris' },
-    --     vars = { 'RISINPUTS' }
-    -- },
-    -- bltxml = {
-    --     patterns = { '*.bltxml' },
-    --     vars = { 'BLTXMLINPUTS' }
-    -- },
-}
+---use correct system tool to open PDF
+---@param file string PDF file path
+---@return string[] args command line arguments
+---@diagnostic disable: undefined-field
+-- luacheck: ignore 143
+function M.get_cmd_args(file)
+    if os.name == 'macosx' then
+        return { "open", file }
+    elseif os.name == 'windows' or os.name == 'cygwin' then
+        return { "start", file }
+    elseif os.getenv "PREFIX" then
+        return { "termux-open", file }
+    elseif file:gsub(".*%.", "") == "pdf" and os.getenv "DISPLAY" == nil then
+        return { "pdftotext", file, "-" }
+    else
+        return { "xdg-open", file }
+    end
+end
 
 return M

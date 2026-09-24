@@ -1,2 +1,2 @@
 #!/usr/bin/env texlua
-require 'texrocks'.run(arg)
+require 'texrocks.luatex'.main(arg)

@@ -1,0 +1,14 @@
+{
+  "bitmapfont": "bitmap font",
+  "mpsupport": "MetaPost support",
+  "source": "TeX system sources",
+  "doc": "TeX system documentation",
+  "trofffont": "Troff fonts",
+  "dvipsconfig": "dvips config",
+  "web2c": "web2c files",
+  "othertext": "other text files",
+  "otherbin": "other binary files",
+  "miscfont": "misc fonts",
+  "cmap": "cmap files",
+  "pdftexconfig": "pdftex config"
+}

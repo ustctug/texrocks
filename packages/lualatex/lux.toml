@@ -16,10 +16,10 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 # refer https://ctan.org/pkg/required
 [dependencies]
-texrocks = "0.3.16"
+texrocks = "0.3.17"
 amsfonts = ">=3.4"
 # tex-ini-files provide lualatexquotejobname.lua
-tex-ini-files = "2026.3.7"
+tex-ini-files = "2026.3.27"
 # latex-base depends on l3backend depends on unicode-data
 latex-base = "2026.6.1"
 luaotfload = ">=3.29"
@@ -28,9 +28,9 @@ lm = ">=2.5"
 lua-uni-algos = ">=0.5"
 
 [build_dependencies]
-texrocks = "0.3.16"
+texrocks = "0.3.17"
 amsfonts = ">=3.4"
-tex-ini-files = "2026.3.7"
+tex-ini-files = "2026.3.27"
 latex-base = "2026.6.1"
 latex-support = "2026.6.1"
 latex-fonts = ">=0.0.1"

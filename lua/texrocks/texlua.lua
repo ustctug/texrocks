@@ -4,7 +4,6 @@
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143
 local updmap = require "texrocks.updmap"
-local texrocks = require 'texrocks'
 local M = {}
 
 if os.type == "windows" then
@@ -28,6 +27,24 @@ if os.name == "macosx" then
     M.OSFONTDIR = M.OSFONTDIR .. ";{/System,}/Library/Fonts//"
 elseif os.name == "cygwin" then
     M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
+end
+
+---get offset from one script to another script
+---such as `texlua --option main.lua --option` -> `main.lua --option`
+---offset should be 2
+---@param args string[] command line arguments
+---@return integer offset
+function M.get_offset(args)
+    local offset
+    for i, v in ipairs(args) do
+        local char = v:sub(1, 1)
+        -- skip \macro and --option
+        if char ~= "\\" and char ~= "-" then
+            offset = i
+            break
+        end
+    end
+    return offset
 end
 
 ---get the first non-nil element's index
@@ -59,6 +76,41 @@ function M.shift(argv, offset)
     return args
 end
 
+---@param args string[]
+---@return string[]
+function M.callback(args)
+    if args.v then
+        print(require 'status'.banner)
+        os.exit(0)
+    end
+    return args
+end
+
+---@param args string[] command line arguments
+---@param extra_offset integer? extra offset
+---@return string[] args parsed result
+function M.parse(args, extra_offset)
+    local offset = M.get_offset(args)
+    if offset == nil then
+        require 'prompt.utils'.main(arg, nil, M.callback)
+        os.exit()
+    end
+
+    return M.shift(args, offset + (extra_offset or 0))
+end
+
+---**entry for texlua**
+---@param argv string[] `arg`
+function M.main(argv)
+    -- luacheck: ignore 121
+    arg = M.parse(argv)
+
+    M.setenvs()
+    -- progname should be texlua
+    M.setotherenv(updmap.name(argv[0]))
+    loadfile(arg[0])()
+end
+
 ---call `os.setenv()` when environment variable doesn't exist
 ---@param key string
 ---@param value string
@@ -76,18 +128,6 @@ end
 function M.getenv(path, suffix)
     local processed = updmap.getpaths(path, suffix)
     return table.concat(processed, ";")
-end
-
----**entry for texlua**
----@param args string[] `arg`
-function M.main(args)
-    M.setenvs()
-    -- progname should be texlua
-    M.setotherenv(updmap.name(args[0]))
-
-    -- luacheck: ignore 121
-    arg = M.preparse(args)
-    loadfile(arg[0])()
 end
 
 ---wrap `os.setenv()` for font files due to `OSFONTDIR`
@@ -133,7 +173,7 @@ function M.setenvs()
     -- create ./texmf.cnf to override lua/texrocks/texmf.cnf
     os.setenv("TEXMFCNF",
         "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" ..
-        debug.getinfo(1).source:match("@?(.*/)") .. 'texrocks/templates')
+        debug.getinfo(1).source:match("@?(.*/)") .. 'templates')
     os.setenv("TEXMFDBS", "")
 
     os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path))
@@ -199,103 +239,6 @@ end
 ---@param progname string read <https://texdoc.org/serve/kpathsea/0>
 function M.setotherenv(progname)
     M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
-end
-
----get offset from one script to another script
----such as `texlua --option main.lua --option` -> `main.lua --option`
----offset should be 2
----@param args string[] command line arguments
----@return integer offset
-function M.get_offset(args)
-    local offset
-    for i, v in ipairs(args) do
-        local char = v:sub(1, 1)
-        -- skip \macro and --option
-        if char ~= "\\" and char ~= "-" then
-            offset = i
-            break
-        end
-    end
-    return offset
-end
-
----refer `parse`
----@see parse
----@param args string[] command line arguments
----@param extra_offset integer? extra offset
----@return string[] args parsed result
-function M.preparse(args, extra_offset)
-    local offset = M.get_offset(args)
-    if offset == nil then
-        require 'prompt.utils'.main(arg, nil, function(args_)
-            if args_.v then
-                print(require 'status'.banner)
-                os.exit(0)
-            end
-            return args_
-        end)
-        os.exit()
-    end
-
-    return M.shift(args, offset + (extra_offset or 0))
-end
-
----**entry for luatex**
----@param argv string[] `arg`
-function M.run(argv)
-    local args = M.parse(argv)
-    M.setotherenv(M.get_program_name(args))
-    updmap.sync(false)
-    texrocks.exec(args)
-end
-
----luahbtex --luaonly texlua luatex:
----texlua will call preparse(), then loadfile("luatex")()
----luatex will call parse(), then os.exec{[0]="luatex", "luahbtex"}
----@param argv string[] command line arguments
----@return string[] args parsed result
----@see preparse
-function M.parse(argv)
-    local args = M.shift(argv, -1)
-    local begin = M.get_begin_index(args)
-    args[0] = args[begin]
-    return args
-end
-
----see <https://texdoc.org/serve/luatex/0>'s command line options
----@param args string[] command line arguments not `arg`
----@return string progname
-function M.get_program_name(args)
-    -- --progname is latter first
-    for i = #args, 2, -1 do
-        if args[i]:match("^--progname=") then
-            local progname = args[i]:gsub("^--progname=", "")
-            return progname
-        elseif args[i - 1] == "--progname" then
-            return args[i]
-        end
-    end
-
-    -- --fmt/--ini is former first
-    local opt
-    for i = 2, #args do
-        if args[i]:match("^--fmt=") then
-            local progname = args[i]:gsub("^--fmt=", "")
-            return progname
-        elseif args[i] == "--fmt" or args[i] == "--ini" then
-            opt = args[i]
-        elseif args[i]:match("^%-") == args[i]:match("^\\") then
-            if opt == "--fmt" then
-                return args[i]
-            elseif opt == "--ini" then
-                local progname = args[i]:gsub(".*/", ""):gsub("%.*", "")
-                return progname
-            end
-        end
-    end
-
-    -- usually be luahbtex
-    return updmap.name(args[1])
 end
 
 return M
