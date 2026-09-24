@@ -25,16 +25,15 @@ command = "luarocks"
 type = "command"
 command = "luarocks"
 flags = [
-  "--lua-version=5.3",
   "--tree=.lux",
   "build",
   "--deps-mode=none",
-  "../../rockspecs/hyperref-7.01-15.rockspec",
+  "../../rockspecs/hyperref-7.1-18.rockspec",
 ]
 
 [build]
 type = "builtin"
 
 [test_dependencies]
-luatex = ">=0.3.12"
+luatex = ">=0.3.16"
 latex-base = ">=2026.6.1"
