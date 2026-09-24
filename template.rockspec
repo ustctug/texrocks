@@ -40,7 +40,7 @@ end
 build = {
   type = 'builtin',
   install = {
-    bin = { "bin/texlua" },
+    bin = { "bin/texlua", "bin/kpsewhich", "bin/updmap" },
   }
 }
 
