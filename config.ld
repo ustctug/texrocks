@@ -78,7 +78,6 @@ Some useful tools for development!
 ### Developed by ours
 
 - [texlua](topics/texlua.md.html): a texlua more like lua
-- [lua-open](topics/lua-open.md.html): view your PDF
 - [texdef](topics/texdef.md.html): which TeX package defines `\macro`?
 - [kpsewhich](topics/kpathsea.md.html): where is TeX package XXX?
 - [epstopdf](topics/epstopdf.md.html): call ghostscript to convert eps to pdf

@@ -17,11 +17,11 @@ hologo = ">=1.15"
 standalone = ">=1.5"
 
 [test_dependencies]
-lua-open = ">=0.3.6"
+texrocks = ">=0.3.16"
 
 [test]
 type = "command"
-command = "lua-open"
+command = "kpsewhich --open"
 flags = ["main.pdf"]
 
 [build]

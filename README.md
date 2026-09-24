@@ -40,6 +40,8 @@ A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 
 ```sh
 $ lx new my-thesis
+Fetching remote repository metadata...
+✔ Fetched remote repository metadata.
 > Package name: my-thesis
 > Description: My thesis
 > License: GPL-3.0
@@ -84,8 +86,8 @@ lx add -b hyperref
 lx add -b graphics-cfg
 # \usepackage{tikz}
 lx add -b pgf
-# lua-open main.pdf
-lx add -t lua-open
+# open main.pdf
+lx add -t texrocks
 # lx add -b more packages ...
 ```
 
@@ -100,7 +102,7 @@ graphics-cfg = "X.Y.Z-1"
 pgf = "X.Y.Z-1"
 
 [test_dependencies]
-lua-open = "X.Y.Z-1"
+texrocks = "X.Y.Z-1"
 ```
 
 3. Edit your document
@@ -124,7 +126,7 @@ build_command = "lualatex --interaction=nonstopmode main.tex"
 
 [test]
 type = "command"
-command = "lua-open"
+command = "kpsewhich --open"
 flags = ["main.pdf"]
 ```
 
@@ -148,8 +150,10 @@ $ tree -a
 │       │   ├──  .gitignore
 │       │   └──  5.3
 │       │       ├──  bin
-│       │       │   ├──  lualatex  # LaTeX compiler
-│       │       │   └──  texlua  # Lua interpreter
+│       │       │   ├──  kpsewhich  # Lua program, a wrapper of luahbtex
+│       │       │   ├──  luahbtex  # real LaTeX compiler and Lua interpreter
+│       │       │   ├──  lualatex  # LaTeX compiler, a wrapper of luahbtex
+│       │       │   └──  texlua  # Lua interpreter, a wrapper of luahbtex
 │       │       ├──  1a043a1a092206fb664a8dd394bdf99e526af762fe7282c6ccf49bc0ec23521e-latex-base@2024.11.01-2
 │       │       │   ├──  etc
 │       │       │   │   ├──  conf
@@ -215,7 +219,8 @@ $ tree -a
 │           └──  5.3
 │               ├──  ...
 │               └──  bin
-│                   ├──  lua-open
+│                   ├──  kpsewhich
+│                   ├──  luahbtex
 │                   └──  texlua
 ├──  lux.lock  # like package-lock.json or requirements.txt
 ├──  lux.toml  # like package.json or pyproject.toml

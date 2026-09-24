@@ -86,7 +86,7 @@ jobs:
         with:
           target: >
             rpzip
-            luahbtex
+            luatex
             luatexinfo
             lualatex
             texdef
