@@ -34,6 +34,21 @@ end
 
 build = {
   type = 'l3build',
+  patches = {
+    ["fix-find_file.diff"] = [[
+--- old/src/luaotfload-init.lua
++++ new/src/luaotfload-init.lua
+@@ -16,7 +16,7 @@ assert(luaotfload_module, "This is a part of luaotfload and should not be loaded
+
+
+ local setmetatable = setmetatable
+-local kpsefind_file   = kpse.find_file
++local kpsefind_file   = kpse.lookup
+ local lfsisdir     = lfs.isdir
+
+ --[[doc--
+]],
+},
   variables = {
     GITHUB_REF_TYPE = 'tag',
     GITHUB_REF_NAME = git_ref,
