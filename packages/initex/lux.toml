@@ -1,5 +1,5 @@
 package = "initex"
-version = "0.3.13"
+version = "0.3.16"
 lua = ">=5.1"
 
 [description]
@@ -15,10 +15,10 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [build_dependencies]
-texrocks = ">=0.3.12"
+texrocks = "0.3.16"
 
 [dependencies]
-texrocks = ">=0.3.12"
+texrocks = "0.3.16"
 
 [run]
 command = "initex"
@@ -36,7 +36,7 @@ type = "command"
 build_command = "bin/initex --ini --interaction=nonstopmode initex.ini"
 
 [build.install.conf]
-'../web2c/luahbtex/initex.fmt' = 'initex.fmt'
+"../web2c/luahbtex/initex.fmt" = "initex.fmt"
 
 [build.install.bin]
-initex = 'bin/initex'
+initex = "bin/initex"

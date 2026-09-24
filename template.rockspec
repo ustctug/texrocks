@@ -16,7 +16,13 @@ description = {
   $license
 }
 
-dependencies = { }
+-- for luatex/lualatex/luatexinfo/initex
+-- luahbtex versions of build/run time must be same
+-- (Fatal format file error; I'm stymied)
+-- so pin versions:
+-- 1. luahbtex -> texrocks
+-- 2. texrocks -> luatex/lualatex/luatexinfo/initex
+dependencies = { "luahbtex == 1.27.0" }
 
 test_dependencies = $test_dependencies
 
