@@ -3,7 +3,6 @@
 ---@copyright 2025
 local kpse = require 'kpse'
 local argparse = require 'argparse'
-local semver = require 'semver'
 local M = {}
 
 ---get parser
@@ -360,10 +359,5 @@ M.formats = {
         vars = { 'BLTXMLINPUTS' }
     },
 }
-local v = semver(kpse.version():gsub(".* ", ''):gsub("/dev", ""))
-if v < semver(6, 4, 0) then
-    M.formats.ris = nil
-    M.formats.bltxml = nil
-end
 
 return M
