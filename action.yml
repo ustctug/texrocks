@@ -8,6 +8,9 @@ inputs:
   version:
     description: Lua version
     default: "5.3"
+  skip:
+    description: Skip deployment when rock is already on luarocks
+    default: "true"
 runs:
   using: composite
   steps:
@@ -16,3 +19,4 @@ runs:
       shell: bash
       env:
         LUA_VERSION: ${{ inputs.version }}
+        SKIP: ${{ inputs.skip }}

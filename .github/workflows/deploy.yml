@@ -78,7 +78,7 @@ jobs:
         with:
           pattern: artifact-*
           merge-multiple: true
-      - uses: ustctug/texrocks@0.3.15
+      - uses: ustctug/texrocks@main
         env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include

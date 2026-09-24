@@ -18,6 +18,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 texrocks = ">=0.3.12"
 luafilesystem = ">=0.0.1"
 zipwriter = ">=0.0.1"
+# https://github.com/moteus/ZipWriter#core
 lua-zlib = ">=0.0.1"
 # for Lua 5.1
 # luabitop = ">=0.0.1"
