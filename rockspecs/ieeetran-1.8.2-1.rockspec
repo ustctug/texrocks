@@ -1,6 +1,8 @@
 local git_ref = '1.8b'
 local modrev = git_ref:gsub('[^0-9.]', '')
-local specrev = git_ref.format('%d', git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+local _git_ref = git_ref.format('%d', git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+modrev = modrev .. '.' .. _git_ref
+local specrev = '1'
 
 rockspec_format = '3.0'
 package = 'ieeetran'

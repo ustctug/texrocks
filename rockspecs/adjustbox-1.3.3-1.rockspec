@@ -1,7 +1,9 @@
 local git_ref = 'v1.3c'
 local _git_ref = git_ref:gsub('^v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
-local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+modrev = modrev .. '.' .. __git_ref
+local specrev = '1'
 local date = '2025-02-26'
 
 local repo_url = 'https://github.com/MartinScharrer/adjustbox'

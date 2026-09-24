@@ -31,7 +31,7 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 -- \RequirePackage{fontenc}
-dependencies = { 'latex-base' }
+dependencies = { 'latex-base == ' .. modrev }
 
 build = {
   type = 'none',

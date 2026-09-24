@@ -1,4 +1,4 @@
-local git_ref = 'debian/7.2-2'
+local git_ref = 'debian/7.2-4'
 local _git_ref = git_ref:gsub("[^/]+/", "")
 local modrev = _git_ref:gsub("%-.*", "")
 local specrev = _git_ref:gsub(".*%-", "")

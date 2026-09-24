@@ -24,7 +24,7 @@ The appropriate LaTeX kernel releases incorporating the ideas from the packages 
   license = 'LPPL-1.3c'
 }
 
-dependencies = { 'l3kernel' }
+dependencies = { 'l3kernel == ' .. modrev }
 
 source = {
   url = repo_url .. '/releases/download/' .. git_ref .. '/' .. package .. '.tds.zip',

@@ -1,5 +1,5 @@
 package = "lualatex"
-version = "0.3.16"
+version = "0.3.17"
 lua = ">=5.1"
 
 [description]
@@ -19,9 +19,9 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 texrocks = "0.3.16"
 amsfonts = ">=3.4"
 # tex-ini-files provide lualatexquotejobname.lua
-tex-ini-files = ">=2026.3.7"
+tex-ini-files = "2026.3.7"
 # latex-base depends on l3backend depends on unicode-data
-latex-base = ">=2026.6.1"
+latex-base = "2026.6.1"
 luaotfload = ">=3.29"
 lm = ">=2.5"
 # lua-uni-algos 0.5 provide lua-uni-data.lua for expl3.sty of l3kernel 2026.8.10
@@ -30,8 +30,9 @@ lua-uni-algos = ">=0.5"
 [build_dependencies]
 texrocks = "0.3.16"
 amsfonts = ">=3.4"
-tex-ini-files = ">=2026.3.7"
-latex-base = ">=2026.6.1"
+tex-ini-files = "2026.3.7"
+latex-base = "2026.6.1"
+latex-support = "2026.6.1"
 latex-fonts = ">=0.0.1"
 lua-uni-algos = ">=0.5"
 

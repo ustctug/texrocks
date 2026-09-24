@@ -1,6 +1,6 @@
-local git_ref = '1.10'
+local git_ref = '1.10.3'
 local modrev = git_ref
-local specrev = '3'
+local specrev = '1'
 
 rockspec_format = '3.0'
 package = 'listings'
