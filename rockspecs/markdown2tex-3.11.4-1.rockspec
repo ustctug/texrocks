@@ -38,28 +38,8 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  -- type = 'builtin',
-  type = 'command',
-  build_command = [[unzip markdown.tds.zip || 7z x markdown.tds.zip]],
-  install = {
-    bin = {
-      ['markdown2tex'] = 'scripts/markdown/markdown2tex.lua',
-      ['markdown-cli'] = 'scripts/markdown/markdown-cli.lua',
-    },
-    conf = {
-      ['../tex/context/third/markdown/t-markdown.tex'] = 'tex/context/third/markdown/t-markdown.tex',
-      ['../tex/context/third/markdown/t-markdownthemewitiko_markdown_defaults.tex'] = 'tex/context/third/markdown/t-markdownthemewitiko_markdown_defaults.tex',
-      ['../tex/generic/markdown/markdown.tex'] = 'tex/generic/markdown/markdown.tex',
-      ['../tex/generic/markdown/markdownthemewitiko_markdown_defaults.tex'] = 'tex/generic/markdown/markdownthemewitiko_markdown_defaults.tex',
-      ['../tex/latex/markdown/markdown.sty'] = 'tex/latex/markdown/markdown.sty',
-      ['../tex/latex/markdown/markdownthemewitiko_markdown_defaults.sty'] = 'tex/latex/markdown/markdownthemewitiko_markdown_defaults.sty',
-    },
-    lua = {
-      ['markdown-parser'] = 'tex/luatex/markdown/markdown-parser.lua',
-      ['markdown-unicode-data'] = 'tex/luatex/markdown/markdown-unicode-data.lua',
-      ['markdown'] = 'tex/luatex/markdown/markdown.lua',
-    }
-  }
+  type = 'tds',
+  copy_directories = { 'tex' },
 }
 
 deploy = {

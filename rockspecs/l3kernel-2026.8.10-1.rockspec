@@ -31,35 +31,6 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
-  copy_directories = { 'doc' },
-  modules = {
-    expl3 = 'tex/latex/l3kernel/expl3.lua'
-  },
-  install = {
-    conf = {
-      ['../tex/latex/l3kernel/expl3-code.tex'] = 'tex/latex/l3kernel/expl3-code.tex',
-      ['../tex/latex/l3kernel/expl3-generic.tex'] = 'tex/latex/l3kernel/expl3-generic.tex',
-      ['../tex/latex/l3kernel/expl3.ltx'] = 'tex/latex/l3kernel/expl3.ltx',
-      ['../tex/latex/l3kernel/expl3.sty'] = 'tex/latex/l3kernel/expl3.sty',
-      ['../tex/latex/l3kernel/l3debug.def'] = 'tex/latex/l3kernel/l3debug.def',
-      ['../tex/latex/l3kernel/l3doc.cls'] = 'tex/latex/l3kernel/l3doc.cls',
-      ['../tex/latex/l3kernel/l3docstrip.tex'] = 'tex/latex/l3kernel/l3docstrip.tex',
-      ['../tex/latex/l3kernel/l3str-enc-iso88591.def'] = 'tex/latex/l3kernel/l3str-enc-iso88591.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88592.def'] = 'tex/latex/l3kernel/l3str-enc-iso88592.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88593.def'] = 'tex/latex/l3kernel/l3str-enc-iso88593.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88594.def'] = 'tex/latex/l3kernel/l3str-enc-iso88594.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88595.def'] = 'tex/latex/l3kernel/l3str-enc-iso88595.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88596.def'] = 'tex/latex/l3kernel/l3str-enc-iso88596.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88597.def'] = 'tex/latex/l3kernel/l3str-enc-iso88597.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88598.def'] = 'tex/latex/l3kernel/l3str-enc-iso88598.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso88599.def'] = 'tex/latex/l3kernel/l3str-enc-iso88599.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso885910.def'] = 'tex/latex/l3kernel/l3str-enc-iso885910.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso885911.def'] = 'tex/latex/l3kernel/l3str-enc-iso885911.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso885913.def'] = 'tex/latex/l3kernel/l3str-enc-iso885913.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso885914.def'] = 'tex/latex/l3kernel/l3str-enc-iso885914.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso885915.def'] = 'tex/latex/l3kernel/l3str-enc-iso885915.def',
-      ['../tex/latex/l3kernel/l3str-enc-iso885916.def'] = 'tex/latex/l3kernel/l3str-enc-iso885916.def',
-    }
-  }
+  type = 'tds',
+  copy_directories = { 'tex' },
 }

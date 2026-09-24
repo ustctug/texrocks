@@ -34,11 +34,6 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
+  type = 'tds',
   copy_directories = { 'tex' },
-  install = {
-    lua = {
-      ['luatexbase.loader'] = 'tex/luatex/luatexbase/luatexbase.loader.lua'
-    }
-  }
 }
