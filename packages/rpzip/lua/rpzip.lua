@@ -1,7 +1,7 @@
 ---https://github.com/drivendataorg/repro-zipfile/pull/23
 ---@module rpzip
 ---@copyright 2025
-local lfs = require("texrocks.lfs")
+local lfs = require "lfs"
 local ZipWriter = require "ZipWriter"
 
 local M = {
@@ -36,6 +36,13 @@ function M.is_executable(path)
         perms:sub(9, 9) == "x"
 end
 
+---@param dir string
+---@return boolean
+function M.isdir(dir)
+    local attr = lfs.attributes(dir)
+    return attr and attr.mode == "directory"
+end
+
 ---@param entry table?
 ---@return table entry
 function M.Entry:new(entry)
@@ -43,7 +50,7 @@ function M.Entry:new(entry)
     setmetatable(entry, {
         __index = self
     })
-    if lfs.isdir(entry.filename) then
+    if M.isdir(entry.filename) then
         entry.isdir    = true
         entry.isfile   = false
         entry.istext   = false

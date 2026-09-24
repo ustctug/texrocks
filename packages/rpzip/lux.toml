@@ -1,5 +1,5 @@
 package = "rpzip"
-version = "0.3.15"
+version = "0.3.16"
 lua = ">=5.1"
 
 [description]
@@ -15,7 +15,6 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
-texrocks = ">=0.3.12"
 luafilesystem = ">=0.0.1"
 zipwriter = ">=0.0.1"
 # https://github.com/moteus/ZipWriter#core
