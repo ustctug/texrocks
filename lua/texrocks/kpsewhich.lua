@@ -1,6 +1,6 @@
 ---library for `kpsewhich`
----@module kpathsea
----@copyright 2025
+---@module texrocks.kpsewhich
+---@copyright 2026
 local kpse = require 'kpse'
 local argparse = require 'argparse'
 local texrocks = require 'texrocks'

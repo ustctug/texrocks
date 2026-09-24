@@ -3,7 +3,7 @@
 -- luacheck: ignore 111 113 143
 if tex then
     if os.getenv "LUA_PATH" then
-        require 'texrocks'.main(arg)
+        require 'texrocks.texlua'.main(arg)
     else
         local cmd = {
             "lx",

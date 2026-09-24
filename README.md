@@ -153,7 +153,8 @@ $ tree -a
 │       │       │   ├──  kpsewhich  # Lua program, a wrapper of luahbtex
 │       │       │   ├──  luahbtex  # real LaTeX compiler and Lua interpreter
 │       │       │   ├──  lualatex  # LaTeX compiler, a wrapper of luahbtex
-│       │       │   └──  texlua  # Lua interpreter, a wrapper of luahbtex
+│       │       │   ├──  texlua  # Lua interpreter, a wrapper of luahbtex
+│       │       │   └──  updmap  # Lua program, a wrapper of luahbtex
 │       │       ├──  1a043a1a092206fb664a8dd394bdf99e526af762fe7282c6ccf49bc0ec23521e-latex-base@2024.11.01-2
 │       │       │   ├──  etc
 │       │       │   │   ├──  conf
@@ -221,7 +222,8 @@ $ tree -a
 │               └──  bin
 │                   ├──  kpsewhich
 │                   ├──  luahbtex
-│                   └──  texlua
+│                   ├──  texlua
+│                   └──  updmap
 ├──  lux.lock  # like package-lock.json or requirements.txt
 ├──  lux.toml  # like package.json or pyproject.toml
 └──  main.tex
