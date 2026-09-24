@@ -20,7 +20,7 @@ description = {
   license = 'GPL'
 }
 
-build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'latex-graphics' }
 

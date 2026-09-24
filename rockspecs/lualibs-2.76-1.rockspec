@@ -31,7 +31,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
   type = 'l3build',

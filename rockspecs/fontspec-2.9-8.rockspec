@@ -1,4 +1,4 @@
-local git_ref = 'v2.9e'
+local git_ref = 'v2.9h'
 local _git_ref = git_ref:gsub('^v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
@@ -27,7 +27,7 @@ source = {
   dir = package .. '-' .. _git_ref,
 }
 
-build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 if modrev == 'scm' or modrev == 'dev' then
   source = {

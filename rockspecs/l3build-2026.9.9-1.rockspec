@@ -34,7 +34,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-dependencies = { "texrocks", "kpathsea" }
+dependencies = { "texrocks" }
 
 build = {
   type = 'builtin',

@@ -1,4 +1,4 @@
-local git_ref = '25.12'
+local git_ref = '26.12'
 local modrev = git_ref
 local specrev = '1'
 
@@ -33,7 +33,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 build = {
   type = 'l3build',
@@ -41,16 +41,16 @@ build = {
     ["fix-build.lua.diff"] = [[
 --- old/build.lua
 +++ new/build.lua
-@@ -7,8 +7,8 @@
+@@ -6,8 +6,8 @@
+ bundle = ""
  module = "babel"
- 
- -- Minor modifications to file types
--installfiles = {"*.def", "*.ldf", "*.sty", "*.tex"}
+
+-installfiles = {"*.def", "*.ldf", "*.sty", "*.tex", "*.cfg" , "*.lua"}
 -sourcefiles  = {"*.dtx", "*.ins"}
-+installfiles = {"*.def", "*.ldf", "*.sty", "*.tex", "locale", '*.lua'}
-+sourcefiles  = {"*.dtx", "*.ins", "locale", "*.lua"}
++installfiles = {"*.def", "*.ldf", "*.sty", "*.tex", "*.cfg" , "*.lua", "locale" }
++sourcefiles  = {"*.dtx", "*.ins", "*.lua", "locale" }
  typesetfiles = {"babel.dtx"}
- 
+
  -- babel tests lots of third-party code
 ]],
   },

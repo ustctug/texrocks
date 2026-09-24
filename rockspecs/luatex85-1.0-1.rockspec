@@ -17,7 +17,7 @@ description = {
   license = 'LPPL-1.3'
 }
 
-build_dependencies = { 'luatex', 'latex-base', 'kpathsea' }
+build_dependencies = { 'luatex', 'latex-base' }
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
