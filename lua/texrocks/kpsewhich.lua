@@ -65,7 +65,7 @@ function M.get_parser(progname)
     parser:option('--mktexmf', 'enable mktexmf generation for this lookup'):args(0)
     parser:option('--mktextfm', 'enable mktextfm generation for this lookup'):args(0)
     parser:option('--subdir', 'only output matches whose directory part ends with the given strings'):count('*')
-    parser:option('--open', 'call PDF browser to open PDF'):args(0)
+    parser:option('--open', 'open a file')
     return parser
 end
 
@@ -127,36 +127,41 @@ function M.main(argv)
         end
     end
 
-    local format = args.format
-    if args.open then
-        format = 'TeX system documentation'
-    end
+    local options = M.get_options(args, verbosity)
     for k, v in ipairs(args.file) do
-        local options = {
-            debug = verbosity,
-            format = format,
-            dpi = args.dpi,
-            path = args.path,
-            all = args.all,
-            mustexist = args.mustexist,
-            mktexpk = args.mktexpk,
-            mktextex = args.mktextex,
-            mktexmf = args.mktexmf,
-            mktextfm = args.mktextfm,
-            subdir = args.subdir,
-        }
         v = kpse.lookup(v, options)
         if v == nil then
             print(args.file[k] .. ' not found')
             os.exit(1)
         end
-        if args.open then
-            local cmd_args = M.get_cmd_args(v)
-            print('$ ' .. texrocks.get_cmd(cmd_args))
-            texrocks.exec(cmd_args)
-        end
         print(v)
     end
+    if args.open then
+        options.format = 'TeX system documentation'
+        local file = kpse.lookup(args.open, options)
+        local cmd_args = M.get_cmd_args(file)
+        print('$ ' .. texrocks.get_cmd(cmd_args))
+        texrocks.exec(cmd_args)
+    end
+end
+
+---@param args table
+---@param verbosity integer
+---@return table
+function M.get_options(args, verbosity)
+    return {
+        debug = verbosity,
+        format = args.format,
+        dpi = args.dpi,
+        path = args.path,
+        all = args.all,
+        mustexist = args.mustexist,
+        mktexpk = args.mktexpk,
+        mktextex = args.mktextex,
+        mktexmf = args.mktexmf,
+        mktextfm = args.mktextfm,
+        subdir = args.subdir,
+    }
 end
 
 ---use correct system tool to open PDF
