@@ -34,20 +34,5 @@ end
 
 build = {
   type = 'tds',
-  patches = {
-    -- https://github.com/RadioNoiseE/apltex/blob/52b75b9bc64bcf5543207e73875f39e7d4d88613/fmtdump/luatex.ini#L15
-    ["add-latex-map.diff"] = [[
---- old/tex/latex/base/latex.ltx
-+++ new/tex/latex/base/latex.ltx
-@@ -20362,6 +20362,7 @@
- \@input{latex2e-first-aid-for-external-files.ltx}
- \makeatother
- \errorstopmode
-+\everyjob=\expandafter{\the\everyjob\pdfextension mapfile {luatex.map}}
- \dump
- \endinput
- %%
-]]
-  },
   copy_directories = { 'makeindex', 'tex' },
 }

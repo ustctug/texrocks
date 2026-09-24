@@ -19,8 +19,6 @@ mkShell {
     rename
     # prompt-style
     readline
-    # luaposix
-    libxcrypt
 
     (lua5_3.withPackages (
       p: with p; [
@@ -31,6 +29,9 @@ mkShell {
       ]
     ))
 
+    # texcat
     pandoc
+    # luaposix
+    libxcrypt
   ];
 }

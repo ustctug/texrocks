@@ -43,15 +43,17 @@ jobs:
           luarocks config variables.ZIP rpzip
           luarocks install rpzip
           luarocks install luahbtex
-          luarocks install luaprompt HISTORY_DIR="$DIR" READLINE_DIR="$DIR"
-          luarocks install luafilesystem
-          luarocks install lua-template
-          luarocks pack lua-zlib
-          luarocks pack luafilesystem
           luarocks pack luahbtex
+          luarocks install luaprompt HISTORY_DIR="$DIR" READLINE_DIR="$DIR"
           luarocks pack luaprompt
+          luarocks install luafilesystem
           luarocks pack luafilesystem
+          luarocks install lua-template
           luarocks pack lua-template
+          luarocks install lua-zlib
+          luarocks pack lua-zlib
+          luarocks install lua-cjson
+          luarocks pack lua-cjson
       - uses: actions/upload-artifact@v4
         with:
           name: artifact-${{matrix.runs-on}}

@@ -1,5 +1,5 @@
 package = "initex"
-version = "0.3.17"
+version = "0.3.18"
 lua = ">=5.1"
 
 [description]
@@ -15,10 +15,10 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [build_dependencies]
-texrocks = "0.3.17"
+texrocks = "0.3.18"
 
 [dependencies]
-texrocks = "0.3.17"
+texrocks = "0.3.18"
 
 [run]
 command = "initex"

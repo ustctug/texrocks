@@ -4,7 +4,7 @@
 local lfs      = require "lfs"
 local argparse = require 'argparse'
 local M        = {
-    fontmap_name = "luatex.map"
+    fontmap_name = "pdftex.map"
 }
 
 ---get parser

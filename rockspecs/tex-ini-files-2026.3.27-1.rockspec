@@ -31,17 +31,4 @@ end
 
 build = {
   type = 'l3build',
-  patches = {
-    -- https://github.com/RadioNoiseE/apltex/blob/52b75b9bc64bcf5543207e73875f39e7d4d88613/fmtdump/luatex.ini#L15
-    ["add-latex-map.diff"] = [[
---- old/luatex.ini
-+++ new/luatex.ini
-@@ -9,4 +9,5 @@
- \input luatexiniconfig.tex
- \input load-unicode-data.tex
- \input etex.src
-+\everyjob=\expandafter{\the\everyjob\pdfextension mapfile {luatex.map}}
- \dump
-]]
-  },
 }

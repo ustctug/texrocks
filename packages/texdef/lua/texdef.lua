@@ -3,7 +3,7 @@
 ---@copyright 2025
 local tex = require 'tex'
 local kpse = require 'kpse'
-local texrocks = require 'texrocks'
+local texlua = require 'texrocks.texlua'
 local argparse = require 'argparse'
 local template = require 'template'
 local M = {}
@@ -45,7 +45,7 @@ end
 ---@param argv string[] command line arguments
 ---@return table args parsed result
 function M.parse(argv)
-    local args = texrocks.preparse(argv)
+    local args = texlua.parse(argv)
     local parser = M.get_parser(args[0], tex.formatname)
     args = parser:parse(args)
     return M.postparse(args)
