@@ -1,35 +1,64 @@
 ---library for `texdef` and `latexdef`
 ---@module texdef
----@copyright 2025
+---@copyright 2026
 local tex = require 'tex'
 local kpse = require 'kpse'
 local texlua = require 'texrocks.texlua'
 local argparse = require 'argparse'
-local template = require 'template'
-local M = {}
+local M = {
+    templates = {},
+}
+
+---https://github.com/lumen-oss/lux/issues/922
+---@param name string
+---@return string
+function M.read(name)
+    local root = debug.getinfo(1).source:match("@?(.*).lua$")
+    local f = io.open(root .. "/templates/" .. name)
+    local content = ""
+    if f then
+        content = f:read("*a")
+        f:close()
+    end
+    return content
+end
+
+for _, name in ipairs { "main.tex", "sub.tex" } do
+    M.templates[name] = M.read(name)
+end
 
 ---get parser
 ---@param progname string program name
----@param fmt string TeX format name
+---@param formatname string TeX format name
 ---@return table parser
-function M.get_parser(progname, fmt)
+function M.get_parser(progname, formatname)
     local parser = argparse(progname):add_complete()
     parser:argument('macro', 'macro name without \\'):args('*')
     parser:option('--value -v', [[Show value of \the\macro instead]]):args(0)
-    if fmt:match 'latex' then
-        parser:option('--list -l', 'List all command sequences of the given packages by -l, -ll'):args(0):count("*")
-        parser:option('--find -f', 'Show full filepath of the file where the command sequence was defined by -f, -ff')
-            :args(0):count("*")
-        parser:option('--ignore-regex -I', 'Ignore all command sequences in the above lists which match lua match()',
-            '[@_]')
-        parser:option('--Environment -E', 'Every command name is taken as an environment name'):args(0)
-        parser:option('--class -c', 'class name', 'article')
-        parser:option('--package -p', 'package name'):count("*")
-        parser:option('--environment -e', 'environment name'):count("*")
-        parser:option('--othercode -o', 'Add other code into the preamble before the definition is shown'):count("*")
-        parser:option('--preamble -P', 'Show definition of the command inside the preamble'):args(0)
-        parser:option('--beforeclass -B', [[Show definition of the command before \documentclass]]):args(0)
-    end
+    local hidden = formatname:match 'latex' == nil
+    parser:option('--list -l', 'List all command sequences of the given packages by -l, -ll'):args(0):count("*")
+        :hidden(hidden)
+    parser:option('--find -f', 'Show full filepath of the file where the command sequence was defined by -f, -ff')
+        :args(0):count("*")
+        :hidden(hidden)
+    parser:option('--ignore-regex -I',
+        'Ignore all command sequences in the above lists which match lua match(), use ""',
+        '[@_]'):convert(M.convert_regex)
+        :hidden(hidden)
+    parser:option('--Environment -E', 'Every command name is taken as an environment name'):args(0)
+        :hidden(hidden)
+    parser:option('--class -c', 'class name', not hidden and 'article'):convert(M.add_brace)
+        :hidden(hidden)
+    parser:option('--package -p', 'package name'):count("*"):convert(M.add_braces)
+        :hidden(hidden)
+    parser:option('--environment -e', 'environment name'):count("*"):convert(M.add_braces)
+        :hidden(hidden)
+    parser:option('--othercode -o', 'Add other code into the preamble before the definition is shown'):count("*")
+        :hidden(hidden)
+    parser:option('--preamble -P', 'Show definition of the command inside the preamble'):args(0)
+        :hidden(hidden)
+    parser:option('--beforeclass -B', [[Show definition of the command before \documentclass]]):args(0)
+        :hidden(hidden)
     parser:option('--before -b', 'Place code before definition is shown'):count("*")
     parser:option('--after -a', 'Place code after definition is shown'):count("*")
 
@@ -38,7 +67,37 @@ function M.get_parser(progname, fmt)
     parser:option('--entering', 'entering file prompt', '>> entering file ')
     parser:option('--leaving', 'leaving file prompt', '<< leaving file ')
     parser:option('--defined', 'defined prompt', ': defined by ')
+    parser:option('--formatname', [[tex.formatname]], formatname)
     return parser
+end
+
+--- '' -> '$^'
+---@param name string
+---@return string
+function M.convert_regex(name)
+    return name == '' and '$^' or name
+end
+
+---add brace: article -> {article}
+---@param name string?
+---@return string?
+function M.add_brace(name)
+    if name and name:sub(#name, #name) ~= '}' then
+        name = '{' .. name .. '}'
+    end
+    return name
+end
+
+---add braces: hyperref -> {hyperref}
+---@param names string[]?
+---@return string[]?
+function M.add_braces(names)
+    if names then
+        for i, name in pairs(names) do
+            names[i] = M.add_brace(name)
+        end
+    end
+    return names
 end
 
 ---parse command line arguments
@@ -48,42 +107,12 @@ function M.parse(argv)
     local args = texlua.parse(argv)
     local parser = M.get_parser(args[0], tex.formatname)
     args = parser:parse(args)
-    return M.postparse(args)
-end
-
----change some values by command line arguments
----@param args table parsed result
----@return table args processed result
-function M.postparse(args)
-    if args.ignore_regex == '' then
-        args.ignore_regex = '$^'
-    end
-    if args.class and args.class:sub(#args.class, #args.class) ~= '}' then
-        args.class = '{' .. args.class .. '}'
-    end
-    if args.package then
-        for i, pkg in ipairs(args.package) do
-            if pkg:sub(#pkg, #pkg) ~= '}' then
-                args.package[i] = '{' .. args.package[i] .. '}'
-            end
-        end
-    end
-    if args.environment then
-        for i, pkg in ipairs(args.environment) do
-            if pkg:sub(#pkg, #pkg) ~= '}' then
-                args.environment[i] = '{' .. args.environment[i] .. '}'
-            end
-        end
-    end
     if args.Environment then
         for i = 1, #args.macro do
             table.insert(args.macro, 'end' .. args.macro[i])
         end
     end
-    args.fmt = tex.formatname .. '.fmt'
-    args.list = args.list or 0
-    args.find = args.find or 0
-    args.sub = M.get_path('texdef/templates/sub.tex')
+    args.sub = M.get_path('sub.tex')
     args.ipairs = ipairs
     return args
 end
@@ -94,7 +123,7 @@ end
 ---@return string file template path
 function M.get_path(filename)
     local root = debug.getinfo(1).source:match("@?(.*)/")
-    local file = root .. '/' .. filename
+    local file = root .. '/texdef/templates/' .. filename
     return file
 end
 
@@ -104,7 +133,8 @@ end
 function M.main(argv)
     print()
     local args = M.parse(argv)
-    local code = template.render(M.get_path('texdef/templates/main.tex'), args)
+    local env = require 'template'
+    local code = env.render(M.get_path('main.tex'), args)
     if args.dry_run then
         print(code)
         return
