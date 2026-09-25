@@ -20,7 +20,7 @@ end
 function M.main(argv)
     local args = M.parse(argv)
     texlua.setotherenv(M.get_program_name(args))
-    updmap.sync(false)
+    updmap.sync()
     texrocks.exec(args)
 end
 
@@ -57,7 +57,14 @@ function M.get_program_name(args)
     end
 
     -- usually be luahbtex
-    return updmap.name(args[1])
+    return M.name(args[1])
+end
+
+---base name without extension name
+---@param path string
+---@return string path
+function M.name(path)
+    return path:match('/([^/.]+)%.?[^/]*$')
 end
 
 return M

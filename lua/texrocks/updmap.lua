@@ -12,7 +12,8 @@ local M        = {
 ---@return table parser
 function M.get_parser(progname)
     local parser = argparse(progname):add_complete()
-    parser:option('--verbose', 'with full name'):args(0)
+    parser:option('--silent -s', 'decrease verbosity'):args(0):count('*')
+    parser:option('--debug -d', 'increase verbosity'):args(0):count('*')
     return parser
 end
 
@@ -21,14 +22,16 @@ end
 function M.main(argv)
     local parser = M.get_parser(argv[0])
     local args = parser:parse(argv)
-    M.sync(not args.verbose)
+    local verbosity = args.debug - args.silent
+    M.sync(verbosity)
 end
 
 ---get paths from `package.path`/`package.cpath`. see tests.
----@param path string paths concatenated by `;`
 ---@param suffix string? add `../${suffix}//` to paths when it is not nil
+---@param path string? paths concatenated by `;`
 ---@return string[] paths
-function M.getpaths(path, suffix)
+function M.getpaths(suffix, path)
+    path = path or package.path
     local parts = {}
     local paths = {}
     for part in string.gmatch(path, "([^;]+)") do
@@ -50,16 +53,24 @@ function M.getpaths(path, suffix)
     return paths
 end
 
----base name without extension name
----@param path string
----@return string path
-function M.name(path)
-    return path:match('/([^/.]+)%.?[^/]*$')
+---@param f table
+---@param filename string
+---@param verbosity integer verbosity level
+function M.write(f, filename, verbosity)
+    local t = io.open(filename)
+    if t then
+        if verbosity > 0 then
+            print(filename)
+        end
+        f:write(t:read("*a"))
+        t:close()
+    end
 end
 
 ---update font map file
----@param short boolean use relative (short)/absolute (long) path for font files
-function M.sync(short)
+---@param verbosity integer? verbosity level
+function M.sync(verbosity)
+    verbosity = verbosity or 0
     local dir = ".lux"
     if not lfs.isdir(dir) then
         lfs.mkdir(dir)
@@ -70,28 +81,18 @@ function M.sync(short)
         print("fail to generate " .. fontmap_name)
         return
     end
-    local template = debug.getinfo(1).source:match("@?(.*/)") .. 'templates' .. M.fontmap_name
-    local t = io.open(template)
-    if t then
-        f:write(t:read("*a"))
-        t:close()
-    end
+    local template = debug.getinfo(1).source:match("@?(.*/)") .. 'templates/' .. M.fontmap_name
+    M.write(f, template, verbosity)
 
-    local function callback(file)
-        local ext = file:match("%.([^.]+)$")
-        if ext ~= "pfb" and ext ~= "t3" then
+    local function callback(filename)
+        local ext = filename:match("%.([^.]+)$")
+        if ext ~= "map" then
             return
         end
-        local basename = file:match('/([^/]+)$')
-        local path = file
-        if short then
-            path = basename
-        end
-        local name = M.name(file)
-        f:write(string.format("%s %s <%s\n", name, name:upper(), path))
+        M.write(f, filename, verbosity)
     end
 
-    for _, path in ipairs(M.getpaths(package.path, "fonts")) do
+    for _, path in ipairs(M.getpaths("fonts")) do
         M.walk(path:gsub("//$", ""), callback)
     end
     f:close()

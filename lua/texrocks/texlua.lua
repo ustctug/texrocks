@@ -6,29 +6,6 @@
 local updmap = require "texrocks.updmap"
 local M = {}
 
-if os.type == "windows" then
-    M.OSFONTDIR = "C:/Windows/System32/Fonts"
-elseif os.type == "unix" then
-    if os.getenv "XDG_DATA_DIRS" ~= nil then
-        M.OSFONTDIR = "{" .. os.getenv("XDG_DATA_DIRS"):gsub(":", ",") .. "}/share/fonts//"
-    else
-        local prefixes = { "/usr" }
-        if os.getenv "PREFIX" ~= nil then
-            prefixes = { os.getenv "PREFIX" }
-        elseif os.name ~= "cygwin" then
-            table.insert(prefixes, "/usr/local")
-        elseif os.getenv "MINGW_PREFIX" ~= nil then
-            table.insert(prefixes, os.getenv "MINGW_PREFIX")
-        end
-        M.OSFONTDIR = "{" .. table.concat(prefixes, ",") .. "}/share/fonts//"
-    end
-end
-if os.name == "macosx" then
-    M.OSFONTDIR = M.OSFONTDIR .. ";{/System,}/Library/Fonts//"
-elseif os.name == "cygwin" then
-    M.OSFONTDIR = M.OSFONTDIR .. ";/proc/cygdrive/c/Windows/System32/Fonts"
-end
-
 ---get offset from one script to another script
 ---such as `texlua --option main.lua --option` -> `main.lua --option`
 ---offset should be 2
@@ -106,8 +83,7 @@ function M.main(argv)
     arg = M.parse(argv)
 
     M.setenvs()
-    -- progname should be texlua
-    M.setotherenv(updmap.name(argv[0]))
+    M.setotherenv("texlua")
     loadfile(arg[0])()
 end
 
@@ -121,48 +97,61 @@ function M.setenv(key, value)
 end
 
 ---concatenate `getpaths()`
----@param path string same as `getpaths()`
 ---@param suffix string? same as `getpaths()`
+---@param path string? same as `getpaths()`
 ---@return string path concatenated by `;`
----@see getpaths
-function M.getenv(path, suffix)
-    local processed = updmap.getpaths(path, suffix)
+function M.getenv(suffix, path)
+    local processed = updmap.getpaths(suffix, path)
     return table.concat(processed, ";")
 end
 
----wrap `os.setenv()` for font files due to `OSFONTDIR`
----@param key string
----@param value string
-function M.setfontenv(key, value)
-    os.setenv(key,
-        "$TEXMFDOTDIR;" .. M.getenv(package.path, "fonts/" .. value) .. ";" .. M.OSFONTDIR)
+---@return string prefixes
+function M.get_prefixes()
+    if os.type ~= "unix" then
+        return ""
+    end
+    local ret
+    if os.getenv "XDG_DATA_DIRS" ~= nil then
+        ret = os.getenv("XDG_DATA_DIRS"):gsub(":", ",")
+    else
+        local prefixes = { "/usr" }
+        if os.getenv "PREFIX" ~= nil then
+            prefixes = { os.getenv "PREFIX" }
+        elseif os.name ~= "cygwin" then
+            table.insert(prefixes, "/usr/local")
+        elseif os.getenv "MINGW_PREFIX" ~= nil then
+            table.insert(prefixes, os.getenv "MINGW_PREFIX")
+        end
+        ret = table.concat(prefixes, ",")
+    end
+    return "{" .. ret .. "}"
+end
+
+---get OSFONTDIR for XeTeX
+function M.get_osfontdir()
+    local osfontdir = ""
+    if os.type == "windows" then
+        osfontdir = "C:/Windows/System32/Fonts"
+    elseif os.type == "unix" then
+        osfontdir = M.get_prefixes() .. "/share/fonts//"
+    end
+    if os.name == "macosx" then
+        osfontdir = osfontdir .. ";{/System,}/Library/Fonts//"
+    elseif os.name == "cygwin" then
+        osfontdir = osfontdir .. ";/proc/cygdrive/c/Windows/System32/Fonts"
+    end
+    return osfontdir
 end
 
 ---set environment variables for kpathsea
 ---@source ../packages/kpathsea/lua/kpathsea.lua
 function M.setenvs()
     M.setenv("TEXMFDOTDIR", ".")
-    if os.getenv "USERPROFILE" == nil then
-        M.setenv("HOME", "~")
-    else
-        M.setenv("HOME", os.getenv "USERPROFILE")
-    end
+    M.setenv("HOME", os.getenv "HOME" or os.getenv "USERPROFILE" or "~")
     -- https://wiki.archlinux.org/title/XDG_Base_Directory#Partial
-    if os.getenv "LOCALAPPDATA" == nil then
-        M.setenv("XDG_CONFIG_HOME", (os.getenv "HOME") .. "/.config")
-    else
-        M.setenv("XDG_CONFIG_HOME", os.getenv "LOCALAPPDATA")
-    end
-    if os.getenv "APPDATA" == nil then
-        M.setenv("XDG_DATA_HOME", (os.getenv "HOME") .. "/.local/share")
-    else
-        M.setenv("XDG_CONFIG_HOME", os.getenv "APPDATA")
-    end
-    if os.getenv "TEMP" == nil then
-        M.setenv("XDG_CACHE_HOME", (os.getenv "HOME") .. "/.cache")
-    else
-        M.setenv("XDG_CACHE_HOME", os.getenv "TEMP")
-    end
+    M.setenv("XDG_CONFIG_HOME", os.getenv "LOCALAPPDATA" or (os.getenv("HOME") .. "/.config"))
+    M.setenv("XDG_DATA_HOME", os.getenv "LOCALAPPDATA" or (os.getenv "HOME") .. "/.local/share")
+    M.setenv("XDG_CACHE_HOME", os.getenv "TEMP" or (os.getenv "HOME") .. "/.cache")
     -- some tex packages like hyperref support config file such as hyperref.cfg
     M.setenv("TEXMFCONFIG", "$XDG_CONFIG_HOME/texmf")
     M.setenv("TEXMFHOME", "$XDG_DATA_HOME/texmf")
@@ -171,74 +160,79 @@ function M.setenvs()
     -- create ./*.cnf to override
     os.setenv("TEXMF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
     -- create ./texmf.cnf to override lua/texrocks/texmf.cnf
-    os.setenv("TEXMFCNF",
-        "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" ..
+    os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" ..
         debug.getinfo(1).source:match("@?(.*/)") .. 'templates')
+    -- don't use ls-R
     os.setenv("TEXMFDBS", "")
 
-    os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path))
-    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.cpath))
-    os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "tex"))
-    os.setenv("BIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "bibtex/bib"))
-    os.setenv("MLBIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "bibtex/mlbib"))
-    os.setenv("BSTINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "bibtex/bst"))
-    os.setenv("MLBSTINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "bibtex/mlbst"))
-    os.setenv("RISINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "biber/ris"))
-    os.setenv("BLTXMLINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "biber/bltxml"))
-    os.setenv("TEXINDEXSTYLE", "$TEXMFDOTDIR;" .. M.getenv(package.path, "makeindex"))
-    os.setenv("MFTINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "mft"))
-    os.setenv("MPINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "mp"))
-    os.setenv("OCPINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "omega/ocp"))
-    os.setenv("OTPINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "omega/otp"))
-    os.setenv("WEBINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web"))
-    os.setenv("CWEBINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "cweb"))
+    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil, package.cpath))
+    os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil))
+    os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv("tex"))
+    os.setenv("BIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/bib"))
+    os.setenv("MLBIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/mlbib"))
+    os.setenv("BSTINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/bst"))
+    os.setenv("MLBSTINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/mlbst"))
+    os.setenv("RISINPUTS", "$TEXMFDOTDIR;" .. M.getenv("biber/ris"))
+    os.setenv("BLTXMLINPUTS", "$TEXMFDOTDIR;" .. M.getenv("biber/bltxml"))
+    os.setenv("TEXINDEXSTYLE", "$TEXMFDOTDIR;" .. M.getenv("makeindex"))
+    os.setenv("MFTINPUTS", "$TEXMFDOTDIR;" .. M.getenv("mft"))
+    os.setenv("MPINPUTS", "$TEXMFDOTDIR;" .. M.getenv("mp"))
+    os.setenv("OCPINPUTS", "$TEXMFDOTDIR;" .. M.getenv("omega/ocp"))
+    os.setenv("OTPINPUTS", "$TEXMFDOTDIR;" .. M.getenv("omega/otp"))
+    os.setenv("WEBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("web"))
+    os.setenv("CWEBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("cweb"))
 
-    os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
-    os.setenv("TEXDOCS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "doc"))
-    os.setenv("TEXSOURCES", "$TEXMFDOTDIR;" .. M.getenv(package.path, "source"))
-    os.setenv("MFINPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "fonts/source"))
-    os.setenv("MPSUPPORT", "$TEXMFDOTDIR;" .. M.getenv(package.path, "metapost/support"))
-    os.setenv("TEXPICTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "images"))
-    os.setenv("TEXPOOL", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
-    os.setenv("TEXPSHEADERS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "dvips"))
-    os.setenv("WEB2C", "$TEXMFDOTDIR;" .. M.getenv(package.path, "web2c"))
-    os.setenv("TEXMFSCRIPTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "scripts"))
+    os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv("web2c"))
+    os.setenv("TEXDOCS", "$TEXMFDOTDIR;" .. M.getenv("doc"))
+    os.setenv("TEXSOURCES", "$TEXMFDOTDIR;" .. M.getenv("source"))
+    os.setenv("MFINPUTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/source"))
+    os.setenv("MPSUPPORT", "$TEXMFDOTDIR;" .. M.getenv("metapost/support"))
+    os.setenv("TEXPICTS", "$TEXMFDOTDIR;" .. M.getenv("images"))
+    os.setenv("TEXPOOL", "$TEXMFDOTDIR;" .. M.getenv("web2c"))
+    os.setenv("TEXPSHEADERS", "$TEXMFDOTDIR;" .. M.getenv("dvips"))
+    os.setenv("WEB2C", "$TEXMFDOTDIR;" .. M.getenv("web2c"))
 
-    os.setenv("TEXCONFIG", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf/dvips"))
-    os.setenv("PDFTEXCONFIG", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf/pdftex"))
+    os.setenv("TEXMFSCRIPTS", os.getenv("PATH"):gsub(":", ";"))
+    os.setenv("TEXCONFIG", "$TEXMFDOTDIR;" .. M.getenv("conf/dvips"))
+    os.setenv("PDFTEXCONFIG", "$TEXMFDOTDIR;" .. M.getenv("conf/pdftex"))
 
-    os.setenv("TEXFONTMAPS", ".lux;$XDG_DATA_HOME/lux/tree")
-    -- font metrics
-    M.setfontenv("TFMFONTS", "tfm")
-    M.setfontenv("OFMFONTS", "ofm")
-    -- luatex
-    M.setfontenv("T1FONTS", "type1")
-    M.setfontenv("OVFFONTS", "ovf")
-    M.setfontenv("OVPFONTS", "ovp")
-    M.setfontenv("VFFONTS", "vf")
-    -- luahbtex
-    M.setfontenv("TTFONTS", "truetype")
-    M.setfontenv("OPENTYPEFONTS", "opentype")
-    -- other fonts
-    -- /usr/share/groff/{current/font,site-font}/devps
-    M.setfontenv("TRFONTS", "groff")
-    M.setfontenv("GFFONTS", "gf")
-    M.setfontenv("PKFONTS", "pk")
-    M.setfontenv("OPLFONTS", "opl")
-    M.setfontenv("T42FONTS", "type42")
-    M.setfontenv("MISCFONTS", "misc")
-    M.setfontenv("ENCFONTS", "enc")
-    M.setfontenv("CMAPFONTS", "cmap")
-    M.setfontenv("SFDFONTS", "sfd")
-    M.setfontenv("LIGFONTS", "lig")
-    M.setfontenv("FONTFEATURES", "fea")
-    M.setfontenv("FONTCIDMAPS", "cid")
+    -- updmap
+    os.setenv("TEXFONTMAPS", "$TEXMFDOTDIR;.lux;$XDG_DATA_HOME/lux/tree;" .. M.getenv("fonts/map"))
+    -- PDFTeX
+    -- PLFONTS is TFMFONTS
+    os.setenv("TFMFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/tfm"))
+    os.setenv("T1FONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/type1"))
+    os.setenv("PKFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/pk"))
+    os.setenv("VFFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/vf"))
+    -- XeTeX
+    os.setenv("OSFONTDIR", "$TEXMFDOTDIR;" .. M.get_osfontdir())
+    -- Omega
+    os.setenv("OPLFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/opl"))
+    os.setenv("OFMFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/ofm"))
+    os.setenv("OVPFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/ovp"))
+    os.setenv("OVFFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/ovf"))
+    -- LuaLaTeX
+    os.setenv("TTFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/truetype") .. ";$OSFONTDIR")
+    os.setenv("OPENTYPEFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/opentype") .. ";$OSFONTDIR")
+    -- groff
+    os.setenv("TRFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/groff") .. ";" ..
+        M.get_prefixes() .. "/groff/{current/font,site-font}/devps")
+    -- others
+    os.setenv("GFFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/gf"))
+    os.setenv("T42FONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/type42"))
+    os.setenv("MISCFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/misc"))
+    os.setenv("ENCFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/enc"))
+    os.setenv("CMAPFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/cmap"))
+    os.setenv("SFDFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/sfd"))
+    os.setenv("LIGFONTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/lig"))
+    os.setenv("FONTFEATURES", "$TEXMFDOTDIR;" .. M.getenv("fonts/fea"))
+    os.setenv("FONTCIDMAPS", "$TEXMFDOTDIR;" .. M.getenv("fonts/cid"))
 end
 
 ---set environment variables for `kpsewhich --show-path 'other text files'`
 ---@param progname string read <https://texdoc.org/serve/kpathsea/0>
 function M.setotherenv(progname)
-    M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv(package.path, "conf"))
+    M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv("conf"))
 end
 
 return M

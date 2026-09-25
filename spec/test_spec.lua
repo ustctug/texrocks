@@ -1,4 +1,6 @@
-local texrocks = require "lua.texrocks"
+local texlua = require "lua.texrocks.texlua"
+local luatex = require "lua.texrocks.luatex"
+local updmap = require "lua.texrocks.updmap"
 
 -- luacheck: ignore 113
 ---@diagnostic disable: undefined-global
@@ -24,7 +26,7 @@ describe("test", function()
             "\\macro",
             "main.tex",
         }
-        for i, v in pairs(texrocks.preparse(input)) do
+        for i, v in pairs(texlua.parse(input)) do
             assert.are.equal(v, output[i])
         end
         local expected = {
@@ -34,7 +36,7 @@ describe("test", function()
             "\\macro",
             "main.tex",
         }
-        local result = texrocks.parse(output)
+        local result = luatex.parse(output)
         for i = 0, #result do
             assert.are.equal(result[i], expected[i])
         end
@@ -48,7 +50,7 @@ describe("test", function()
             "\\macro",
             "main.tex",
         }
-        assert.are.equal(texrocks.get_program_name(input), "luatex")
+        assert.are.equal(luatex.get_program_name(input), "luatex")
         input = {
             [0] = "luahbtex",
             "luatex",
@@ -57,7 +59,7 @@ describe("test", function()
             "\\macro",
             "main.tex",
         }
-        assert.are.equal(texrocks.get_program_name(input), "lualatex")
+        assert.are.equal(luatex.get_program_name(input), "lualatex")
         input = {
             [0] = "luahbtex",
             "luatex",
@@ -67,7 +69,7 @@ describe("test", function()
             "\\macro",
             "main.tex",
         }
-        assert.are.equal(texrocks.get_program_name(input), "luatexinfo")
+        assert.are.equal(luatex.get_program_name(input), "luatexinfo")
     end)
 
     it("tests getpaths", function()
@@ -76,14 +78,14 @@ describe("test", function()
             "/a/src",
             "/b/lib",
         }
-        for i, v in ipairs(texrocks.getpaths(input)) do
+        for i, v in ipairs(updmap.getpaths(input)) do
             assert.are.equal(v, expected[i])
         end
         expected = {
             "/a/etc/doc//",
             "/b/etc/doc//",
         }
-        for i, v in ipairs(texrocks.getpaths(input, "doc")) do
+        for i, v in ipairs(updmap.getpaths(input, "doc")) do
             assert.are.equal(v, expected[i])
         end
     end)
