@@ -1,5 +1,5 @@
 package = "luatexinfo"
-version = "0.3.18"
+version = "0.3.19"
 lua = ">=5.1"
 
 [description]
@@ -15,14 +15,14 @@ url = "https://github.com/ustctug/texrocks/archive/$(VERSION).zip"
 dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [build_dependencies]
-texrocks = "0.3.18"
+texrocks = "0.3.19"
 amsfonts = ">=3.4"
 tex-ini-files = ">=2026.3.7"
 knuth-lib = ">=2021.2.5"
 texinfo = ">=7.2"
 
 [dependencies]
-texrocks = "0.3.18"
+texrocks = "0.3.19"
 amsfonts = ">=3.4"
 
 [run]

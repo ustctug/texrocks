@@ -1,4 +1,4 @@
----library for `luatex`, `lualatex`, `luatexinfo` and `texlua`
+---library for `texlua`
 ---@module texrocks.texlua
 ---@copyright 2025
 ---@diagnostic disable: undefined-field
@@ -68,7 +68,7 @@ end
 ---@return string[] args parsed result
 function M.parse(args, extra_offset)
     local offset = M.get_offset(args)
-    if offset == nil then
+    if offset ~= 1 then
         require 'prompt.utils'.main(arg, nil, M.callback)
         os.exit()
     end

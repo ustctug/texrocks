@@ -1,3 +1,4 @@
+---library for `luatex`, `lualatex`, `luatexinfo` and `initex`
 local updmap = require "texrocks.updmap"
 local texlua = require "texrocks.texlua"
 local texrocks = require 'texrocks'
