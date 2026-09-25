@@ -29,6 +29,8 @@ mkShell {
       ]
     ))
 
+    rustup
+
     # texcat
     pandoc
     # luaposix

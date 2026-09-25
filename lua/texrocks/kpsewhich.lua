@@ -6,6 +6,7 @@ local argparse = require 'argparse'
 local cjson = require 'cjson'
 local texrocks = require 'texrocks'
 
+---https://github.com/lumen-oss/lux/issues/922
 ---@param name string
 ---@return table
 local function decode(name)

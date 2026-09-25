@@ -31,6 +31,7 @@ jobs:
         with:
           luaVersion: "5.3"
       - uses: luarocks/gh-actions-luarocks@v6
+      - uses: lumen-oss/gh-actions-lux@v1
       - name: Install Dependencies
         if: runner.os == 'macOS'
         run: |
@@ -54,6 +55,11 @@ jobs:
           luarocks pack lua-zlib
           luarocks install lua-cjson
           luarocks pack lua-cjson
+          rustup component add rust-src
+          # https://github.com/benniekiss/rs-mod-lua/issues/163
+          # luarocks install minijinja-lua
+          # luarocks pack minijinja-lua
+          lx pack minijinja-lua
       - uses: actions/upload-artifact@v4
         with:
           name: artifact-${{matrix.runs-on}}
@@ -72,6 +78,7 @@ jobs:
         with:
           luaVersion: "5.3"
       - uses: luarocks/gh-actions-luarocks@v6
+      - uses: lumen-oss/gh-actions-lux@v1
       - name: Install Dependencies
         run: |
           sudo apt-get -y update
@@ -81,6 +88,12 @@ jobs:
           echo local_by_default = true >>\
           ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
           luarocks config variables.ZIP rpzip
+          rustup component add rust-src
+          # https://github.com/benniekiss/rs-mod-lua/issues/163
+          # luarocks install minijinja-lua
+          # luarocks pack minijinja-lua
+          lx pack minijinja-lua
+          luarocks install minijinja-lua-*.rock
       - uses: actions/download-artifact@v4
         with:
           pattern: artifact-*
