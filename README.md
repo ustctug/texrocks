@@ -126,8 +126,8 @@ build_command = "lualatex --interaction=nonstopmode main.tex"
 
 [test]
 type = "command"
-command = "kpsewhich --open"
-flags = ["main.pdf"]
+command = "kpsewhich"
+flags = ["--open", "main.pdf"]
 ```
 
 5. Build and view your document

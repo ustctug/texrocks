@@ -19,8 +19,8 @@ texrocks = ">=0.3.16"
 
 [test]
 type = "command"
-command = "kpsewhich --open"
-flags = ["main.pdf"]
+command = "kpsewhich"
+flags = ["--open", "main.pdf"]
 
 [build]
 type = "command"
