@@ -1,10 +1,10 @@
-<l:for names="_, code" in="ipairs(before)">${code}</l:for>
-<l:for names="_, mac" in="ipairs(macro)">
-\begingroup\immediate\write\texdefoutput{\expandafter\string\csname ${mac}\endcsname=}\expandafter\endgroup
-<l:if cond="value">
-\immediate\write\texdefoutput{\expandafter\the\csname ${mac}\endcsname}
-<l:else/>
-\expandafter\immediate\expandafter\write\expandafter\texdefoutput\expandafter{\expandafter\meaning\csname ${mac}\endcsname}
-</l:if>
-</l:for>
-<l:for names="_, code" in="ipairs(after)">${code}</l:for>
+{% for code in before %}{{ code }}{% endfor %}
+{% for mac in macro %}
+\begingroup\immediate\write\texdefoutput{\expandafter\string\csname {{ mac }}\endcsname=}\expandafter\endgroup
+{% if value %}
+\immediate\write\texdefoutput{\expandafter\the\csname {{ mac }}\endcsname}
+{% else %}
+\expandafter\immediate\expandafter\write\expandafter\texdefoutput\expandafter{\expandafter\meaning\csname {{ mac }}\endcsname}
+{% endif %}
+{% endfor %}
+{% for code in after %}{{ code }}{% endfor %}

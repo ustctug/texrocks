@@ -5,6 +5,7 @@ local tex = require 'tex'
 local kpse = require 'kpse'
 local texlua = require 'texrocks.texlua'
 local argparse = require 'argparse'
+local minijinja = require 'minijinja'
 local M = {
     templates = {},
 }
@@ -112,19 +113,17 @@ function M.parse(argv)
             table.insert(args.macro, 'end' .. args.macro[i])
         end
     end
-    args.sub = M.get_path('sub.tex')
-    args.ipairs = ipairs
     return args
 end
 
----get path of template
----https://github.com/lumen-oss/lux/issues/922
----@param filename string template name
----@return string file template path
-function M.get_path(filename)
-    local root = debug.getinfo(1).source:match("@?(.*)/")
-    local file = root .. '/texdef/templates/' .. filename
-    return file
+---get environment for minijinja
+---@return table
+function M.get_environment()
+    local env = minijinja.Environment:new()
+    for name, template in pairs(M.templates) do
+        env:add_template(name, template)
+    end
+    return env
 end
 
 ---**first entry for texdef and latexdef**
@@ -133,8 +132,8 @@ end
 function M.main(argv)
     print()
     local args = M.parse(argv)
-    local env = require 'template'
-    local code = env.render(M.get_path('main.tex'), args)
+    local env = M.get_environment()
+    local code = env:render_template('main.tex', args)
     if args.dry_run then
         print(code)
         return

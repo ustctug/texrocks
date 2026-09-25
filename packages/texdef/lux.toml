@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 argparse = ">=0.7.1"
-lua-template = ">=1.0.0"
+minijinja-lua = ">=0.0.1"
 currfile = ">=1.0"
 lualatex = ">=0.3.17"
 luatex = ">=0.3.17"
