@@ -77,9 +77,7 @@ Some useful tools for development!
 
 ### Developed by ours
 
-- [texlua](topics/texlua.md.html): a texlua more like lua
 - [texdef](topics/texdef.md.html): which TeX package defines `\macro`?
-- [kpsewhich](topics/kpathsea.md.html): where is TeX package XXX?
 - [epstopdf](topics/epstopdf.md.html): call ghostscript to convert eps to pdf
 - [texcat](topics/texcat.md.html): a new syntax highlight system to
   replace [minted](https://github.com/gpoore/minted) based on python's

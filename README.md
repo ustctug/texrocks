@@ -229,4 +229,20 @@ $ tree -a
 └──  main.tex
 ```
 
+You can search package by:
+
+```bash
+$ kpsewhich url.sty
+/home/wzy/Desktop/texrocks/packages/kpathsea/.lux/5.3/test_dependencies/5.3/9d30c278ce6738129492ba18692faf0bd87368b477c94e5db31e632f16acee21-latex-url@3.4-1/etc/tex/latex/url/url.sty
+```
+
+A REPL for debug on LuaLaTeX:
+
+```bash
+$ texlua
+> status.banner
+_[1] = "This is LuaHBTeX, Version 1.23.3 (TeX Live 2026/dev)"
+>
+```
+
 See [documents](https://texrocks.readthedocs.io/) to know more.

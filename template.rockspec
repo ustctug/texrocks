@@ -38,10 +38,7 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
-  install = {
-    bin = { "bin/texlua", "bin/kpsewhich", "bin/updmap" },
-  }
+  type = 'builtin'
 }
 
 test = {
