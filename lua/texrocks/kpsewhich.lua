@@ -6,7 +6,6 @@
 local kpse = require 'kpse'
 local argparse = require 'argparse'
 local cjson = require 'cjson'
-local texrocks = require 'texrocks'
 
 ---https://github.com/lumen-oss/lux/issues/922
 ---@param name string
@@ -69,7 +68,6 @@ function M.get_parser(progname)
     parser:option('--mktexmf', 'enable mktexmf generation for this lookup'):args(0)
     parser:option('--mktextfm', 'enable mktextfm generation for this lookup'):args(0)
     parser:option('--subdir', 'only output matches whose directory part ends with the given strings'):count('*')
-    parser:option('--open', 'open a file')
     return parser
 end
 
@@ -141,13 +139,6 @@ function M.main(argv)
         end
         print(v)
     end
-    if args.open then
-        options.format = 'TeX system documentation'
-        local file = kpse.lookup(args.open, options)
-        local cmd_args = M.get_cmd_args(file)
-        print('$ ' .. texrocks.get_cmd(cmd_args))
-        texrocks.exec(cmd_args)
-    end
 end
 
 ---@param args table
@@ -169,25 +160,6 @@ function M.get_options(args, verbosity)
         mktextfm = args.mktextfm,
         subdir = args.subdir,
     }
-end
-
----use correct system tool to open PDF
----@param file string PDF file path
----@return string[] args command line arguments
----@diagnostic disable: undefined-field
--- luacheck: ignore 143
-function M.get_cmd_args(file)
-    if os.name == 'macosx' then
-        return { "open", file }
-    elseif os.name == 'windows' or os.name == 'cygwin' then
-        return { "start", file }
-    elseif os.getenv "PREFIX" then
-        return { "termux-open", file }
-    elseif file:gsub(".*%.", "") == "pdf" and os.getenv "DISPLAY" == nil then
-        return { "pdftotext", file, "-" }
-    else
-        return { "xdg-open", file }
-    end
 end
 
 return M
