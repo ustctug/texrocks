@@ -37,7 +37,7 @@ end
 dependencies = { "texrocks" }
 
 build = {
-  type = 'builtin',
+  type = 'tds',
   patches = {
     ["fix-set_program.diff"] = [[
 --- old/scripts/l3build/l3build-install.lua
@@ -75,34 +75,20 @@ build = {
  specialformats = specialformats or { }
  specialformats.context = specialformats.context or {
 ]],
+    ["fix-l3build.diff"] = [[
+--- old/scripts/l3build/l3build.lua
++++ new/scripts/l3build/l3build.lua
+@@ -44,7 +44,6 @@ local open             = io.open
+
+ -- l3build setup and functions
+ kpse.set_program_name("kpsewhich")
+-build_kpse_path = match(lookup("l3build.lua"),"(.*[/])")
+ local function build_require(s)
+   require(lookup("l3build-"..s..".lua", { path = build_kpse_path } ) )
+ end
+]],
   },
   copy_directories = { },
-  modules = {
-    ["l3build-arguments"] = "scripts/l3build/l3build-arguments.lua",
-    ["l3build-aux"] = "scripts/l3build/l3build-aux.lua",
-    ["l3build-check"] = "scripts/l3build/l3build-check.lua",
-    ["l3build-clean"] = "scripts/l3build/l3build-clean.lua",
-    ["l3build-ctan"] = "scripts/l3build/l3build-ctan.lua",
-    ["l3build-file-functions"] = "scripts/l3build/l3build-file-functions.lua",
-    ["l3build-help"] = "scripts/l3build/l3build-help.lua",
-    ["l3build-install"] = "scripts/l3build/l3build-install.lua",
-    ["l3build-manifest-setup"] = "scripts/l3build/l3build-manifest-setup.lua",
-    ["l3build-manifest"] = "scripts/l3build/l3build-manifest.lua",
-    ["l3build-stdmain"] = "scripts/l3build/l3build-stdmain.lua",
-    ["l3build-tagging"] = "scripts/l3build/l3build-tagging.lua",
-    ["l3build-typesetting"] = "scripts/l3build/l3build-typesetting.lua",
-    ["l3build-unpack"] = "scripts/l3build/l3build-unpack.lua",
-    ["l3build-upload"] = "scripts/l3build/l3build-upload.lua",
-    ["l3build-variables"] = "scripts/l3build/l3build-variables.lua",
-    ["l3build-zip"] = "scripts/l3build/l3build-zip.lua",
-    -- l3build lookup it
-    ["l3build"] = "scripts/l3build/l3build.lua",
-  },
-  install = {
-    bin = {
-      l3build = 'scripts/l3build/l3build.lua'
-    }
-  }
 }
 
 deploy = {

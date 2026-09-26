@@ -39,6 +39,9 @@ end
 
 build = {
   type = 'tds',
+  tds = {
+    extract = true,
+  },
   copy_directories = { 'tex' },
 }
 
