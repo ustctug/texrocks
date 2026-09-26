@@ -1,4 +1,4 @@
-local git_ref = 'v4.1.1'
+local git_ref = 'v4.1.2'
 local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 

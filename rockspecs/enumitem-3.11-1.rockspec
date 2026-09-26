@@ -30,10 +30,9 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
-  install = {
-    conf = {
-      ['../tex/latex/enumitem/enumitem.sty'] = 'enumitem.sty',
-    },
-  }
+  type = 'tds',
+  tds = {
+    extract = true,
+  },
+  copy_directories = { 'tex', 'doc' },
 }

@@ -88,7 +88,6 @@ build = {
  end
 ]],
   },
-  copy_directories = { },
 }
 
 deploy = {

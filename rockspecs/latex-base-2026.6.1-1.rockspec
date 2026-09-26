@@ -34,5 +34,5 @@ end
 
 build = {
   type = 'tds',
-  copy_directories = { 'makeindex', 'tex' },
+  copy_directories = { 'doc', 'makeindex', 'tex' },
 }

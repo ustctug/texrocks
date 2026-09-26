@@ -1,7 +1,9 @@
 local git_ref = 'release-7.01r'
 local _git_ref = git_ref:gsub('.*%-', '')
 local modrev = _git_ref:gsub('[^0-9.]', ''):gsub('0+(%d)', '%1')
-local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+modrev = modrev .. '.' .. __git_ref
+local specrev = '1'
 
 rockspec_format = '3.0'
 package = 'hyperref'

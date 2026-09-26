@@ -1,4 +1,4 @@
-local git_ref = 'v3.72'
+local git_ref = 'v3.78'
 local modrev = git_ref:gsub('v', '')
 local specrev = '1'
 
@@ -41,5 +41,5 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'tex' },
+  copy_directories = { 'tex', 'doc' },
 }

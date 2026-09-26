@@ -1,8 +1,8 @@
-local git_ref = '3.11.4'
+local git_ref = '3.16.1'
 local modrev = git_ref
 local specrev = '1'
 
-local repo_url = 'https://github.com/Witiko/markdown/'
+local repo_url = 'https://github.com/Witiko/markdown'
 
 rockspec_format = '3.0'
 package = 'markdown2tex'
@@ -42,7 +42,7 @@ build = {
   tds = {
     extract = true,
   },
-  copy_directories = { 'tex' },
+  copy_directories = { 'tex', 'doc' },
 }
 
 deploy = {

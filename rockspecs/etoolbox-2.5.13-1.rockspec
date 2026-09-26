@@ -1,7 +1,9 @@
-local git_ref = 'v2.5l'
+local git_ref = 'v2.5m'
 local _git_ref = git_ref:gsub('^v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
-local specrev = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
+modrev = modrev .. '.' .. __git_ref
+local specrev = '1'
 
 local repo_url = 'https://github.com/josephwright/etoolbox'
 
@@ -35,11 +37,5 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  install = {
-    conf = {
-      ['../tex/latex/etoolbox/etoolbox.sty'] = 'etoolbox.sty',
-      ['../tex/latex/etoolbox/etoolbox.def'] = 'etoolbox.def',
-    }
-  }
+  type = 'l3build',
 }

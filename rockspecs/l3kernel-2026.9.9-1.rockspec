@@ -1,4 +1,4 @@
-local git_ref = '2026-08-10'
+local git_ref = '2026-09-09'
 local modrev = git_ref:gsub('-0', '-'):gsub('-', '.')
 local specrev = '1'
 
@@ -32,5 +32,5 @@ end
 
 build = {
   type = 'tds',
-  copy_directories = { 'tex' },
+  copy_directories = { 'doc', 'tex' },
 }

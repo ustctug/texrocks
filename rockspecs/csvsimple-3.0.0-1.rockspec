@@ -1,4 +1,4 @@
-local git_ref = 'v2.7.0'
+local git_ref = 'v3.0.0'
 local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
@@ -36,6 +36,6 @@ end
 dependencies = { 'etoolbox', 'pgf', 'latex-tools' }
 
 build = {
-  type = 'builtin',
-  copy_directories = { 'tex' }
+  type = 'none',
+  copy_directories = { 'tex', 'doc' }
 }

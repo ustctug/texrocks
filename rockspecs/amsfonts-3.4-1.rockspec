@@ -32,6 +32,6 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'command',
+  type = 'none',
   copy_directories = { 'tex', 'fonts', 'doc' },
 }

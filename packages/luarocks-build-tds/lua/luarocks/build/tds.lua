@@ -80,8 +80,6 @@ end
 ---@param no_install boolean?
 ---@return true?, string?
 function M.run(rockspec, no_install)
-    local base_dir = rockspec.source.dir or "."
-
     -- 通过 rockspec.build.tds.extract 控制是否解压，默认 true
     local extract_tds = false
     if rockspec.build
@@ -92,7 +90,7 @@ function M.run(rockspec, no_install)
     end
 
     if extract_tds then
-        local ok, err = extract_tds_zips(base_dir)
+        local ok, err = extract_tds_zips(".")
         if not ok then
             return nil, err
         end

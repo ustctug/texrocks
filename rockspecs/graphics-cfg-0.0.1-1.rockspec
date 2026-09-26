@@ -33,11 +33,19 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'none',
-  install = {
-    conf = {
-      ['../tex/latex/graphics-cfg/color.cfg'] = 'color.cfg',
-      ['../tex/latex/graphics-cfg/graphics.cfg'] = 'graphics.cfg',
-    }
-  }
+  type = 'l3build',
+  patches = {
+    ["fix-build.lua.diff"] = [[
+--- old/build.lua
++++ new/build.lua
+@@ -23,4 +23,6 @@ testfildir = ""
+ 
+ -- Find and run the build system
+ kpse.set_program_name ("kpsewhich")
+-dofile (kpse.lookup ("l3build.lua"))
++if not release_date then
++  dofile(kpse.lookup("l3build.lua"))
++end
+]],
+  },
 }

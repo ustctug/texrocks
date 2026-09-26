@@ -33,7 +33,7 @@ description = {
 
 source = {
   url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = 'latex2e-' .. git_ref,
+  dir = 'latex2e-' .. git_ref .. '/support',
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -46,7 +46,7 @@ build = {
   type = 'none',
   install = {
     conf = {
-      ['../tex/generic/pdftex/glyphtounicode.tex'] = 'support/glyphtounicode.tex',
+      ['../tex/generic/pdftex/glyphtounicode.tex'] = 'glyphtounicode.tex',
     }
   }
 }
