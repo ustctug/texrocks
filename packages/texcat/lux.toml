@@ -44,3 +44,6 @@ flags = ["--shell-escape", "test.tex"]
 
 [build]
 type = "builtin"
+
+[deploy]
+wrap_bin_scripts = false

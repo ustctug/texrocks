@@ -14,13 +14,10 @@ lualatex = ">=0.3.16"
 markdown2tex = ">=3.11.4"
 babel-base = ">=25.12"
 
-[test_dependencies]
-texrocks = ">=0.3.16"
-
-[test]
+[run]
 type = "command"
-command = "kpsewhich"
-flags = ["--open", "main.pdf"]
+command = "lx"
+args = ["--tree=.lux", "doc", "demo-markdown"]
 
 [build]
 type = "command"

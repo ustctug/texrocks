@@ -16,13 +16,10 @@ hyperref = ">=7.1-18"
 hologo = ">=1.15"
 standalone = ">=1.5"
 
-[test_dependencies]
-texrocks = ">=0.3.16"
-
-[test]
+[run]
 type = "command"
-command = "kpsewhich"
-flags = ["--open", "main.pdf"]
+command = "lx"
+args = ["--tree=.lux", "doc", "demo-tikz"]
 
 [build]
 type = "command"

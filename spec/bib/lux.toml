@@ -15,13 +15,10 @@ citation-style-language = ">=0.8.2"
 beamer = ">=3.72"
 ctex = ">=2.5.10"
 
-[test_dependencies]
-texrocks = ">=0.3.16"
-
-[test]
+[run]
 type = "command"
-command = "kpsewhich"
-flags = ["--open", "main.pdf"]
+command = "lx"
+args = ["--tree=.lux", "doc", "demo-bib"]
 
 [build]
 type = "command"

@@ -86,8 +86,6 @@ lx add -b hyperref
 lx add -b graphics-cfg
 # \usepackage{tikz}
 lx add -b pgf
-# open main.pdf
-lx add -t texrocks
 # lx add -b more packages ...
 ```
 
@@ -100,9 +98,6 @@ lualatex = "X.Y.Z-1"
 hyperref = "X.Y.Z-1"
 graphics-cfg = "X.Y.Z-1"
 pgf = "X.Y.Z-1"
-
-[test_dependencies]
-texrocks = "X.Y.Z-1"
 ```
 
 3. Edit your document
@@ -124,17 +119,17 @@ build_command = "lualatex --interaction=nonstopmode main.tex"
 [build.install.conf]
 '../doc/main.pdf' = 'main.pdf'
 
-[test]
+[run]
 type = "command"
-command = "kpsewhich"
-flags = ["--open", "main.pdf"]
+command = "lx"
+args = ["--tree=.lux", "doc", "my-thesis"]
 ```
 
 5. Build and view your document
 
 ```sh
 lx build
-lx test
+lx run
 ```
 
 This is your project structure:

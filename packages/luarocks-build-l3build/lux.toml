@@ -33,7 +33,3 @@ flags = [
 
 [build]
 type = "builtin"
-
-[test_dependencies]
-luatex = ">=0.3.16"
-latex-base = ">=2026.6.1"
