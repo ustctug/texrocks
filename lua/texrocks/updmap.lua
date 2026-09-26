@@ -27,10 +27,12 @@ function M.main(argv)
 end
 
 ---get paths from `package.path`/`package.cpath`. see tests.
----@param suffix string? add `../${suffix}//` to paths when it is not nil
+---@param dirname string? add `../${dirname}${suffix}` to paths when it is not nil
+---@param suffix string?
 ---@param path string? paths concatenated by `;`
 ---@return string[] paths
-function M.getpaths(suffix, path)
+function M.getpaths(dirname, suffix, path)
+    suffix = suffix or '//'
     path = path or package.path
     local parts = {}
     local paths = {}
@@ -38,11 +40,11 @@ function M.getpaths(suffix, path)
         part = part:gsub("/%?.*", "")
         if not parts[part] then
             parts[part] = true
-            if suffix then
-                part = part:gsub("/src$", ""):gsub("/lib$", "") .. '/etc/' .. suffix
+            if dirname then
+                part = part:gsub("/src$", ""):gsub("/lib$", "") .. '/etc/' .. dirname
                 -- for test
                 if lfs.isdir == nil or lfs.isdir(part) then
-                    part = part .. "//"
+                    part = part .. suffix
                     table.insert(paths, part)
                 end
             else

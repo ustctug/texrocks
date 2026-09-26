@@ -1,6 +1,8 @@
 ---library for `kpsewhich`
 ---@module texrocks.kpsewhich
 ---@copyright 2026
+---@diagnostic disable: undefined-field
+-- luacheck: ignore 143
 local kpse = require 'kpse'
 local argparse = require 'argparse'
 local cjson = require 'cjson'
@@ -24,7 +26,7 @@ local M = {
     aliases = decode("aliases"),
     formats = decode("formats"),
 }
--- kpse 6.4.0
+-- kpse 6.4.1 doesn't support:
 M.formats.ris = nil
 M.formats.bltxml = nil
 
@@ -36,6 +38,7 @@ function M.get_parser(progname)
     parser:argument('file', 'file name'):args('*')
     parser:option('--progname', 'set program name', progname)
     parser:option('--help-formats', 'display information about all supported file formats'):args(0)
+    parser:option('--engine', 'set environment variable $engine', '/')
     parser:option('--expand-braces', 'output variable and brace expansion'):count('*')
     parser:option('--expand-path', 'output complete path expansion'):count('*')
     parser:option('--expand-var', 'output variable expansion'):count('*')
@@ -57,7 +60,7 @@ function M.get_parser(progname)
         table.insert(names, name)
     end
     parser:option('--format', 'use specific file type', nil):choices(names)
-    parser:option('--dpi', 'use this resolution for this lookup', 600):convert(tonumber)
+    parser:option('--dpi -D', 'use this resolution for this lookup', 600):convert(tonumber)
     parser:option('--path', 'search in the given path', nil)
     parser:option('--all', 'output all matches, not just the first'):args(0)
     parser:option('--must-exist', 'search the disk as well as ls-R if necessary'):args(0)
@@ -75,6 +78,7 @@ end
 function M.main(argv)
     local parser = M.get_parser(argv[0])
     local args = parser:parse(argv)
+    os.setenv("engine", args.engine)
     local verbosity = args.debug - args.silent
 
     if args.version then

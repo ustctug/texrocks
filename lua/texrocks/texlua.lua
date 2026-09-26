@@ -97,11 +97,12 @@ function M.setenv(key, value)
 end
 
 ---concatenate `getpaths()`
----@param suffix string? same as `getpaths()`
+---@param dirname string? same as `getpaths()`
 ---@param path string? same as `getpaths()`
+---@param suffix string?
 ---@return string path concatenated by `;`
-function M.getenv(suffix, path)
-    local processed = updmap.getpaths(suffix, path)
+function M.getenv(dirname, suffix, path)
+    local processed = updmap.getpaths(dirname, suffix, path)
     return table.concat(processed, ";")
 end
 
@@ -165,7 +166,7 @@ function M.setenvs()
     -- don't use ls-R
     os.setenv("TEXMFDBS", "")
 
-    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil, package.cpath))
+    os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil, "//", package.cpath))
     os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv("tex"))
     os.setenv("BIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/bib"))
@@ -182,7 +183,7 @@ function M.setenvs()
     os.setenv("WEBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("web"))
     os.setenv("CWEBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("cweb"))
 
-    os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv("web2c"))
+    os.setenv("TEXFORMATS", "$TEXMFDOTDIR;" .. M.getenv("web2c", "{/$engine,}"))
     os.setenv("TEXDOCS", "$TEXMFDOTDIR;" .. M.getenv("doc"))
     os.setenv("TEXSOURCES", "$TEXMFDOTDIR;" .. M.getenv("source"))
     os.setenv("MFINPUTS", "$TEXMFDOTDIR;" .. M.getenv("fonts/source"))
