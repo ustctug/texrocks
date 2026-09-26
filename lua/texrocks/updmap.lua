@@ -14,6 +14,7 @@ function M.get_parser(progname)
     local parser = argparse(progname):add_complete()
     parser:option('--silent -s', 'decrease verbosity'):args(0):count('*')
     parser:option('--debug -d', 'increase verbosity'):args(0):count('*')
+    parser:option('--dry-run -n', 'no output'):args(0)
     return parser
 end
 
@@ -23,7 +24,7 @@ function M.main(argv)
     local parser = M.get_parser(argv[0])
     local args = parser:parse(argv)
     local verbosity = args.debug - args.silent
-    M.sync(verbosity)
+    M.sync(verbosity, args.dry_run)
 end
 
 ---get paths from `package.path`/`package.cpath`. see tests.
@@ -55,23 +56,68 @@ function M.getpaths(dirname, suffix, path)
     return paths
 end
 
----@param f table
+---TODO: read from a config file
+---@param filename string
+---@return integer priority
+function M.get_priority(filename)
+    return #(filename:match("([^/]+)$") or "")
+end
+
+---compare priorities
+---@param new string
+---@param old string
+---@return boolean
+function M.is_prior(new, old)
+    return M.get_priority(new) < M.get_priority(old)
+end
+
+---@param lines string[]
+---@param seen table
 ---@param filename string
 ---@param verbosity integer verbosity level
-function M.write(f, filename, verbosity)
+function M.insert(lines, seen, filename, verbosity)
     local t = io.open(filename)
-    if t then
-        if verbosity > 0 then
-            print(filename)
-        end
-        f:write(t:read("*a"))
-        t:close()
+    if t == nil then
+        return
     end
+    if #lines > 0 then
+        table.insert(lines, "")
+        table.insert(lines, "%! " .. filename)
+    end
+    for line in t:lines() do
+        local name = line:match("^[^%% ]+") or line
+        if not seen[name] then
+            table.insert(lines, line)
+            seen[name] = { #lines, filename }
+        else
+            local old_number = seen[name][1]
+            local old_line = lines[old_number]
+            if old_line ~= line then
+                local old_filename = seen[name][2]
+                if M.is_prior(filename, old_filename) then
+                    -- comment old
+                    lines[old_number] = "%% " .. old_line
+                    -- insert new
+                    table.insert(lines, line)
+                    seen[name] = { #lines, filename }
+                end
+                if name:sub(1, 1) ~= "%" then
+                    if verbosity > 0 then
+                        print(("%s"):format(name))
+                    elseif verbosity > 1 then
+                        print(("%s: %s is overridden by %s"):format(name, old_filename, filename))
+                    end
+                end
+            end
+        end
+    end
+    t:close()
 end
 
 ---update font map file
 ---@param verbosity integer? verbosity level
-function M.sync(verbosity)
+---@param dry_run boolean? no output
+function M.sync(verbosity, dry_run)
     verbosity = verbosity or 0
     local dir = ".lux"
     if not lfs.isdir(dir) then
@@ -84,18 +130,23 @@ function M.sync(verbosity)
         return
     end
     local template = debug.getinfo(1).source:match("@?(.*/)") .. 'templates/' .. M.fontmap_name
-    M.write(f, template, verbosity)
+    local lines = {}
+    local seen = {}
+    M.insert(lines, seen, template, verbosity)
 
     local function callback(filename)
         local ext = filename:match("%.([^.]+)$")
         if ext ~= "map" then
             return
         end
-        M.write(f, filename, verbosity)
+        M.insert(lines, seen, filename, verbosity)
     end
 
     for _, path in ipairs(M.getpaths("fonts")) do
         M.walk(path:gsub("//$", ""), callback)
+    end
+    if not dry_run then
+        f:write(table.concat(lines, "\n"))
     end
     f:close()
 end
