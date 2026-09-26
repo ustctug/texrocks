@@ -3,7 +3,7 @@
 ---@copyright 2026
 local tex = require 'tex'
 local kpse = require 'kpse'
-local texlua = require 'texrocks.texlua'
+local utils = require 'prompt.utils'
 local argparse = require 'argparse'
 local minijinja = require 'minijinja'
 local M = {
@@ -105,7 +105,7 @@ end
 ---@param argv string[] command line arguments
 ---@return table args parsed result
 function M.parse(argv)
-    local args = texlua.parse(argv)
+    local args = utils.parse(argv)
     local parser = M.get_parser(args[0], tex.formatname)
     args = parser:parse(args)
     if args.Environment then

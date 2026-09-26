@@ -6,85 +6,19 @@
 local updmap = require "texrocks.updmap"
 local M = {}
 
----get offset from one script to another script
----such as `texlua --option main.lua --option` -> `main.lua --option`
----offset should be 2
----@param args string[] command line arguments
----@return integer offset
-function M.get_offset(args)
-    local offset
-    for i, v in ipairs(args) do
-        local char = v:sub(1, 1)
-        -- skip \macro and --option
-        if char ~= "\\" and char ~= "-" then
-            offset = i
-            break
-        end
-    end
-    return offset
-end
-
----get the first non-nil element's index
----@param args string[] index can be negative
----@return integer begin begin index
-function M.get_begin_index(args)
-    local begin = -1
-    while args[begin] do
-        begin = begin - 1
-    end
-    begin = begin + 1
-    return begin
-end
-
----texlua has a behaviour about command line arguments.
----`arg` starts from index 0: `arg = {[0] = "ls", "-al"}`
----`os.exec()` starts from index 1: `os.exec{"ls", "-al"}`
----we need to shift it
----@param argv string[] command line arguments
----@param offset integer e.g., `-1` means `args[i + 1] = args[i]`
----@return string[] args
-function M.shift(argv, offset)
-    local begin = M.get_begin_index(argv)
-
-    local args = {}
-    for i = begin, #argv do
-        args[i - offset] = argv[i]
-    end
-    return args
-end
-
----@param args string[]
----@return string[]
-function M.callback(args)
-    if args.v then
-        print(require 'status'.banner)
-        os.exit(0)
-    end
-    return args
-end
-
----@param args string[] command line arguments
----@param extra_offset integer? extra offset
----@return string[] args parsed result
-function M.parse(args, extra_offset)
-    local offset = M.get_offset(args)
-    if offset ~= 1 then
-        require 'prompt.utils'.main(arg, nil, M.callback)
-        os.exit()
-    end
-
-    return M.shift(args, offset + (extra_offset or 0))
-end
-
 ---**entry for texlua**
 ---@param argv string[] `arg`
 function M.main(argv)
-    -- luacheck: ignore 121
-    arg = M.parse(argv)
-
     M.setenvs()
-    M.setotherenv("texlua")
-    loadfile(arg[0])()
+    M.setotherenv(M.get_program_name(argv[0]))
+    require 'prompt.repl'.main(argv)
+end
+
+---base name without extension name
+---@param path string
+---@return string path
+function M.get_program_name(path)
+    return path:match('/([^/.]+)%.?[^/]*$')
 end
 
 ---call `os.setenv()` when environment variable doesn't exist

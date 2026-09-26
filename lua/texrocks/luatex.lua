@@ -1,4 +1,5 @@
 ---library for `luatex`, `lualatex`, `luatexinfo` and `initex`
+local utils = require "prompt.utils"
 local updmap = require "texrocks.updmap"
 local texlua = require "texrocks.texlua"
 local texrocks = require 'texrocks'
@@ -10,8 +11,8 @@ local M = {}
 ---@param argv string[] command line arguments
 ---@return string[] args parsed result
 function M.parse(argv)
-    local args = texlua.shift(argv, -1)
-    local begin = texlua.get_begin_index(args)
+    local args = utils.shift(argv, -1)
+    local begin = utils.get_begin_index(args)
     args[0] = args[begin]
     return args
 end
@@ -58,14 +59,7 @@ function M.get_program_name(args)
     end
 
     -- usually be luahbtex
-    return M.name(args[1])
-end
-
----base name without extension name
----@param path string
----@return string path
-function M.name(path)
-    return path:match('/([^/.]+)%.?[^/]*$')
+    return texlua.get_program_name(args[1])
 end
 
 return M
