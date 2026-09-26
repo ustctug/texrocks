@@ -18,23 +18,36 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 [dependencies]
 texrocks = "0.3.19"
 amsfonts = ">=3.4"
-# tex-ini-files provide lualatexquotejobname.lua
-tex-ini-files = "2026.3.27"
-# latex-base depends on l3backend depends on unicode-data
-latex-base = "2026.6.1"
 luaotfload = ">=3.29"
 lm = ">=2.5"
 # lua-uni-algos 0.5 provide lua-uni-data.lua for expl3.sty of l3kernel 2026.8.10
 lua-uni-algos = ">=0.5"
+# tex-ini-files provide lualatexquotejobname.lua
+tex-ini-files = ">=2026.3.27"
+# latex-base depends on l3kernel depends on unicode-data
+latex-base = ">=2026.6.1"
+# Package: expl3 2026-09-09 L3 programming layer (loader)
+#
+#
+# ! LaTeX Error: Mismatched LaTeX support files detected.
+# (LaTeX)        Loading 'expl3.sty' aborted!
+# (LaTeX)
+# (LaTeX)        The L3 programming layer in the LaTeX format
+# (LaTeX)        is dated 2026-08-10, but in your TeX tree the files require
+# (LaTeX)        at least 2026-09-09.
+l3kernel = "2026.9.9"
 
 [build_dependencies]
 texrocks = "0.3.19"
 amsfonts = ">=3.4"
-tex-ini-files = "2026.3.27"
-latex-base = "2026.6.1"
-latex-support = "2026.6.1"
 latex-fonts = ">=0.0.1"
 lua-uni-algos = ">=0.5"
+tex-ini-files = "2026.3.27"
+# glyphtounicode.tex
+latex-support = "2026.6.1"
+# glyphtounicode-cmex.tex
+latex-base = "2026.6.1"
+l3kernel = "2026.9.9"
 
 [run]
 command = "lualatex"
