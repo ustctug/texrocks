@@ -159,7 +159,9 @@ function M.get_options(args, verbosity)
         format = args.format,
         dpi = args.dpi,
         path = args.path,
-        all = args.all,
+        -- cannot work
+        -- all = args.all,
+        all = false,
         mustexist = args.mustexist,
         mktexpk = args.mktexpk,
         mktextex = args.mktextex,
