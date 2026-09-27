@@ -6,8 +6,6 @@ lux.lock
 *.rock
 # lx build
 .luarc.json
-# lx generate-rockspec
-packages/*/*.rockspec
 # l3build upload
 *.curlopt
 # sdluatex
