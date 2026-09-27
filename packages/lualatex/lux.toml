@@ -1,5 +1,5 @@
 package = "lualatex"
-version = "0.3.19"
+version = "0.3.20"
 lua = ">=5.1"
 
 [description]
@@ -16,7 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 # refer https://ctan.org/pkg/required
 [dependencies]
-texrocks = "0.3.19"
+texrocks = "0.3.20"
 amsfonts = ">=3.4"
 luaotfload = ">=3.29"
 lm = ">=2.5"
@@ -38,7 +38,7 @@ latex-base = ">=2026.6.1"
 l3kernel = "2026.9.9"
 
 [build_dependencies]
-texrocks = "0.3.19"
+texrocks = "0.3.20"
 amsfonts = ">=3.4"
 latex-fonts = ">=0.0.1"
 lua-uni-algos = ">=0.5"

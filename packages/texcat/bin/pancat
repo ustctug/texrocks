@@ -1,2 +1,0 @@
-#!/usr/bin/env -S pandoc --lua-filter
-return require 'texcat'.main(arg)

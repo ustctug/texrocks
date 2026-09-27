@@ -79,9 +79,9 @@ Some useful tools for development!
 
 - [texdef](topics/texdef.md.html): which TeX package defines `\macro`?
 - [epstopdf](topics/epstopdf.md.html): call ghostscript to convert eps to pdf
-- [texcat](topics/texcat.md.html): a new syntax highlight system to
-  replace [minted](https://github.com/gpoore/minted) based on python's
-  [pygments](https://pygments.org/)
+- [texcat](https://tree-sitter-highlight.readthedocs.io/en/latest/resources/texcat.html):
+  a new syntax highlight system to replace [minted](https://github.com/gpoore/minted)
+  based on python's [pygments](https://pygments.org/)
 - [luarocks-build-l3build](topics/luarocks-build-l3build.md.html): Luarocks
   build backend for packing TeX packages. More TeX packages are needed:
   CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100. Welcome to pack!

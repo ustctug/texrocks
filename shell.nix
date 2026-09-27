@@ -17,7 +17,7 @@ mkShell {
     lux-cli
 
     rename
-    # prompt-style
+    # texrocks -> prompt-style -> luaprompt
     readline
 
     (lua5_3.withPackages (
@@ -29,11 +29,11 @@ mkShell {
       ]
     ))
 
-    rustup
+    # ghostscript
+    autoconf
+    automake
 
-    # texcat
-    pandoc
-    # luaposix
-    libxcrypt
+    # texdef -> minijinja-lua
+    rustup
   ];
 }

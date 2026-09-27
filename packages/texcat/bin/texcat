@@ -1,2 +1,0 @@
-#!/usr/bin/env texlua
-require 'texcat'.main(arg)
