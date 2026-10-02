@@ -20,46 +20,48 @@ end
 ---**entry for luatex**
 ---@param argv string[] `arg`
 function M.main(argv)
-    local args = M.parse(argv)
-    texlua.setotherenv(M.get_program_name(args))
+    texlua.setotherenv(M.get_program_name(argv))
     updmap.sync()
+    local args = M.parse(argv)
     texrocks.exec(args)
 end
 
 ---see <https://texdoc.org/serve/luatex/0>'s command line options
----@param args string[] command line arguments not `arg`
+---@param argv string[] command line arguments not `arg`
 ---@return string progname
-function M.get_program_name(args)
+function M.get_program_name(argv)
+    local begin = utils.get_begin_index(argv)
+    local end_ = begin + #argv - 1
     -- --progname is latter first
-    for i = #args, 2, -1 do
-        if args[i]:match("^--progname=") then
-            local progname = args[i]:gsub("^--progname=", "")
+    for i = end_, begin + 1, -1 do
+        if argv[i]:match("^--progname=") then
+            local progname = argv[i]:gsub("^--progname=", "")
             return progname
-        elseif args[i - 1] == "--progname" then
-            return args[i]
+        elseif argv[i - 1] == "--progname" then
+            return argv[i]
         end
     end
 
     -- --fmt/--ini is former first
     local opt
-    for i = 2, #args do
-        if args[i]:match("^--fmt=") then
-            local progname = args[i]:gsub("^--fmt=", "")
+    for i = begin + 1, end_ do
+        if argv[i]:match("^--fmt=") then
+            local progname = argv[i]:gsub("^--fmt=", "")
             return progname
-        elseif args[i] == "--fmt" or args[i] == "--ini" then
-            opt = args[i]
-        elseif args[i]:match("^%-") == args[i]:match("^\\") then
+        elseif argv[i] == "--fmt" or argv[i] == "--ini" then
+            opt = argv[i]
+        elseif argv[i]:match("^%-") == argv[i]:match("^\\") then
             if opt == "--fmt" then
-                return args[i]
+                return argv[i]
             elseif opt == "--ini" then
-                local progname = args[i]:gsub(".*/", ""):gsub("%.*", "")
+                local progname = argv[i]:gsub(".*/", ""):gsub("%.*", "")
                 return progname
             end
         end
     end
 
     -- usually be luahbtex
-    return texlua.get_program_name(args[1])
+    return texlua.match_program_name(argv[begin])
 end
 
 return M

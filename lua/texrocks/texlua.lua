@@ -10,15 +10,15 @@ local M = {}
 ---@param argv string[] `arg`
 function M.main(argv)
     M.setenvs()
-    M.setotherenv(M.get_program_name(argv[0]))
+    M.setotherenv(M.match_program_name(argv[0]))
     require 'prompt.repl'.main(argv)
 end
 
 ---base name without extension name
 ---@param path string
 ---@return string path
-function M.get_program_name(path)
-    return path:match('/([^/.]+)%.?[^/]*$')
+function M.match_program_name(path)
+    return path:match('/([^/.]+)%.?[^/]*$') or path
 end
 
 ---call `os.setenv()` when environment variable doesn't exist
