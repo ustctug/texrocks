@@ -35,5 +35,9 @@ mkShell {
 
     # texdef -> minijinja-lua
     rustup
+
+    # bibtex -> web2c
+    flex
+    bison
   ];
 }

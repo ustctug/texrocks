@@ -55,6 +55,10 @@ jobs:
           luarocks pack lua-zlib
           luarocks install lua-cjson
           luarocks pack lua-cjson
+          luarocks install ghostscript
+          luarocks pack ghostscript
+          luarocks install bibtex
+          luarocks pack bibtex
           rustup component add rust-src
           # https://github.com/benniekiss/rs-mod-lua/issues/163
           # luarocks install minijinja-lua
@@ -106,6 +110,8 @@ jobs:
         with:
           target: >
             rpzip
+            ghostscript
+            bibtex
             luatex
             luatexinfo
             lualatex
