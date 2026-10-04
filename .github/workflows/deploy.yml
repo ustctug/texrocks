@@ -128,6 +128,9 @@ jobs:
             babel-base
             hypdoc
             ydoc
+            algorithms
+            subfig
+            cite
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: gh-pages
