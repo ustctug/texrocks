@@ -59,6 +59,8 @@ jobs:
           luarocks pack ghostscript
           luarocks install bibtex
           luarocks pack bibtex
+          luarocks install makeindex
+          luarocks pack makeindex
           rustup component add rust-src
           # https://github.com/benniekiss/rs-mod-lua/issues/163
           # luarocks install minijinja-lua
@@ -112,6 +114,7 @@ jobs:
             rpzip
             ghostscript
             bibtex
+            makeindex
             luatex
             luatexinfo
             lualatex

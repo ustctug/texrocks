@@ -1,6 +1,5 @@
 -- local git_ref = 'texlive-2025.2'
 local git_ref = 'svn78399'
--- local modrev = git_ref:gsub("^release%-", "")
 local _git_ref = '0.99e'
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
@@ -44,8 +43,8 @@ dependencies = {  }
 build = {
   type = 'command',
   build_command = [[
-  mkdir build
-  cd build
+  mkdir work
+  cd work
   ../configure --without-x
   make recurse
   mkdir -p texk/web2c
@@ -55,7 +54,7 @@ build = {
 ]],
   install = {
     bin = {
-      'build/texk/web2c/bibtex'
+      'work/texk/web2c/bibtex'
     }
   }
 }
