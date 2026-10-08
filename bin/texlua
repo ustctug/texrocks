@@ -1,40 +1,71 @@
 #!/usr/bin/env -S luahbtex --luaonly
----@diagnostic disable: undefined-field, undefined-global
--- luacheck: ignore 111 113 143
-if tex then
-    if os.getenv "LUA_PATH" then
-        require 'texrocks.texlua'.main(arg)
-    else
-        local cmd = {
-            "lx",
-            "--lua-version=" .. _VERSION:gsub(".* ", ""),
-            "lua",
-            "--lua=" .. arg[0],
-            "--no-loader",
-            "--",
-        }
-        for _, v in ipairs(arg) do
-            table.insert(cmd, v)
-        end
-        os.exec(cmd)
-    end
-else
-    -- --luaonly will make --lua invalid
-    -- so cannot use --lua XXX.lua
-    local cmd = {
-        'luahbtex',
-        '--luaonly',
-        arg[0],
-    }
-    for _, v in ipairs(arg) do
-        table.insert(cmd, v)
-    end
-    for i, v in ipairs(cmd) do
-        cmd[i] = string.format('%q', v)
-    end
-    local isok, reason, ret = os.execute(table.concat(cmd, ' '))
-    if type(ret) == type(0) then
-        ret = isok
-    end
-    os.exit(ret)
+if os.getenv "LUA_PATH" then
+    require 'texrocks.texlua'.main(arg)
+    return
 end
+local M = {}
+
+---@return string version
+function M.get_version()
+    return _VERSION:match("%d[%d.]*%d") or "5.4"
+end
+
+---@return boolean
+function M.is_venv()
+    local version = M.get_version()
+    local env = "LUA_PATH_" .. version:gsub("%.", "_")
+    return (os.getenv "LUA_PATH" or os.getenv(env)) ~= nil
+end
+
+---expand ~ to `$HOME`
+---@param dir string
+---@return string
+function M.expand(dir)
+    if dir:sub(1, 2) == '~/' then
+        return (os.getenv("HOME") or ".") .. dir:sub(2)
+    end
+    return dir
+end
+
+---add ~/.local/share/lua/5.3 to package.path
+---add ~/.local/lib/lua/5.3 to package.cpath
+function M.set_path()
+    if M.is_venv() then
+        return
+    end
+    local expand = M.expand
+    local version = M.get_version()
+    local ext = package.cpath:match('([^.]+)$')
+    package.path = package.path
+        .. ";./share/lua/" .. version .. "/?.lua;./?.lua;./?/init.lua;;"
+        .. ";" .. expand("~/.local/share/lua/") .. version .. "/?.lua"
+        .. ";" .. expand("~/.local/share/lua/") .. version .. "/?/init.lua"
+        .. ";" .. expand("~/.local/state/nix/profile/share/lua/") .. version .. "/?.lua"
+        .. ";" .. expand("~/.local/state/nix/profile/share/lua/") .. version .. "/?/init.lua"
+    package.cpath = package.cpath
+        .. ";./lib/lua/" .. version .. "/?." .. ext .. ";./?." .. ext
+        .. ";" .. expand("~/.local/lib/lua/") .. version .. "/?." .. ext
+        .. ";" .. expand("~/.local/state/nix/profile/share/lua/") .. version .. "/?." .. ext
+    local f = io.open("/run/current-system/nixos-version")
+    if f then
+        f:close()
+        package.path = package.path
+            .. ";/run/current-system/sw/share/lua/" .. version .. "/?.lua"
+            .. ";/run/current-system/sw/share/lua/" .. version .. "/?/init.lua"
+        package.cpath = package.cpath
+            .. ";/run/current-system/sw/lib/lua/" .. version .. "/?." .. ext
+    else
+        if package.path:gsub("/usr/share/lua/" .. version .. "/?.lua", "") == package.path then
+            package.path = package.path
+                .. ";/usr/share/lua/" .. version .. "/?.lua"
+                .. ";/usr/share/lua/" .. version .. "/?/init.lua"
+        end
+        if package.cpath:gsub("/usr/lib/lua/" .. version .. "/?" .. ext, "") == package.cpath then
+            package.cpath = package.cpath
+                .. ";/usr/lib/lua/" .. version .. "/?." .. ext
+        end
+    end
+end
+
+M.set_path()
+require 'texrocks.texlua'.main(arg)

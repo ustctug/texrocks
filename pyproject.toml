@@ -2,4 +2,4 @@
 number = true
 
 [tool.codespell]
-ignore-words-list = "ist, parm"
+ignore-words-list = "ist, parm, cuted"

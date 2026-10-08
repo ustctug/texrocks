@@ -39,11 +39,11 @@ build = {
       ['../doc/bibtex/bst/ieeetran/IEEEtran_bst_HOWTO.pdf'] = 'bibtex/IEEEtran_bst_HOWTO.pdf',
       ['../tex/latex/ieeetran/IEEEtran.cls'] = 'IEEEtran.cls',
       ['../tex/latex/ieeetran/IEEEtrantools.sty'] = 'tools/IEEEtrantools.sty',
-      ['../tex/bibtex/bst/ieeetran/IEEEtran.bst'] = 'bibtex/IEEEtran.bst',
-      ['../tex/bibtex/bst/ieeetran/IEEEtranN.bst'] = 'bibtex/IEEEtranN.bst',
-      ['../tex/bibtex/bst/ieeetran/IEEEtranS.bst'] = 'bibtex/IEEEtranS.bst',
-      ['../tex/bibtex/bst/ieeetran/IEEEtranSA.bst'] = 'bibtex/IEEEtranSA.bst',
-      ['../tex/bibtex/bst/ieeetran/IEEEtranSN.bst'] = 'bibtex/IEEEtranSN.bst',
+      ['../bibtex/bst/ieeetran/IEEEtran.bst'] = 'bibtex/IEEEtran.bst',
+      ['../bibtex/bst/ieeetran/IEEEtranN.bst'] = 'bibtex/IEEEtranN.bst',
+      ['../bibtex/bst/ieeetran/IEEEtranS.bst'] = 'bibtex/IEEEtranS.bst',
+      ['../bibtex/bst/ieeetran/IEEEtranSA.bst'] = 'bibtex/IEEEtranSA.bst',
+      ['../bibtex/bst/ieeetran/IEEEtranSN.bst'] = 'bibtex/IEEEtranSN.bst',
     }
   }
 }

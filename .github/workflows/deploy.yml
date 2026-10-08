@@ -131,6 +131,8 @@ jobs:
             algorithms
             subfig
             cite
+            sttools
+            light-latex-make
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: gh-pages
