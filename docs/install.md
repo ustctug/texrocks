@@ -7,7 +7,7 @@
 In [tutorial](README.md.html), you have found the core program is `lx`, a
 package manager written in rust. It is provided by
 [`lux-cli`](https://github.com/lumen-oss/lux).
-The version must be `> 0.11.1` due to many bug fixes.
+The version must be `>= 0.47.0` due to many bug fixes.
 
 Without any package managers: you can download compiled programs from Internet.
 This is an example for GNU/Linux. For other OSes, search

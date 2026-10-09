@@ -49,6 +49,7 @@ First coming?
 - [draw a graph](topics/demo-tikz.md.html): an example for LaTeX
 - [use bibliography](topics/demo-bib.md.html): another example for LaTeX
 - [write markdown](topics/demo-markdown.md.html): try markdown!
+- [write a thesis for ieeetran](topics/demo-ieeetran.md.html): a complex project.
 
 ## TeX Dialects
 
@@ -71,6 +72,7 @@ Some useful tools for development!
 ### Developed by others
 
 - l3build: a tool to test/build/pack TeX packages developed by LaTeX 3 team
+- light-latex-make: read XXX.log to decide if rerun TeX compiler.
 - texdoc: a tool to search document of any TeX package developed by TeX Live
   team. It needs an extra [configuration](topics/texdoc.md.html).
 - luafindfont: a simple tool to search fonts
@@ -85,11 +87,6 @@ Some useful tools for development!
 - [luarocks-build-l3build](topics/luarocks-build-l3build.md.html): Luarocks
   build backend for packing TeX packages. More TeX packages are needed:
   CTAN ~3000 v.s. <https://ustctug.github.io/texrocks/> ~100. Welcome to pack!
-
-TODO:
-
-- [latexmk](https://github.com/debian-tex/latexmk): read XXX.log to decide if
-  rerun TeX compiler. So far you have to rerun lualatex by yourself.
 
 ## Learn More
 

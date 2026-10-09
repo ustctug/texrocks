@@ -119,12 +119,14 @@ jobs:
             luatexinfo
             lualatex
             texdef
+            texdoc
+            light-latex-make
+            markdown2tex
+            citation-style-language
             standalone
             hologo
-            citation-style-language
-            beamer
+            beamerswitch
             ctex
-            markdown2tex
             babel-base
             hypdoc
             ydoc
@@ -132,7 +134,10 @@ jobs:
             subfig
             cite
             sttools
-            light-latex-make
+            ieeetran
+            preprint
+            booktabs
+            makecell
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: gh-pages

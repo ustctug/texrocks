@@ -213,12 +213,7 @@ $ tree -a
 │       └──  test_dependencies
 │           ├──  .gitignore
 │           └──  5.3
-│               ├──  ...
 │               └──  bin
-│                   ├──  kpsewhich
-│                   ├──  luahbtex
-│                   ├──  texlua
-│                   └──  updmap
 ├──  lux.lock  # like package-lock.json or requirements.txt
 ├──  lux.toml  # like package.json or pyproject.toml
 └──  main.tex

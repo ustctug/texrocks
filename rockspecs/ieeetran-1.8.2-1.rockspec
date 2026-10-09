@@ -29,7 +29,7 @@ if modrev == 'scm' or modrev == 'dev' then
   }
 end
 
-dependencies = {}
+dependencies = { 'psnfss' }
 
 build = {
   type = 'none',
