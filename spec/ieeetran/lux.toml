@@ -1,0 +1,38 @@
+package = "demo-ieeetran"
+version = "0.0.1"
+lua = ">=5.1"
+
+[description]
+summary = "https://template-selector.ieee.org/api/ieee-template-selector/template/12/download"
+maintainer = "Wu"
+labels = [""]
+license = "GPL-3.0-only"
+
+[dependencies]
+
+[run]
+type = "command"
+command = "lx"
+args = ["--tree=.lux", "doc", "demo-ieeetran"]
+
+[build]
+type = "command"
+build_command = "llmk"
+
+[build.install.conf]
+"../doc/bare_jrnl_new_sample4.pdf" = "bare_jrnl_new_sample4.pdf"
+
+[build_dependencies]
+lualatex = "0.3.20-1"
+ieeetran = "1.8.2-1"
+algorithms = "0.1-1"
+subfig = "1.3-1"
+bibtex = "0.99.5-1"
+latex-amsmath = "2026.6.1-1"
+latex-tools = "2026.6.1-1"
+graphics-cfg = "0.0.1-1"
+sttools = "3.5-1"
+cite = "5.5-1"
+light-latex-make = "1.2.0-1"
+# New_IEEEtran_how-to.tex
+preprint = "2011-1"
