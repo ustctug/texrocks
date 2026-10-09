@@ -3,12 +3,11 @@ version = "0.0.1"
 lua = ">=5.1"
 
 [description]
-summary = "https://template-selector.ieee.org/api/ieee-template-selector/template/12/download"
-maintainer = "Wu"
-labels = [""]
-license = "GPL-3.0-only"
-
-[dependencies]
+summary = "A Sample Article Using IEEEtran.cls for IEEE Journals and Transactions"
+homepage = "https://template-selector.ieee.org/api/ieee-template-selector/template/12/download"
+maintainer = "Michael Shell"
+labels = ["Journal"]
+license = "LPPL-1.3c"
 
 [run]
 type = "command"

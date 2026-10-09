@@ -106,6 +106,9 @@ Know what is under the hood.
 
 ## Related Projects
 
-- [mmtex](https://github.com/vlasakm/mmtex)
-- [apltex](https://github.com/RadioNoiseE/apltex)
+- [mmTeX](https://github.com/vlasakm/mmtex): the earliest plainTeX distribution.
+- [aplTeX](https://github.com/RadioNoiseE/apltex): inspiration source
+- [TinyTeX](https://yihui.org/tinytex): a small customized TeX Live fork.
+- [TeX Live](https://tug.org/texlive): official (La)TeX distribution
+- [MikTeX](https://miktex.org): another famous (La)TeX distribution
 ]]
