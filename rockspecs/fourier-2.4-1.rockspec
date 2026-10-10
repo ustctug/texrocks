@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '2.4'
 local modrev = git_ref
 local specrev = '1'
 
@@ -24,8 +24,8 @@ build_dependencies = { 'lualatex', 'latex-base' }
 dependencies = { 'iftex', 'latex-base', 'fontspec' }
 
 source = {
-  url = 'https://mirrors.ctan.org/fonts/fourier-GUT.zip',
-  dir = package .. '-' .. modrev,
+  url = 'https://github.com/ustctug/texrocks/releases/download/0.0.1/' .. package .. '-GUT.zip',
+  dir = package .. '-GUT',
 }
 
 if modrev == 'scm' or modrev == 'dev' then

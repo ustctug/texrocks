@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '3.5.3'
 local modrev = git_ref
 local specrev = '1'
 
@@ -47,8 +47,8 @@ build_dependencies = { 'lualatex', 'latex-base' }
 dependencies = { 'latex-amsmath' }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev,
+  url = 'https://github.com/ustctug/texrocks/releases/download/0.0.1/' .. package .. '.zip',
+  dir = package,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -66,31 +66,31 @@ build = {
   copy_directories = { '../doc' },
   install = {
     conf = {
-      ['../tex/latex/ncctools/afterpackage.sty'] = 'source/afterpackage.sty',
-      ['../tex/latex/ncctools/dcounter.sty'] = 'source/dcounter.sty',
-      ['../tex/latex/ncctools/desclist.sty'] = 'source/desclist.sty',
-      ['../tex/latex/ncctools/extdash.sty'] = 'source/extdash.sty',
-      ['../tex/latex/ncctools/manyfoot.sty'] = 'source/manyfoot.sty',
-      ['../tex/latex/ncctools/mboxfill.sty'] = 'source/mboxfill.sty',
-      ['../tex/latex/ncctools/nccbbb.sty'] = 'source/nccbbb.sty',
-      ['../tex/latex/ncctools/nccboxes.sty'] = 'source/nccboxes.sty',
-      ['../tex/latex/ncctools/ncccomma.sty'] = 'source/ncccomma.sty',
-      ['../tex/latex/ncctools/ncccropbox.sty'] = 'source/ncccropbox.sty',
-      ['../tex/latex/ncctools/ncccropmark.sty'] = 'source/ncccropmark.sty',
-      ['../tex/latex/ncctools/nccfancyhdr.sty'] = 'source/nccfancyhdr.sty',
-      ['../tex/latex/ncctools/nccfloats.sty'] = 'source/nccfloats.sty',
-      ['../tex/latex/ncctools/nccfoots.sty'] = 'source/nccfoots.sty',
-      ['../tex/latex/ncctools/nccmath.sty'] = 'source/nccmath.sty',
-      ['../tex/latex/ncctools/nccparskip.sty'] = 'source/nccparskip.sty',
-      ['../tex/latex/ncctools/nccpic.sty'] = 'source/nccpic.sty',
-      ['../tex/latex/ncctools/nccrules.sty'] = 'source/nccrules.sty',
-      ['../tex/latex/ncctools/nccsect.sty'] = 'source/nccsect.sty',
-      ['../tex/latex/ncctools/nccstretch.sty'] = 'source/nccstretch.sty',
-      ['../tex/latex/ncctools/nccthm.sty'] = 'source/nccthm.sty',
-      ['../tex/latex/ncctools/textarea.sty'] = 'source/textarea.sty',
-      ['../tex/latex/ncctools/tocenter.sty'] = 'source/tocenter.sty',
-      ['../tex/latex/ncctools/topsection.sty'] = 'source/topsection.sty',
-      ['../tex/latex/ncctools/watermark.sty'] = 'source/watermark.sty',
+      ['../tex/latex/ncctools/afterpackage.sty'] = 'afterpackage.sty',
+      ['../tex/latex/ncctools/dcounter.sty'] = 'dcounter.sty',
+      ['../tex/latex/ncctools/desclist.sty'] = 'desclist.sty',
+      ['../tex/latex/ncctools/extdash.sty'] = 'extdash.sty',
+      ['../tex/latex/ncctools/manyfoot.sty'] = 'manyfoot.sty',
+      ['../tex/latex/ncctools/mboxfill.sty'] = 'mboxfill.sty',
+      ['../tex/latex/ncctools/nccbbb.sty'] = 'nccbbb.sty',
+      ['../tex/latex/ncctools/nccboxes.sty'] = 'nccboxes.sty',
+      ['../tex/latex/ncctools/ncccomma.sty'] = 'ncccomma.sty',
+      ['../tex/latex/ncctools/ncccropbox.sty'] = 'ncccropbox.sty',
+      ['../tex/latex/ncctools/ncccropmark.sty'] = 'ncccropmark.sty',
+      ['../tex/latex/ncctools/nccfancyhdr.sty'] = 'nccfancyhdr.sty',
+      ['../tex/latex/ncctools/nccfloats.sty'] = 'nccfloats.sty',
+      ['../tex/latex/ncctools/nccfoots.sty'] = 'nccfoots.sty',
+      ['../tex/latex/ncctools/nccmath.sty'] = 'nccmath.sty',
+      ['../tex/latex/ncctools/nccparskip.sty'] = 'nccparskip.sty',
+      ['../tex/latex/ncctools/nccpic.sty'] = 'nccpic.sty',
+      ['../tex/latex/ncctools/nccrules.sty'] = 'nccrules.sty',
+      ['../tex/latex/ncctools/nccsect.sty'] = 'nccsect.sty',
+      ['../tex/latex/ncctools/nccstretch.sty'] = 'nccstretch.sty',
+      ['../tex/latex/ncctools/nccthm.sty'] = 'nccthm.sty',
+      ['../tex/latex/ncctools/textarea.sty'] = 'textarea.sty',
+      ['../tex/latex/ncctools/tocenter.sty'] = 'tocenter.sty',
+      ['../tex/latex/ncctools/topsection.sty'] = 'topsection.sty',
+      ['../tex/latex/ncctools/watermark.sty'] = 'watermark.sty',
     }
   }
 }

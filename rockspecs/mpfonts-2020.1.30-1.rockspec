@@ -1,4 +1,4 @@
-local git_ref = 'scm'
+local git_ref = '2020.1.30'
 local modrev = git_ref
 local specrev = '1'
 
@@ -24,8 +24,8 @@ description = {
 }
 
 source = {
-  url = repo_url .. '/archive/' .. git_ref .. '.zip',
-  dir = package .. '-' .. modrev
+  url = 'https://github.com/ustctug/texrocks/releases/download/0.0.1/' .. package .. '.zip',
+  dir = package,
 }
 
 if modrev == 'scm' or modrev == 'dev' then
