@@ -123,6 +123,7 @@ jobs:
             light-latex-make
             markdown2tex
             citation-style-language
+            graphics-pln
             standalone
             hologo
             beamerswitch
