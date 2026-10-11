@@ -1,6 +1,6 @@
 local git_ref = '3.04'
 local modrev = git_ref:gsub('0+(%d)', '%1')
-local specrev = '1'
+local specrev = '2'
 
 rockspec_format = '3.0'
 package = 'amsfonts'
@@ -18,6 +18,9 @@ Basic LaTeX support for the symbol fonts is provided by amsfonts.sty, with names
   homepage = 'http://www.ams.org/arc/resources/amsfonts-about.html',
   license = 'SIL'
 }
+
+-- lasy10.tfm
+dependencies = { 'latex-fonts' }
 
 source = {
   url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/amsfonts.tds.zip",

@@ -1,6 +1,6 @@
 local git_ref = 'release-2026-06-01'
 local modrev = git_ref:gsub("^release%-", ""):gsub('-0', '-'):gsub('%-', '.')
-local specrev = "1"
+local specrev = "2"
 
 local repo_url = 'https://github.com/latex3/latex2e'
 
@@ -38,8 +38,7 @@ end
 
 -- \RequirePackage{ifthen}
 -- https://tex.stackexchange.com/questions/340099/cannot-add-picture-to-article-no-driver-specified/648751#648751
--- graphics-cfg -> graphics-def -> epstopdf -> kvoptions -> latex-graphics's keyval
-dependencies = { 'latex-base == ' .. modrev }
+dependencies = { 'latex-base == ' .. modrev, 'graphics-cfg' }
 
 build = {
   type = 'builtin',

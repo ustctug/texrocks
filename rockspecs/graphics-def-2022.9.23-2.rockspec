@@ -1,6 +1,6 @@
 local git_ref = '2022-09-23'
 local modrev = git_ref:gsub('-0', '-'):gsub('-', '.')
-local specrev = '1'
+local specrev = '2'
 
 local repo_url = 'https://github.com/latex3/graphics-def'
 
@@ -8,7 +8,9 @@ rockspec_format = '3.0'
 package = 'graphics-def'
 version = modrev .. '-' .. specrev
 
-dependencies = { 'epstopdf-pkg' }
+-- optional dependency for
+-- \includegraphics{filename.eps}
+-- dependencies = { 'epstopdf-pkg' }
 
 description = {
   summary = 'Colour and graphics option files',

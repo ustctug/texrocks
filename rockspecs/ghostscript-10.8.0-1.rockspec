@@ -59,5 +59,10 @@ build = {
       "--without-tesseract",
       "--without-ijs",
       "--with-drivers=PS,PNG,JPEG,TIFF,PBM"
-   }
+   },
+}
+
+-- https://github.com/luarocks/luarocks/issues/1817
+deploy = {
+  wrap_bin_scripts = false
 }

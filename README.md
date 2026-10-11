@@ -82,8 +82,6 @@ type = "builtin"
 lx add -b lualatex
 # \usepackage{hyperref}
 lx add -b hyperref
-# \usepackage{graphicx}
-lx add -b graphics-cfg
 # \usepackage{tikz}
 lx add -b pgf
 # lx add -b more packages ...
@@ -96,7 +94,6 @@ lx add -b pgf
 [build_dependencies]
 lualatex = "X.Y.Z-1"
 hyperref = "X.Y.Z-1"
-graphics-cfg = "X.Y.Z-1"
 pgf = "X.Y.Z-1"
 ```
 

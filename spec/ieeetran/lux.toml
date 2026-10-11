@@ -40,8 +40,6 @@ latex-tools = ">=2026.6.1"
 algorithms = ">=0.1"
 # \usepackage{subfig}
 subfig = ">=1.3"
-# \includegraphics{fig1}
-graphics-cfg = ">=0.0.1"
 # \usepackage{stfloats}
 sttools = ">=3.5"
 # \usepackage{cite}

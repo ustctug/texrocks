@@ -1,6 +1,6 @@
 local git_ref = "19d1238af17df376cd46333b229579b0f7f3a41f"
 local modrev = '0.0.1'
-local specrev = '1'
+local specrev = '3'
 
 local repo_url = 'https://github.com/latex3/graphics-cfg'
 
@@ -19,7 +19,7 @@ description = {
   license = 'CC0-1.0'
 }
 
-dependencies = { 'graphics-def', 'latex-graphics' }
+dependencies = { 'graphics-def' }
 
 source = {
   url = "https://github.com/latex3/graphics-cfg/archive/" .. git_ref .. ".zip",
@@ -38,13 +38,21 @@ build = {
     ["fix-build.lua.diff"] = [[
 --- old/build.lua
 +++ new/build.lua
+@@ -15,7 +15,7 @@ typesetfiles =
+   }
+
+
+-installfiles = {"graphics.cfg"}
++installfiles = sourcefiles
+
+ -- No automated tests for this bundle
+ testfildir = ""
 @@ -23,4 +23,6 @@ testfildir = ""
- 
+
  -- Find and run the build system
  kpse.set_program_name ("kpsewhich")
--dofile (kpse.lookup ("l3build.lua"))
 +if not release_date then
-+  dofile(kpse.lookup("l3build.lua"))
+ dofile (kpse.lookup ("l3build.lua"))
 +end
 ]],
   },

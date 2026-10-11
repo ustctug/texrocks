@@ -5,6 +5,13 @@
 with pkgs;
 mkShell {
   name = "texrocks";
+  NIX_LD = stdenv.cc.bintools.dynamicLinker;
+  NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
+    # luahbtex
+    stdenv.cc.cc
+    # luaprompt
+    readline
+  ];
   env = {
     HISTORY_INCDIR = "${readline.dev}/include";
     HISTORY_LIBDIR = "${readline.out}/lib";
@@ -14,7 +21,7 @@ mkShell {
   buildInputs = [
     # how lx find lua
     pkg-config
-    lux-cli
+    # lux-cli
 
     rename
     # texrocks -> prompt-style -> luaprompt

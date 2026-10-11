@@ -101,7 +101,8 @@ function M.setenvs()
     os.setenv("TEXMFDBS", "")
 
     os.setenv("CLUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil, "//", package.cpath))
-    os.setenv("LUAINPUTS", "$TEXMFDOTDIR;" .. M.getenv(nil))
+    -- .lux/language.dat.lua
+    os.setenv("LUAINPUTS", "$TEXMFDOTDIR;.lux;" .. M.getenv(nil))
     os.setenv("TEXINPUTS", "$TEXMFDOTDIR;" .. M.getenv("tex"))
     os.setenv("BIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/bib"))
     os.setenv("MLBIBINPUTS", "$TEXMFDOTDIR;" .. M.getenv("bibtex/mlbib"))
@@ -165,9 +166,10 @@ function M.setenvs()
 end
 
 ---set environment variables for `kpsewhich --show-path 'other text files'`
+---.lux/language.dat
 ---@param progname string read <https://texdoc.org/serve/kpathsea/0>
 function M.setotherenv(progname)
-    M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;" .. M.getenv("conf"))
+    M.setenv(progname:upper() .. "INPUTS", "$TEXMFDOTDIR;.lux;" .. M.getenv("data"))
 end
 
 return M

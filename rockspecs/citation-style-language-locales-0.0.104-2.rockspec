@@ -1,6 +1,6 @@
 local git_ref = 'v0.0.104'
 local modrev = git_ref:gsub('^v', '')
-local specrev = 1
+local specrev = 2
 local repo_url = "https://github.com/citation-style-language/locales"
 
 rockspec_format = "3.0"
@@ -28,6 +28,6 @@ dependencies = {
 }
 build = {
    type = "command",
-   build_command = "install -Dm644 *.xml -t conf",
-   copy_directories = { 'conf' },
+   build_command = "install -Dm644 *.xml -t data/locales",
+   copy_directories = { 'data' },
 }

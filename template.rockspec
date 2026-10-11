@@ -22,7 +22,7 @@ description = {
 -- so pin versions:
 -- 1. luahbtex -> texrocks
 -- 2. texrocks -> luatex/lualatex/luatexinfo/initex
-dependencies = { "luahbtex == 1.27.0", "argparse", "lua-cjson", "prompt-style >= 0.1.3" }
+dependencies = { "luahbtex == 1.27.5", "argparse", "lua-cjson", "prompt-style >= 0.1.3" }
 
 test_dependencies = $test_dependencies
 
