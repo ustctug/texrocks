@@ -31,7 +31,8 @@ local function flatten_move(src, dst_dir, strip)
         basename = basename:sub(1, -5)
     end
     local dst = dir.path(dst_dir, basename)
-    local ok, err = fs.move(src, dst)
+    -- fs.move deletes the source with a tool that only accepts absolute paths
+    local ok, err = fs.move(fs.absolute_name(src), dst)
     if ok then
         return true, dst
     end
@@ -96,7 +97,8 @@ function M.run(rockspec, no_install)
         end
     end
 
-    local scripts_dir = dir.path(rockspec.source.dir, "scripts")
+    -- luarocks already changed the cwd to rockspec.source.dir
+    local scripts_dir = "scripts"
 
     if fs.is_dir(scripts_dir) then
         local script_files = collect_files(scripts_dir, "")
@@ -142,7 +144,7 @@ function M.run(rockspec, no_install)
         end
     end
 
-    local tex_dir = dir.path(rockspec.source.dir, "tex")
+    local tex_dir = "tex"
 
     if fs.is_dir(tex_dir) then
         local lua_files = collect_files(tex_dir, ".lua")
