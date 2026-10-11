@@ -43,13 +43,16 @@ function M.run(rockspec, no_install)
     local luadir = path.lua_dir(rockspec.name, rockspec.version)
     local bindir = path.bin_dir(rockspec.name, rockspec.version)
     local confdir = path.conf_dir(rockspec.name, rockspec.version)
+    local docdir = path.doc_dir(rockspec.name, rockspec.version)
 
     -- Build configure command with custom command and options
     local cmd = string.format(
-        [[%s %s --prefix='%s' --libdir='%s' --bindir='%s']],
+        [[%s %s --prefix=%q --docdir=%q --mandir=%q --libdir=%q --bindir=%q]],
         table.concat(envs, " "),
         configure_command,
         confdir,
+        docdir,
+        docdir,
         libdir,
         bindir
     )

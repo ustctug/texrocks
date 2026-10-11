@@ -1,5 +1,5 @@
 package = "luarocks-build-autotools"
-version = "0.0.2"
+version = "0.0.3"
 lua = ">=5.1"
 
 [description]
