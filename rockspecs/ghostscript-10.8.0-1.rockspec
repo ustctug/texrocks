@@ -59,5 +59,11 @@ build = {
       "--without-tesseract",
       "--without-ijs",
       "--with-drivers=PS,PNG,JPEG,TIFF,PBM"
+   },
+   install = {
+     -- https://github.com/luarocks/luarocks/issues/1817
+     lib = {
+       ['ghostscript/README'] = 'README'
+     },
    }
 }

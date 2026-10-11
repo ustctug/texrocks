@@ -1,7 +1,7 @@
 -- local git_ref = 'texlive-2025.2'
 local git_ref = 'svn78399'
 local modrev = '2.12'
-local specrev = "1"
+local specrev = "2"
 
 local repo_url = 'https://github.com/TeX-Live/texlive-source'
 
@@ -51,6 +51,10 @@ build = {
     },
     conf = {
       ['../doc/makeindex.1'] = 'texk/makeindexk/makeindex.1'
+    },
+    -- https://github.com/luarocks/luarocks/issues/1817
+    lib = {
+      ['makeindex/BUILD'] = 'BUILD'
     },
   }
 }

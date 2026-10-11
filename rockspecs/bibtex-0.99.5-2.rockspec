@@ -4,7 +4,7 @@ local _git_ref = '0.99e'
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 modrev = modrev .. '.' .. __git_ref
-local specrev = "1"
+local specrev = "2"
 
 local repo_url = 'https://github.com/TeX-Live/texlive-source'
 
@@ -55,6 +55,10 @@ build = {
   install = {
     bin = {
       'work/texk/web2c/bibtex'
-    }
+    },
+    -- https://github.com/luarocks/luarocks/issues/1817
+    lib = {
+      ['bibtex/BUILD'] = 'BUILD'
+    },
   }
 }

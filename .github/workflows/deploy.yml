@@ -123,6 +123,16 @@ jobs:
             light-latex-make
             markdown2tex
             citation-style-language
+            cm-unicode
+            fourier
+            mpfonts
+            multirow
+            ulem
+            jknappen
+            ncctools
+            yhmath
+            bigfoot
+            changepage
             graphics-pln
             standalone
             hologo
