@@ -25,7 +25,7 @@ local M = {
     aliases = decode("aliases"),
     formats = decode("formats"),
 }
--- kpse 6.4.1 doesn't support:
+-- biber remove support of ris and bltxml
 M.formats.ris = nil
 M.formats.bltxml = nil
 

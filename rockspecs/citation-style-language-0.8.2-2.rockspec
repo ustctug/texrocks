@@ -1,6 +1,6 @@
 local git_ref = 'v0.8.2'
 local modrev = git_ref:gsub('^v', '')
-local specrev = 1
+local specrev = 2
 local repo_url = "https://github.com/zepinglee/citeproc-lua"
 
 rockspec_format = "3.0"
@@ -42,15 +42,6 @@ build = {
       ['fix-other-text-files.diff'] = [[
 --- old/citeproc/citeproc-manager.lua
 +++ new/citeproc/citeproc-manager.lua
-@@ -39,7 +39,7 @@
-   if ftype then
-     path = kpse.find_file(file_name, ftype)
-   else
--    path = kpse.find_file(file_name)
-+    path = kpse.find_file(file_name, 'other text files')
-   end
- 
-   if not path then
 @@ -113,7 +113,7 @@
  local function make_citeproc_sys(item_dict)
    local citeproc_sys = {

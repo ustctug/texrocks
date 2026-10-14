@@ -1,4 +1,4 @@
-local git_ref = 'v1.0.3'
+local git_ref = 'v1.0.4'
 local modrev = git_ref:gsub('^v', '')
 local specrev = 1
 local repo_url = "https://github.com/citation-style-language/styles"
@@ -29,6 +29,6 @@ description = {
 
 build = {
    type = "command",
-   build_command = "install -Dm644 *.csl -t data/styles",
-   copy_directories = { 'data' },
+   build_command = "install -Dm644 *.csl -t tex/luatex/citation-style-language/styles",
+   copy_directories = { 'tex' },
 }

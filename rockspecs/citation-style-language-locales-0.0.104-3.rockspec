@@ -1,6 +1,6 @@
 local git_ref = 'v0.0.104'
 local modrev = git_ref:gsub('^v', '')
-local specrev = 2
+local specrev = 3
 local repo_url = "https://github.com/citation-style-language/locales"
 
 rockspec_format = "3.0"
@@ -28,6 +28,6 @@ dependencies = {
 }
 build = {
    type = "command",
-   build_command = "install -Dm644 *.xml -t data/locales",
-   copy_directories = { 'data' },
+   build_command = "install -Dm644 *.xml -t tex/luatex/citation-style-language/locales",
+   copy_directories = { 'tex' },
 }
