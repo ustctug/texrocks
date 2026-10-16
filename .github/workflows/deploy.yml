@@ -136,6 +136,7 @@ jobs:
             graphics-pln
             standalone
             hologo
+            luadraw
             beamerswitch
             ctex
             babel-base
