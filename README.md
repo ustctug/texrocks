@@ -39,7 +39,7 @@ A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 1. Create a project
 
 ```sh
-$ lx new my-thesis
+$ lx new --main=none my-thesis
 Fetching remote repository metadata...
 ✔ Fetched remote repository metadata.
 > Package name: my-thesis
@@ -64,12 +64,13 @@ maintainer = "A TeX user"
 labels = ["thesis"]
 license = "GPL-3.0"
 
+# [source]
+# When publishing, configure the source URL here
+
 [dependencies]
 # Add your dependencies here
 # `busted = ">=2.0"`
 
-[run]
-args = ["src/main.lua"]
 
 [build]
 type = "builtin"
@@ -103,7 +104,7 @@ pgf = "X.Y.Z-1"
 $EDITOR main.tex
 ```
 
-4. Tell `lx` how to build, install and open your document
+4. Tell `lx` how to build and install your document
 
 `lux.toml`:
 
@@ -115,18 +116,13 @@ build_command = "lualatex --interaction=nonstopmode main.tex"
 
 [build.install.conf]
 '../doc/main.pdf' = 'main.pdf'
-
-[run]
-type = "command"
-command = "lx"
-args = ["--tree=.lux", "doc", "my-thesis"]
 ```
 
 5. Build and view your document
 
 ```sh
 lx build
-lx run
+lx doc
 ```
 
 This is your project structure:

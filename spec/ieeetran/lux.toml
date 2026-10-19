@@ -9,11 +9,6 @@ maintainer = "Michael Shell"
 labels = ["Journal"]
 license = "LPPL-1.3c"
 
-[run]
-type = "command"
-command = "lx"
-args = ["--tree=.lux", "doc", "demo-ieeetran"]
-
 [build]
 type = "command"
 build_command = "llmk"

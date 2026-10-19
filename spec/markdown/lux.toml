@@ -14,11 +14,6 @@ lualatex = ">=0.3.16"
 markdown2tex = ">=3.11.4"
 babel-base = ">=25.12"
 
-[run]
-type = "command"
-command = "lx"
-args = ["--tree=.lux", "doc", "demo-markdown"]
-
 [build]
 type = "command"
 build_command = "lualatex --interaction=nonstopmode main.tex"

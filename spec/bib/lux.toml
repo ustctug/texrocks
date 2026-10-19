@@ -15,11 +15,6 @@ citation-style-language = ">=0.8.2"
 beamer = ">=3.72"
 ctex = ">=2.5.10"
 
-[run]
-type = "command"
-command = "lx"
-args = ["--tree=.lux", "doc", "demo-bib"]
-
 [build]
 type = "command"
 build_command = "lualatex --interaction=nonstopmode main.tex"
