@@ -46,10 +46,20 @@ First coming?
 
 - [tutorial](topics/README.md.html): the steps to build a TeX project
 - [install and configure](topics/install.md.html): read it before all examples
+
+## Examples
+
+### Demos
+
 - [draw a graph](topics/demo-tikz.md.html): an example for LaTeX
 - [use bibliography](topics/demo-bib.md.html): another example for LaTeX
 - [write markdown](topics/demo-markdown.md.html): try markdown!
 - [write a thesis for ieeetran](topics/demo-ieeetran.md.html): a complex project.
+
+### Projects
+
+- [lshort-zh-cn](https://github.com/ustctug/lshort-zh-cn/tree/main/src): The Not
+  So Short Introduction To LaTeX2ε (Chinese Edition)
 
 ## TeX Dialects
 
@@ -60,10 +70,7 @@ Which TeX do you want to use?
 - [TeXinfo](topics/luatexinfo.md.html): GNU's TeX
 - [sdLuaTeX](topics/sdluatex.md.html): [speedata](https://www.speedata.de/)'s TeX
 - [A toy TeX](topics/initex.md.html): how to create a new TeX dialect?
-
-TODO:
-
-- ConTeXt
+- ConTeXt: TODO
 
 ## TeX Tools
 
