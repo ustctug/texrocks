@@ -39,7 +39,7 @@ A minimal (La)TeX distribution powered by lux/luarocks and luaTeX.
 1. Create a project
 
 ```sh
-$ lx new --main=none my-thesis
+$ lx new --main=none --no-luarc my-thesis
 Fetching remote repository metadata...
 ✔ Fetched remote repository metadata.
 > Package name: my-thesis

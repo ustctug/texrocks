@@ -3,7 +3,7 @@ local _git_ref = git_ref:gsub('v', '')
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 modrev = modrev .. '.' .. __git_ref
-local specrev = '1'
+local specrev = '2'
 
 local repo_url = 'https://github.com/latex3/unicode-math'
 
@@ -36,7 +36,11 @@ end
 
 build_dependencies = { 'luatex', 'latex-base' }
 
-dependencies = {'lm-math', 'fontspec', 'l3kernel', 'l3packages', 'lualatex-math'}
+dependencies = {
+  -- 'lm-math',
+  'fontspec', 'l3kernel', 'l3packages',
+  -- 'lualatex-math'
+}
 
 build = {
   type = 'l3build',

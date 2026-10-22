@@ -18,24 +18,50 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - run: |
           sudo apt-get -y update
           sudo apt-get -y install libreadline-dev
+      - uses: actions/checkout@v7
       - uses: lumen-oss/luarocks-tag-release@v7
         env:
-          LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+          HISTORY_LIBDIR: /usr/lib/x86_64-linux-gnu
+        with:
+          # for luatex/lualatex/luatexinfo/initex
+          # luahbtex versions of build/run time must be same
+          # (Fatal format file error; I'm stymied)
+          # so pin versions:
+          # 1. luahbtex -> texrocks
+          # 2. texrocks -> luatex/lualatex/luatexinfo/initex
+          dependencies: |
+            luahbtex == 1.27.0
+            argparse
+            lua-cjson
+            prompt-style >= 0.1.3
+          template: extra.rockspec
+      - uses: luarocks/gh-actions-lua@v14
+        with:
+          luaVersion: "5.1"
+      - uses: luarocks/gh-actions-luarocks@v7
+      - name: Pack
+        env:
+          HISTORY_LIBDIR: /usr/lib/x86_64-linux-gnu
+        run: |
+          luarocks install texrocks
+          luarocks pack texrocks
+      - uses: actions/upload-artifact@v7
         if: "! startsWith(github.ref, 'refs/tags/')"
         with:
-          extra_luarocks_args: |
-            --force
-          version: scm
-          template: template.rockspec
-      - uses: lumen-oss/luarocks-tag-release@v7
-        env:
-          LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
+          path: |
+            *.rock
+      - uses: softprops/action-gh-release@v3
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          extra_luarocks_args: |
-            --force
-          template: template.rockspec
+          files: |
+            *.rock
+      - name: Upload
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          scripts/upload.sh ./*.rock
+        env:
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}

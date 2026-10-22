@@ -16,13 +16,7 @@ description = {
   $license
 }
 
--- for luatex/lualatex/luatexinfo/initex
--- luahbtex versions of build/run time must be same
--- (Fatal format file error; I'm stymied)
--- so pin versions:
--- 1. luahbtex -> texrocks
--- 2. texrocks -> luatex/lualatex/luatexinfo/initex
-dependencies = { "luahbtex == 1.27.5", "argparse", "lua-cjson", "prompt-style >= 0.1.3" }
+dependencies = $dependencies
 
 test_dependencies = $test_dependencies
 
@@ -38,11 +32,8 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin'
-}
-
-test = {
-   type = "busted",
+  type = 'builtin',
+  copy_directories = $copy_directories,
 }
 
 deploy = {

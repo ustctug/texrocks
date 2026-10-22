@@ -1,6 +1,6 @@
 local git_ref = 'release-v62'
 local modrev = git_ref:gsub("^release%-v", "")
-local specrev = '1'
+local specrev = '4'
 
 rockspec_format = '3.0'
 package = 'minitoc'
@@ -19,6 +19,7 @@ description = {
 
 dependencies = { 'latex-base', 'notoccite', 'placeins' }
 
+-- lualatex only support utf-8 encoding
 source = {
   url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/minitoc.tds.zip",
   dir = '.'
