@@ -1,8 +1,8 @@
 local git_ref = 'release-2026-05-13'
 local modrev = git_ref:gsub("^release%-", ""):gsub('-0', '-'):gsub('%-', '.')
-local specrev = '2'
+local specrev = '3'
 
-local repo_url = 'https://github.com/ho-tex/oberdiek'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/oberdiek'
 
 rockspec_format = '3.0'
 package = 'oberdiek'
@@ -51,20 +51,15 @@ Each of the packages is represented by two files, a .dtx (documented source) and
 build_dependencies = { 'luatex', 'latex-base' }
 
 dependencies = { 'kvoptions', 'latex-amsmath', 'latex-graphics',
--- 'tabularht',
-'etexcmds', 'pdftexcmds',
+'tabularht', 'etexcmds', 'pdftexcmds',
 'ltxcmds', 'atveryend',
--- 'uniquecounter',
-'kvsetkeys',
-'iftex',
--- 'sauerj', 'pdfcol',
-'infwarerr',
--- 'parallel',
-'pdfescape', 'hyperref',
--- 'index',
--- 'carlisle',
+'uniquecounter', 'kvsetkeys', 'iftex',
+'sauerj',
+'pdfcol', 'infwarerr', 'latex-parallel',
+'pdfescape', 'hyperref', 'index',
+'carlisle',
 'hypdoc', 'hologo', 'latex-tools', 'fontspec',
--- 'unicode-math',
+'unicode-math',
 }
 
 source = {

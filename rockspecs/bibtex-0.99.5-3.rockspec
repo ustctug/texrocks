@@ -4,7 +4,7 @@ local _git_ref = '0.99e'
 local modrev = _git_ref:gsub('[^0-9.]', '')
 local __git_ref = git_ref.format('%d', _git_ref:gsub('[0-9.]', ''):byte() - 0x60)
 modrev = modrev .. '.' .. __git_ref
-local specrev = "2"
+local specrev = "3"
 
 local repo_url = 'https://github.com/TeX-Live/texlive-source'
 
@@ -43,11 +43,10 @@ dependencies = {}
 build = {
   type = 'command',
   build_command = [[
-  mkdir work
+  mkdir -p work/texk/web2c
   cd work
   ../configure --without-x
   make recurse
-  mkdir -p texk/web2c
   cd texk/web2c
   eval "$(sed 's,auxdir/auxsub,texk/web2c,g' ../../subsubdir-conf.cmd)"
   make bibtex
@@ -58,7 +57,7 @@ build = {
     },
     -- https://github.com/luarocks/luarocks/issues/1817
     lib = {
-      ['bibtex/README'] = 'README'
+      ['bibtex.so'] = 'README'
     },
   }
 }

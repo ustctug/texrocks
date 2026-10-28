@@ -60,6 +60,8 @@ First coming?
 
 - [lshort-zh-cn](https://github.com/ustctug/lshort-zh-cn/tree/main/src): The Not
   So Short Introduction To LaTeX2ε (Chinese Edition)
+- [sjtulib-latex-talk](https://github.com/ustctug/sjtulib-latex-talk/tree/main):
+  How to use LaTeX to make a beamer
 
 ## TeX Dialects
 

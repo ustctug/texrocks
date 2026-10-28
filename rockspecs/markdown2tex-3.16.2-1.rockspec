@@ -1,4 +1,4 @@
-local git_ref = '3.16.1'
+local git_ref = '3.16.2'
 local modrev = git_ref
 local specrev = '1'
 
@@ -21,9 +21,7 @@ description = {
   license = 'LPPL-1.3c'
 }
 
--- TODO:
--- 'unicode-math',
-dependencies = {'lt3luabridge', 'paralist', 'latex-amsmath', 'ltxcmds', 'l3kernel', 'graphics-cfg', 'fancyvrb', 'csvsimple', 'enumitem', 'latex-url', 'latex-verse', 'lua-ul', 'luacolor', 'lua-uni-algos'}
+dependencies = {'lt3luabridge', 'paralist', 'latex-amsmath', 'ltxcmds', 'l3kernel', 'graphics-cfg', 'fancyvrb', 'csvsimple', 'enumitem', 'latex-url', 'latex-verse', 'lua-ul', 'luacolor', 'lua-uni-algos', 'unicode-math' }
 
 source = {
   url = repo_url .. '/releases/download/' .. git_ref .. '/markdown.zip',

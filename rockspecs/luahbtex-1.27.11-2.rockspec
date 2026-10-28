@@ -1,6 +1,6 @@
-local git_ref = '1.27.5'
+local git_ref = '1.27.11'
 local modrev = git_ref
-local specrev = '1'
+local specrev = '2'
 
 local repo_url = 'https://gitlab.lisn.upsaclay.fr/texlive/luatex'
 
@@ -34,12 +34,12 @@ build = {
     bin = {
       luahbtex = 'build/texk/web2c/luahbtex'
     },
-    -- https://github.com/luarocks/luarocks/issues/1817
-    lib = {
-      ["texmf.cnf"] = 'source/texk/kpathsea/texmf.cnf'
-    },
     conf = {
       ['../web2c/texmf.cnf'] = 'source/texk/kpathsea/texmf.cnf'
-    }
+    },
+    -- https://github.com/luarocks/luarocks/issues/1817
+    lib = {
+      ['luahbtex.so'] = 'source/texk/kpathsea/texmf.cnf'
+    },
   }
 }

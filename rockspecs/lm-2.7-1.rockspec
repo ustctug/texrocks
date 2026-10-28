@@ -1,4 +1,4 @@
-local git_ref = '2.005'
+local git_ref = '2.007'
 local modrev = git_ref:gsub('0+(%d)', '%1')
 local specrev = '1'
 
@@ -16,8 +16,8 @@ description = {
 }
 
 source = {
-  url = "https://github.com/ustctug/texrocks/releases/download/0.0.1/lm.zip",
-  dir = 'lm',
+  url = 'https://www.gust.org.pl/projects/e-foundry/latin-modern/download/Latin_Modern-TDS_distr-2_007-31_03_2026.zip',
+  dir = '.',
 }
 
 if modrev == 'scm' or modrev == 'dev' then
@@ -29,5 +29,5 @@ end
 
 build = {
   type = 'none',
-  copy_directories = { 'fonts', 'tex' }
+  copy_directories = { 'fonts', 'tex', 'doc' }
 }

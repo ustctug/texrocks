@@ -1,4 +1,4 @@
-local git_ref = 'v1.0.4'
+local git_ref = 'v1.0.14'
 local modrev = git_ref:gsub('^v', '')
 local specrev = 1
 local repo_url = "https://github.com/citation-style-language/styles"

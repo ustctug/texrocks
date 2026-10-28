@@ -1,7 +1,7 @@
 -- local git_ref = 'texlive-2025.2'
 local git_ref = 'svn78399'
 local modrev = '2.12'
-local specrev = "2"
+local specrev = "3"
 
 local repo_url = 'https://github.com/TeX-Live/texlive-source'
 
@@ -36,11 +36,10 @@ dependencies = {}
 build = {
   type = 'command',
   build_command = [[
-  mkdir work
+  mkdir -p work/texk/makeindexk
   cd work
   ../configure --without-x
   make recurse
-  mkdir -p texk/makeindexk
   cd texk/makeindexk
   eval "$(sed 's,auxdir/auxsub,texk/makeindexk,g' ../../subsubdir-conf.cmd)"
   make
@@ -54,7 +53,7 @@ build = {
     },
     -- https://github.com/luarocks/luarocks/issues/1817
     lib = {
-      ['makeindex/README'] = 'README'
+      ['makeindex.so'] = 'README'
     },
   }
 }
