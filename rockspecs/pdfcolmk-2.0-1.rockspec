@@ -1,5 +1,6 @@
 local git_ref = 'release-2019-11-24'
-local modrev = git_ref:gsub("^release%-", ""):gsub('%-', '.')
+-- local modrev = git_ref:gsub("^release%-", ""):gsub('%-', '.')
+local modrev = '2.0'
 local specrev = '1'
 
 local repo_url = 'https://github.com/ho-tex/pdfcolmk'

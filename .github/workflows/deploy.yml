@@ -21,48 +21,43 @@ jobs:
       fail-fast: false
       matrix:
         runs-on:
+          - ubuntu-latest
           - macos-latest
           # - windows-latest
     runs-on: ${{matrix.runs-on}}
     steps:
       - name: Install MSVC Compiler Toolchain
         uses: ilammy/msvc-dev-cmd@v1
-      - uses: leafo/gh-actions-lua@v12
+      - uses: luarocks/gh-actions-lua@v14
         with:
           luaVersion: "5.3"
-      - uses: luarocks/gh-actions-luarocks@v6
+      - uses: lumen-oss/gh-actions-lux@v1
       - name: Install Dependencies
         if: runner.os == 'macOS'
         run: |
           brew install autoconf automake libtool
-          echo "DIR=$(brew --prefix readline)" >> "$GITHUB_ENV"
+          echo "PKG_CONFIG_PATH=$(brew --prefix readline)/lib/pkgconfig:\
+          $PKG_CONFIG_PATH" >> "$GITHUB_ENV"
       - name: Install Dependencies
+        if: runner.os == 'Linux'
         run: |
-          luarocks config variables.ZIP rpzip
-          luarocks install rpzip
-          luarocks install luahbtex
-          luarocks pack luahbtex
-          luarocks install luaprompt HISTORY_DIR="$DIR" READLINE_DIR="$DIR"
-          luarocks pack luaprompt
-          luarocks install luafilesystem
-          luarocks pack luafilesystem
-          luarocks install lua-template
-          luarocks pack lua-template
-          luarocks install lua-zlib
-          luarocks pack lua-zlib
-          luarocks install lua-cjson
-          luarocks pack lua-cjson
-          luarocks install bibtex
-          luarocks pack bibtex
-          luarocks install makeindex
-          luarocks pack makeindex
+          sudo apt-get -y update
+          sudo apt-get -y install libreadline-dev
+      - name: Pack
+        env:
+          HISTORY_LIBDIR: /usr/lib/x86_64-linux-gnu
+        run: |
+          lx --lua-version=5.3 pack luaprompt
+          lx --lua-version=5.3 pack luafilesystem
+          lx --lua-version=5.3 pack lua-cjson
+          lx --lua-version=5.3 --no-manifest-cache pack luahbtex
+          lx --lua-version=5.3 --no-manifest-cache pack bibtex
+          lx --lua-version=5.3 --no-manifest-cache pack makeindex
           rustup component add rust-src
-          # https://github.com/benniekiss/rs-mod-lua/issues/163
-          # luarocks install minijinja-lua
-          # luarocks pack minijinja-lua
+          lx --lua-version=5.3 pack minijinja-lua
       - uses: actions/upload-artifact@v4
         with:
-          name: artifact-${{matrix.runs-on}}
+          name: artifact-${{ matrix.runs-on }}
           path: |
             *.rock
 
@@ -70,11 +65,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{secrets.GH_TOKEN}}
-          ref: gh-pages
-      - uses: leafo/gh-actions-lua@v12
+      - uses: luarocks/gh-actions-lua@v14
         with:
           luaVersion: "5.3"
       - uses: luarocks/gh-actions-luarocks@v6
@@ -82,27 +73,35 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install liblua5.3-dev rename libreadline-dev
-          rm -f ./*.rock
           # https://github.com/luarocks/luarocks/issues/1817
           echo local_by_default = true >>\
           ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
           luarocks config variables.ZIP rpzip
-          # minijinja-lua
-          rustup component add rust-src
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          ref: gh-pages
+      - name: Clean old rocks
+        run: |
+          rm -f ./*.rock
       - uses: actions/download-artifact@v4
         with:
           pattern: artifact-*
           merge-multiple: true
+      - name: Install rocks
+        run: |
+          for rock in ./*.linux-x86_64.rock; do
+            luarocks install "$rock"
+          done
       - uses: ustctug/texrocks@main
         env:
           TEXMFDOTDIR: .;~/.luarocks/lib/luarocks/rocks-5.3//
           CXXFLAGS: -I/home/runner/work/texrocks/texrocks/.lua/include
-          LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         with:
           target: >
             rpzip
-            bibtex
-            makeindex
+            texdef
             luatex
             luatexinfo
             lualatex
@@ -125,6 +124,7 @@ jobs:
             hologo
             luadraw
             beamerswitch
+            sjtubeamer
             ctex
             babel-base
             hypdoc

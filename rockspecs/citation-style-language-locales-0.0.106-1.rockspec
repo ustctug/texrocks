@@ -1,6 +1,6 @@
-local git_ref = 'v0.0.104'
+local git_ref = 'v0.0.106'
 local modrev = git_ref:gsub('^v', '')
-local specrev = 3
+local specrev = 1
 local repo_url = "https://github.com/citation-style-language/locales"
 
 rockspec_format = "3.0"

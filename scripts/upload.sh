@@ -65,4 +65,5 @@ for i; do
   fi
 
   curl -sLF "rock_file=@$i" "https://luarocks.org/api/1/$LUAROCKS_API_KEY/upload_rock/$version"
+  echo
 done
