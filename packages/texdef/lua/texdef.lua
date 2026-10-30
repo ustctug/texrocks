@@ -5,27 +5,28 @@ local tex = require 'tex'
 local kpse = require 'kpse'
 local utils = require 'prompt.utils'
 local argparse = require 'argparse'
+local datafile = require 'datafile'
 local minijinja = require 'minijinja'
 local M = {
     templates = {},
 }
 
----https://github.com/lumen-oss/lux/issues/922
----@param name string
+---get file content
+---@param path string
 ---@return string
-function M.read(name)
-    local root = debug.getinfo(1).source:match("@?(.*).lua$")
-    local f = io.open(root .. "/templates/" .. name)
-    local content = ""
+function M.read(path)
+    local f = datafile.open(path)
+        or io.open(debug.getinfo(1).source:match("@?(.*/)[^/]+/[^/]+$") .. "etc/" .. path)
+    local text = "{}"
     if f then
-        content = f:read("*a")
+        text = f:read "*a"
         f:close()
     end
-    return content
+    return text
 end
 
 for _, name in ipairs { "main.tex", "sub.tex" } do
-    M.templates[name] = M.read(name)
+    M.templates[name] = M.read('conf/' .. name)
 end
 
 ---get parser

@@ -75,7 +75,7 @@ repos:
           - mdformat-config
           - mdformat-web
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.23.3
+    rev: v0.24.0
     hooks:
       - id: markdownlint-cli2
         additional_dependencies:
@@ -91,5 +91,5 @@ repos:
 
 ci:
   skip:
-    # https://github.com/pre-commit-ci/issues/issues/239
+    # https://github.com/pre-commit-ci/runner-image/pull/342
     - nixfmt

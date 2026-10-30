@@ -5,26 +5,34 @@
 -- luacheck: ignore 143
 local kpse = require 'kpse'
 local argparse = require 'argparse'
+local datafile = require 'datafile'
 local cjson = require 'cjson'
 
----https://github.com/lumen-oss/lux/issues/922
----@param name string
----@return table
-local function decode(name)
-    local root = debug.getinfo(1).source:match("@?(.*).lua$")
-    local f = io.open(root .. "/" .. name .. ".json")
-    local content = "{}"
+local M = {}
+
+---get file content
+---@param path string
+---@return string
+function M.read(path)
+    local f = datafile.open(path)
+        or io.open(debug.getinfo(1).source:match("@?(.*/)[^/]+/[^/]+/[^/]+$") .. "etc/" .. path)
+    local text = "{}"
     if f then
-        content = f:read("*a")
+        text = f:read "*a"
         f:close()
     end
-    return cjson.decode(content)
+    return text
 end
 
-local M = {
-    aliases = decode("aliases"),
-    formats = decode("formats"),
-}
+---decode a json
+---@param name string
+---@return table
+function M.decode(name)
+    return cjson.decode(M.read('conf/' .. name))
+end
+
+M.aliases = M.decode("aliases.json")
+M.formats = M.decode("formats.json")
 -- biber remove support of ris and bltxml
 M.formats.ris = nil
 M.formats.bltxml = nil

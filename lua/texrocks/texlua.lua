@@ -4,7 +4,9 @@
 ---@diagnostic disable: undefined-field
 -- luacheck: ignore 143
 local updmap = require "texrocks.updmap"
-local M = {}
+local M = {
+    texmf_cnf = updmap.get_conf("texmf.cnf"):match("(.*)/[^/]+$") or ""
+}
 
 ---**entry for texlua**
 ---@param argv string[] `arg`
@@ -95,8 +97,7 @@ function M.setenvs()
     -- create ./*.cnf to override
     os.setenv("TEXMF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR")
     -- create ./texmf.cnf to override lua/texrocks/texmf.cnf
-    os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" ..
-        debug.getinfo(1).source:match("@?(.*/)") .. 'templates')
+    os.setenv("TEXMFCNF", "$TEXMFDOTDIR;$TEXMFCONFIG;$TEXMFHOME;$TEXMFVAR;" .. M.texmf_cnf)
     -- don't use ls-R
     os.setenv("TEXMFDBS", "")
 

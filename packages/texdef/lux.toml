@@ -1,5 +1,5 @@
 package = "texdef"
-version = "0.3.18"
+version = "0.3.19"
 lua = ">=5.1"
 
 [description]
@@ -16,6 +16,7 @@ dir = "texrocks-$(VERSION)/packages/$(PACKAGE)"
 
 [dependencies]
 argparse = ">=0.7.1"
+datafile = ">=0.0.1"
 minijinja-lua = ">=0.0.1"
 currfile = ">=1.0"
 lualatex = ">=0.3.17"

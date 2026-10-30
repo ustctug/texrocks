@@ -3,9 +3,21 @@
 ---@copyright 2026
 local lfs      = require "lfs"
 local argparse = require 'argparse'
+local datafile = require 'datafile'
 local M        = {
     fontmap_name = "pdftex.map"
 }
+
+---@param name string
+function M.get_conf(name)
+    local _f, conf = datafile.open("conf/" .. name)
+    if _f then
+        _f:close()
+    else
+        conf = debug.getinfo(1).source:match("@?(.*/)[^/]+/[^/]+/[^/]+$") .. "etc/conf/" .. name
+    end
+    return conf
+end
 
 ---get parser
 ---@param progname string program name
@@ -129,10 +141,9 @@ function M.sync(verbosity, dry_run)
         print("fail to generate " .. fontmap_name)
         return
     end
-    local template = debug.getinfo(1).source:match("@?(.*/)") .. 'templates/' .. M.fontmap_name
     local lines = {}
     local seen = {}
-    M.insert(lines, seen, template, verbosity)
+    M.insert(lines, seen, M.get_conf(M.fontmap_name), verbosity)
 
     local function callback(filename)
         local ext = filename:match("%.([^.]+)$")
