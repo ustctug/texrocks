@@ -2,7 +2,7 @@ local git_ref = 'release-2019-12-03'
 local modrev = '1.5'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/infwarerr'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/infwarerr'
 
 rockspec_format = '3.0'
 package = 'infwarerr'

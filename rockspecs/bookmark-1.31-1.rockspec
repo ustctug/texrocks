@@ -6,7 +6,7 @@ rockspec_format = '3.0'
 package = 'bookmark'
 version = modrev .. '-' .. specrev
 
-local repo_url = 'https://github.com/ho-tex/bookmark'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/bookmark'
 
 description = {
   summary = [[A new bookmark (outline) organization for hyperref]],

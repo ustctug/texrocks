@@ -2,7 +2,7 @@ local git_ref = 'v3.14'
 local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/kvoptions'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/kvoptions'
 
 rockspec_format = '3.0'
 package = 'kvoptions'

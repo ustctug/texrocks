@@ -6,7 +6,7 @@ rockspec_format = '3.0'
 package = 'hycolor'
 version = modrev .. '-' .. specrev
 
-local repo_url = 'https://github.com/ho-tex/hycolor'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/hycolor'
 
 description = {
   summary = [[Implements colour for packages hyperref and bookmark]],

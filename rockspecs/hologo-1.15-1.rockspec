@@ -6,7 +6,7 @@ rockspec_format = '3.0'
 package = 'hologo'
 version = modrev .. '-' .. specrev
 
-local repo_url = 'https://github.com/ho-tex/hologo'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/hologo'
 
 description = {
   summary = [[A collection of logos with bookmark support]],

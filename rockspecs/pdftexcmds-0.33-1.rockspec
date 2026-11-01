@@ -2,7 +2,7 @@ local git_ref = 'v0.33'
 local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/pdftexcmds'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/pdftexcmds'
 
 rockspec_format = '3.0'
 package = 'pdftexcmds'

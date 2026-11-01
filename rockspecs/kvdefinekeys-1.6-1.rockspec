@@ -2,7 +2,7 @@ local git_ref = 'release-2019-12-19'
 local modrev = '1.6'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/kvdefinekeys'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/kvdefinekeys'
 
 rockspec_format = '3.0'
 package = 'kvdefinekeys'

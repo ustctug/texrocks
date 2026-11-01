@@ -2,7 +2,7 @@ local git_ref = 'release-2019-12-15'
 local modrev = '1.3'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/intcalc'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/intcalc'
 
 rockspec_format = '3.0'
 package = 'intcalc'

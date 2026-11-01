@@ -2,7 +2,7 @@ local git_ref = 'release-2019-11-24'
 local modrev = git_ref:gsub("^release%-", ""):gsub('%-', '.')
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/pdfcolmk'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/pdfcolmk'
 
 rockspec_format = '3.0'
 package = 'pdfcolmk'

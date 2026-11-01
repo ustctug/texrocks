@@ -2,7 +2,7 @@ local git_ref = 'v1.11'
 local modrev = git_ref:gsub("^v", "")
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/rerunfilecheck'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/rerunfilecheck'
 
 rockspec_format = '3.0'
 package = 'rerunfilecheck'

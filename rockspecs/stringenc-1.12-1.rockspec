@@ -2,7 +2,7 @@ local git_ref = 'release-2019-11-29'
 local modrev = '1.12'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/stringenc'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/stringenc'
 
 rockspec_format = '3.0'
 package = 'stringenc'

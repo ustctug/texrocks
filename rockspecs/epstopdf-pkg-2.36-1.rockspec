@@ -2,7 +2,7 @@ local git_ref = 'release-2020-01-24'
 local modrev = '2.36'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/epstopdf'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/epstopdf'
 
 rockspec_format = '3.0'
 package = 'epstopdf-pkg'

@@ -2,7 +2,7 @@ local git_ref = 'release-2019-12-15'
 local modrev = '1.19'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/bigintcalc'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/bigintcalc'
 
 rockspec_format = '3.0'
 package = 'bigintcalc'

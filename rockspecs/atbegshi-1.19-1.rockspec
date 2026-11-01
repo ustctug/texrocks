@@ -2,7 +2,7 @@ local git_ref = 'release-2019-12-05'
 local modrev = '1.19'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/atbegshi'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/atbegshi'
 
 rockspec_format = '3.0'
 package = 'atbegshi'

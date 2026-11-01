@@ -2,7 +2,7 @@ local git_ref = 'release-2019-12-03'
 local modrev = '1.3'
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/grfext'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/grfext'
 
 rockspec_format = '3.0'
 package = 'grfext'

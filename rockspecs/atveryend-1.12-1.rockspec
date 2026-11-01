@@ -3,7 +3,7 @@ local _git_ref = git_ref:gsub("^v", "")
 local modrev = _git_ref:gsub("%-.*", "")
 local specrev = '1'
 
-local repo_url = 'https://github.com/ho-tex/atveryend'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/atveryend'
 
 rockspec_format = '3.0'
 package = 'atveryend'

@@ -6,7 +6,7 @@ rockspec_format = '3.0'
 package = 'hopatch'
 version = modrev .. '-' .. specrev
 
-local repo_url = 'https://github.com/ho-tex/hopatch'
+local repo_url = 'https://github.com/LaTeX-Package-Repositories/hopatch'
 
 description = {
   summary = [[Load patches for packages]],
