@@ -44,7 +44,7 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -y install libreadline-dev
         # https://github.com/lumen-oss/lux/issues/2198
-      - uses: luarocks/gh-actions-luarocks@v6
+      - uses: luarocks/gh-actions-luarocks@v7
       - name: Pack
         env:
           HISTORY_LIBDIR: /usr/lib/x86_64-linux-gnu
@@ -82,15 +82,14 @@ jobs:
       - uses: luarocks/gh-actions-lua@v14
         with:
           luaVersion: "5.3"
-      - uses: luarocks/gh-actions-luarocks@v6
+      - uses: luarocks/gh-actions-luarocks@v7
       - name: Install Dependencies
         run: |
           sudo apt-get -y update
           sudo apt-get -y install liblua5.3-dev rename libreadline-dev
-          # https://github.com/luarocks/luarocks/issues/1817
+          # https://github.com/luarocks/luarocks/pull/1945
           echo local_by_default = true >>\
-          ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
-          luarocks config variables.ZIP rpzip
+            ~/work/texrocks/texrocks/.luarocks/etc/luarocks/config-5.3.lua
           for rock in ./*.linux-x86_64.rock; do
             luarocks install "$rock"
           done
@@ -101,7 +100,6 @@ jobs:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         with:
           target: >
-            rpzip
             texdef
             luatex
             luatexinfo
